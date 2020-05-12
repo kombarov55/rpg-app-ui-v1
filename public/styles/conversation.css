@@ -1,0 +1,66 @@
+.conversation-view-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    border: 1px solid black;
+    background: #592E83;
+
+    padding: 1.5vmin;
+}
+
+.conversation-back-button {
+    margin: 0 3vw;
+}
+
+.conversation-view-companion-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 666px;
+}
+
+.conversation-view-companion-vertical {
+    display: flex;
+    flex-direction: column;
+    align-self: start;
+
+    margin: 0.2vh 0 0.5vh 3vw;
+}
+
+.conversation-view-companion-fullname {
+    align-self: start;
+
+    font-size: 2.5vh;
+}
+
+.conversation-view-companion-status {
+    color: #a7a7a7;
+}
+
+.conversation-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    background: #592E83;
+    border: 1px solid black;
+}
+
+.conversation-input-textarea {
+    width: 90vw;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.conversation-view-msg-list {
+    display: flex;
+    flex-direction: column-reverse;
+    flex: 1 1 auto;
+
+    height: 85vh;
+    width: 100%;
+
+    /*padding: 2vh 0;*/
+
+    overflow-y: auto;
+}

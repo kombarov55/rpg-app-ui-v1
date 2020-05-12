@@ -1,0 +1,232 @@
+.network-selection-view {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+
+    /*height: 0;*/
+    width: 100%;
+
+    overflow-y: auto;
+}
+
+.network-selection-view-horizontal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.network-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 1.5vh 3vw;
+}
+
+
+.network-item-img {
+    height: 25vmax;
+    width: 40vmin;
+}
+
+.network-item-title {
+    padding: 1vh 0;
+
+    font-size: 2vmax;
+}
+
+.network-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.network-info-img {
+    align-self: center;
+
+    margin: 1vmax 1vmin 3vmax 1vmin;
+
+    height: 35vmax;
+    width: 60vmin;
+
+
+}
+
+.network-name {
+    align-self: center;
+
+    margin: 2vmax 1vmin;
+
+    font-size: 3vmax;
+}
+
+.network-description {
+    padding: 1vmax 5vmin;
+    text-align: start;
+}
+
+.subnetworks-label {
+    font-size: 3vmax;
+}
+
+.subnetwork-view-horizontal {
+    display: flex;
+    flex-direction: row;
+
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.games-label {
+    font-size: 3vmax;
+}
+
+.games-view-horizontal {
+    display: flex;
+    flex-direction: row;
+
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.game-view {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 100%;
+}
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+.game-info-img {
+    align-self: center;
+
+    margin: 1vmax 1vmin 3vmax 1vmin;
+
+    height: 35vmax;
+    width: 60vmin;
+
+
+}
+
+.game-name {
+    align-self: center;
+
+    margin: 2vmax 1vmin;
+    width: 90%;
+    text-align: center;
+
+    font-size: 3vmax;
+}
+
+.game-description {
+    padding: 1vmax 5vmin;
+    text-align: start;
+}
+
+.mobile-button {
+    align-self: center;
+
+    padding: 1vmax 0;
+    margin: 1vmax 0;
+    width: 80%;
+
+    text-align: center;
+
+    background: #592e83;
+}
+
+.network-creation-view {
+    align-self: center;
+    align-items: stretch;
+
+    width: 80%;
+}
+
+.network-creation-view-label {
+    font-size: 2.2vmax;
+    padding: 2vmax 0;
+}
+
+.network-creation-save-button {
+    align-self: center;
+
+    padding: 1vmax 0;
+    margin: 5vmax 0;
+
+    text-align: center;
+
+    background: #592e83;
+}
+
+.add-subnetwork-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 1.5vh 3vw;
+    height: 25vmax;
+}
+
+.add-game-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 1.5vh 3vw;
+    height: 25vmax;
+}
+
+.subnetwork-creation-view {
+    align-self: center;
+    align-items: stretch;
+
+    width: 80%;
+}
+
+.subnetwork-creation-view-label {
+    font-size: 2.2vmax;
+    padding: 2vmax 0;
+}
+
+.subnetwork-creation-save-button {
+    align-self: center;
+
+    padding: 1vmax 0;
+    margin: 5vmax 0;
+
+    text-align: center;
+
+    background: #592e83;
+}
+
+.game-creation-view {
+    align-self: center;
+    align-items: stretch;
+
+    width: 80%;
+}
+
+.game-creation-view-label {
+    font-size: 2.2vmax;
+    padding: 2vmax 0;
+}
+
+.game-creation-save-button {
+    align-self: center;
+
+    padding: 1vmax 0;
+    margin: 5vmax 0;
+
+    text-align: center;
+
+    background: #592e83;
+}

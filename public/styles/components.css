@@ -1,0 +1,38 @@
+.list-input-horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list-input-input {
+    width: 90%;
+}
+
+.list-input-values {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 2vmax;
+}
+
+.list-input-value {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 0.25vmax 0;
+
+    background: #382357;
+    border-radius: 5px;
+}
+
+.list-input-value-label {
+    padding: 1vmax 2vmin;
+    margin: 0.25vmax 0;
+}
+
+/*.list-input-value > i {*/
+/*    color: black;*/
+/*}*/

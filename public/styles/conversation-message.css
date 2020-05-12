@@ -1,0 +1,36 @@
+.conversation-message-mine {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+
+    margin: 0.25vh 0;
+}
+
+.conversation-message-companion {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin: 0.25vh 0;
+}
+
+.conversation-message-mine > * {
+    margin-left: 2vw;
+}
+
+.conversation-message-companion > * {
+    margin-right: 2vw;
+}
+
+.conversation-message-img {
+    width: 25px;
+    height: 25px;
+    border-radius: 666px;
+}
+
+.conversation-message-text {
+    padding: 1vh 2.5vw;
+
+    background: grey;
+    border-radius: 5px;
+}

@@ -134,6 +134,11 @@
     width: 100%;
 }
 
+.questionnaire-item-head-horizontal-right {
+    display: flex;
+    flex-direction: row;
+}
+
 .questionnaire-item-name {
     padding: 1vmax 0;
 

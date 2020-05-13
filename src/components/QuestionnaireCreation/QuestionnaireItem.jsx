@@ -16,7 +16,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         <div className={"questionnaire-item"}>
             <div className={"questionnaire-item-head-horizontal"}>
                 <div className={"questionnaire-item-name"}>{props.name}</div>
-                <div className={"questionnaire-item-type"}>{props.type}</div>
+                <div className={"questionnaire-item-head-horizontal-right"}>
+                    <div className={"questionnaire-item-type"}>{props.type}</div>
+                    <i
+                        className={"pi pi-times"}
+                        style={{
+                            "margin": "0 3vmin"
+                        }}
+                    />
+                </div>
             </div>
             {props.type === QuestionnaireItemType.LIST.value && props.listValues.map(name =>
                 <div key={name}

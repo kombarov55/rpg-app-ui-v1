@@ -39,6 +39,36 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         return props.skillForm.currenciesForUpgrade.some(it => it === name)
     }
 
+    function onMaxValueChange(value) {
+        props.updateSkillForm({maxValue: value})
+        // props.updateSkillForm({skillCosts: buildSkillCostsList(1, parseInt(value), props.currencies)})
+        props.updateSkillForm({skillCosts: updateSkillCostsList(props.skillForm.skillCosts, parseInt(value), props.currencies)})
+    }
+
+    function updateSkillCostsList(prevList, newLength, currencies) {
+        if (newLength > prevList.length) {
+            return prevList.concat(buildSkillCostsList(prevList.length + 1, newLength - prevList.length, currencies))
+        } else {
+            return prevList.slice(0, newLength - prevList.length)
+        }
+    }
+
+    function buildSkillCostsList(start, length, currencies) {
+        const result = []
+
+        for (let i = start; i < start + length; i++) {
+            result.push({
+                lvlNum: i,
+                costs: currencies.map(name => ({
+                    currencyName: name,
+                    amount: 0
+                }))
+            })
+        }
+
+        return result
+    }
+
     return (
         <div className={"questionnaire-creation-skill-item-form"}>
             <div className={"questionnaire-creation-view-label"}>Создание листа навыков:</div>
@@ -67,7 +97,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     </div>
                 )
             }
-             {/*<div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>*/}
+            {/*<div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>*/}
             {/*    <Checkbox/>*/}
             {/*     <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>Золото</div>*/}
             {/* </div>*/}
@@ -84,12 +114,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <div className={"questionnaire-creation-skill-item-form-label"}>Максимальное значение:</div>
             <input className={"questionnaire-creation-skill-item-form-max-value"}
                    value={props.skillForm.maxValue}
-                   onChange={e => props.updateSkillForm({maxValue: e.target.value})}
+                   onChange={e => onMaxValueChange(e.target.value)}
             />
 
             <div className={"questionnaire-creation-skill-item-form-lvl-increase-vertical"}>
                 {
-                    [...Array(10).keys()].map(i =>
+                    [...Array(5).keys()].map(i =>
                         <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
                             <div className={"questionnaire-creation-skill-item-form-label"}>{i + 1} уровень:</div>
 
@@ -97,8 +127,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                 {
                                     props.skillForm.currenciesForUpgrade.map(name =>
                                         <>
-                                            <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{name}</div>
-                                            <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+                                            <div
+                                                className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{name}:
+                                            </div>
+                                            <input
+                                                className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
                                         </>)
                                 }
                                 {/*<div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото</div>*/}

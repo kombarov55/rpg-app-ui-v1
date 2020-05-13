@@ -82,7 +82,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
 
             <div className={"questionnaire-creation-skill-item-form-label"}>Максимальное значение:</div>
-            <input className={"questionnaire-creation-skill-item-form-max-value"}/>
+            <input className={"questionnaire-creation-skill-item-form-max-value"}
+                   value={props.skillForm.maxValue}
+                   onChange={e => props.updateSkillForm({maxValue: e.target.value})}
+            />
 
             <div className={"questionnaire-creation-skill-item-form-lvl-increase-vertical"}>
                 <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>

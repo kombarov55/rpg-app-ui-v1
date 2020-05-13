@@ -88,37 +88,56 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
 
             <div className={"questionnaire-creation-skill-item-form-lvl-increase-vertical"}>
-                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
-                    <div className={"questionnaire-creation-skill-item-form-label"}>1 уровень:</div>
-                    <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>
-                        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото</div>
-                        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
-                        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>
-                        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
-                    </div>
-                </div>
+                {
+                    [...Array(10).keys()].map(i =>
+                        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
+                            <div className={"questionnaire-creation-skill-item-form-label"}>{i + 1} уровень:</div>
 
-                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
-                    <div className={"questionnaire-creation-skill-item-form-label"}>2 уровень:</div>
-                    <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>
-                        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото</div>
-                        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
-                        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>
-                        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
-                    </div>
-                </div>
+                            <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>
+                                {
+                                    props.skillForm.currenciesForUpgrade.map(name =>
+                                        <>
+                                            <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{name}</div>
+                                            <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+                                        </>)
+                                }
+                                {/*<div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото</div>*/}
+                                {/*<input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>*/}
+                                {/*<div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>*/}
+                                {/*<input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>*/}
+                            </div>
+                        </div>)
+                }
 
-                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
-                    <div className={"questionnaire-creation-skill-item-form-label"}>3 уровень:</div>
-                    <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>
-                        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото</div>
-                        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
-                        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>
-                        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
-                    </div>
-                </div>
+                {/*<div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>*/}
+                {/*    <div className={"questionnaire-creation-skill-item-form-label"}>1 уровень:</div>*/}
+                {/*    <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>*/}
+                {/*        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото</div>*/}
+                {/*        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>*/}
+                {/*        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>*/}
+                {/*        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
 
-
+                {/*<div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>*/}
+                {/*    <div className={"questionnaire-creation-skill-item-form-label"}>2 уровень:</div>*/}
+                {/*    <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>*/}
+                {/*        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото</div>*/}
+                {/*        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>*/}
+                {/*        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>*/}
+                {/*        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+                {/**/}
+                {/*<div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>*/}
+                {/*    <div className={"questionnaire-creation-skill-item-form-label"}>3 уровень:</div>*/}
+                {/*    <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>*/}
+                {/*        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото</div>*/}
+                {/*        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>*/}
+                {/*        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>*/}
+                {/*        <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
 
             <div className={"questionnaire-creation-skill-item-form-img-selection-label"}>Картинка:</div>

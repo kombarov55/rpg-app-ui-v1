@@ -33,6 +33,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
 
         props.updateSkillForm({currenciesForUpgrade: updatedList})
+        props.updateSkillForm({skillCosts: updateSkillCostsCurrencies(props.skillForm.skillCosts, updatedList)})
     }
 
     function isCurrencyChecked(name) {
@@ -41,11 +42,30 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onMaxValueChange(value) {
         props.updateSkillForm({maxValue: value})
-        // props.updateSkillForm({skillCosts: buildSkillCostsList(1, parseInt(value), props.currencies)})
-        props.updateSkillForm({skillCosts: updateSkillCostsList(props.skillForm.skillCosts, parseInt(value), props.currencies)})
+        props.updateSkillForm({skillCosts: updateSkillCostsLength(props.skillForm.skillCosts, parseInt(value), props.currencies)})
     }
 
-    function updateSkillCostsList(prevList, newLength, currencies) {
+    function updateSkillCostsCurrencies(list, updatedCurrenciesList) {
+        return list.map(item => Object.assign({}, item, {
+            costs: updatedCurrenciesList.map(name => {
+                const prevItem = item.costs.find(costItem => costItem.currencyName === name)
+
+                let amount
+                if (prevItem != null) {
+                    amount = prevItem.amount
+                } else {
+                    amount = 0
+                }
+
+                return {
+                    currencyName: name,
+                    amount: amount
+                }
+            })
+        }))
+    }
+
+    function updateSkillCostsLength(prevList, newLength, currencies) {
         if (newLength > prevList.length) {
             return prevList.concat(buildSkillCostsList(prevList.length + 1, newLength - prevList.length, currencies))
         } else {

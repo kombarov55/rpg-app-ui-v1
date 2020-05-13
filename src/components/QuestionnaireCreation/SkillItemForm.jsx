@@ -2,17 +2,21 @@ import React from "react";
 import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {Checkbox} from "primereact/checkbox";
-import {updateSkillForm} from "../../data-layer/ActionCreators";
+import {updateQuestionnaireForm, updateSkillForm} from "../../data-layer/ActionCreators";
+import Btn from "../Common/Btn";
+import DefaultFormValues from "../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state, props) {
     return {
-        skillForm: state.skillForm
+        skillForm: state.skillForm,
+        questionnaireForm: state.questionnaireForm
     }
 }
 
 function mapDispatchToProps(dispatch, props) {
     return {
-        updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue))
+        updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue)),
+        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue))
     }
 }
 
@@ -100,6 +104,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateSkillForm({skillCosts: newList})
     }
 
+    function onSaveClicked() {
+        props.updateQuestionnaireForm({skills: props.questionnaireForm.skills.concat(props.skillForm)})
+        props.updateSkillForm(DefaultFormValues.skillForm)
+        props.updateQuestionnaireForm({skillFormVisible: false})
+    }
+
     return (
         <>
             {/*<div className={"questionnaire-creation-view-label"}>Создание листа навыков:</div>*/}
@@ -183,6 +193,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     />
                 </div>
 
+                <Btn
+                    text={"Сохранить"}
+                    onClick={() => onSaveClicked()}
+                />
 
             </div>
         </>

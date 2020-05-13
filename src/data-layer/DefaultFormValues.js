@@ -13,8 +13,8 @@ export default {
         itemFormVisible: false,
         skillFormVisible: false,
         questionnaireItems: [],
-        skillPointsDistribution: [
-        ]
+        skillPointsDistribution: [],
+        skills: []
     },
     questionnaireItemForm: {
         name: "",

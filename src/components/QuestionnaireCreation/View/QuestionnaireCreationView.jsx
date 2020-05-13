@@ -49,6 +49,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <SkillpointsDistributionForm
                 skillTypes={props.activeGame.skillTypes}
             />
+
+            {
+                props.questionnaireForm.skills.length === 0 ? "Нет навыков" :
+                    props.questionnaireForm.skills.map(skill =>
+                        <SkillItem
+                            name={skill.name}
+                            type={skill.type}
+                            imgSrc={"https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"}
+                            description={skill.description}
+                        />)
+            }
             {/**/}
             {/*<div className={"questionnaire-creation-view-label"}>Навыки</div>*/}
             {/**/}

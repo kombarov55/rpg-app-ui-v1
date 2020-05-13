@@ -42,7 +42,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onMaxValueChange(value) {
         props.updateSkillForm({maxValue: value})
-        props.updateSkillForm({skillCosts: updateSkillCostsLength(props.skillForm.skillCosts, parseInt(value), props.currencies)})
+        props.updateSkillForm({skillCosts: updateSkillCostsLength(props.skillForm.skillCosts, parseInt(value), props.skillForm.currenciesForUpgrade)})
     }
 
     function updateSkillCostsCurrencies(list, updatedCurrenciesList) {
@@ -89,6 +89,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         return result
     }
 
+    function onSkillCostUpdate(lvlNum, currencyName, amount) {
+        const newList = props.skillForm.skillCosts.slice()
+
+        newList.find(cost => cost.lvlNum === lvlNum)
+            .costs
+            .find(costItem => costItem.currencyName === currencyName)
+            .amount = amount
+
+        props.updateSkillForm({skillCosts: newList})
+    }
+
     return (
         <div className={"questionnaire-creation-skill-item-form"}>
             <div className={"questionnaire-creation-view-label"}>Создание листа навыков:</div>
@@ -117,18 +128,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     </div>
                 )
             }
-            {/*<div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>*/}
-            {/*    <Checkbox/>*/}
-            {/*     <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>Золото</div>*/}
-            {/* </div>*/}
-            {/*<div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>*/}
-            {/*    <Checkbox/>*/}
-            {/*    <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>Серебро</div>*/}
-            {/*</div>*/}
-            {/*<div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>*/}
-            {/*    <Checkbox/>*/}
-            {/*    <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>Опыт</div>*/}
-            {/*</div>*/}
 
 
             <div className={"questionnaire-creation-skill-item-form-label"}>Максимальное значение:</div>
@@ -139,19 +138,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             <div className={"questionnaire-creation-skill-item-form-lvl-increase-vertical"}>
                 {
-                    [...Array(5).keys()].map(i =>
+                    props.skillForm.skillCosts.map(skillCostItem =>
                         <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
-                            <div className={"questionnaire-creation-skill-item-form-label"}>{i + 1} уровень:</div>
+                            <div className={"questionnaire-creation-skill-item-form-label"}>{skillCostItem.lvlNum} уровень:</div>
 
                             <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>
                                 {
-                                    props.skillForm.currenciesForUpgrade.map(name =>
+                                    skillCostItem.costs.map(costItem =>
                                         <>
                                             <div
-                                                className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{name}:
+                                                className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{costItem.currencyName}:
                                             </div>
                                             <input
-                                                className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+                                                className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}
+                                                onChange={e => onSkillCostUpdate(skillCostItem.lvlNum, costItem.currencyName, e.target.value)}
+                                            />
                                         </>)
                                 }
                                 {/*<div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото</div>*/}

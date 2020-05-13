@@ -27,6 +27,15 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
+    function onSkillClicked(name) {
+        const item = props.questionnaireForm.skills.find(it => it.name === name)
+        if (item != null) {
+            item.expand = !item.expand
+        }
+
+        props.updateQuestionnaireForm({skills: props.questionnaireForm.skills})
+    }
+
     return (
         <div className={"questionnaire-creation-view"}>
             <div className={"questionnaire-creation-view-label"}>Пункты анкеты</div>
@@ -58,6 +67,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             type={skill.type}
                             imgSrc={"https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"}
                             description={skill.description}
+                            maxValue={skill.maxValue}
+                            upgradeCosts={skill.skillCosts.map(skillCost =>
+                                skillCost.costs.map(({currencyName, amount}) =>
+                                    amount + " " + currencyName).join(", "))}
+                            expand={skill.expand}
+                            onClick={() => onSkillClicked(skill.name)}
                         />)
             }
             {/**/}

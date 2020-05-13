@@ -45,6 +45,42 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         return props.skillForm.currenciesForUpgrade.some(it => it === name)
     }
 
+    function toggleOptionCurrency(name) {
+        const list = props.skillForm.upgradeOptionForm.currencies
+
+        const contains = list.some(it => it === name)
+
+        let updatedList
+
+        if (!contains) {
+            updatedList = list.concat(name)
+        } else {
+            updatedList = list.filter(it => it !== name)
+        }
+
+        props.updateSkillForm({
+            upgradeOptionForm: Object.assign({}, props.skillForm.upgradeOptionForm, {
+                currencies: updatedList
+            })
+        })
+        // props.updateSkillForm({upgradeCosts: updateupgradeCostsCurrencies(props.skillForm.upgradeCosts, updatedList)})
+    }
+
+    function isOptionCurrencyChecked(name) {
+        return props.skillForm.upgradeOptionForm.currencies.some(it => it === name)
+    }
+
+    function onUpgradeOptionAddClicked() {
+        props.updateSkillForm({
+            upgradeOptions: props.skillForm.upgradeOptions.concat(props.skillForm.upgradeOptionForm),
+            upgradeOptionForm: {
+                currencies: []
+            },
+            upgradeOptionFormVisible: false
+        })
+
+    }
+
     function onMaxValueChange(value) {
         props.updateSkillForm({maxValue: value})
         props.updateSkillForm({upgradeCosts: updateupgradeCostsLength(props.skillForm.upgradeCosts, parseInt(value), props.skillForm.currenciesForUpgrade)})
@@ -122,7 +158,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                        onChange={e => props.updateSkillForm({name: e.target.value})}
                 />
 
-                <div className={"questionnaire-creation-skill-item-form-label"}>Описание: </div>
+                <div className={"questionnaire-creation-skill-item-form-label"}>Описание:</div>
                 <InputTextarea
                     autoResize={true}
                     className={"questionnaire-creation-skill-item-form-name-input"}
@@ -151,7 +187,31 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         </div>
                     )
                 }
+                <div className={"questionnaire-creation-skill-item-form-label"}>Варианты повышения:</div>
+                {props.skillForm.upgradeOptionFormVisible &&
+                <>
+                    {props.currencies.map(name =>
+                        <div
+                            className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}
+                            key={name}
+                        >
+                            <Checkbox
+                                onChange={() => toggleOptionCurrency(name)}
+                                checked={isOptionCurrencyChecked(name)}
+                            />
+                            <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>{name}</div>
+                        </div>
+                    )}
+                    <Btn text={"Добавить"}
+                         onClick={() => onUpgradeOptionAddClicked()}
+                    />
+                </>
+                }
 
+                <i className={"pi pi-plus-circle"}
+                   style={{"fontSize": "4vh"}}
+                   onClick={() => props.updateSkillForm({upgradeOptionFormVisible: true})}
+                />
 
                 <div className={"questionnaire-creation-skill-item-form-label"}>Максимальное значение:</div>
                 <input className={"questionnaire-creation-skill-item-form-max-value"}

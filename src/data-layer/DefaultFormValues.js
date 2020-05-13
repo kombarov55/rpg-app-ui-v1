@@ -27,6 +27,11 @@ export default {
         description: "",
         type: "",
         currenciesForUpgrade: [],
+        upgradeOptions: [],
+        upgradeOptionForm: {
+            currencies: []
+        },
+        upgradeOptionFormVisible: false,
         maxValue: 1,
         upgradeCosts: []
     }

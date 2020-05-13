@@ -12,18 +12,20 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     return (
-        <div className={"questionaire-skill-item"}
-             onClick={() => props.onClick()}>
+        <div className={"questionaire-skill-item"}>
             <div className={"questionaire-skill-item-horizontal"}>
                 <img className={"questionnaire-skill-img"}
                      src={props.imgSrc}
+                     onClick={() => props.onClick()}
                 />
                 <div className={"questionaire-skill-item-horizontal-text-group"}>
-                    <div className={"questionnaire-skill-item-vertical"}>
+                    <div className={"questionnaire-skill-item-vertical"}
+                         onClick={() => props.onClick()}>
                         <div className={"questionnaire-skill-name"}>{props.name}</div>
                         <div className={"questionnaire-skill-type"}>{props.type}</div>
                     </div>
                     <i className={"pi pi-times"}
+                       onClick={() => props.onDelete()}
                     />
                 </div>
 
@@ -41,9 +43,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         </div>
                         {
                             props.upgradeCosts.map(label =>
-                            <div className={"questionnaire-skill-detail-lvl-increase-detail-chip"}>
-                                {label}
-                            </div>)
+                                <div className={"questionnaire-skill-detail-lvl-increase-detail-chip"}>
+                                    {label}
+                                </div>)
                         }
                         {/*<div className={"questionnaire-skill-detail-lvl-increase-detail-chip"}>500 опыта, 100 золота*/}
                         {/*</div>*/}

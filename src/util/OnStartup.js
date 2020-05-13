@@ -12,7 +12,9 @@ async function loadAnnouncements() {
 function saveAuthToken() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const userId = urlSearchParams.get("user_id")
-    Globals.userId = userId
+    Globals.userId = userId == null ? "33167934" : userId
+
+    console.log(Globals.userId)
 
     return fetch(loginUrl, {
         method: "POST",
@@ -20,7 +22,7 @@ function saveAuthToken() {
             'Content-Type': 'application/json;charset=utf-8'
         }),
         body: JSON.stringify({
-            login: userId
+            login: Globals.userId
         })
     })
         .then(rs => rs.json())

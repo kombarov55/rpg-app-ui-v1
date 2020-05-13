@@ -12,7 +12,8 @@ import QuestionnaireItemType from "../../../data-layer/enums/QuestionnaireItemTy
 
 function mapStateToProps(state, props) {
     return {
-        questionnaireForm: state.questionnaireForm
+        questionnaireForm: state.questionnaireForm,
+        activeGame: state.activeGame
     }
 }
 
@@ -43,22 +44,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 props.questionnaireForm.itemFormVisible && <QuestionnaireItemForm/>
             }
 
-            {/*<QuestionnaireItem name={"Имя персонажа"}*/}
-            {/*                   type={"Текстовое"}*/}
-            {/*/>*/}
-            {/*<QuestionnaireItem name={"Мин. возраст персонажа"}*/}
-            {/*                   type={"Текстовое"}*/}
-            {/*/>*/}
-
-            {/*<QuestionnaireItem name={"Город"}*/}
-            {/*                   type={"Выбор из списка"}*/}
-            {/*                   listValues={["Москва", "Тула", "Воронеж", "Ростов"]}*/}
-            {/*/>*/}
-
             <QuestionnaireAddItemButton onClick={() => props.updateQuestionnaireForm({itemFormVisible: true})}/>
 
-            {/*<div className={"questionnaire-creation-view-label"}>Распределение навыков</div>*/}
-            {/*<SkillpointsDistributionForm/>*/}
+            <div className={"questionnaire-creation-view-label"}>Распределение навыков</div>
+            <SkillpointsDistributionForm
+                skillTypes={props.activeGame.skillTypes}
+
+            />
             {/**/}
             {/*<div className={"questionnaire-creation-view-label"}>Навыки</div>*/}
             {/**/}

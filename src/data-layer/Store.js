@@ -12,7 +12,7 @@ import DefaultFormValues from "./DefaultFormValues";
 export const initialState = {
     sidebarVisible: false,
     growl: null,
-    currentView: questionnaireCreationView,
+    currentView: networkSelectionView,
     userAccount: {
 
     },

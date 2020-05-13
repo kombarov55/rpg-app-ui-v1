@@ -6,6 +6,7 @@ import {put} from "../../../util/Http";
 import {editGameByNetworkId, editGamebySubnetworkId} from "../../../util/Parameters";
 import {gameView} from "../../../Views";
 import ListInput from "../../Common/ListInput";
+import Globals from "../../../util/Globals";
 
 function mapStateToProps(state, props) {
     return {
@@ -50,7 +51,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onSaveClicked() {
-        const url = props.activeNetwork.networkId ?
+        const url = Globals.creatingGameByNetwork ?
             editGameByNetworkId(props.activeNetwork.id) :
             editGamebySubnetworkId(props.activeNetwork.id, props.activeSubnetwork.id);
 

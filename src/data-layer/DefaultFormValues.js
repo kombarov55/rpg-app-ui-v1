@@ -11,7 +11,9 @@ export default {
     },
     questionnaireForm: {
         itemFormVisible: false,
-        questionnaireItems: []
+        questionnaireItems: [],
+        skillPointsDistribution: [
+        ]
     },
     questionnaireItemForm: {
         name: "",

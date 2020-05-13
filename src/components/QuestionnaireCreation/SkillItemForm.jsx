@@ -46,6 +46,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <div className={"questionnaire-creation-skill-item-form-label"}>Название навыка:</div>
             <input className={"questionnaire-creation-skill-item-form-name-input"}
                    value={props.skillForm.name}
+                   onChange={e => props.updateSkillForm({name: e.target.value})}
             />
 
             <div className={"questionnaire-creation-skill-item-form-label"}>Тип навыка:</div>

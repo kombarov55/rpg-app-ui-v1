@@ -11,6 +11,7 @@ export default {
     },
     questionnaireForm: {
         itemFormVisible: false,
+        skillFormVisible: false,
         questionnaireItems: [],
         skillPointsDistribution: [
         ]
@@ -20,5 +21,12 @@ export default {
         type: QuestionnaireItemType.STRING.name,
         listInput: "",
         listValues: []
+    },
+    skillForm: {
+        name: "",
+        type: "",
+        currenciesForUpgrade: [],
+        maxValue: 1,
+
     }
 }

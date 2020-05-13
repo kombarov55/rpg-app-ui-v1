@@ -16,7 +16,10 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     return (
-        <div className={"questionnaire-add-item-button"}>
+        <div
+            className={"questionnaire-add-item-button"}
+            onClick={() => props.onClick()}
+        >
             <i className={"pi pi-plus-circle"}
                style={{"fontSize": "5vmax"}}
             />

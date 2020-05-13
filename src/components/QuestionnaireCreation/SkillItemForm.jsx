@@ -2,39 +2,82 @@ import React from "react";
 import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {Checkbox} from "primereact/checkbox";
+import {updateSkillForm} from "../../data-layer/ActionCreators";
 
 function mapStateToProps(state, props) {
-    return {}
+    return {
+        skillForm: state.skillForm
+    }
 }
 
 function mapDispatchToProps(dispatch, props) {
-    return {}
+    return {
+        updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue))
+    }
 }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+
+    function toggleCurrency(name) {
+        const list = props.skillForm.currenciesForUpgrade
+
+        const contains = list.some(it => it === name)
+
+        let updatedList
+
+        if (!contains) {
+            updatedList = list.concat(name)
+        } else {
+            updatedList = list.filter(it => it !== name)
+        }
+
+        props.updateSkillForm({currenciesForUpgrade: updatedList})
+    }
+
+    function isCurrencyChecked(name) {
+        return props.skillForm.currenciesForUpgrade.some(it => it === name)
+    }
+
     return (
         <div className={"questionnaire-creation-skill-item-form"}>
-            <div className={"questionnaire-creation-skill-item-form-label"}>Название навыка</div>
+            <div className={"questionnaire-creation-view-label"}>Создание листа навыков:</div>
+
+            <div className={"questionnaire-creation-skill-item-form-label"}>Название навыка:</div>
             <input className={"questionnaire-creation-skill-item-form-name-input"}
+                   value={props.skillForm.name}
             />
 
             <div className={"questionnaire-creation-skill-item-form-label"}>Тип навыка:</div>
-            <SelectButton options={["Общий", "Боевой", "Магический", "Прочий"]}/>
+            <SelectButton
+                value={props.skillForm.type}
+                onChange={e => props.updateSkillForm({type: e.target.value})}
+                options={props.skillTypes.map(name => ({label: name, value: name}))}/>
 
             <div className={"questionnaire-creation-skill-item-form-label"}>Валюта для повышения:</div>
-            <div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>
-                <Checkbox/>
-                <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>Золото</div>
-            </div>
-            <div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>
-                <Checkbox/>
-                <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>Серебро</div>
-            </div>
-            <div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>
-                <Checkbox/>
-                <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>Опыт</div>
-            </div>
+            {
+                props.currencies.map(name =>
+                    <div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>
+                        <Checkbox
+                            onChange={() => toggleCurrency(name)}
+                            checked={isCurrencyChecked(name)}
+                        />
+                        <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>{name}</div>
+                    </div>
+                )
+            }
+             {/*<div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>*/}
+            {/*    <Checkbox/>*/}
+            {/*     <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>Золото</div>*/}
+            {/* </div>*/}
+            {/*<div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>*/}
+            {/*    <Checkbox/>*/}
+            {/*    <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>Серебро</div>*/}
+            {/*</div>*/}
+            {/*<div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}>*/}
+            {/*    <Checkbox/>*/}
+            {/*    <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>Опыт</div>*/}
+            {/*</div>*/}
 
 
             <div className={"questionnaire-creation-skill-item-form-label"}>Максимальное значение:</div>

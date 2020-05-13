@@ -25,7 +25,6 @@ import {
     ADD_MESSAGES,
     TOGGLE_RESPOND_ANNOUNCEMENT,
     SET_GROWL,
-    SHOW_GROWL,
     UPDATE_NETWORK_FORM,
     SET_NETWORKS,
     SET_ACTIVE_NETWORK,
@@ -33,7 +32,10 @@ import {
     SET_SUBNETWORKS,
     SET_ACTIVE_SUBNETWORK,
     UPDATE_GAME_FORM,
-    SET_GAMES, SET_ACTIVE_GAME, UPDATE_QUESTIONNAIRE_FORM, UPDATE_QUESTIONNAIRE_ITEM_FORM
+    SET_GAMES, SET_ACTIVE_GAME,
+    UPDATE_QUESTIONNAIRE_FORM,
+    UPDATE_QUESTIONNAIRE_ITEM_FORM,
+    UPDATE_SKILL_FORM
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -271,6 +273,7 @@ export function updateMsgForm(fieldNameToValue) {
         }
     }
 }
+
 export function addMsgs(msgs) {
     return {
         type: ADD_MESSAGES,
@@ -373,6 +376,15 @@ export function updateQuestionnaireForm(fieldNameToValue) {
 export function updateQuestionnaireItemForm(fieldNameToValue) {
     return {
         type: UPDATE_QUESTIONNAIRE_ITEM_FORM,
+        payload: {
+            fieldNameToValue: fieldNameToValue
+        }
+    }
+}
+
+export function updateSkillForm(fieldNameToValue) {
+    return {
+        type: UPDATE_SKILL_FORM,
         payload: {
             fieldNameToValue: fieldNameToValue
         }

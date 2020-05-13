@@ -8,6 +8,7 @@ import SkillItem from "../SkillItem";
 import QuestionnaireAddSkillButton from "../QuestionnaireAddSkillButton";
 import {updateQuestionnaireForm} from "../../../data-layer/ActionCreators";
 import QuestionnaireItemType from "../../../data-layer/enums/QuestionnaireItemType";
+import SkillItemForm from "../SkillItemForm";
 
 
 function mapStateToProps(state, props) {
@@ -40,16 +41,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 )
             }
 
-            {
-                props.questionnaireForm.itemFormVisible && <QuestionnaireItemForm/>
-            }
+            {props.questionnaireForm.itemFormVisible && <QuestionnaireItemForm/>}
 
             <QuestionnaireAddItemButton onClick={() => props.updateQuestionnaireForm({itemFormVisible: true})}/>
 
             <div className={"questionnaire-creation-view-label"}>Распределение навыков</div>
             <SkillpointsDistributionForm
                 skillTypes={props.activeGame.skillTypes}
-
             />
             {/**/}
             {/*<div className={"questionnaire-creation-view-label"}>Навыки</div>*/}
@@ -73,11 +71,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             {/*    description={"Strength is one of the three primary attributes with the theme of defending against magic damage. It grants health and health regeneration to every hero. Strength heroes also gain attack damage per point of strength."}*/}
             {/*/>*/}
             {/**/}
-            {/*<QuestionnaireAddSkillButton/>*/}
-            {/*<QuestionnaireItemForm/>*/}
 
+            {
+                props.questionnaireForm.skillFormVisible &&
 
-            {/*<SkillItemForm/>*/}
+                <SkillItemForm
+                    skillTypes={props.activeGame.skillTypes}
+                    currencies={props.activeGame.currencies}
+                />
+            }
+
+            <QuestionnaireAddSkillButton
+                onClick={() => props.updateQuestionnaireForm({skillFormVisible: true})}
+            />
+
         </div>
     )
 })

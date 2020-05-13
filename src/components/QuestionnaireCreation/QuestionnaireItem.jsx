@@ -23,6 +23,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         style={{
                             "margin": "0 3vmin"
                         }}
+                        onClick={() => props.onDelete()}
                     />
                 </div>
             </div>

@@ -27,6 +27,10 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
+    function onQuestionnaireItemDeleteClicked(name) {
+        props.updateQuestionnaireForm({questionnaireItems: props.questionnaireForm.questionnaireItems.filter(it => it.name !== name)})
+    }
+
     function onSkillClicked(name) {
         const item = props.questionnaireForm.skills.find(it => it.name === name)
         if (item != null) {
@@ -46,6 +50,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         name={it.name}
                         type={QuestionnaireItemType.getValueByName(it.type)}
                         listValues={it.listValues}
+                        onDelete={() => onQuestionnaireItemDeleteClicked(it.name)}
                     />
                 )
             }

@@ -5,6 +5,7 @@ import {Checkbox} from "primereact/checkbox";
 import {updateQuestionnaireForm, updateSkillForm} from "../../data-layer/ActionCreators";
 import Btn from "../Common/Btn";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
+import {InputTextarea} from "primereact/inputtextarea";
 
 function mapStateToProps(state, props) {
     return {
@@ -119,6 +120,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <input className={"questionnaire-creation-skill-item-form-name-input"}
                        value={props.skillForm.name}
                        onChange={e => props.updateSkillForm({name: e.target.value})}
+                />
+
+                <div className={"questionnaire-creation-skill-item-form-label"}>Описание: </div>
+                <InputTextarea
+                    autoResize={true}
+                    className={"questionnaire-creation-skill-item-form-name-input"}
+                    value={props.skillForm.description}
+                    onChange={e => props.updateSkillForm({description: e.target.value})}
                 />
 
                 <div className={"questionnaire-creation-skill-item-form-label"}>Тип навыка:</div>

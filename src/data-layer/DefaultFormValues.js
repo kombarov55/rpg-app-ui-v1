@@ -24,6 +24,7 @@ export default {
     },
     skillForm: {
         name: "",
+        description: "",
         type: "",
         currenciesForUpgrade: [],
         maxValue: 1,

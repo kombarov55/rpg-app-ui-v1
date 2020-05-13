@@ -228,6 +228,13 @@
 .questionnaire-creation-skill-item-form {
     display: flex;
     flex-direction: column;
+
+    width: 80%;
+
+    padding: 0 5vmin;
+
+    background: rgba(134, 134, 134, 0.63);
+    border-radius: 5px;
 }
 
 .questionnaire-creation-skill-item-form > * {
@@ -266,6 +273,8 @@
 
 .questionnaire-creation-skill-item-form-label {
     padding-bottom: 0.5vmax;
+
+    text-decoration: underline;
 }
 
 .questionnaire-creation-skill-item-form-lvl-increase-horizontal > * {

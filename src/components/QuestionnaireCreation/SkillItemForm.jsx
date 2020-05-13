@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {Checkbox} from "primereact/checkbox";
 import {updateSkillForm} from "../../data-layer/ActionCreators";
+import {Dropdown} from "primereact/dropdown";
 
 function mapStateToProps(state, props) {
     return {
@@ -131,6 +132,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
 
             <div className={"questionnaire-creation-skill-item-form-label"}>Максимальное значение:</div>
+            <Dropdown
+            />
             <input className={"questionnaire-creation-skill-item-form-max-value"}
                    value={props.skillForm.maxValue}
                    onChange={e => onMaxValueChange(e.target.value)}

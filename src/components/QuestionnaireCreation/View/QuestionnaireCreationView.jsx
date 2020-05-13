@@ -76,6 +76,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 props.questionnaireForm.skillFormVisible &&
 
                 <SkillItemForm
+
                     skillTypes={props.activeGame.skillTypes}
                     currencies={props.activeGame.currencies}
                 />

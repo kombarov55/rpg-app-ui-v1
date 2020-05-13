@@ -19,17 +19,19 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function distributeSkillPoint(name, value) {
-        const list = props.questionnaireForm.skillPointsDistribution;
+        let updatedList = props.questionnaireForm.skillPointsDistribution.slice()
 
-        let obj = list.find(it => it.skillType === name)
+        const prevItem = updatedList.find(it => it.skillType === name)
 
-        if (obj == null) {
-            obj = {skillType: name}
+        if (prevItem == null) {
+            updatedList = updatedList.concat({
+                skillType: name,
+                maxValue: parseInt(value)
+            })
+        } else {
+            prevItem.maxValue = parseInt(value)
         }
 
-        obj.maxValue = value
-
-        const updatedList = list.filter(it => it.skillType !== name).concat(obj)
         props.updateQuestionnaireForm({skillPointsDistribution: updatedList})
     }
 

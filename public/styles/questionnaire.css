@@ -181,6 +181,15 @@
 .questionaire-skill-item-horizontal {
     display: flex;
     flex-direction: row;
+    justify-content: stretch;
+}
+
+.questionaire-skill-item-horizontal-text-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    width: 90vmin;
 }
 
 .questionnaire-skill-img {

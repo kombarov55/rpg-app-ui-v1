@@ -18,10 +18,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <img className={"questionnaire-skill-img"}
                      src={props.imgSrc}
                 />
-                <div className={"questionnaire-skill-item-vertical"}>
-                    <div className={"questionnaire-skill-name"}>{props.name}</div>
-                    <div className={"questionnaire-skill-type"}>{props.type}</div>
+                <div className={"questionaire-skill-item-horizontal-text-group"}>
+                    <div className={"questionnaire-skill-item-vertical"}>
+                        <div className={"questionnaire-skill-name"}>{props.name}</div>
+                        <div className={"questionnaire-skill-type"}>{props.type}</div>
+                    </div>
+                    <i className={"pi pi-times"}
+                    />
                 </div>
+
             </div>
             {
                 props.expand &&

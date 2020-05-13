@@ -38,7 +38,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
 
         props.updateSkillForm({currenciesForUpgrade: updatedList})
-        props.updateSkillForm({skillCosts: updateSkillCostsCurrencies(props.skillForm.skillCosts, updatedList)})
+        props.updateSkillForm({upgradeCosts: updateupgradeCostsCurrencies(props.skillForm.upgradeCosts, updatedList)})
     }
 
     function isCurrencyChecked(name) {
@@ -47,10 +47,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onMaxValueChange(value) {
         props.updateSkillForm({maxValue: value})
-        props.updateSkillForm({skillCosts: updateSkillCostsLength(props.skillForm.skillCosts, parseInt(value), props.skillForm.currenciesForUpgrade)})
+        props.updateSkillForm({upgradeCosts: updateupgradeCostsLength(props.skillForm.upgradeCosts, parseInt(value), props.skillForm.currenciesForUpgrade)})
     }
 
-    function updateSkillCostsCurrencies(list, updatedCurrenciesList) {
+    function updateupgradeCostsCurrencies(list, updatedCurrenciesList) {
         return list.map(item => Object.assign({}, item, {
             costs: updatedCurrenciesList.map(name => {
                 const prevItem = item.costs.find(costItem => costItem.currencyName === name)
@@ -70,15 +70,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }))
     }
 
-    function updateSkillCostsLength(prevList, newLength, currencies) {
+    function updateupgradeCostsLength(prevList, newLength, currencies) {
         if (newLength > prevList.length) {
-            return prevList.concat(buildSkillCostsList(prevList.length + 1, newLength - prevList.length, currencies))
+            return prevList.concat(buildupgradeCostsList(prevList.length + 1, newLength - prevList.length, currencies))
         } else {
             return prevList.slice(0, newLength - prevList.length)
         }
     }
 
-    function buildSkillCostsList(start, length, currencies) {
+    function buildupgradeCostsList(start, length, currencies) {
         const result = []
 
         for (let i = start; i < start + length; i++) {
@@ -95,14 +95,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onSkillCostUpdate(lvlNum, currencyName, amount) {
-        const newList = props.skillForm.skillCosts.slice()
+        const newList = props.skillForm.upgradeCosts.slice()
 
         newList.find(cost => cost.lvlNum === lvlNum)
             .costs
             .find(costItem => costItem.currencyName === currencyName)
             .amount = amount
 
-        props.updateSkillForm({skillCosts: newList})
+        props.updateSkillForm({upgradeCosts: newList})
     }
 
     function onSaveClicked() {
@@ -161,7 +161,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <div className={"questionnaire-creation-skill-item-form-lvl-increase-vertical"}>
                     {
-                        props.skillForm.skillCosts.map(skillCostItem =>
+                        props.skillForm.upgradeCosts.map(skillCostItem =>
                             <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
                                 <div
                                     className={"questionnaire-creation-skill-item-form-label"}>{skillCostItem.lvlNum} уровень:

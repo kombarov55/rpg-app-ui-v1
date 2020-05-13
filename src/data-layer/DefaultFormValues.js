@@ -28,6 +28,6 @@ export default {
         type: "",
         currenciesForUpgrade: [],
         maxValue: 1,
-        skillCosts: []
+        upgradeCosts: []
     }
 }

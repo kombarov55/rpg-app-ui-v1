@@ -77,9 +77,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             imgSrc={"https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"}
                             description={skill.description}
                             maxValue={skill.maxValue}
-                            upgradeCosts={skill.upgradeCosts.map(skillCost =>
-                                skillCost.costs.map(({currencyName, amount}) =>
-                                    amount + " " + currencyName).join(", "))}
+                            upgradeCosts={skill.upgradeCosts}
                             expand={skill.expand}
                             onClick={() => onSkillClicked(skill.name)}
                             onDelete={() => onSkillDeleteClicked(skill.name)}

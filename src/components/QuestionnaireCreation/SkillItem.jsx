@@ -11,6 +11,14 @@ function mapDispatchToProps(dispatch, props) {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+    function optionsToString(options) {
+        return options.map(({costs}) => buildCostLabel(costs)).join(" или ")
+    }
+
+    function buildCostLabel(costsList) {
+        return costsList.map(it => it.amount + " " + it.currencyName).join(" + ")
+    }
+
     return (
         <div className={"questionaire-skill-item"}>
             <div className={"questionaire-skill-item-horizontal"}>
@@ -41,20 +49,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         <div className={"questionnaire-skill-detail-lvl-increase-detail-label"}>
                             Повышение:
                         </div>
-                        {
-                            props.upgradeCosts.map(label =>
-                                <div className={"questionnaire-skill-detail-lvl-increase-detail-chip"}>
-                                    {label}
-                                </div>)
-                        }
-                        {/*<div className={"questionnaire-skill-detail-lvl-increase-detail-chip"}>500 опыта, 100 золота*/}
-                        {/*</div>*/}
-                        {/*<div className={"questionnaire-skill-detail-lvl-increase-detail-chip"}>1000 опыта, 200 золота*/}
-                        {/*</div>*/}
-                        {/*<div className={"questionnaire-skill-detail-lvl-increase-detail-chip"}>2000 опыта, 400 золота*/}
-                        {/*</div>*/}
-                        {/*<div className={"questionnaire-skill-detail-lvl-increase-detail-chip"}>5000 опыта, 500 золота*/}
-                        {/*</div>*/}
+
+                        {props.upgradeCosts.map(lvlUpgrade =>
+                            <div className={"questionnaire-skill-detail-lvl-increase-detail-chip"}>
+                                {optionsToString(lvlUpgrade.options)}
+                            </div>
+                        )}
+
+
                     </div>
                 </>
             }

@@ -39,20 +39,37 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
 
         props.updateSkillForm({currenciesForUpgrade: updatedList})
-        props.updateSkillForm({upgradeCosts: deprecated__updateupgradeCostsCurrencies(props.skillForm.upgradeCosts, updatedList)})
+        // props.updateSkillForm({upgradeCosts: deprecated__updateupgradeCostsCurrencies(props.skillForm.upgradeCosts, updatedList)})
     }
 
     function isCurrencyChecked(name) {
         return props.skillForm.currenciesForUpgrade.some(it => it === name)
     }
 
-    function deleteUpgradeOption(deletionCurrencies) {
+    function onUpgradeOptionDeleteClicked(deletionCurrencies) {
+        deleteUpgradeOptionByCurrencies(deletionCurrencies)
+        deleteUpgradeCostsOptionsByCurrencies(deletionCurrencies)
+    }
+
+    function deleteUpgradeOptionByCurrencies(deletionCurrencies) {
         props.updateSkillForm({
             upgradeOptions: props.skillForm.upgradeOptions.filter(item =>
                 !item.currencies.every(optionCurrency =>
                     deletionCurrencies.some(deletionCurrency =>
                         deletionCurrency === optionCurrency)))
         })
+    }
+
+    function deleteUpgradeCostsOptionsByCurrencies(deletionCurrencies) {
+        props.updateSkillForm({
+            upgradeCosts: props.skillForm.upgradeCosts.map(upgradeCost =>
+                Object.assign({}, upgradeCost, {
+                    options: upgradeCost.options.filter(option =>
+                        !option.costs.every(cost =>
+                            deletionCurrencies.some(deletionCurrency =>
+                                deletionCurrency === cost.currencyName)))
+                })
+            )})
     }
 
     function toggleOptionCurrency(name) {
@@ -258,7 +275,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 {
                     props.skillForm.upgradeOptions.map(({currencies}) =>
                         <div className={"skill-upgrade-option"}
-                             onClick={() => deleteUpgradeOption(currencies)}>
+                             onClick={() => onUpgradeOptionDeleteClicked(currencies)}>
                             {currencies.join(" + ")}
                         </div>
                     )
@@ -267,10 +284,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 {props.skillForm.upgradeOptionFormVisible &&
                 <>
                     {props.skillForm.currenciesForUpgrade.map(name =>
-                        <div
-                            className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}
-                            key={name}
-                        >
+                        <div className={"questionnaire-creation-skill-item-form-checkbox-horizontal"} key={name}>
                             <Checkbox
                                 onChange={() => toggleOptionCurrency(name)}
                                 checked={isOptionCurrencyChecked(name)}

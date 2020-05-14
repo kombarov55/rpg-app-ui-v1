@@ -188,6 +188,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     )
                 }
                 <div className={"questionnaire-creation-skill-item-form-label"}>Варианты повышения:</div>
+                {
+                    props.skillForm.upgradeOptions.map(({currencies}) =>
+                        <div className={"skill-upgrade-option"}>
+                            {currencies.join(" + ")}
+                        </div>
+                    )
+                }
+
                 {props.skillForm.upgradeOptionFormVisible &&
                 <>
                     {props.currencies.map(name =>

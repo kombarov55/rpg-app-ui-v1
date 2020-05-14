@@ -351,3 +351,15 @@
     font-size: 1.3vmax;
     line-height: 2vmax;
 }
+
+.skill-upgrade-option {
+    padding: 0.25vmax 1.5vmin;
+    margin: 0.25vmax 0.5vmin;
+
+    background: rgba(21, 12, 31, 0.59);
+    color: white;
+    border-radius: 666px;
+
+    font-size: 1.3vmax;
+    line-height: 2vmax;
+}

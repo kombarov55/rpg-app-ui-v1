@@ -6,25 +6,29 @@ import QuestionnaireItem from "../QuestionnaireItem";
 import SkillpointsDistributionForm from "../SkillpointsDistributionForm";
 import SkillItem from "../SkillItem";
 import QuestionnaireAddSkillButton from "../QuestionnaireAddSkillButton";
-import {updateQuestionnaireForm} from "../../../data-layer/ActionCreators";
+import {changeView, updateQuestionnaireForm} from "../../../data-layer/ActionCreators";
 import QuestionnaireItemType from "../../../data-layer/enums/QuestionnaireItemType";
 import SkillItemForm from "../SkillItemForm";
 import Btn from "../../Common/Btn";
 import {post} from "../../../util/Http";
 import {questionnaireUrl} from "../../../util/Parameters";
 import {InputTextarea} from "primereact/inputtextarea";
+import {gameView} from "../../../Views";
+import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 
 
 function mapStateToProps(state, props) {
     return {
         questionnaireForm: state.questionnaireForm,
-        activeGame: state.activeGame
+        activeGame: state.activeGame,
+        growl: state.growl
     }
 }
 
 function mapDispatchToProps(dispatch, props) {
     return {
-        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue))
+        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue)),
+        changeView: view => dispatch(changeView(view))
     }
 }
 
@@ -53,8 +57,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             gameId: props.activeGame.id
         })
 
-        post(questionnaireUrl, form, rs => {
-
+        post(questionnaireUrl, form, () => {
+            props.growl.show({severity: "info", summary: "Шаблон анкеты создан"})
+            props.updateQuestionnaireForm(DefaultFormValues.questionnaireForm)
+            props.changeView(gameView)
         })
     }
 

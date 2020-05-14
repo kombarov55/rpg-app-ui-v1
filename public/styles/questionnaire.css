@@ -322,7 +322,7 @@
 }
 
 .questionnaire-creation-skill-item-form-lvl-increase-item-option-label {
-    margin: 0.5vmax 0;
+    margin: 0.5vmax 0 2vmax 0;
     width: 70vmin;
 
     text-decoration: underline;

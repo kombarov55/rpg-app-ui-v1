@@ -35,6 +35,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             updatedList = list.concat(name)
         } else {
             updatedList = list.filter(it => it !== name)
+            deleteMentionedUpgradeOptions(name)
         }
 
         props.updateSkillForm({currenciesForUpgrade: updatedList})
@@ -72,7 +73,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 currencies: updatedList
             })
         })
-        // props.updateSkillForm({upgradeCosts: updateupgradeCostsCurrencies(props.skillForm.upgradeCosts, updatedList)})
+    }
+
+    function deleteMentionedUpgradeOptions(currency) {
+        props.updateSkillForm({
+            upgradeOptions: props.skillForm.upgradeOptions.filter(item =>
+                !item.currencies.some(itemCurrency =>
+                    itemCurrency === currency))
+        })
     }
 
     function isOptionCurrencyChecked(name) {

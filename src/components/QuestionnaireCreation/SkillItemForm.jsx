@@ -177,15 +177,35 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         return result
     }
 
-    function onSkillCostUpdate(lvlNum, currencyName, amount) {
+    function deprecated__onSkillCostUpdate(lvlNum, currencyName, amount) {
         const newList = props.skillForm.upgradeCosts.slice()
 
         newList.find(cost => cost.lvlNum === lvlNum)
-            .costs
-            .find(costItem => costItem.currencyName === currencyName)
+            .costs.find(costItem => costItem.currencyName === currencyName)
             .amount = amount
 
         props.updateSkillForm({upgradeCosts: newList})
+    }
+
+    function onSkillCostUpdate(lvlNum, optionIndex, currencyName, amount) {
+        console.log("params: ")
+        console.log({lvlNum: lvlNum, optionIndex: optionIndex, currencyName: currencyName, amount: amount})
+
+        const updatedList = props.skillForm.upgradeCosts.slice()
+        console.log(updatedList)
+
+        const lvlUpgrade = updatedList.find(it => it.lvlNum === lvlNum)
+        console.log(lvlUpgrade)
+
+        const options = lvlUpgrade.options[optionIndex]
+        console.log(options)
+
+        const cost = options.costs.find(it => it.currencyName === currencyName)
+        console.log(cost)
+
+        cost.amount = amount
+
+        props.updateSkillForm({upgradeCosts: updatedList})
     }
 
     function onSaveClicked() {
@@ -288,7 +308,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                         { upgradeOption.costs.map(cost =>
                                             <>
                                                 <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{cost.currencyName}:</div>
-                                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+                                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}
+                                                       onChange={e => onSkillCostUpdate(upgradeCostItem.lvlNum, i, cost.currencyName, parseInt(e.target.value))}
+                                                />
                                             </>
                                         )}
 
@@ -298,33 +320,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             </div>
                         </div>
                     )}
-
-                    {/*
-                        props.skillForm.upgradeCosts.map(skillCostItem =>
-                            <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
-                                <div
-                                    className={"questionnaire-creation-skill-item-form-label"}>{skillCostItem.lvlNum} уровень:
-                                </div>
-
-                                {skillCostItem.options.length === 0 ? "Выберите варианты повышения" :
-                                    <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>
-                                        {
-                                            skillCostItem.options.map(option => option.costs.map(optionCost =>
-                                                <>
-                                                    <div
-                                                        className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{optionCost.currencyName}:
-                                                    </div>
-                                                    <input
-                                                        className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}
-                                                        // onChange={e => onSkillCostUpdate(skillCostItem.lvlNum, optionCost.currencyName, e.target.value)}
-                                                    />
-                                                </>))
-                                        }
-                                    </div>
-                                }
-
-                            </div>)
-                    */}
                 </div>
 
                 <div className={"questionnaire-creation-skill-item-form-img-selection-label"}>Картинка:</div>

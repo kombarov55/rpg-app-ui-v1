@@ -10,6 +10,9 @@ export default {
         skillTypes: ["Общие", "Боевые", "Магические", "Прочие"]
     },
     questionnaireForm: {
+        name: "",
+        description: "",
+        gameId: "",
         itemFormVisible: false,
         skillFormVisible: false,
         questionnaireItems: [],

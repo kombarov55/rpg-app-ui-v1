@@ -7,7 +7,7 @@ export function get(url, onSuccess) {
     xhr.send()
     if (onSuccess != null) {
         xhr.onload = function () {
-            onSuccess(JSON.parse(xhr.responseText))
+            onSuccess(parseResponse(xhr.responseText))
         }
     }
 }
@@ -21,7 +21,7 @@ export function post(url, body, onSuccess) {
 
     if (onSuccess != null) {
         xhr.onload = function () {
-            onSuccess(JSON.parse(xhr.responseText))
+            onSuccess(parseResponse(xhr.responseText))
         }
     }
 }
@@ -49,7 +49,7 @@ export function patch(url, body, onSuccess) {
 
     if (onSuccess != null) {
         xhr.onload = function () {
-            onSuccess(JSON.parse(xhr.responseText))
+            onSuccess(parseResponse(xhr.responseText))
         }
     }
 }
@@ -63,7 +63,15 @@ export function put(url, body, onSuccess) {
 
     if (onSuccess != null) {
         xhr.onload = function () {
-            onSuccess(JSON.parse(xhr.responseText))
+            onSuccess(parseResponse(xhr.responseText))
         }
+    }
+}
+
+function parseResponse(rs) {
+    try {
+        return JSON.parse(rs)
+    } catch (ignored) {
+        return {}
     }
 }

@@ -9,6 +9,10 @@ import QuestionnaireAddSkillButton from "../QuestionnaireAddSkillButton";
 import {updateQuestionnaireForm} from "../../../data-layer/ActionCreators";
 import QuestionnaireItemType from "../../../data-layer/enums/QuestionnaireItemType";
 import SkillItemForm from "../SkillItemForm";
+import Btn from "../../Common/Btn";
+import {post} from "../../../util/Http";
+import {questionnaireUrl} from "../../../util/Parameters";
+import {InputTextarea} from "primereact/inputtextarea";
 
 
 function mapStateToProps(state, props) {
@@ -44,8 +48,31 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateQuestionnaireForm({skills: props.questionnaireForm.skills})
     }
 
+    function onQuestionnaireSaveClicked() {
+        const form = Object.assign({}, props.questionnaireForm, {
+            gameId: props.activeGame.id
+        })
+
+        post(questionnaireUrl, form, rs => {
+
+        })
+    }
+
     return (
         <div className={"questionnaire-creation-view"}>
+            <div className={"questionnaire-creation-view-label"}>Название анкеты:</div>
+            <input className={"questionnaire-creation-view-input"}
+                   value={props.questionnaireForm.name}
+                   onChange={e => props.updateQuestionnaireForm({name: e.target.value})}
+            />
+
+            <div className={"questionnaire-creation-view-label"}>Описание анкеты:</div>
+            <InputTextarea className={"questionnaire-creation-view-input"}
+                           autoResize={true}
+                           value={props.questionnaireForm.description}
+                           onChange={e => props.updateQuestionnaireForm({description: e.target.value})}
+            />
+
             <div className={"questionnaire-creation-view-label"}>Пункты анкеты</div>
             {
                 props.questionnaireForm.questionnaireItems.map(it =>
@@ -94,6 +121,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             <QuestionnaireAddSkillButton
                 onClick={() => props.updateQuestionnaireForm({skillFormVisible: true})}
+            />
+
+            <Btn text={"Сохранить анкету"}
+                 onClick={() => onQuestionnaireSaveClicked()}
             />
 
         </div>

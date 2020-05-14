@@ -33,6 +33,10 @@
     text-decoration: underline;
 }
 
+.questionnaire-creation-view-input {
+    width: 80%;
+}
+
 .questionnaire-add-item-button {
     display: flex;
     flex-direction: row;
@@ -376,3 +380,4 @@
     font-size: 1.3vmax;
     line-height: 2vmax;
 }
+

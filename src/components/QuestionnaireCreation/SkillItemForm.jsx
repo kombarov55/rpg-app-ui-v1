@@ -205,22 +205,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onSkillCostUpdate(lvlNum, optionIndex, currencyName, amount) {
-        console.log("params: ")
-        console.log({lvlNum: lvlNum, optionIndex: optionIndex, currencyName: currencyName, amount: amount})
-
         const updatedList = props.skillForm.upgradeCosts.slice()
-        console.log(updatedList)
-
-        const lvlUpgrade = updatedList.find(it => it.lvlNum === lvlNum)
-        console.log(lvlUpgrade)
-
-        const options = lvlUpgrade.options[optionIndex]
-        console.log(options)
-
-        const cost = options.costs.find(it => it.currencyName === currencyName)
-        console.log(cost)
-
-        cost.amount = amount
+        updatedList.find(it => it.lvlNum === lvlNum)
+            .options[optionIndex]
+            .costs.find(it => it.currencyName === currencyName)
+            .amount = amount
 
         props.updateSkillForm({upgradeCosts: updatedList})
     }

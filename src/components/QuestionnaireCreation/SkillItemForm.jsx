@@ -39,7 +39,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
 
         props.updateSkillForm({currenciesForUpgrade: updatedList})
-        props.updateSkillForm({upgradeCosts: updateupgradeCostsCurrencies(props.skillForm.upgradeCosts, updatedList)})
+        props.updateSkillForm({upgradeCosts: deprecated__updateupgradeCostsCurrencies(props.skillForm.upgradeCosts, updatedList)})
     }
 
     function isCurrencyChecked(name) {
@@ -99,11 +99,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onMaxValueChange(value) {
-        props.updateSkillForm({maxValue: value})
-        props.updateSkillForm({upgradeCosts: updateupgradeCostsLength(props.skillForm.upgradeCosts, parseInt(value), props.skillForm.currenciesForUpgrade)})
+        props.updateSkillForm({
+            maxValue: value,
+            upgradeCosts: updateUpgradeCostsLength(props.skillForm.upgradeCosts, parseInt(value), props.skillForm.upgradeOptions)
+        })
+        // props.updateSkillForm({upgradeCosts: deprecated__updateupgradeCostsLength(props.skillForm.upgradeCosts, parseInt(value), props.skillForm.currenciesForUpgrade)})
+
     }
 
-    function updateupgradeCostsCurrencies(list, updatedCurrenciesList) {
+    function updateUpgradeCostsLength(prevList, newLength, options) {
+        if (newLength > prevList.length) {
+            return prevList.concat(buildUpgradeCostsList(prevList.length + 1, newLength - prevList.length, options))
+        } else {
+            return prevList.slice(0, newLength - prevList.length)
+        }
+    }
+
+    function deprecated__updateupgradeCostsCurrencies(list, updatedCurrenciesList) {
         return list.map(item => Object.assign({}, item, {
             costs: updatedCurrenciesList.map(name => {
                 const prevItem = item.costs.find(costItem => costItem.currencyName === name)
@@ -123,15 +135,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }))
     }
 
-    function updateupgradeCostsLength(prevList, newLength, currencies) {
+    function deprecated__updateupgradeCostsLength(prevList, newLength, currencies) {
         if (newLength > prevList.length) {
-            return prevList.concat(buildupgradeCostsList(prevList.length + 1, newLength - prevList.length, currencies))
+            return prevList.concat(deprecated__buildupgradeCostsList(prevList.length + 1, newLength - prevList.length, currencies))
         } else {
             return prevList.slice(0, newLength - prevList.length)
         }
     }
 
-    function buildupgradeCostsList(start, length, currencies) {
+    function updateUpgradeCostsLength(prevList, newLength, options) {
+        if (newLength > prevList.length) {
+            return prevList.concat(buildUpgradeCostsList(prevList.length + 1, newLength - prevList.length, options))
+        } else {
+            return prevList.slice(0, newLength - prevList.length)
+        }
+    }
+
+    function deprecated__buildupgradeCostsList(start, length, currencies) {
         const result = []
 
         for (let i = start; i < start + length; i++) {
@@ -140,6 +160,24 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 costs: currencies.map(name => ({
                     currencyName: name,
                     amount: 0
+                }))
+            })
+        }
+
+        return result
+    }
+
+    function buildUpgradeCostsList(start, length, upgradeOptions) {
+        const result = []
+
+        for (let i = start; i < start + length; i++) {
+            result.push({
+                lvlNum: i,
+                options: upgradeOptions.map(({currencies}) => ({
+                    costs: currencies.map(name => ({
+                        currencyName: name,
+                        amount: 0
+                    }))
                 }))
             })
         }
@@ -208,7 +246,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 {
                     props.skillForm.upgradeOptions.map(({currencies}) =>
                         <div className={"skill-upgrade-option"}
-                        onClick={() => deleteUpgradeOption(currencies)}>
+                             onClick={() => deleteUpgradeOption(currencies)}>
                             {currencies.join(" + ")}
                         </div>
                     )
@@ -246,32 +284,93 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
 
                 <div className={"questionnaire-creation-skill-item-form-lvl-increase-vertical"}>
-                    {
+                    <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
+                        <div
+                            className={"questionnaire-creation-skill-item-form-label"}>1 уровень:
+                        </div>
+                        <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>
+                            <div className={"questionnaire-creation-skill-item-form-lvl-increase-value"}>
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-option-label"}>Вариант 1: Золото Ада + Опыт</div>
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото Ада:</div>
+                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>
+                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+                            </div>
+
+                            <div className={"questionnaire-creation-skill-item-form-lvl-increase-value"}>
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Вариант 2: Опыт</div>
+
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>
+                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+                            </div>
+
+                            <div className={"questionnaire-creation-skill-item-form-lvl-increase-value"}>
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Вариант 3: Золото Ада</div>
+
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото Ада</div>
+                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
+                        <div
+                            className={"questionnaire-creation-skill-item-form-label"}>2 уровень:
+                        </div>
+                        <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>
+                            <div className={"questionnaire-creation-skill-item-form-lvl-increase-value"}>
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Вариант 1: Золото Ада + Опыт</div>
+
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото Ада:</div>
+                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>
+                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+                            </div>
+
+                            <div className={"questionnaire-creation-skill-item-form-lvl-increase-value"}>
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Вариант 2: Опыт</div>
+
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Опыт</div>
+                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+                            </div>
+
+                            <div className={"questionnaire-creation-skill-item-form-lvl-increase-value"}>
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Вариант 3: Золото Ада</div>
+
+                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>Золото Ада</div>
+                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}/>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/*
                         props.skillForm.upgradeCosts.map(skillCostItem =>
                             <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
                                 <div
                                     className={"questionnaire-creation-skill-item-form-label"}>{skillCostItem.lvlNum} уровень:
                                 </div>
 
-                                {skillCostItem.costs.length === 0 ? "Выберите валюту" :
+                                {skillCostItem.options.length === 0 ? "Выберите варианты повышения" :
                                     <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>
                                         {
-                                            skillCostItem.costs.map(costItem =>
+                                            skillCostItem.options.map(option => option.costs.map(optionCost =>
                                                 <>
                                                     <div
-                                                        className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{costItem.currencyName}:
+                                                        className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{optionCost.currencyName}:
                                                     </div>
                                                     <input
                                                         className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}
-                                                        onChange={e => onSkillCostUpdate(skillCostItem.lvlNum, costItem.currencyName, e.target.value)}
+                                                        // onChange={e => onSkillCostUpdate(skillCostItem.lvlNum, optionCost.currencyName, e.target.value)}
                                                     />
-                                                </>)
+                                                </>))
                                         }
                                     </div>
                                 }
 
                             </div>)
-                    }
+                    */}
                 </div>
 
                 <div className={"questionnaire-creation-skill-item-form-img-selection-label"}>Картинка:</div>

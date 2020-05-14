@@ -309,6 +309,11 @@
 }
 
 .questionnaire-creation-skill-item-form-lvl-increase-values {
+    display: flex;
+    flex-direction: column;
+}
+
+.questionnaire-creation-skill-item-form-lvl-increase-value {
     padding-left: 3vmin;
 }
 
@@ -316,8 +321,16 @@
     margin: 1vmax 0;
 }
 
+.questionnaire-creation-skill-item-form-lvl-increase-item-option-label {
+    margin: 0.5vmax 0;
+    width: 70vmin;
+
+    text-decoration: underline;
+}
+
 .questionnaire-creation-skill-item-form-lvl-increase-item-label {
     margin: 0.5vmax 0;
+    width: 60vmin;
 }
 
 .questionnaire-creation-skill-item-form-lvl-increase-item-value {

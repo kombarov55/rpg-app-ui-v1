@@ -45,6 +45,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         return props.skillForm.currenciesForUpgrade.some(it => it === name)
     }
 
+    function deleteUpgradeOption(deletionCurrencies) {
+        props.updateSkillForm({
+            upgradeOptions: props.skillForm.upgradeOptions.filter(item =>
+                !item.currencies.every(optionCurrency =>
+                    deletionCurrencies.some(deletionCurrency =>
+                        deletionCurrency === optionCurrency)))
+        })
+    }
+
     function toggleOptionCurrency(name) {
         const list = props.skillForm.upgradeOptionForm.currencies
 
@@ -190,7 +199,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <div className={"questionnaire-creation-skill-item-form-label"}>Варианты повышения:</div>
                 {
                     props.skillForm.upgradeOptions.map(({currencies}) =>
-                        <div className={"skill-upgrade-option"}>
+                        <div className={"skill-upgrade-option"}
+                        onClick={() => deleteUpgradeOption(currencies)}>
                             {currencies.join(" + ")}
                         </div>
                     )
@@ -198,7 +208,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 {props.skillForm.upgradeOptionFormVisible &&
                 <>
-                    {props.currencies.map(name =>
+                    {props.skillForm.currenciesForUpgrade.map(name =>
                         <div
                             className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}
                             key={name}

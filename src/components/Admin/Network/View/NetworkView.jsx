@@ -1,11 +1,11 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import NetworkItem from "../../NetworkItem";
 import {
+    adminPageView,
     gameCreationView,
     gameView,
-    networkCreationView, networkEditView,
-    networkSelectionView,
+    networkEditView,
     subnetworkCreationView,
     subnetworkView
 } from "../../../../Views";
@@ -79,9 +79,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             httpDelete(deleteNetworkUrl(props.activeNetwork.id), () => {
                 props.growl.show({severity: "info", summary: "Сеть архивирована."})
                 props.setNetworks(props.networks.filter(it => it.id !== props.activeNetwork.id))
-                props.changeView(networkSelectionView)
+                props.changeView(adminPageView)
             })
         }
+    }
+
+    function onBackClicked() {
+        props.changeView(adminPageView)
     }
 
     return (
@@ -133,6 +137,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
             <Btn text={"Удалить"}
                  onClick={() => onDeleteClicked()}
+            />
+            <Btn text={"Назад"}
+                 onClick={() => onBackClicked()}
             />
         </div>
     )

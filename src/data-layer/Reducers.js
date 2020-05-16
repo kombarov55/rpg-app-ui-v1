@@ -44,8 +44,6 @@ export function rootReducer(state = initialState, action) {
             })
 
         case CHANGE_VIEW:
-            action.payload.nextView.preload.forEach(preload => preload())
-
             return Object.assign({}, state, {
                 currentView: action.payload.nextView
             })

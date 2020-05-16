@@ -29,26 +29,13 @@ export const initialState = {
     subnetworks: [],
     games: [],
 
-    announcementForm: {
-        anonymous: false,
-        commentsEnabled: true
-    },
+    announcementForm: DefaultFormValues.announcement,
 
-    commentForm: {
-        text: ""
-    },
-    messageForm: {
-        text: ""
-    },
+    commentForm: DefaultFormValues.comment,
+    messageForm: DefaultFormValues.message,
 
-    networkForm: {
-        title: "",
-        description: ""
-    },
-    subnetworkForm: {
-        title: "",
-        description: ""
-    },
+    networkForm: DefaultFormValues.network,
+    subnetworkForm: DefaultFormValues.subnetwork,
     gameForm: DefaultFormValues.gameForm,
     questionnaireForm: DefaultFormValues.questionnaireForm,
     questionnaireItemForm: DefaultFormValues.questionnaireItemForm,

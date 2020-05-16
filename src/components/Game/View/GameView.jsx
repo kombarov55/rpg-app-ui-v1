@@ -4,8 +4,6 @@ import {changeView, setActiveGame, setGames, updateGameForm} from "../../../data
 import {gameEditView, networkView, questionnaireCreationView, questionnaireRulesView, skillView} from "../../../Views";
 import {httpDelete} from "../../../util/Http";
 import {deleteGame} from "../../../util/Parameters";
-import Label from "../../Common/Label";
-import SkillItem from "../../QuestionnaireCreation/SkillItem";
 import Btn from "../../Common/Btn";
 
 function mapStateToProps(state, props) {

@@ -1,6 +1,24 @@
 import QuestionnaireItemType from "./enums/QuestionnaireItemType";
 
 export default {
+    announcement: {
+        anonymous: false,
+        commentsEnabled: true
+    },
+    comment: {
+        text: ""
+    },
+    message: {
+        text: ""
+    },
+    network: {
+        title: "",
+        description: ""
+    },
+    subnetwork: {
+        title: "",
+        description: ""
+    },
     gameForm: {
         title: "",
         description: "",

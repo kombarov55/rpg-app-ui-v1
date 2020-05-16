@@ -5,11 +5,15 @@ import SkillItem from "../../QuestionnaireCreation/SkillItem";
 import Btn from "../../Common/Btn";
 
 function mapStateToProps(state, props) {
-    return {}
+    return {
+
+    }
 }
 
 function mapDispatchToProps(dispatch, props) {
-    return {}
+    return {
+
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {

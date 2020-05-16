@@ -24,6 +24,8 @@ import {get, httpDelete} from "../../../../util/Http";
 import {deleteNetworkUrl, gameBySubnetworkId} from "../../../../util/Parameters";
 import Btn from "../../../Common/Btn";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
+import Preload from "../../../../util/Preload";
+import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
 
 function mapStateToProps(state, props) {
     return {
@@ -58,14 +60,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onGameClicked(game) {
+        Globals.gameCreationMode = GameCreationMode.BY_NETWORK
         props.setActiveGame(game)
         props.changeView(gameView)
     }
 
     function onAddGameClicked() {
-        Globals.creatingGameByNetwork = true
+        Globals.gameCreationMode = GameCreationMode.BY_NETWORK
         props.updateGameForm(DefaultFormValues.gameForm)
         props.changeView(gameCreationView)
+    }
+
+    function onAddSubnetworkClicked() {
+        props.changeView(subnetworkCreationView)
     }
 
     function onEditClicked() {
@@ -85,6 +92,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onBackClicked() {
+        Preload.networks()
+        Preload.games()
         props.changeView(adminPageView)
     }
 
@@ -112,7 +121,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         />
                     ))
                 }
-                <AddSubnetworkItem onClick={() => props.changeView(subnetworkCreationView)}/>
+                <AddSubnetworkItem onClick={() => onAddSubnetworkClicked()}/>
 
             </div>
 

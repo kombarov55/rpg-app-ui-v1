@@ -1,5 +1,7 @@
+import GameCreationMode from "../data-layer/enums/GameCreationMode";
+
 export default {
     userId: null,
     authToken: null,
-    creatingGameByNetwork: null
+    gameCreationMode: GameCreationMode.OPEN
 }

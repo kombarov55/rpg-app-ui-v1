@@ -8,6 +8,7 @@ import Globals from "../../../../util/Globals";
 import Btn from "../../../Common/Btn";
 import {httpDelete} from "../../../../util/Http";
 import {deleteSubnetworkUrl} from "../../../../util/Parameters";
+import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
 
 function mapStateToProps(state, props) {
     return {
@@ -31,12 +32,13 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onGameClicked(game) {
+        Globals.gameCreationMode = GameCreationMode.BY_SUBNETWORK
         props.setActiveGame(game)
         props.changeView(gameView)
     }
 
     function onAddGameClicked() {
-        Globals.creatingGameByNetwork = false
+        Globals.gameCreationMode = GameCreationMode.BY_SUBNETWORK
         props.changeView(gameCreationView)
     }
 

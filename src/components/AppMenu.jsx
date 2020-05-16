@@ -10,6 +10,7 @@ import {changeView, setNetworks, toggleSidebar} from "../data-layer/ActionCreato
 import {connect} from "react-redux";
 import {get} from "../util/Http";
 import {networkUrl} from "../util/Parameters";
+import Preload from "../util/Preload";
 
 function mapStateToProps(state) {
     return {
@@ -90,7 +91,8 @@ class ConnectedMenu extends React.Component {
                 <div className={"main-frame-nav-item"}
                      onClick={() => {
                          this.onItemClicked(adminPageView)
-                         get(networkUrl, rs => this.props.setNetworks(rs))
+                         Preload.networks()
+                         Preload.games()
                      }}
                 >
                     <i className={"pi pi-apple"} style={{"fontSize": "6vmin"}}/>

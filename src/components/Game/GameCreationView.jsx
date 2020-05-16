@@ -3,11 +3,12 @@ import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import {changeView, setGames, updateGameForm} from "../../data-layer/ActionCreators";
 import {post} from "../../util/Http";
-import {gameByNetworkId, gameBySubnetworkId} from "../../util/Parameters";
-import {networkView, subnetworkView} from "../../Views";
+import {gameByNetworkId, gameBySubnetworkId, gamesUrl} from "../../util/Parameters";
+import {adminPageView, networkView, subnetworkView} from "../../Views";
 import Globals from "../../util/Globals";
-import QuestionnaireInputList from "../QuestionnaireCreation/QuestionnaireInputList";
 import ListInput from "../Common/ListInput";
+import GameCreationMode from "../../data-layer/enums/GameCreationMode";
+import DefaultFormValues from "../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state, props) {
     return {
@@ -56,14 +57,31 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function save() {
-        const url = Globals.creatingGameByNetwork ?
-            gameByNetworkId(props.activeNetwork.id) :
-            gameBySubnetworkId(props.activeNetwork.id, props.activeSubnetwork.id);
+        let url
+        let nextView
+
+        switch(Globals.gameCreationMode) {
+            case GameCreationMode.OPEN:
+                url = gamesUrl
+                nextView = adminPageView
+                break
+
+            case GameCreationMode.BY_NETWORK:
+                url = gameByNetworkId(props.activeNetwork.id)
+                nextView = networkView
+                break
+
+            case GameCreationMode.BY_SUBNETWORK:
+                url = gameBySubnetworkId(props.activeGame.id, props.activeSubnetwork.id)
+                nextView = subnetworkView
+                break;
+        }
+
 
         post(url, props.gameForm, rs => {
             props.setGames(props.games.concat(rs))
-            props.updateGameForm({title: "", description: ""})
-            props.changeView(Globals.creatingGameByNetwork ? networkView : subnetworkView)
+            props.updateGameForm(DefaultFormValues.gameForm)
+            props.changeView(nextView)
             props.growl.show({severity: "info", summary: "Игра создана"})
         })
     }

@@ -3,10 +3,12 @@ import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import {changeView, setActiveGame, setGames, updateGameForm} from "../../data-layer/ActionCreators";
 import {put} from "../../util/Http";
-import {editGameByNetworkId, editGamebySubnetworkId} from "../../util/Parameters";
-import {gameView} from "../../Views";
+import {editGameByNetworkId, editGamebySubnetworkId, gameByNetworkId, gamesUrl, gameUrl} from "../../util/Parameters";
+import {adminPageView, gameView, networkView, subnetworkView} from "../../Views";
 import ListInput from "../Common/ListInput";
 import Globals from "../../util/Globals";
+import GameCreationMode from "../../data-layer/enums/GameCreationMode";
+import DefaultFormValues from "../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state, props) {
     return {
@@ -51,15 +53,30 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onSaveClicked() {
-        const url = Globals.creatingGameByNetwork ?
-            editGameByNetworkId(props.activeNetwork.id) :
-            editGamebySubnetworkId(props.activeNetwork.id, props.activeSubnetwork.id);
+        let url
+        let nextView
+
+        switch (Globals.gameCreationMode) {
+            case GameCreationMode.OPEN:
+                url = gameUrl(props.gameForm.id)
+                nextView = adminPageView
+                break;
+            case GameCreationMode.BY_NETWORK:
+                url = editGameByNetworkId(props.activeNetwork.id, props.gameForm.id)
+                nextView = networkView
+                break;
+            case GameCreationMode.BY_SUBNETWORK:
+                url= editGamebySubnetworkId(props.activeNetwork.id, props.activeSubnetwork.id, props.gameForm.id)
+                nextView = subnetworkView
+                break;
+
+        }
 
         put(url, props.gameForm, rs => {
             props.growl.show({severity: "info", summary: "Игра обновлена"})
             props.setGames(props.games.filter(it => it.id !== rs.id).concat(rs))
-            props.setActiveGame(rs)
-            props.changeView(gameView)
+            props.updateGameForm(DefaultFormValues.gameForm)
+            props.changeView(nextView)
         })
     }
 

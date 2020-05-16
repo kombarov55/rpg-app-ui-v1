@@ -4,7 +4,7 @@ import Label from "../../Common/Label";
 import SkillItem from "../../QuestionnaireCreation/SkillItem";
 import Btn from "../../Common/Btn";
 import {changeView, setSkills, updateSkillForm} from "../../../data-layer/ActionCreators";
-import {skillCreationView, skillEditView} from "../../../Views";
+import {gameView, skillCreationView, skillEditView} from "../../../Views";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state, props) {
@@ -46,6 +46,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(skillCreationView)
     }
 
+    function onBackClicked() {
+        props.changeView(gameView)
+    }
+
     return (
         <div className={"skills-view"}>
             <div className={"list"}>
@@ -71,6 +75,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <Btn
                     text={"Добавить навык"}
                     onClick={() => onAddClicked()}
+                />
+                <Btn
+                    text={"Назад"}
+                    onClick={() => onBackClicked()}
                 />
             </div>
         </div>

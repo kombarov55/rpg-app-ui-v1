@@ -103,13 +103,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            value={props.gameForm.description}
                            onChange={e => props.updateGameForm({description: e.target.value})}
             />
-            <div className={"game-creation-view-label"}>Валюта:</div>
+            <div className={"game-creation-view-label"}>Валюта: (макс. 3)</div>
             <ListInput
                 value={props.gameForm.currencyInput}
                 onChange={e => props.updateGameForm({currencyInput: e.target.value})}
                 onSubmit={value => onCurrencySubmitClicked(value)}
                 onDelete={value => onCurrencyDeleteClicked(value)}
                 values={props.gameForm.currencies}
+                max={3}
             />
             <div className={"game-creation-view-label"}>Тип навыка:</div>
             <ListInput

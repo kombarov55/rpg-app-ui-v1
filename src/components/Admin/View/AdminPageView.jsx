@@ -16,7 +16,7 @@ import {gameByNetworkId, subnetworkUrl} from "../../../util/Parameters";
 import GameItem from "../GameItem";
 import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
-import AddItemButton from "../../Common/AddItemButton";
+import AddItemButton from "../../Common/AddItemButtonCircle";
 import Preload from "../../../util/Preload";
 
 function mapStateToProps(state, props) {

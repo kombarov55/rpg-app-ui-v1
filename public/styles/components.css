@@ -67,11 +67,27 @@
     overflow-y: hidden;
 }
 
-.add-item-button {
+.add-item-button-circle {
     display: flex;
     flex-direction: column;
     justify-content: center;
 
     padding: 1.5vh 3vw;
     height: 25vmax;
+}
+
+.add-item-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    align-self: center;
+
+    padding: 0.5vmax 3vmin;
+    margin: 1vmax 0;
+    width: 80%;
+
+    text-align: center;
+    background: rgba(134, 134, 134, 0.63);
+    border-radius: 5px;
 }

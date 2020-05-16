@@ -8,6 +8,7 @@ import {InputTextarea} from "primereact/inputtextarea";
 import {post} from "../../../util/Http";
 import {skillUrl} from "../../../util/Parameters";
 import {skillslView} from "../../../Views";
+import AddItemButton from "../../Common/AddItemButton";
 
 function mapStateToProps(state, props) {
     return {
@@ -76,7 +77,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             deletionCurrencies.some(deletionCurrency =>
                                 deletionCurrency === cost.currencyName)))
                 })
-            )})
+            )
+        })
     }
 
     function toggleOptionCurrency(name) {
@@ -299,10 +301,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 </>
                 }
 
-                <i className={"pi pi-plus-circle"}
-                   style={{"fontSize": "4vh"}}
-                   onClick={() => props.updateSkillForm({upgradeOptionFormVisible: true})}
+                {!props.skillForm.upgradeOptionFormVisible &&
+                <AddItemButton text={"Добавить вариант"}
+                               onClick={() => props.updateSkillForm({upgradeOptionFormVisible: true})}
                 />
+                }
 
                 <div className={"questionnaire-creation-skill-item-form-label"}>Максимальное значение:</div>
                 <input className={"questionnaire-creation-skill-item-form-max-value"}
@@ -311,27 +314,30 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
 
                 <div className={"questionnaire-creation-skill-item-form-lvl-increase-vertical"}>
-                    { props.skillForm.upgradeCosts.map(upgradeCostItem =>
+                    {props.skillForm.upgradeCosts.map(upgradeCostItem =>
                         <div className={"questionnaire-creation-skill-item-form-lvl-increase-item"}>
                             <div
                                 className={"questionnaire-creation-skill-item-form-label"}>{upgradeCostItem.lvlNum} уровень:
                             </div>
                             <div className={"questionnaire-creation-skill-item-form-lvl-increase-values"}>
-                                { upgradeCostItem.options.map((upgradeOption, i)=>
+                                {upgradeCostItem.options.map((upgradeOption, i) =>
                                     <div className={"questionnaire-creation-skill-item-form-lvl-increase-value"}>
-                                        <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-option-label"}>{(i + 1) + " Вариант: " + upgradeOption.costs.map(cost => cost.currencyName).join(" + ")}</div>
-                                        { upgradeOption.costs.map(cost =>
+                                        <div
+                                            className={"questionnaire-creation-skill-item-form-lvl-increase-item-option-label"}>{(i + 1) + " Вариант: " + upgradeOption.costs.map(cost => cost.currencyName).join(" + ")}</div>
+                                        {upgradeOption.costs.map(cost =>
                                             <>
-                                                <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{cost.currencyName}:</div>
-                                                <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}
-                                                       onChange={e =>
-                                                           onSkillCostUpdate(upgradeCostItem.lvlNum, i, cost.currencyName, e.target.value)}
+                                                <div
+                                                    className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{cost.currencyName}:
+                                                </div>
+                                                <input
+                                                    className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}
+                                                    onChange={e =>
+                                                        onSkillCostUpdate(upgradeCostItem.lvlNum, i, cost.currencyName, e.target.value)}
                                                 />
                                             </>
                                         )}
 
                                     </div>
-
                                 )}
                             </div>
                         </div>

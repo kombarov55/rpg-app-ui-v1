@@ -1,9 +1,17 @@
 import {get} from "./Http";
-import {gameUrl, skillsByGameIdUrl} from "./Parameters";
-import {setActiveGame, setSkills} from "../data-layer/ActionCreators";
+import {gamesUrl, gameUrl, networkUrl, skillsByGameIdUrl} from "./Parameters";
+import {setActiveGame, setGames, setNetworks, setSkills} from "../data-layer/ActionCreators";
 
 
 export default {
+    networks: () => {
+        get(networkUrl, rs => window.store.dispatch(setNetworks(rs)))
+    },
+
+    games: () => {
+        get(gamesUrl, rs => window.store.dispatch(setGames(rs)))
+    },
+
     game: gameId => {
         get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
     },

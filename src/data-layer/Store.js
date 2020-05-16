@@ -13,7 +13,7 @@ import DefaultFormValues from "./DefaultFormValues";
 export const initialState = {
     sidebarVisible: false,
     growl: null,
-    currentView: adminPageView,
+    currentView: announcementView,
     userAccount: {
 
     },

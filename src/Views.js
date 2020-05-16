@@ -26,6 +26,7 @@ import SkillItemForm from "./components/Game/View/SkillCreationView";
 import SkillEditView from "./components/Game/View/SkillEditView";
 import SkillSelectionView from "./components/QuestionnaireCreation/View/SkillSelectionView";
 import AdminPageView from "./components/Admin/View/AdminPageView";
+import Preload from "./util/Preload";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -40,7 +41,7 @@ export const conversationView = {
     label: "Диалог"
 }
 
-export const adminPageView = {component: <AdminPageView/>, label: "Панель администратора"}
+export const adminPageView = {component: <AdminPageView/>, label: "Панель администратора", preload: [Preload.networks, Preload.games]}
 
 export const networkSelectionView = {component: <NetworkSelectionView/>, label: "Сети"}
 

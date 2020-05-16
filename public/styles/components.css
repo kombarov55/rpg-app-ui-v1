@@ -48,3 +48,11 @@
 
     width: 100%;
 }
+
+.no-items-label {
+    margin: 2vh 0;
+
+    color: rgba(255, 255, 255, 0.56);
+    font-style: italic;
+    text-decoration: underline;
+}

@@ -53,4 +53,4 @@ export const gameEditView = {component: <GameEditView/>, label: "Редакти�
 export const questionnaireRulesView = {component: <QuestionnaireRulesView/>, label: "Правила игры"}
 export const questionnaireCreationView = {component: <QuestionnaireCreationView/>, label: "Создание анкеты"}
 
-export const skillView = {component: <SkillView/>, label: "Навыки"}
+export const skillslView = {component: <SkillView/>, label: "Навыки"}

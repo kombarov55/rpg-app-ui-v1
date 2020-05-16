@@ -1,11 +1,11 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {changeView, setActiveNetwork, setGames, setNetworks, setSubnetworks} from "../../../data-layer/ActionCreators";
-import Btn from "../../Common/Btn";
-import {networkCreationView, networkView} from "../../../Views";
-import {get} from "../../../util/Http";
-import {gameByNetworkId, subnetworkUrl} from "../../../util/Parameters";
-import NetworkItem from "../NetworkItem";
+import {changeView, setActiveNetwork, setGames, setNetworks, setSubnetworks} from "../../../../data-layer/ActionCreators";
+import Btn from "../../../Common/Btn";
+import {networkCreationView, networkView} from "../../../../Views";
+import {get} from "../../../../util/Http";
+import {gameByNetworkId, subnetworkUrl} from "../../../../util/Parameters";
+import NetworkItem from "../../NetworkItem";
 
 function mapStateToProps(state, props) {
     return {

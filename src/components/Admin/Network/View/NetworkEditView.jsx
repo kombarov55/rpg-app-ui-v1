@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
-import {changeView, setActiveNetwork, setNetworks, updateNetworkForm} from "../../../data-layer/ActionCreators";
-import {post, put} from "../../../util/Http";
-import {editNetworkUrl, networkUrl} from "../../../util/Parameters";
-import {networkSelectionView, networkView} from "../../../Views";
+import {changeView, setActiveNetwork, setNetworks, updateNetworkForm} from "../../../../data-layer/ActionCreators";
+import {post, put} from "../../../../util/Http";
+import {editNetworkUrl, networkUrl} from "../../../../util/Parameters";
+import {networkSelectionView, networkView} from "../../../../Views";
 import {InputTextarea} from "primereact/inputtextarea";
 
 function mapStateToProps(state, props) {

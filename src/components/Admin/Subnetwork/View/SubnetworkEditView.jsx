@@ -6,10 +6,10 @@ import {
     setActiveSubnetwork,
     setSubnetworks,
     updateSubnetworkForm
-} from "../../../data-layer/ActionCreators";
-import {post, put} from "../../../util/Http";
-import {editSubnetworkUrl, subnetworkUrl} from "../../../util/Parameters";
-import {networkView, subnetworkView} from "../../../Views";
+} from "../../../../data-layer/ActionCreators";
+import {post, put} from "../../../../util/Http";
+import {editSubnetworkUrl, subnetworkUrl} from "../../../../util/Parameters";
+import {networkView, subnetworkView} from "../../../../Views";
 
 function mapStateToProps(state, props) {
     return {

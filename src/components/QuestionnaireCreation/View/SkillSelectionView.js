@@ -37,7 +37,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     name={skill.name}
                     type={skill.type}
                     imgSrc={"https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"}
-                    description={skil.description}
+                    description={skill.description}
                     onClick={() => onSkillClicked(skill)}
                     expand={skill.expand}
                     maxValue={100}

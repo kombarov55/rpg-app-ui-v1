@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    adminPageView,
     announcementView,
     conversationListView,
     favoriteAnnouncementView,
@@ -88,7 +89,7 @@ class ConnectedMenu extends React.Component {
                 </div>
                 <div className={"main-frame-nav-item"}
                      onClick={() => {
-                         this.onItemClicked(networkSelectionView)
+                         this.onItemClicked(adminPageView)
                          get(networkUrl, rs => this.props.setNetworks(rs))
                      }}
                 >

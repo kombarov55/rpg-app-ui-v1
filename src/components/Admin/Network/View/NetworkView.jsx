@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import NetworkItem from "../NetworkItem";
+import NetworkItem from "../../NetworkItem";
 import {
     gameCreationView,
     gameView,
@@ -8,22 +8,22 @@ import {
     networkSelectionView,
     subnetworkCreationView,
     subnetworkView
-} from "../../../Views";
+} from "../../../../Views";
 import {
     changeView,
     setActiveGame,
     setActiveSubnetwork,
     setGames, setNetworks,
     setSubnetworks, updateGameForm, updateNetworkForm
-} from "../../../data-layer/ActionCreators";
+} from "../../../../data-layer/ActionCreators";
 import AddSubnetworkItem from "../AddSubnetworkItem";
-import AddGameItem from "../../Game/AddGameItem";
-import Globals from "../../../util/Globals";
-import GameItem from "../GameItem";
-import {get, httpDelete} from "../../../util/Http";
-import {deleteNetworkUrl, gameBySubnetworkId} from "../../../util/Parameters";
-import Btn from "../../Common/Btn";
-import DefaultFormValues from "../../../data-layer/DefaultFormValues";
+import AddGameItem from "../../../Game/AddGameItem";
+import Globals from "../../../../util/Globals";
+import GameItem from "../../GameItem";
+import {get, httpDelete} from "../../../../util/Http";
+import {deleteNetworkUrl, gameBySubnetworkId} from "../../../../util/Parameters";
+import Btn from "../../../Common/Btn";
+import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state, props) {
     return {

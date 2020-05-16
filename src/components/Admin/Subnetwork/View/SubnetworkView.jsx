@@ -1,13 +1,13 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import GameItem from "../GameItem";
-import {changeView, setActiveGame, setSubnetworks, updateSubnetworkForm} from "../../../data-layer/ActionCreators";
-import {gameCreationView, gameView, networkView, subnetworkEditView} from "../../../Views";
-import AddGameItem from "../../Game/AddGameItem";
-import Globals from "../../../util/Globals";
-import Btn from "../../Common/Btn";
-import {httpDelete} from "../../../util/Http";
-import {deleteSubnetworkUrl} from "../../../util/Parameters";
+import GameItem from "../../GameItem";
+import {changeView, setActiveGame, setSubnetworks, updateSubnetworkForm} from "../../../../data-layer/ActionCreators";
+import {gameCreationView, gameView, networkView, subnetworkEditView} from "../../../../Views";
+import AddGameItem from "../../../Game/AddGameItem";
+import Globals from "../../../../util/Globals";
+import Btn from "../../../Common/Btn";
+import {httpDelete} from "../../../../util/Http";
+import {deleteSubnetworkUrl} from "../../../../util/Parameters";
 
 function mapStateToProps(state, props) {
     return {

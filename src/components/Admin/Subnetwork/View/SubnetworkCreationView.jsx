@@ -1,10 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
-import {changeView, setSubnetworks, updateSubnetworkForm} from "../../../data-layer/ActionCreators";
-import {post} from "../../../util/Http";
-import {subnetworkUrl} from "../../../util/Parameters";
-import {networkView} from "../../../Views";
+import {changeView, setSubnetworks, updateSubnetworkForm} from "../../../../data-layer/ActionCreators";
+import {post} from "../../../../util/Http";
+import {subnetworkUrl} from "../../../../util/Parameters";
+import {networkView} from "../../../../Views";
 
 function mapStateToProps(state, props) {
     return {

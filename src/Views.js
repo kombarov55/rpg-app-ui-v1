@@ -8,23 +8,24 @@ import ConversationListView from "./components/Conversation/View/ConversationLis
 import ConversationView from "./components/Conversation/View/ConversationView";
 import ConversationHeadView from "./components/Conversation/View/ConversationHeadView";
 import ConversationInputView from "./components/Conversation/View/ConversationInputView";
-import NetworkSelectionView from "./components/Network/View/NetworkSelectionView";
-import NetworkView from "./components/Network/View/NetworkView";
-import SubnetworkView from "./components/Network/View/SubnetworkView";
+import NetworkSelectionView from "./components/Admin/Network/View/NetworkSelectionView";
+import NetworkView from "./components/Admin/Network/View/NetworkView";
+import SubnetworkView from "./components/Admin/Subnetwork/View/SubnetworkView";
 import GameView from "./components/Game/View/GameView";
 import QuestionnaireCreationView from "./components/QuestionnaireCreation/View/QuestionnaireCreationView";
 import QuestionnaireRulesView from "./components/QuestionnaireCreation/View/QuestionnaireRulesView";
-import NetworkItem from "./components/Network/NetworkItem";
-import NetworkCreationView from "./components/Network/View/NetworkCreationView";
-import SubnetworkCreationView from "./components/Network/View/SubnetworkCreationView";
+import NetworkItem from "./components/Admin/NetworkItem";
+import NetworkCreationView from "./components/Admin/Network/View/NetworkCreationView";
+import SubnetworkCreationView from "./components/Admin/Subnetwork/View/SubnetworkCreationView";
 import GameCreationView from "./components/Game/GameCreationView";
-import NetworkEditView from "./components/Network/View/NetworkEditView";
-import SubnetworkEditView from "./components/Network/View/SubnetworkEditView";
+import NetworkEditView from "./components/Admin/Network/View/NetworkEditView";
+import SubnetworkEditView from "./components/Admin/Subnetwork/View/SubnetworkEditView";
 import GameEditView from "./components/Game/GameEditView";
 import SkillView from "./components/Game/View/SkillView";
 import SkillItemForm from "./components/Game/View/SkillCreationView";
 import SkillEditView from "./components/Game/View/SkillEditView";
 import SkillSelectionView from "./components/QuestionnaireCreation/View/SkillSelectionView";
+import AdminPageView from "./components/Admin/View/AdminPageView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -38,6 +39,8 @@ export const conversationView = {
     footer: <ConversationInputView/>,
     label: "Диалог"
 }
+
+export const adminPageView = {component: <AdminPageView/>, label: "Панель администратора"}
 
 export const networkSelectionView = {component: <NetworkSelectionView/>, label: "Сети"}
 

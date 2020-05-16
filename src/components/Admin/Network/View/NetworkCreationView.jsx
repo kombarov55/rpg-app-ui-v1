@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import Btn from "../../../Common/Btn";
 import {changeView, setActiveNetwork, setNetworks, updateNetworkForm} from "../../../../data-layer/ActionCreators";
-import {post} from "../../../../util/Http";
-import {networkUrl} from "../../../../util/Parameters";
+import {post, upload} from "../../../../util/Http";
+import {networkUrl, uploadUrl} from "../../../../util/Parameters";
 import {networkSelectionView} from "../../../../Views";
 
 function mapStateToProps(state, props) {
@@ -26,6 +26,12 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
+    function onFileChange(e) {
+        upload(uploadUrl, e.target.files[0], rs => {
+            console.log(rs)
+        })
+    }
+
     function save() {
         post(networkUrl, props.networkForm, rs => {
             props.setNetworks(props.networks.concat(rs))
@@ -44,7 +50,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
 
             <div className={"network-creation-view-label"}>Картинка: </div>
-            <input type={"file"} />
+            <input type={"file"}
+                   onChange={e => onFileChange(e)}
+            />
 
             <div className={"network-creation-view-label"}>Описание:</div>
             <InputTextarea autoResize={true}

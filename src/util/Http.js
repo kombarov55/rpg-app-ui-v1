@@ -68,6 +68,24 @@ export function put(url, body, onSuccess) {
     }
 }
 
+export function upload(url, file, onSuccess) {
+    const formData = new FormData()
+    formData.append("file", file)
+
+    const xhr = new XMLHttpRequest()
+    xhr.open("POST", url, true)
+    xhr.setRequestHeader("Authorization", "Bearer " + Globals.authToken)
+    xhr.setRequestHeader("Content-Type", "multipart/form-data")
+
+    xhr.send(formData)
+
+    if (onSuccess != null) {
+        xhr.onload = function() {
+            onSuccess(parseResponse(xhr.responseText))
+        }
+    }
+}
+
 function parseResponse(rs) {
     try {
         return JSON.parse(rs)

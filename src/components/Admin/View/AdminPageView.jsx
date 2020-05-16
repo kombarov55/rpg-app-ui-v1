@@ -16,6 +16,7 @@ import {gameByNetworkId, subnetworkUrl} from "../../../util/Parameters";
 import GameItem from "../GameItem";
 import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
+import AddItemButton from "../../Common/AddItemButton";
 
 function mapStateToProps(state, props) {
     return {
@@ -61,7 +62,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     return (
         <div className={"admin-page-view"}>
             <Label text={"Сети"}/>
-            <div className={"network-selection-view-horizontal"}>
+            <div className={"horizontal-list"}>
                 {props.networks.length == 0 ?
                     <div className={"no-items-label"}>Нет сетей</div> :
                     props.networks.map(network =>
@@ -72,25 +73,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             title={network.title}
                         />
                     )}
+                <AddItemButton onClick={() => onAddNetworkClick()}/>
             </div>
-            <Btn text={"Добавить сеть"}
-                 onClick={() => onAddNetworkClick()}
-            />
             <Label text={"Игры"}/>
-            <div className={"network-selection-view-horizontal"}>
+            <div className={"horizontal-list"}>
                 {props.games.length === 0 ?
-                <div className={"no-items-label"}>Нет игр</div> :
+                    <div className={"no-items-label"}>Нет игр</div> :
                     props.games.map(game =>
-                    <GameItem
-                        title={game.title}
-                        imgSrc={game.imgSrc}
-                        onClick={() => onGameClick(game)}
-                    />
-                )}
+                        <GameItem
+                            title={game.title}
+                            imgSrc={game.imgSrc}
+                            onClick={() => onGameClick(game)}
+                        />
+                    )}
+                <AddItemButton onClick={() => onAddGameClick()}/>
             </div>
-            <Btn text={"Добавить игру"}
-                 onClick={() => onAddGameClick()}
-            />
         </div>
     )
 })

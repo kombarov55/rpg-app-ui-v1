@@ -56,3 +56,22 @@
     font-style: italic;
     text-decoration: underline;
 }
+
+.horizontal-list {
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.add-item-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 1.5vh 3vw;
+    height: 25vmax;
+}

@@ -1,11 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
 import {changeView, setActiveGame, setGames, updateGameForm} from "../../../data-layer/ActionCreators";
-import {gameEditView, networkView, questionnaireCreationView, questionnaireRulesView, skillslView} from "../../../Views";
+import {
+    adminPageView,
+    gameEditView,
+    networkView,
+    questionnaireCreationView,
+    questionnaireRulesView,
+    skillslView, subnetworkView
+} from "../../../Views";
 import {httpDelete} from "../../../util/Http";
 import {deleteGame} from "../../../util/Parameters";
 import Btn from "../../Common/Btn";
 import Preload from "../../../util/Preload";
+import Globals from "../../../util/Globals";
+import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
 
 function mapStateToProps(state, props) {
     return {
@@ -41,6 +50,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
     }
 
+    function onBackClicked() {
+        switch(Globals.gameCreationMode) {
+            case GameCreationMode.OPEN:
+                props.changeView(adminPageView)
+                break
+            case GameCreationMode.BY_NETWORK:
+                props.changeView(networkView)
+                break
+            case GameCreationMode.BY_SUBNETWORK:
+                props.changeView(subnetworkView)
+                break
+        }
+    }
+
     function onSkillViewClicked() {
         Preload.skills(props.activeGame.id)
         props.changeView(skillslView)
@@ -63,14 +86,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <Btn text={"Навыки"}
                      onClick={() => onSkillViewClicked()}
                 />
-                <div className={"mobile-button"}
-                     onClick={() => onEditClicked()}>
-                    Редактировать
-                </div>
-                <div className={"mobile-button"}
-                     onClick={() => onDeleteClicked()}>
-                    Удалить
-                </div>
+                <Btn text={"Редактировать"}
+                     onClick={() => onEditClicked()}
+                />
+                <Btn text={"Удалить"}
+                     onClick={() => onDeleteClicked()}
+                />
+                <Btn text={"Назад"}
+                     onClick={() => onBackClicked()}
+                />
             </div>
         </div>
     )

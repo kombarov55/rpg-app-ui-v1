@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import Label from "../../Common/Label";
 import SkillItem from "../../QuestionnaireCreation/SkillItem";
 import Btn from "../../Common/Btn";
-import {changeView} from "../../../data-layer/ActionCreators";
+import {changeView, setSkills} from "../../../data-layer/ActionCreators";
 import {skillCreationView} from "../../../Views";
 
 function mapStateToProps(state, props) {
@@ -14,11 +14,21 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch, props) {
     return {
+        setSkills: skills => dispatch(setSkills(skills)),
         changeView: view => dispatch(changeView(view))
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+
+    function onSkillClicked(skill) {
+        const updatedList = props.skills.slice()
+
+        const x = updatedList.find(it => it.id === skill.id);
+        x.expand = !x.expand
+        console.log(x.expand)
+        props.setSkills(updatedList)
+    }
 
     function onAddClicked() {
         props.changeView(skillCreationView)
@@ -37,10 +47,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             imgSrc={"https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"}
                             description={"Чем она выше - тем сильнее ваш персонаж"}
                             onDelete={() => alert("implement onDelete")}
-                            onClick={() => alert("implement onClick")}
-                            expand={false}
+                            onClick={() => onSkillClicked(skill)}
+                            expand={skill.expand}
                             maxValue={100}
-                            upgradeCosts={[]}
+                            upgradeCosts={skill.upgradeCosts}
                         />
                     )
                 }

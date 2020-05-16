@@ -41,7 +41,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             </div>
             {
-                expand &&
+                props.expand &&
                 <>
                     <div className={"questionnaire-skill-description"}>{description}</div>
                     <div className={"questionnaire-skill-detail"}>

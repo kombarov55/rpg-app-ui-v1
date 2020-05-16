@@ -231,15 +231,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             props.changeView(skillslView)
             props.growl.show({severity: "info", summary: "Навык создан"})
         })
-
-        // props.updateQuestionnaireForm({skills: props.questionnaireForm.skills.concat(props.skillForm)})
-        // props.updateSkillForm(DefaultFormValues.skillForm)
-        // props.updateQuestionnaireForm({skillFormVisible: false})
     }
 
     return (
         <>
-            {/*<div className={"questionnaire-creation-view-label"}>Создание листа навыков:</div>*/}
             <div className={"questionnaire-creation-skill-item-form"}>
 
                 <div className={"questionnaire-creation-skill-item-form-label"}>Название навыка:</div>

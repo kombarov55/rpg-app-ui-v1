@@ -2,22 +2,29 @@ import React from "react";
 import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {Checkbox} from "primereact/checkbox";
-import {updateQuestionnaireForm, updateSkillForm} from "../../data-layer/ActionCreators";
-import Btn from "../Common/Btn";
-import DefaultFormValues from "../../data-layer/DefaultFormValues";
+import {changeView, setSkills, updateQuestionnaireForm, updateSkillForm} from "../../../data-layer/ActionCreators";
+import Btn from "../../Common/Btn";
 import {InputTextarea} from "primereact/inputtextarea";
+import {post} from "../../../util/Http";
+import {saveSkillUrl} from "../../../util/Parameters";
+import {skillslView} from "../../../Views";
 
 function mapStateToProps(state, props) {
     return {
         skillForm: state.skillForm,
-        questionnaireForm: state.questionnaireForm
+        activeGame: state.activeGame,
+        questionnaireForm: state.questionnaireForm,
+        skills: state.skills,
+        growl: state.growl
     }
 }
 
 function mapDispatchToProps(dispatch, props) {
     return {
         updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue)),
-        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue))
+        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue)),
+        setSkills: skills => dispatch(setSkills(skills)),
+        changeView: view => dispatch(changeView(view))
     }
 }
 
@@ -215,9 +222,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onSaveClicked() {
-        props.updateQuestionnaireForm({skills: props.questionnaireForm.skills.concat(props.skillForm)})
-        props.updateSkillForm(DefaultFormValues.skillForm)
-        props.updateQuestionnaireForm({skillFormVisible: false})
+        const body = Object.assign({}, props.skillForm, {
+            gameId: props.activeGame.id
+        })
+
+        post(saveSkillUrl, body, rs => {
+            props.setSkills(props.skills.concat(rs))
+            props.changeView(skillslView)
+            props.growl.show({severity: "info", summary: "Навык создан"})
+        })
+
+        // props.updateQuestionnaireForm({skills: props.questionnaireForm.skills.concat(props.skillForm)})
+        // props.updateSkillForm(DefaultFormValues.skillForm)
+        // props.updateQuestionnaireForm({skillFormVisible: false})
     }
 
     return (
@@ -243,11 +260,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <SelectButton
                     value={props.skillForm.type}
                     onChange={e => props.updateSkillForm({type: e.target.value})}
-                    options={props.skillTypes.map(name => ({label: name, value: name}))}/>
+                    options={props.activeGame.skillTypes.map(name => ({label: name, value: name}))}/>
 
                 <div className={"questionnaire-creation-skill-item-form-label"}>Валюта для повышения:</div>
                 {
-                    props.currencies.map(name =>
+                    props.activeGame.currencies.map(name =>
                         <div
                             className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}
                             key={name}

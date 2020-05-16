@@ -22,7 +22,7 @@ import NetworkEditView from "./components/Network/View/NetworkEditView";
 import SubnetworkEditView from "./components/Network/View/SubnetworkEditView";
 import GameEditView from "./components/Game/GameEditView";
 import SkillView from "./components/Game/View/SkillView";
-import SkillItemForm from "./components/QuestionnaireCreation/SkillItemForm";
+import SkillItemForm from "./components/Game/View/SkillCreationView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}

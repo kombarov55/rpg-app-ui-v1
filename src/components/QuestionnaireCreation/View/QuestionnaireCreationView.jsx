@@ -8,7 +8,7 @@ import SkillItem from "../SkillItem";
 import QuestionnaireAddSkillButton from "../QuestionnaireAddSkillButton";
 import {changeView, updateQuestionnaireForm} from "../../../data-layer/ActionCreators";
 import QuestionnaireItemType from "../../../data-layer/enums/QuestionnaireItemType";
-import SkillItemForm from "../SkillItemForm";
+import SkillItemForm from "../../Game/View/SkillCreationView";
 import Btn from "../../Common/Btn";
 import {post} from "../../../util/Http";
 import {questionnaireUrl} from "../../../util/Parameters";

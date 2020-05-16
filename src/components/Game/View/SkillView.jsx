@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import Label from "../../Common/Label";
 import SkillItem from "../../QuestionnaireCreation/SkillItem";
 import Btn from "../../Common/Btn";
+import {changeView} from "../../../data-layer/ActionCreators";
+import {skillCreationView} from "../../../Views";
 
 function mapStateToProps(state, props) {
     return {
@@ -11,10 +13,17 @@ function mapStateToProps(state, props) {
 }
 
 function mapDispatchToProps(dispatch, props) {
-    return {}
+    return {
+        changeView: view => dispatch(changeView(view))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+
+    function onAddClicked() {
+        props.changeView(skillCreationView)
+    }
+
     return (
         <div className={"skills-view"}>
             <div className={"list"}>
@@ -38,7 +47,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <Btn
                     text={"Добавить навык"}
-                    onClick={() => alert("implement onClick")}
+                    onClick={() => onAddClicked()}
                 />
             </div>
         </div>

@@ -39,3 +39,4 @@ export const deleteGame = gameId => rootUrl + "/game/" + gameId
 export const questionnaireUrl = rootUrl + "/questionnaire"
 
 export const skillsByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/skill"
+export const saveSkillUrl = rootUrl + "/skill"

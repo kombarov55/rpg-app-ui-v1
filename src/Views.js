@@ -23,6 +23,7 @@ import SubnetworkEditView from "./components/Network/View/SubnetworkEditView";
 import GameEditView from "./components/Game/GameEditView";
 import SkillView from "./components/Game/View/SkillView";
 import SkillItemForm from "./components/Game/View/SkillCreationView";
+import SkillEditView from "./components/Game/View/SkillEditView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -56,3 +57,4 @@ export const questionnaireCreationView = {component: <QuestionnaireCreationView/
 
 export const skillslView = {component: <SkillView/>, label: "Навыки"}
 export const skillCreationView = {component: <SkillItemForm/>, label: "Создание навыка"}
+export const skillEditView = {component: <SkillEditView/>, label: "Редактирование навыка"}

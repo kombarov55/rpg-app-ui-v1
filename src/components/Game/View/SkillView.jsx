@@ -46,8 +46,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             type={skill.type}
                             imgSrc={"https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"}
                             description={"Чем она выше - тем сильнее ваш персонаж"}
-                            onDelete={() => alert("implement onDelete")}
                             onClick={() => onSkillClicked(skill)}
+                            onDelete={() => alert("implement onDelete")}
+                            onEdit={() => alert("implement onEdit")}
                             expand={skill.expand}
                             maxValue={100}
                             upgradeCosts={skill.upgradeCosts}

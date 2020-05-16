@@ -5,8 +5,8 @@ import {Checkbox} from "primereact/checkbox";
 import {changeView, setSkills, updateQuestionnaireForm, updateSkillForm} from "../../../data-layer/ActionCreators";
 import Btn from "../../Common/Btn";
 import {InputTextarea} from "primereact/inputtextarea";
-import {post} from "../../../util/Http";
-import {skillUrl} from "../../../util/Parameters";
+import {put} from "../../../util/Http";
+import {updateSkillUrl} from "../../../util/Parameters";
 import {skillslView} from "../../../Views";
 
 function mapStateToProps(state, props) {
@@ -46,7 +46,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
 
         props.updateSkillForm({currenciesForUpgrade: updatedList})
-        // props.updateSkillForm({upgradeCosts: deprecated__updateupgradeCostsCurrencies(props.skillForm.upgradeCosts, updatedList)})
     }
 
     function isCurrencyChecked(name) {
@@ -221,15 +220,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateSkillForm({upgradeCosts: updatedList})
     }
 
-    function onSaveClicked() {
+    function onEditClicked() {
         const body = Object.assign({}, props.skillForm, {
             gameId: props.activeGame.id
         })
 
-        post(skillUrl, body, rs => {
-            props.setSkills(props.skills.concat(rs))
+        put(updateSkillUrl(props.skillForm.id), body, rs => {
+            props.setSkills(props.skills.filter(it => it.id !== rs.id).concat(rs))
             props.changeView(skillslView)
-            props.growl.show({severity: "info", summary: "Навык создан"})
+            props.growl.show({severity: "info", summary: "Навык обновлен"})
         })
     }
 
@@ -352,8 +351,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 </div>
 
                 <Btn
-                    text={"Сохранить"}
-                    onClick={() => onSaveClicked()}
+                    text={"Обновить"}
+                    onClick={() => onEditClicked()}
                 />
 
             </div>

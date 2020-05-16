@@ -210,6 +210,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateSkillForm({upgradeCosts: newList})
     }
 
+    function upgradeValue(lvlNum, optionIndex, currencyName) {
+        return props.skillForm.upgradeCosts
+            .find(it => it.lvlNum === lvlNum)
+            .options[optionIndex]
+            .costs.find(it => it.currencyName === currencyName)
+            .amount
+    }
+
     function onSkillCostUpdate(lvlNum, optionIndex, currencyName, amount) {
         const updatedList = props.skillForm.upgradeCosts.slice()
         updatedList.find(it => it.lvlNum === lvlNum)
@@ -323,6 +331,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                             <>
                                                 <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{cost.currencyName}:</div>
                                                 <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}
+                                                       // value={upgradeValue(upgradeCostItem.lvlNum, i, cost.currencyName)}
                                                        onChange={e => onSkillCostUpdate(upgradeCostItem.lvlNum, i, cost.currencyName, parseInt(e.target.value))}
                                                 />
                                             </>

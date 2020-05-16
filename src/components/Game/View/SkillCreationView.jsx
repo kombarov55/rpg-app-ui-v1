@@ -216,7 +216,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         updatedList.find(it => it.lvlNum === lvlNum)
             .options[optionIndex]
             .costs.find(it => it.currencyName === currencyName)
-            .amount = amount
+            .amount = window.isNaN(amount) ? 0 : parseInt(amount)
 
         props.updateSkillForm({upgradeCosts: updatedList})
     }
@@ -324,7 +324,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                             <>
                                                 <div className={"questionnaire-creation-skill-item-form-lvl-increase-item-label"}>{cost.currencyName}:</div>
                                                 <input className={"questionnaire-creation-skill-item-form-lvl-increase-item-value"}
-                                                       onChange={e => onSkillCostUpdate(upgradeCostItem.lvlNum, i, cost.currencyName, parseInt(e.target.value))}
+                                                       onChange={e =>
+                                                           onSkillCostUpdate(upgradeCostItem.lvlNum, i, cost.currencyName, e.target.value)}
                                                 />
                                             </>
                                         )}

@@ -5,6 +5,7 @@ import SkillItem from "../../QuestionnaireCreation/SkillItem";
 import Btn from "../../Common/Btn";
 import {changeView, setSkills, updateSkillForm} from "../../../data-layer/ActionCreators";
 import {skillCreationView, skillEditView} from "../../../Views";
+import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state, props) {
     return {
@@ -41,6 +42,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onAddClicked() {
+        props.updateSkillForm(DefaultFormValues.skillForm)
         props.changeView(skillCreationView)
     }
 

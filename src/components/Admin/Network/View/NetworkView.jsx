@@ -26,6 +26,7 @@ import Btn from "../../../Common/Btn";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 import Preload from "../../../../util/Preload";
 import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
+import Label from "../../../Common/Label";
 
 function mapStateToProps(state, props) {
     return {
@@ -55,7 +56,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSubnetworkClicked(subnetwork) {
         props.setActiveSubnetwork(subnetwork)
-        get(gameBySubnetworkId(props.activeNetwork.id, subnetwork.id), rs => props.setGames(rs))
+        Preload.subnetworkView(props.activeNetwork.id, subnetwork.id)
         props.changeView(subnetworkView)
     }
 
@@ -92,8 +93,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onBackClicked() {
-        Preload.networks()
-        Preload.games()
+        Preload.adminPageView()
+        Globals.gameCreationMode = GameCreationMode.OPEN
         props.changeView(adminPageView)
     }
 
@@ -106,9 +107,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <div className={"network-name"}>{props.activeNetwork.title}</div>
                 <div className={"network-description"}>{props.activeNetwork.description}</div>
             </div>
-            <div className={"subnetworks-label"}>
-                Подсети:
-            </div>
+            <Btn text={"Редактировать"}
+                 onClick={() => onEditClicked()}
+            />
+            <Btn text={"Удалить"}
+                 onClick={() => onDeleteClicked()}
+            />
+            <Label text={"Подсети:"}/>
 
             <div className={"subnetwork-view-horizontal"}>
                 {
@@ -141,12 +146,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 }
                 <AddGameItem onClick={() => onAddGameClicked()}/>
             </div>
-            <Btn text={"Редактировать"}
-                 onClick={() => onEditClicked()}
-            />
-            <Btn text={"Удалить"}
-                 onClick={() => onDeleteClicked()}
-            />
             <Btn text={"Назад"}
                  onClick={() => onBackClicked()}
             />

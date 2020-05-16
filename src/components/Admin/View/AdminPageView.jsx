@@ -17,6 +17,7 @@ import GameItem from "../GameItem";
 import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
 import AddItemButton from "../../Common/AddItemButton";
+import Preload from "../../../util/Preload";
 
 function mapStateToProps(state, props) {
     return {
@@ -39,8 +40,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onNetworkClick(network) {
         props.setActiveNetwork(network)
-        get(subnetworkUrl(network.id), rs => props.setSubnetworks(rs))
-        get(gameByNetworkId(network.id), rs => props.setGames(rs))
+        Preload.networkView(network.id)
         props.changeView(networkView)
     }
 
@@ -61,7 +61,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     return (
         <div className={"admin-page-view"}>
-            <Label text={"Сети"}/>
+
+            <Label text={"Сети:"}/>
             <div className={"horizontal-list"}>
                 {props.networks.length == 0 ?
                     <div className={"no-items-label"}>Нет сетей</div> :
@@ -75,7 +76,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     )}
                 <AddItemButton onClick={() => onAddNetworkClick()}/>
             </div>
-            <Label text={"Игры"}/>
+
+            <Label text={"Игры:"}/>
             <div className={"horizontal-list"}>
                 {props.games.length === 0 ?
                     <div className={"no-items-label"}>Нет игр</div> :

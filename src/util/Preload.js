@@ -1,15 +1,29 @@
 import {get} from "./Http";
-import {gamesUrl, gameUrl, networkUrl, skillsByGameIdUrl} from "./Parameters";
-import {setActiveGame, setGames, setNetworks, setSkills} from "../data-layer/ActionCreators";
+import {
+    gameByNetworkId,
+    gameBySubnetworkId,
+    gamesUrl,
+    gameUrl,
+    networkUrl,
+    skillsByGameIdUrl,
+    subnetworkUrl
+} from "./Parameters";
+import {setActiveGame, setGames, setNetworks, setSkills, setSubnetworks} from "../data-layer/ActionCreators";
 
 
 export default {
-    networks: () => {
+    adminPageView: () => {
         get(networkUrl, rs => window.store.dispatch(setNetworks(rs)))
+        get(gamesUrl, rs => window.store.dispatch(setGames(rs)))
     },
 
-    games: () => {
-        get(gamesUrl, rs => window.store.dispatch(setGames(rs)))
+    networkView: networkId => {
+        get(subnetworkUrl(networkId), rs => window.store.dispatch(setSubnetworks(rs)))
+        get(gameByNetworkId(networkId), rs => window.store.dispatch(setGames(rs)))
+    },
+
+    subnetworkView: (networkId, subnetworkId) => {
+        get(gameBySubnetworkId(networkId, subnetworkId), rs => window.store.dispatch(setGames(rs)))
     },
 
     game: gameId => {

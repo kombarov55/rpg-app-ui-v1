@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch, props) {
         changeView: view => dispatch(changeView(view)),
         setSubnetworks: subnetworks => dispatch(setSubnetworks(subnetworks)),
         updateSubnetworkForm: fieldNameToValue => dispatch(updateSubnetworkForm(fieldNameToValue)),
-        setActiveGame: game =>  dispatch(setActiveGame(game))
+        setActiveGame: game => dispatch(setActiveGame(game))
     }
 }
 
@@ -57,6 +57,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
     }
 
+    function onBackClicked() {
+        Globals.gameCreationMode = GameCreationMode.BY_NETWORK
+        props.changeView(networkView)
+    }
+
     return (
         <div className={"network-selection-view"}>
             <div className={"network-info"}>
@@ -64,6 +69,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <div className={"network-name"}>{props.activeSubnetwork.title}</div>
                 <div className={"network-description"}>{props.activeSubnetwork.description}</div>
             </div>
+
+            <Btn text={"Редактировать"}
+                 onClick={() => onEditClicked()}
+            />
+
+            <Btn text={"Удалить"}
+                 onClick={() => onDeleteClicked()}
+            />
+
 
             <div className={"games-label"}>
                 Игры:
@@ -82,11 +96,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     onClick={() => onAddGameClicked()}
                 />
             </div>
-            <Btn text={"Редактировать"}
-                 onClick={() => onEditClicked()}
+
+            <Btn text={"Назад"}
+                 onClick={() => onBackClicked()}
             />
-            <Btn onClick={() => onDeleteClicked()}
-                 text={"Удалить"}/>
         </div>
     )
 })

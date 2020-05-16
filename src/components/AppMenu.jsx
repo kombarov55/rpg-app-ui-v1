@@ -91,8 +91,7 @@ class ConnectedMenu extends React.Component {
                 <div className={"main-frame-nav-item"}
                      onClick={() => {
                          this.onItemClicked(adminPageView)
-                         Preload.networks()
-                         Preload.games()
+                         Preload.adminPageView()
                      }}
                 >
                     <i className={"pi pi-apple"} style={{"fontSize": "6vmin"}}/>

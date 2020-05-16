@@ -1,12 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
-import {changeView, setActiveGame, setGames, updateGameForm} from "../../../data-layer/ActionCreators";
-import {put} from "../../../util/Http";
-import {editGameByNetworkId, editGamebySubnetworkId} from "../../../util/Parameters";
-import {gameView} from "../../../Views";
-import ListInput from "../../Common/ListInput";
-import Globals from "../../../util/Globals";
+import {changeView, setActiveGame, setGames, updateGameForm} from "../../data-layer/ActionCreators";
+import {put} from "../../util/Http";
+import {editGameByNetworkId, editGamebySubnetworkId} from "../../util/Parameters";
+import {gameView} from "../../Views";
+import ListInput from "../Common/ListInput";
+import Globals from "../../util/Globals";
 
 function mapStateToProps(state, props) {
     return {

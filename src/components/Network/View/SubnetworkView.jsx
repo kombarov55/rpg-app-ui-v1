@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import GameItem from "../GameItem";
 import {changeView, setActiveGame, setSubnetworks, updateSubnetworkForm} from "../../../data-layer/ActionCreators";
 import {gameCreationView, gameView, networkView, subnetworkEditView} from "../../../Views";
-import AddGameItem from "../AddGameItem";
+import AddGameItem from "../../Game/AddGameItem";
 import Globals from "../../../util/Globals";
 import Btn from "../../Common/Btn";
 import {httpDelete} from "../../../util/Http";

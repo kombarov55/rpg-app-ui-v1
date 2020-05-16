@@ -17,7 +17,7 @@ import {
     setSubnetworks, updateGameForm, updateNetworkForm
 } from "../../../data-layer/ActionCreators";
 import AddSubnetworkItem from "../AddSubnetworkItem";
-import AddGameItem from "../AddGameItem";
+import AddGameItem from "../../Game/AddGameItem";
 import Globals from "../../../util/Globals";
 import GameItem from "../GameItem";
 import {get, httpDelete} from "../../../util/Http";

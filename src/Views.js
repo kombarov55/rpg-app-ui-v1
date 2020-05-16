@@ -11,16 +11,17 @@ import ConversationInputView from "./components/Conversation/View/ConversationIn
 import NetworkSelectionView from "./components/Network/View/NetworkSelectionView";
 import NetworkView from "./components/Network/View/NetworkView";
 import SubnetworkView from "./components/Network/View/SubnetworkView";
-import GameView from "./components/Network/View/GameView";
+import GameView from "./components/Game/View/GameView";
 import QuestionnaireCreationView from "./components/QuestionnaireCreation/View/QuestionnaireCreationView";
 import QuestionnaireRulesView from "./components/QuestionnaireCreation/View/QuestionnaireRulesView";
 import NetworkItem from "./components/Network/NetworkItem";
 import NetworkCreationView from "./components/Network/View/NetworkCreationView";
 import SubnetworkCreationView from "./components/Network/View/SubnetworkCreationView";
-import GameCreationView from "./components/Network/View/GameCreationView";
+import GameCreationView from "./components/Game/GameCreationView";
 import NetworkEditView from "./components/Network/View/NetworkEditView";
 import SubnetworkEditView from "./components/Network/View/SubnetworkEditView";
-import GameEditView from "./components/Network/View/GameEditView";
+import GameEditView from "./components/Game/GameEditView";
+import SkillView from "./components/Game/View/SkillView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -51,3 +52,5 @@ export const gameEditView = {component: <GameEditView/>, label: "Редакти�
 
 export const questionnaireRulesView = {component: <QuestionnaireRulesView/>, label: "Правила игры"}
 export const questionnaireCreationView = {component: <QuestionnaireCreationView/>, label: "Создание анкеты"}
+
+export const skillView = {component: <SkillView/>, label: "Навыки"}

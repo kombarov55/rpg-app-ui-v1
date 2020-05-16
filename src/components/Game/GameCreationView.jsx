@@ -1,13 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
-import {changeView, setGames, updateGameForm} from "../../../data-layer/ActionCreators";
-import {post} from "../../../util/Http";
-import {gameByNetworkId, gameBySubnetworkId} from "../../../util/Parameters";
-import {networkView, subnetworkView} from "../../../Views";
-import Globals from "../../../util/Globals";
-import QuestionnaireInputList from "../../QuestionnaireCreation/QuestionnaireInputList";
-import ListInput from "../../Common/ListInput";
+import {changeView, setGames, updateGameForm} from "../../data-layer/ActionCreators";
+import {post} from "../../util/Http";
+import {gameByNetworkId, gameBySubnetworkId} from "../../util/Parameters";
+import {networkView, subnetworkView} from "../../Views";
+import Globals from "../../util/Globals";
+import QuestionnaireInputList from "../QuestionnaireCreation/QuestionnaireInputList";
+import ListInput from "../Common/ListInput";
 
 function mapStateToProps(state, props) {
     return {

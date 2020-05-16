@@ -1,9 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
 import {changeView, setActiveGame, setGames, updateGameForm} from "../../../data-layer/ActionCreators";
-import {gameEditView, networkView, questionnaireCreationView, questionnaireRulesView} from "../../../Views";
+import {gameEditView, networkView, questionnaireCreationView, questionnaireRulesView, skillView} from "../../../Views";
 import {httpDelete} from "../../../util/Http";
 import {deleteGame} from "../../../util/Parameters";
+import Label from "../../Common/Label";
+import SkillItem from "../../QuestionnaireCreation/SkillItem";
+import Btn from "../../Common/Btn";
 
 function mapStateToProps(state, props) {
     return {
@@ -53,6 +56,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                      onClick={() => props.changeView(questionnaireRulesView)}>
                     Создать шаблон анкеты
                 </div>
+                <Btn text={"Навыки"}
+                     onClick={() => props.changeView(skillView)}
+                />
                 <div className={"mobile-button"}
                      onClick={() => onEditClicked()}>
                     Редактировать

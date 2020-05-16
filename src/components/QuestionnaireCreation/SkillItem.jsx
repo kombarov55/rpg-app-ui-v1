@@ -11,6 +11,8 @@ function mapDispatchToProps(dispatch, props) {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+    const {name, type, description, imgSrc, onDelete, onClick, expand, maxValue, upgradeCosts} = props
+
     function optionsToString(options) {
         return options.map(({costs}) => buildCostLabel(costs)).join(" или ")
     }
@@ -23,34 +25,34 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         <div className={"questionaire-skill-item"}>
             <div className={"questionaire-skill-item-horizontal"}>
                 <img className={"questionnaire-skill-img"}
-                     src={props.imgSrc}
-                     onClick={() => props.onClick()}
+                     src={imgSrc}
+                     onClick={() => onClick()}
                 />
                 <div className={"questionaire-skill-item-horizontal-text-group"}>
                     <div className={"questionnaire-skill-item-vertical"}
-                         onClick={() => props.onClick()}>
-                        <div className={"questionnaire-skill-name"}>{props.name}</div>
-                        <div className={"questionnaire-skill-type"}>{props.type}</div>
+                         onClick={() => onClick()}>
+                        <div className={"questionnaire-skill-name"}>{name}</div>
+                        <div className={"questionnaire-skill-type"}>{type}</div>
                     </div>
                     <i className={"pi pi-times"}
-                       onClick={() => props.onDelete()}
+                       onClick={() => onDelete()}
                     />
                 </div>
 
             </div>
             {
-                props.expand &&
+                expand &&
                 <>
-                    <div className={"questionnaire-skill-description"}>{props.description}</div>
+                    <div className={"questionnaire-skill-description"}>{description}</div>
                     <div className={"questionnaire-skill-detail"}>
-                        <div className={"questionnaire-skill-detail-entry"}>Макс. уровень: {props.maxValue}</div>
+                        <div className={"questionnaire-skill-detail-entry"}>Макс. уровень: {maxValue}</div>
                     </div>
                     <div className={"questionnaire-skill-detail-lvl-increase-detail"}>
                         <div className={"questionnaire-skill-detail-lvl-increase-detail-label"}>
                             Повышение:
                         </div>
 
-                        {props.upgradeCosts.map(lvlUpgrade =>
+                        {upgradeCosts.map(lvlUpgrade =>
                             <div className={"questionnaire-skill-detail-lvl-increase-detail-chip"}>
                                 {optionsToString(lvlUpgrade.options)}
                             </div>

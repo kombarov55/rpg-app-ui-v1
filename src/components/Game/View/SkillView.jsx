@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import Label from "../../Common/Label";
 import SkillItem from "../../QuestionnaireCreation/SkillItem";
 import Btn from "../../Common/Btn";
-import {changeView, setSkills} from "../../../data-layer/ActionCreators";
-import {skillCreationView} from "../../../Views";
+import {changeView, setSkills, updateSkillForm} from "../../../data-layer/ActionCreators";
+import {skillCreationView, skillEditView} from "../../../Views";
 
 function mapStateToProps(state, props) {
     return {
@@ -15,6 +15,7 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch, props) {
     return {
         setSkills: skills => dispatch(setSkills(skills)),
+        updateSkillForm: skill => dispatch(updateSkillForm(skill)),
         changeView: view => dispatch(changeView(view))
     }
 }
@@ -28,6 +29,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         x.expand = !x.expand
         console.log(x.expand)
         props.setSkills(updatedList)
+    }
+
+    function onEditClicked(skill) {
+        props.updateSkillForm(skill)
+        props.changeView(skillEditView)
+    }
+
+    function onDeleteClicked() {
+
     }
 
     function onAddClicked() {
@@ -47,8 +57,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             imgSrc={"https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"}
                             description={"Чем она выше - тем сильнее ваш персонаж"}
                             onClick={() => onSkillClicked(skill)}
+                            onEdit={() => onEditClicked(skill)}
                             onDelete={() => alert("implement onDelete")}
-                            onEdit={() => alert("implement onEdit")}
                             expand={skill.expand}
                             maxValue={100}
                             upgradeCosts={skill.upgradeCosts}

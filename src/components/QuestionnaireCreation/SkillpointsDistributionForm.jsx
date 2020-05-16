@@ -39,9 +39,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         <div className={"questionnaire-creation-skillpoints-distribution-vertical"}>
             {props.skillTypes.map(name =>
                 <div key={name} className={"questionnaire-creation-skillpoints-distribution-entry"}>
-                    <div className={"questionnaire-creation-skillpoints-distribution-name"}>
-                        {name}
-                    </div>
+                    <div className={"questionnaire-creation-skillpoints-distribution-name"}>{name}:</div>
                     <input className={"questionnaire-creation-skillpoints-distribution-value"}
                            onChange={e => distributeSkillPoint(name, e.target.value)}
                     />

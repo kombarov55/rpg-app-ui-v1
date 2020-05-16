@@ -13,7 +13,7 @@ import Btn from "../../Common/Btn";
 import {post} from "../../../util/Http";
 import {questionnaireUrl} from "../../../util/Parameters";
 import {InputTextarea} from "primereact/inputtextarea";
-import {gameView} from "../../../Views";
+import {gameView, skillSelectionView} from "../../../Views";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 
 
@@ -96,37 +96,29 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             <QuestionnaireAddItemButton onClick={() => props.updateQuestionnaireForm({itemFormVisible: true})}/>
 
-            <div className={"questionnaire-creation-view-label"}>Распределение навыков</div>
+            <div className={"questionnaire-creation-view-label"}>Распределение навыков:</div>
             <SkillpointsDistributionForm
                 skillTypes={props.activeGame.skillTypes}
             />
 
-            {
-                props.questionnaireForm.skills.length === 0 ? "Нет навыков" :
-                    props.questionnaireForm.skills.map(skill =>
-                        <SkillItem
-                            name={skill.name}
-                            type={skill.type}
-                            imgSrc={"https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"}
-                            description={skill.description}
-                            maxValue={skill.maxValue}
-                            upgradeCosts={skill.upgradeCosts}
-                            expand={skill.expand}
-                            onClick={() => onSkillClicked(skill.name)}
-                            onDelete={() => onSkillDeleteClicked(skill.name)}
-                        />)
-            }
-            {
-                props.questionnaireForm.skillFormVisible &&
+            <div className={"questionnaire-creation-view-label"}>Навыки:</div>
 
-                <SkillItemForm
-                    skillTypes={props.activeGame.skillTypes}
-                    currencies={props.activeGame.currencies}
+            {props.questionnaireForm.skills.map(skill =>
+                <SkillItem
+                    name={skill.name}
+                    type={skill.type}
+                    imgSrc={"https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"}
+                    description={skill.description}
+                    maxValue={skill.maxValue}
+                    upgradeCosts={skill.upgradeCosts}
+                    expand={skill.expand}
+                    onClick={() => onSkillClicked(skill.name)}
+                    onDelete={() => onSkillDeleteClicked(skill.name)}
                 />
-            }
+            )}
 
             <QuestionnaireAddSkillButton
-                onClick={() => props.updateQuestionnaireForm({skillFormVisible: true})}
+                onClick={() => props.changeView(skillSelectionView)}
             />
 
             <Btn text={"Сохранить анкету"}

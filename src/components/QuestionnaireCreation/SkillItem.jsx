@@ -35,12 +35,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         <div className={"questionnaire-skill-type"}>{type}</div>
                     </div>
                     <div className={"questionaire-skill-item-horizontal-button-group"}>
-                        <i className={"pi pi-times"}
-                           onClick={() => onDelete()}
-                        />
-                        <i className={"pi pi-pencil"}
-                           onClick={() => onEdit()}
-                        />
+                        {
+                            props.onDelete &&
+                            <i className={"pi pi-times"}
+                               onClick={() => onDelete()}
+                            />
+                        }
+
+                        {
+                            props.onEdit &&
+                            <i className={"pi pi-pencil"}
+                               onClick={() => onEdit()}
+                            />
+                        }
                     </div>
 
                 </div>

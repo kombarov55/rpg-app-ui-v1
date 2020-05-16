@@ -28,6 +28,7 @@ export const initialState = {
     networks: [],
     subnetworks: [],
     games: [],
+    skills: [],
 
     announcementForm: DefaultFormValues.announcement,
 

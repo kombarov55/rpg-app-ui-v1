@@ -31,7 +31,7 @@ import {
     SET_SUBNETWORKS,
     SET_ACTIVE_SUBNETWORK,
     UPDATE_GAME_FORM,
-    SET_GAMES, SET_ACTIVE_GAME, UPDATE_QUESTIONNAIRE_FORM, UPDATE_QUESTIONNAIRE_ITEM_FORM, UPDATE_SKILL_FORM
+    SET_GAMES, SET_ACTIVE_GAME, UPDATE_QUESTIONNAIRE_FORM, UPDATE_QUESTIONNAIRE_ITEM_FORM, UPDATE_SKILL_FORM, SET_SKILLS
 } from "./ActionTypes";
 import {initialState} from "./Store";
 import MergeLists from "../util/MergeLists";
@@ -238,6 +238,11 @@ export function rootReducer(state = initialState, action) {
         case UPDATE_SKILL_FORM:
             return Object.assign({}, state, {
                 skillForm: Object.assign({}, state.skillForm, action.payload.fieldNameToValue)
+            })
+
+        case SET_SKILLS:
+            return Object.assign({}, state, {
+                skills: action.payload.skills
             })
 
         default:

@@ -1,6 +1,7 @@
 import {createStore} from "redux";
 import {rootReducer} from "./Reducers";
 import {
+    adminPageView,
     announcementView, gameCreationView, gameEditView,
     gameView, networkCreationView,
     networkSelectionView,
@@ -12,7 +13,7 @@ import DefaultFormValues from "./DefaultFormValues";
 export const initialState = {
     sidebarVisible: false,
     growl: null,
-    currentView: announcementView,
+    currentView: adminPageView,
     userAccount: {
 
     },

@@ -49,6 +49,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onDeleteSkillTypeClicked(value) {
+        props.updateGameForm({skillTypes: props.gameForm.skillTypes.filter(it => it !== value)})
     }
 
     function onSaveClicked() {
@@ -110,6 +111,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 values={props.gameForm.skillTypes}
                 onSubmit={value => onAddSkillTypeClicked(value)}
                 onDelete={value => onDeleteSkillTypeClicked(value)}
+                deleteOnlyNew={true}
             />
             <div className={"game-creation-save-button"}
                  onClick={() => onSaveClicked()}>

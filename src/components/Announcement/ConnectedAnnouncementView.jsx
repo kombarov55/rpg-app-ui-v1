@@ -1,6 +1,7 @@
 import React from "react";
 import RestoreAnnouncement from "./RestoreAnnouncement";
 import AnnouncementItem from "./AnnouncementItem";
+import NoItemsLabel from "../Common/NoItemsLabel";
 
 class ConnectedAnnouncementView extends React.Component {
     render() {
@@ -21,7 +22,8 @@ class ConnectedAnnouncementView extends React.Component {
                     </span>
                 </div>
                 <div className={"announcement-view-list"}>
-                    {
+                    {this.props.announcements.length === 0 ?
+                        <NoItemsLabel text={"Нет объявлений"}/> :
                         this.props.announcements.map(announcement =>
                             announcement.deleted ?
                                 <RestoreAnnouncement

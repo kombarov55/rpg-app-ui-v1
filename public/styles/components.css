@@ -62,11 +62,14 @@
 }
 
 .no-items-label {
+    align-self: center;
+
     margin: 2vh 0;
 
     color: rgba(255, 255, 255, 0.56);
     font-style: italic;
     text-decoration: underline;
+    font-size: 2vmax;
 }
 
 .horizontal-list {

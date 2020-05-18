@@ -5,7 +5,7 @@ import {loginUrl} from "./Parameters";
 import {get} from "./Http";
 import Globals from "./Globals";
 
-async function loadAnnouncements() {
+function loadAnnouncements() {
     get(announcementUrl, xs => xs.forEach(x => store.dispatch(addAnnouncement(x))))
 }
 

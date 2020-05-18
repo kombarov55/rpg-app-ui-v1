@@ -6,6 +6,7 @@ import {conversationView} from "../../../Views";
 import {get} from "../../../util/Http";
 import {getAllConversationsUrl} from "../../../util/Parameters";
 import Globals from "../../../util/Globals";
+import NoItemsLabel from "../../Common/NoItemsLabel";
 
 function mapStateToProps(state, props) {
     return {
@@ -30,20 +31,21 @@ function ConversationListView(props) {
     }, [])
 
 
-
     return (
         <div className={"conversations-view"}>
             {
-                props.conversations.map(conversation => (
-                    <ConversationItem
-                        key={conversation.id}
-                        companionImgSrc={conversation.companionImgSrc}
-                        companionFullName={conversation.companionFullName}
-                        msgTimestamp={conversation.lastMsgDate}
-                        text={conversation.lastMsgText}
-                        onClick={() => props.changeViewToConversation(conversation)}
-                    />
-                ))
+                props.conversations.length === 0 ?
+                    <NoItemsLabel text={"Нет диалогов"}/> :
+                    props.conversations.map(conversation => (
+                        <ConversationItem
+                            key={conversation.id}
+                            companionImgSrc={conversation.companionImgSrc}
+                            companionFullName={conversation.companionFullName}
+                            msgTimestamp={conversation.lastMsgDate}
+                            text={conversation.lastMsgText}
+                            onClick={() => props.changeViewToConversation(conversation)}
+                        />
+                    ))
             }
         </div>
     )

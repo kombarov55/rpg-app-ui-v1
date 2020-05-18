@@ -1,3 +1,9 @@
+.conversations-view {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
 .conversations-view-item {
     display: flex;
     flex-direction: row;

@@ -28,7 +28,8 @@ function mapStateToProps(state, props) {
         activeSubnetwork: state.activeSubnetwork,
         games: state.games,
         growl: state.growl,
-        currencyForm: state.currencyForm
+        currencyForm: state.currencyForm,
+        conversionForm: state.conversionForm
     }
 }
 
@@ -66,6 +67,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         setConversionFormVisible(false)
         props.updateGameForm({conversions: props.gameForm.conversions.slice().concat(props.conversionForm)})
         props.updateConversionForm(DefaultFormValues.conversionForm)
+        console.log(props.gameForm)
     }
 
     function onSkillTypeSubmitClicked(value) {
@@ -133,7 +135,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 {props.gameForm.currencies.length === 0 ?
                     <NoItemsLabel text={"Нет валют"}/> :
                     props.gameForm.currencies.map(currency =>
-                        <ListItemSmall text={currency.name} subtext={currency.priceInActivityPoints}/>
+                        <ListItemSmall left={currency.name} right={currency.priceInActivityPoints}/>
                     )
                 }
             </div>
@@ -149,6 +151,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             }
 
             <InputLabel text={"Обмен валют:"}/>
+            <div className={"list"}>
+                {
+                    props.gameForm.conversions.length === 0 ?
+                        <NoItemsLabel text={"Нет вариантов обмена"}/> :
+                        props.gameForm.conversions.map(conversion =>
+                            <ListItemSmall
+                                left={"1 " + conversion.currency1.name + " = " + conversion.conversionPrice1to2 + " " + conversion.currency2.name}
+                                right={"1 " + conversion.currency2.name + " = " + conversion.conversionPrice2to1 + " " + conversion.currency1.name}
+                            />
+                        )
+                }
+            </div>
             {
                 conversionFormVisible &&
                 <ConversionForm

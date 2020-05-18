@@ -130,8 +130,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                      src={props.activeGame.imgSrc}
                 />
                 <div className={"game-name"}>{props.activeGame.title}</div>
-                <div className={"game-description"}>{props.activeGame.description}
-                </div>
+                <div className={"game-description"}>{props.activeGame.description}</div>
 
                 <Label text={"Шаблоны анкет:"}/>
                 {props.activeGame.questionnaireTemplates.length === 0 ?

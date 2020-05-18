@@ -1,19 +1,6 @@
 import React from "react";
-import {connect} from "react-redux";
 
-function mapStateToProps(state, props) {
-    return {
-
-    }
-}
-
-function mapDispatchToProps(dispatch, props) {
-    return {
-
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+export default function (props) {
     return (
         <div className={"add-item-button-circle"} onClick={() => props.onClick()}>
             <i className={"pi pi-plus-circle"}
@@ -21,4 +8,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
         </div>
     )
-})
+}

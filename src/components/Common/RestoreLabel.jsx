@@ -1,15 +1,6 @@
 import React from "react";
-import {connect} from "react-redux";
 
-function mapStateToProps(state, props) {
-    return {}
-}
-
-function mapDispatchToProps(dispatch, props) {
-    return {}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(function(props) {
+export default function(props) {
     return (
         <div className={"restore-label"}>
             <div className={"restore-label-text"}>
@@ -20,4 +11,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(function(props) {
             </div>
         </div>
     )
-})
+}

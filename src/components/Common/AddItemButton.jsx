@@ -1,19 +1,6 @@
 import React from "react";
-import {connect} from "react-redux";
 
-function mapStateToProps(state, props) {
-    return {
-
-    }
-}
-
-function mapDispatchToProps(dispatch, props) {
-    return {
-
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+export default function (props) {
     return (
         <div
             className={"add-item-button"}
@@ -25,4 +12,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <div className={"questionnaire-add-item-label"}>{props.text}</div>
         </div>
     )
-})
+}

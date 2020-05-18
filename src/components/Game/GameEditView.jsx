@@ -39,8 +39,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
     }
 
-    function onDeleteCurrencyClicked(value) {
-        props.updateGameForm({currencies: props.gameForm.currencies.filter(it => it !== value)})
+    function onEditCurrencyClicked(value) {
     }
 
     function onAddSkillTypeClicked(value) {
@@ -48,8 +47,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateGameForm({skillTypeInput: ""})
     }
 
-    function onDeleteSkillTypeClicked(value) {
-        props.updateGameForm({skillTypes: props.gameForm.skillTypes.filter(it => it !== value)})
+    function onEditSkillTypeClicked(value) {
     }
 
     function onSaveClicked() {
@@ -100,7 +98,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 onChange={e => props.updateGameForm({currencyInput: e.target.value})}
                 values={props.gameForm.currencies}
                 onSubmit={value => onAddCurrencyClicked(value)}
-                onDelete={value => onDeleteCurrencyClicked(value)}
+                onEdit={value => onEditCurrencyClicked(value)}
                 max={3}
             />
             <div className={"game-creation-view-label"}>Тип навыка: </div>
@@ -109,7 +107,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 onChange={e => props.updateGameForm({skillTypeInput: e.target.value})}
                 values={props.gameForm.skillTypes}
                 onSubmit={value => onAddSkillTypeClicked(value)}
-                onDelete={value => onDeleteSkillTypeClicked(value)}
+                onEdit={value => onEditSkillTypeClicked(value)}
             />
             <div className={"game-creation-save-button"}
                  onClick={() => onSaveClicked()}>

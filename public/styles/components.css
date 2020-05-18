@@ -91,3 +91,56 @@
     background: rgba(134, 134, 134, 0.63);
     border-radius: 5px;
 }
+
+.horizontal-list-item {
+    display: flex;
+    flex-direction: column;
+
+    padding: 0.5vmax 1vmin;
+    margin: 1vmax 0;
+    width: 80%;
+
+    background: rgba(55, 55, 55, 0.79);
+    border-radius: 5px;
+}
+
+.horizontal-list-item-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+}
+
+.horizontal-list-img {
+    width: 50px;
+    height: 50px;
+
+    margin-right: 3vmin;
+}
+
+.horizontal-list-item-text-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    width: 90vmin;
+}
+
+.horizontal-list-item-text-group-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.horizontal-list-item-name {
+    font-size: 3vmax;
+}
+
+.horizontal-list-item-description {
+    font-size: 1.8vmax;
+}
+
+.horizontal-list-item-button-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

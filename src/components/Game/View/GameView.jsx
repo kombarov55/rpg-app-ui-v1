@@ -5,7 +5,6 @@ import {
     adminPageView,
     gameEditView,
     networkView,
-    questionnaireCreationView,
     questionnaireRulesView,
     skillslView, subnetworkView
 } from "../../../Views";
@@ -15,6 +14,8 @@ import Btn from "../../Common/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
+import HorizontalListItem from "../../Common/HorizontalListItem";
+import Label from "../../Common/Label";
 
 function mapStateToProps(state, props) {
     return {
@@ -51,7 +52,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onBackClicked() {
-        switch(Globals.gameCreationMode) {
+        switch (Globals.gameCreationMode) {
             case GameCreationMode.OPEN:
                 props.changeView(adminPageView)
                 break
@@ -78,23 +79,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <div className={"game-name"}>{props.activeGame.title}</div>
                 <div className={"game-description"}>{props.activeGame.description}
                 </div>
-                <div className={"mobile-button"}>Присоединиться к игре</div>
-                <div className={"mobile-button"}
-                     onClick={() => props.changeView(questionnaireRulesView)}>
-                    Создать шаблон анкеты
+
+                <Label text={"Шаблоны анкет"}/>
+                <HorizontalListItem
+                    name={"Анкета #1"}
+                    description={"Кто будет играть лексу?"}
+                    imgSrc={"https://sun9-50.userapi.com/c206728/v206728029/e6b05/y0oZUh43Mp4.jpg"}
+                />
+
+                <div className={"game-view-button-group"}>
+                    <Btn text={"Присоединиться к игре"}/>
+                    <Btn text={"Создать шаблон анкеты"} onClick={() => props.changeView(questionnaireRulesView)}/>
+                    <Btn text={"Навыки"} onClick={() => onSkillViewClicked()}/>
+                    <Btn text={"Редактировать"} onClick={() => onEditClicked()}/>
+                    <Btn text={"Удалить"} onClick={() => onDeleteClicked()}/>
+                    <Btn text={"Назад"} onClick={() => onBackClicked()}/>
                 </div>
-                <Btn text={"Навыки"}
-                     onClick={() => onSkillViewClicked()}
-                />
-                <Btn text={"Редактировать"}
-                     onClick={() => onEditClicked()}
-                />
-                <Btn text={"Удалить"}
-                     onClick={() => onDeleteClicked()}
-                />
-                <Btn text={"Назад"}
-                     onClick={() => onBackClicked()}
-                />
             </div>
         </div>
     )

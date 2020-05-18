@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import {
     changeView,
-    setGames, updateConversionForm,
+    setGames,
     updateCurrencyForm,
     updateGameForm
 } from "../../../data-layer/ActionCreators";
@@ -19,7 +19,6 @@ import AddItemButton from "../../Common/AddItemButton";
 import InputLabel from "../../Common/InputLabel";
 import ListItemSmall from "../../Common/ListItemSmall";
 import NoItemsLabel from "../../Common/NoItemsLabel";
-import ConversionForm from "../ConversionForm";
 
 function mapStateToProps(state, props) {
     return {
@@ -28,8 +27,7 @@ function mapStateToProps(state, props) {
         activeSubnetwork: state.activeSubnetwork,
         games: state.games,
         growl: state.growl,
-        currencyForm: state.currencyForm,
-        conversionForm: state.conversionForm
+        currencyForm: state.currencyForm
     }
 }
 
@@ -38,8 +36,7 @@ function mapDispatchToProps(dispatch, props) {
         updateGameForm: fieldNameToValue => dispatch(updateGameForm(fieldNameToValue)),
         changeView: view => dispatch(changeView(view)),
         setGames: games => dispatch(setGames(games)),
-        updateCurrencyForm: fieldNameToValue => dispatch(updateCurrencyForm(fieldNameToValue)),
-        updateConversionForm: fieldNameToValue => dispatch(updateConversionForm(fieldNameToValue))
+        updateCurrencyForm: fieldNameToValue => dispatch(updateCurrencyForm(fieldNameToValue))
     }
 }
 
@@ -47,7 +44,7 @@ function mapDispatchToProps(dispatch, props) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     const [currencyFormVisible, setCurrencyFormVisible] = useState(false)
-    const [conversionFormVisible, setConversionFormVisible] = useState(false)
+
 
     function onAddCurrencyClicked() {
         setCurrencyFormVisible(true)
@@ -57,17 +54,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         setCurrencyFormVisible(false)
         props.updateGameForm({currencies: props.gameForm.currencies.slice().concat(props.currencyForm)})
         props.updateCurrencyForm(DefaultFormValues.currencyForm)
-    }
-
-    function onAddConversionClicked() {
-        setConversionFormVisible(true)
-    }
-
-    function onConversionFormSubmit() {
-        setConversionFormVisible(false)
-        props.updateGameForm({conversions: props.gameForm.conversions.slice().concat(props.conversionForm)})
-        props.updateConversionForm(DefaultFormValues.conversionForm)
-        console.log(props.gameForm)
     }
 
     function onSkillTypeSubmitClicked(value) {
@@ -148,31 +134,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             {
                 !currencyFormVisible && props.gameForm.currencies.length < 3 &&
                 <AddItemButton text={"Добавить валюту"} onClick={() => onAddCurrencyClicked()}/>
-            }
-
-            <InputLabel text={"Обмен валют:"}/>
-            <div className={"list"}>
-                {
-                    props.gameForm.conversions.length === 0 ?
-                        <NoItemsLabel text={"Нет вариантов обмена"}/> :
-                        props.gameForm.conversions.map(conversion =>
-                            <ListItemSmall
-                                left={"1 " + conversion.currency1.name + " = " + conversion.conversionPrice1to2 + " " + conversion.currency2.name}
-                                right={"1 " + conversion.currency2.name + " = " + conversion.conversionPrice2to1 + " " + conversion.currency1.name}
-                            />
-                        )
-                }
-            </div>
-            {
-                conversionFormVisible &&
-                <ConversionForm
-                    currencies={props.gameForm.currencies}
-                    onSubmit={() => onConversionFormSubmit()}
-                />
-            }
-            {
-                !conversionFormVisible &&
-                <AddItemButton text={"Добавить вариант обмена"} onClick={() => onAddConversionClicked()}/>
             }
 
             <InputLabel text={"Тип навыка:"}/>

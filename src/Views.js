@@ -21,7 +21,7 @@ import GameCreationView from "./components/Game/GameCreationView";
 import NetworkEditView from "./components/Admin/Network/View/NetworkEditView";
 import SubnetworkEditView from "./components/Admin/Subnetwork/View/SubnetworkEditView";
 import GameEditView from "./components/Game/GameEditView";
-import SkillView from "./components/Game/View/SkillView";
+import SkillView from "./components/Game/View/SkillListView";
 import SkillItemForm from "./components/Game/View/SkillCreationView";
 import SkillEditView from "./components/Game/View/SkillEditView";
 import SkillSelectionView from "./components/QuestionnaireCreation/View/SkillSelectionView";

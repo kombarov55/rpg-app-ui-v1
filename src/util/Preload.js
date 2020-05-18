@@ -37,6 +37,10 @@ export default {
         get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
     },
 
+    skillSelectionView: gameId => {
+        get(skillsByGameIdUrl(gameId), rs => window.store.dispatch(setSkills(rs)))
+    },
+
     questionnaireEditView: questionnaireId => {
         get(questionnaireByIdUrl(questionnaireId), rs => window.store.dispatch(updateQuestionnaireForm(rs)))
     },

@@ -15,6 +15,7 @@ import {questionnaireUrl, questionnaireByIdUrl} from "../../../util/Parameters";
 import {InputTextarea} from "primereact/inputtextarea";
 import {gameView, questionnaireEditView, skillSelectionView} from "../../../Views";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
+import Preload from "../../../util/Preload";
 
 
 function mapStateToProps(state, props) {
@@ -51,6 +52,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
 
         props.updateQuestionnaireForm({skills: props.questionnaireForm.skills})
+    }
+
+    function onAddSkillClicked() {
+        Preload.skillSelectionView(props.activeGame.id)
+        props.changeView(skillSelectionView)
     }
 
     function onQuestionnaireEditClicked() {
@@ -123,7 +129,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             )}
 
             <QuestionnaireAddSkillButton
-                onClick={() => props.changeView(skillSelectionView)}
+                onClick={() => onAddSkillClicked()}
             />
 
             <Btn text={"Обновить анкету"}

@@ -69,6 +69,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onBackClicked() {
+        props.changeView(gameView)
+    }
+
     function onAddSkillClicked() {
         Preload.skillSelectionView(props.activeGame.id)
         props.changeView(skillSelectionView)
@@ -131,9 +135,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 onClick={() => onAddSkillClicked()}
             />
 
-            <Btn text={"Сохранить анкету"}
-                 onClick={() => onQuestionnaireTemplateSaveClicked()}
-            />
+            <Btn text={"Сохранить анкету"} onClick={() => onQuestionnaireTemplateSaveClicked()}/>
+            <Btn text={"Назад"} onClick={() => onBackClicked()}/>
 
         </div>
     )

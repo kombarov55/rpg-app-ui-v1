@@ -1,4 +1,5 @@
 import Globals from "./Globals";
+import {uploadUrl} from "./Parameters";
 
 export function get(url, onSuccess) {
     const xhr = new XMLHttpRequest()

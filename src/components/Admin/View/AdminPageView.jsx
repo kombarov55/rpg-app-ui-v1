@@ -64,30 +64,26 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             <Label text={"Сети:"}/>
             <div className={"horizontal-list"}>
-                {props.networks.length == 0 ?
-                    <div className={"no-items-label"}>Нет сетей</div> :
-                    props.networks.map(network =>
-                        <NetworkItem
-                            key={network.id}
-                            onClick={() => onNetworkClick(network)}
-                            imgSrc={network.imgSrc}
-                            title={network.title}
-                        />
-                    )}
+                {props.networks.map(network =>
+                    <NetworkItem
+                        key={network.id}
+                        onClick={() => onNetworkClick(network)}
+                        imgSrc={network.imgSrc}
+                        title={network.title}
+                    />
+                )}
                 <AddItemButton onClick={() => onAddNetworkClick()}/>
             </div>
 
             <Label text={"Игры:"}/>
             <div className={"horizontal-list"}>
-                {props.games.length === 0 ?
-                    <div className={"no-items-label"}>Нет игр</div> :
-                    props.games.map(game =>
-                        <GameItem
-                            title={game.title}
-                            imgSrc={game.imgSrc}
-                            onClick={() => onGameClick(game)}
-                        />
-                    )}
+                {props.games.map(game =>
+                    <GameItem
+                        title={game.title}
+                        imgSrc={game.imgSrc}
+                        onClick={() => onGameClick(game)}
+                    />
+                )}
                 <AddItemButton onClick={() => onAddGameClick()}/>
             </div>
         </div>

@@ -12,8 +12,8 @@ import NetworkSelectionView from "./components/Admin/Network/View/NetworkSelecti
 import NetworkView from "./components/Admin/Network/View/NetworkView";
 import SubnetworkView from "./components/Admin/Subnetwork/View/SubnetworkView";
 import GameView from "./components/Game/View/GameView";
-import QuestionnaireTemplateCreationView from "./components/QuestionnaireCreation/View/QuestionnaireTemplateCreationView";
-import QuestionnaireRulesView from "./components/QuestionnaireCreation/View/QuestionnaireRulesView";
+import QuestionnaireTemplateCreationView from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateCreationView";
+import QuestionnaireRulesView from "./components/QuestionnaireTemplateCreation/View/QuestionnaireRulesView";
 import NetworkItem from "./components/Admin/NetworkItem";
 import NetworkCreationView from "./components/Admin/Network/View/NetworkCreationView";
 import SubnetworkCreationView from "./components/Admin/Subnetwork/View/SubnetworkCreationView";
@@ -24,10 +24,10 @@ import GameEditView from "./components/Game/GameEditView";
 import SkillView from "./components/Game/View/SkillListView";
 import SkillItemForm from "./components/Game/View/SkillCreationView";
 import SkillEditView from "./components/Game/View/SkillEditView";
-import SkillSelectionView from "./components/QuestionnaireCreation/View/SkillSelectionView";
+import SkillSelectionView from "./components/QuestionnaireTemplateCreation/View/SkillSelectionView";
 import AdminPageView from "./components/Admin/View/AdminPageView";
 import Preload from "./util/Preload";
-import QuestionnaireTemplateEditView from "./components/QuestionnaireCreation/View/QuestionnaireTemplateEditView";
+import QuestionnaireTemplateEditView from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateEditView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}

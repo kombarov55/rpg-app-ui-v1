@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import Label from "../../Common/Label";
-import SkillItem from "../../QuestionnaireCreation/SkillItem";
+import SkillItem from "../../QuestionnaireTemplateCreation/SkillItem";
 import Btn from "../../Common/Btn";
 import {changeView, setSkills, updateSkillForm} from "../../../data-layer/ActionCreators";
 import {gameView, skillCreationView, skillEditView} from "../../../Views";

@@ -46,7 +46,6 @@ function mapDispatchToProps(dispatch, props) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     const [currencyFormVisible, setCurrencyFormVisible] = useState(false)
-    const [conversionFormVisible, setConversionFormVisible] = useState(false)
 
     function onAddCurrencyClicked() {
         setCurrencyFormVisible(true)

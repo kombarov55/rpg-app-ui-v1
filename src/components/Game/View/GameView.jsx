@@ -12,7 +12,7 @@ import {
     gameEditView,
     networkView, questionnaireTemplateEditView,
     questionnaireRulesView,
-    skillsView, subnetworkView
+    skillsView, subnetworkView, conversionView
 } from "../../../Views";
 import {get, httpDelete} from "../../../util/Http";
 import {deleteGame, questionnaireTemplateByIdUrl, questionnaireTemplateRestoreUrl} from "../../../util/Parameters";
@@ -123,6 +123,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(skillsView)
     }
 
+    function onConversionClicked() {
+        Preload.conversionView(props.activeGame.id)
+        props.changeView(conversionView)
+    }
+
     return (
         <div className={"game-view"}>
             <div className={"game-info"}>
@@ -156,6 +161,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     <Btn text={"Присоединиться к игре"}/>
                     <Btn text={"Создать шаблон анкеты"} onClick={() => onAddQuestionnaireTemplateClicked()}/>
                     <Btn text={"Навыки"} onClick={() => onSkillViewClicked()}/>
+                    <Btn text={"Настройки обмена валют"} onClick={() => onConversionClicked()}/>
                     <Btn text={"Редактировать"} onClick={() => onEditClicked()}/>
                     <Btn text={"Удалить"} onClick={() => onDeleteClicked()}/>
                     <Btn text={"Назад"} onClick={() => onBackClicked()}/>

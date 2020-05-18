@@ -114,7 +114,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 {props.gameForm.currencies.length === 0 ?
                     <NoItemsLabel text={"Нет валют"}/> :
                     props.gameForm.currencies.map(currency =>
-                        <ListItemSmall text={currency.name} subtext={currency.priceInActivityPoints}/>
+                        <ListItemSmall left={currency.name} right={currency.priceInActivityPoints}/>
                     )
                 }
 

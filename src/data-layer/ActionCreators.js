@@ -35,7 +35,7 @@ import {
     SET_GAMES, SET_ACTIVE_GAME,
     UPDATE_QUESTIONNAIRE_TEMPLATE_FORM,
     UPDATE_QUESTIONNAIRE_TEMPLATE_ITEM_FORM,
-    UPDATE_SKILL_FORM, SET_SKILLS, UPDATE_ACTIVE_GAME, UPDATE_CURRENCY_FORM, UPDATE_CONVERSION_FORM
+    UPDATE_SKILL_FORM, SET_SKILLS, UPDATE_ACTIVE_GAME, UPDATE_CURRENCY_FORM, UPDATE_CONVERSION_FORM, SET_CURRENCIES
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -423,6 +423,15 @@ export function updateConversionForm(fieldNameToValue) {
         type: UPDATE_CONVERSION_FORM,
         payload: {
             fieldNameToValue: fieldNameToValue
+        }
+    }
+}
+
+export function setCurrencies(currencies) {
+    return {
+        type: SET_CURRENCIES,
+        payload: {
+            currencies: currencies
         }
     }
 }

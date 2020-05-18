@@ -23,6 +23,7 @@ export const initialState = {
     subnetworks: [],
     games: [],
     skills: [],
+    currencies: [],
 
     announcementForm: DefaultFormValues.announcement,
 

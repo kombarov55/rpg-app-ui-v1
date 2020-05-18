@@ -28,6 +28,7 @@ import SkillSelectionView from "./components/QuestionnaireTemplateCreation/View/
 import AdminPageView from "./components/Admin/View/AdminPageView";
 import Preload from "./util/Preload";
 import QuestionnaireTemplateEditView from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateEditView";
+import ConversionView from "./components/Game/View/ConversionView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -66,3 +67,5 @@ export const skillSelectionView = {component: <SkillSelectionView/>, label: "В�
 export const skillsView = {component: <SkillView/>, label: "Навыки"}
 export const skillCreationView = {component: <SkillItemForm/>, label: "Создание навыка"}
 export const skillEditView = {component: <SkillEditView/>, label: "Редактирование навыка"}
+
+export const conversionView = {component: <ConversionView/>, label: "Обмен валют"}

@@ -23,7 +23,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         if (item != null) {
             return item.maxValue
         } else {
-            return 0
+            return ""
         }
     }
 
@@ -31,14 +31,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         let updatedList = props.questionnaireForm.skillPointsDistribution.slice()
 
         const prevItem = updatedList.find(it => it.skillType === name)
-
         if (prevItem == null) {
             updatedList = updatedList.concat({
                 skillType: name,
-                maxValue: parseInt(value)
+                maxValue: value === "" || window.isNaN(value) ?
+                    "" :
+                    parseInt(value)
             })
         } else {
-            prevItem.maxValue = parseInt(value)
+            const prevValue = prevItem.maxValue
+            prevItem.maxValue =
+                value === "" ?
+                    "" :
+                    window.isNaN(value) ?
+                        prevValue :
+                        parseInt(value)
         }
 
         props.updateQuestionnaireForm({skillPointsDistribution: updatedList})

@@ -67,7 +67,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               {label: QuestionnaireItemType.LIST.value, value: QuestionnaireItemType.LIST.name}
                           ]}/>
             <div className={"questionnaire-creation-item-form-label"}>Элемент списка:</div>
-            {props.questionnaireItemForm.type === "list" &&
+            {props.questionnaireItemForm.type === QuestionnaireItemType.LIST.name &&
             <ListInput
                 value={props.questionnaireItemForm.listInput}
                 onChange={e => props.updateQuestionnaireItemForm({listInput: e.target.value})}

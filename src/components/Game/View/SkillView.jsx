@@ -28,7 +28,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
         const x = updatedList.find(it => it.id === skill.id);
         x.expand = !x.expand
-        console.log(x.expand)
         props.setSkills(updatedList)
     }
 

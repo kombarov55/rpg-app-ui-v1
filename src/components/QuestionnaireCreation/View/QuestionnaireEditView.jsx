@@ -11,7 +11,7 @@ import QuestionnaireItemType from "../../../data-layer/enums/QuestionnaireItemTy
 import SkillItemForm from "../../Game/View/SkillCreationView";
 import Btn from "../../Common/Btn";
 import {post, put} from "../../../util/Http";
-import {questionnaireUrl, questionnaireById} from "../../../util/Parameters";
+import {questionnaireUrl, questionnaireByIdUrl} from "../../../util/Parameters";
 import {InputTextarea} from "primereact/inputtextarea";
 import {gameView, questionnaireEditView, skillSelectionView} from "../../../Views";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
@@ -58,7 +58,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             gameId: props.activeGame.id
         })
 
-        put(questionnaireById(form.id), form, rs => {
+        put(questionnaireByIdUrl(form.id), form, rs => {
             props.growl.show({severity: "info", summary: "Шаблон анкеты обновлен"})
             props.updateQuestionnaireForm(DefaultFormValues.questionnaireForm)
 

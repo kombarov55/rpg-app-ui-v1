@@ -35,7 +35,7 @@ import {
     SET_GAMES, SET_ACTIVE_GAME,
     UPDATE_QUESTIONNAIRE_FORM,
     UPDATE_QUESTIONNAIRE_ITEM_FORM,
-    UPDATE_SKILL_FORM, SET_SKILLS
+    UPDATE_SKILL_FORM, SET_SKILLS, UPDATE_ACTIVE_GAME
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -360,6 +360,15 @@ export function setActiveGame(game) {
         type: SET_ACTIVE_GAME,
         payload: {
             activeGame: game
+        }
+    }
+}
+
+export function updateActiveGame(fieldNameToValue) {
+    return {
+        type: UPDATE_ACTIVE_GAME,
+        payload: {
+            fieldNameToValue: fieldNameToValue
         }
     }
 }

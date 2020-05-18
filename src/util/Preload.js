@@ -4,7 +4,7 @@ import {
     gameBySubnetworkId,
     gamesUrl,
     gameUrl,
-    networkUrl, questionnaireById,
+    networkUrl, questionnaireByIdUrl,
     skillsByGameIdUrl,
     subnetworkUrl
 } from "./Parameters";
@@ -38,7 +38,7 @@ export default {
     },
 
     questionnaireEditView: questionnaireId => {
-        get(questionnaireById(questionnaireId), rs => window.store.dispatch(updateQuestionnaireForm(rs)))
+        get(questionnaireByIdUrl(questionnaireId), rs => window.store.dispatch(updateQuestionnaireForm(rs)))
     },
 
     game: gameId => {

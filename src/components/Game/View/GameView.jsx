@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {
     changeView,
     setActiveGame,
-    setGames,
+    setGames, updateActiveGame,
     updateGameForm,
     updateQuestionnaireForm
 } from "../../../data-layer/ActionCreators";
@@ -15,7 +15,7 @@ import {
     skillslView, subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
-import {deleteGame} from "../../../util/Parameters";
+import {deleteGame, questionnaireByIdUrl, questionnaireUrl} from "../../../util/Parameters";
 import Btn from "../../Common/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
@@ -36,7 +36,8 @@ function mapDispatchToProps(dispatch, props) {
         changeView: view => dispatch(changeView(view)),
         setGames: games => dispatch(setGames(games)),
         updateGameForm: game => dispatch(updateGameForm(game)),
-        updateQuestionnaireForm: questionnaire => dispatch(updateQuestionnaireForm(questionnaire))
+        updateQuestionnaireForm: questionnaire => dispatch(updateQuestionnaireForm(questionnaire)),
+        updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue))
     }
 }
 
@@ -46,6 +47,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onQuestionnaireEditClicked(questionnaire) {
         Preload.questionnaireEditView(questionnaire.id)
         props.changeView(questionnaireEditView)
+    }
+
+    function onQuestionnaireDeleteClicked(questionnaire) {
+        httpDelete(questionnaireByIdUrl(questionnaire.id), rs => {
+            console.log(rs)
+            console.log(props.activeGame.questionnaires.map(it => it.id))
+
+            const updatedList = props.activeGame.questionnaires.slice()
+
+            updatedList
+                .find(it => it.id === rs.id)
+                .deleted = true
+
+            props.updateActiveGame({
+                questionnaires: updatedList
+            })
+        })
+
+        props.growl.show({severity: "info", summary: "Шаблон анкеты удалён"})
     }
 
     function onEditClicked() {
@@ -100,6 +120,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         description={questionnaire.description}
                         imgSrc={questionnaire.imgSrc !== "" ? questionnaire.imgSrc : "https://vignette.wikia.nocookie.net/the100/images/9/95/The100215_1620.jpg/revision/latest?cb=20180104191509&path-prefix=ru"}
                         onEdit={() => onQuestionnaireEditClicked(questionnaire)}
+                        onDelete={() => onQuestionnaireDeleteClicked(questionnaire)}
                     />
                 )}
 

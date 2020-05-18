@@ -35,7 +35,8 @@ export const initialState = {
     questionnaireTemplateForm: DefaultFormValues.questionnaireTemplateForm,
     questionnaireTemplateItemForm: DefaultFormValues.questionnaireTemplateItemForm,
     skillForm: DefaultFormValues.skillForm,
-    currencyForm: DefaultFormValues.currencyForm
+    currencyForm: DefaultFormValues.currencyForm,
+    conversionForm: DefaultFormValues.conversionForm
 }
 
 export const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

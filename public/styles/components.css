@@ -193,3 +193,15 @@
     border-radius: 5px;
     background: grey;
 }
+
+.form-view {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    padding: 0 5vmin;
+
+    background: rgba(134, 134, 134, 0.03);
+    border-radius: 5px;
+}

@@ -19,6 +19,7 @@ import AddItemButton from "../../Common/AddItemButton";
 import InputLabel from "../../Common/InputLabel";
 import ListItemSmall from "../../Common/ListItemSmall";
 import NoItemsLabel from "../../Common/NoItemsLabel";
+import ConversionForm from "../ConversionForm";
 
 function mapStateToProps(state, props) {
     return {
@@ -43,12 +44,25 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
-    function onCurrencyFormSubmit() {
-        props.updateGameForm({
-            currencies: props.gameForm.currencies.slice().concat(props.currencyForm)
-        })
+    const [currencyFormVisible, setCurrencyFormVisible] = useState(false)
+    const [conversionFormVisible, setConversionFormVisible] = useState(false)
 
+    function onAddCurrencyClicked() {
+        setCurrencyFormVisible(true)
+    }
+
+    function onCurrencyFormSubmit() {
+        setCurrencyFormVisible(false)
+        props.updateGameForm({currencies: props.gameForm.currencies.slice().concat(props.currencyForm)})
         props.updateCurrencyForm(DefaultFormValues.currencyForm)
+    }
+
+    function onAddConversionClicked() {
+        setConversionFormVisible(true)
+    }
+
+    function onConversionFormSubmit() {
+        setConversionFormVisible(false)
     }
 
     function onSkillTypeSubmitClicked(value) {
@@ -62,10 +76,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSkillTypeDeleteClicked(value) {
         props.updateGameForm({skillTypes: props.gameForm.skillTypes.filter(it => it != value)})
-    }
-
-    function onAddCurrencyFormClicked() {
-        props.updateCurrencyForm({visible: true})
     }
 
     function save() {
@@ -116,7 +126,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            onChange={e => props.updateGameForm({description: e.target.value})}
             />
             <InputLabel text={"Валюта: (макс. 3)"}/>
-
             <div className={"list"}>
                 {props.gameForm.currencies.length === 0 ?
                     <NoItemsLabel text={"Нет валют"}/> :
@@ -124,20 +133,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         <ListItemSmall text={currency.name} subtext={currency.priceInActivityPoints}/>
                     )
                 }
-
             </div>
-
             {
-                props.currencyForm.visible &&
+                currencyFormVisible &&
                 <CurrencyForm
                     onSubmit={() => onCurrencyFormSubmit()}
                 />
             }
             {
-                !props.currencyForm.visible && props.gameForm.currencies.length < 3 &&
-                <AddItemButton text={"Добавить валюту"}
-                               onClick={() => onAddCurrencyFormClicked()}
-                />
+                !currencyFormVisible && props.gameForm.currencies.length < 3 &&
+                <AddItemButton text={"Добавить валюту"} onClick={() => onAddCurrencyClicked()}/>
+            }
+
+            <InputLabel text={"Обмен валют:"}/>
+            {
+                conversionFormVisible && <ConversionForm/>
+            }
+            {
+                !conversionFormVisible &&
+                <AddItemButton text={"Добавить вариант обмена"} onClick={() => onAddConversionClicked()}/>
             }
 
             <InputLabel text={"Тип навыка:"}/>

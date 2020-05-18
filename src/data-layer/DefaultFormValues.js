@@ -58,8 +58,13 @@ export default {
     },
 
     currencyForm: {
-        visible: false,
         name: "",
         priceInActivityPoints: ""
+    },
+    conversionForm: {
+        currency1: "",
+        currency2: "",
+        conversionPrice1to2: 0,
+        conversionPrice2to1: 0
     }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import {
@@ -45,16 +45,17 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
-    function onCurrencyFormSubmit() {
-        props.updateGameForm({
-            currencies: props.gameForm.currencies.slice().concat(props.currencyForm)
-        })
+    const [currencyFormVisible, setCurrencyFormVisible] = useState(false)
+    const [conversionFormVisible, setConversionFormVisible] = useState(false)
 
-        props.updateCurrencyForm(DefaultFormValues.currencyForm)
+    function onAddCurrencyClicked() {
+        setCurrencyFormVisible(true)
     }
 
-    function onAddCurrencyFormClicked() {
-        props.updateCurrencyForm({visible: true})
+    function onCurrencyFormSubmit() {
+        setCurrencyFormVisible(false)
+        props.updateGameForm({currencies: props.gameForm.currencies.slice().concat(props.currencyForm)})
+        props.updateCurrencyForm(DefaultFormValues.currencyForm)
     }
 
     function onAddSkillTypeClicked(value) {
@@ -121,15 +122,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             </div>
 
             {
-                props.currencyForm.visible &&
+                currencyFormVisible &&
                 <CurrencyForm
                     onSubmit={() => onCurrencyFormSubmit()}
                 />
             }
             {
-                !props.currencyForm.visible &&
+                !currencyFormVisible &&
                 <AddItemButton text={"Добавить валюту"}
-                               onClick={() => onAddCurrencyFormClicked()}
+                               onClick={() => onAddCurrencyClicked()}
                 />
             }
 

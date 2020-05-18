@@ -257,3 +257,19 @@
     background: rgba(134, 134, 134, 0.03);
     border-radius: 5px;
 }
+
+.conversion-entry {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.conversion-currency-name {
+
+}
+
+.conversion-input {
+    width: 15vmin;
+    padding: 0.5vmin;
+    margin: 0 1.5vmin;
+}

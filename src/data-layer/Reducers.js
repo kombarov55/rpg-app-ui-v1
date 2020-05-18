@@ -37,7 +37,7 @@ import {
     UPDATE_QUESTIONNAIRE_TEMPLATE_ITEM_FORM,
     UPDATE_SKILL_FORM,
     SET_SKILLS,
-    UPDATE_ACTIVE_GAME, UPDATE_CURRENCY_FORM
+    UPDATE_ACTIVE_GAME, UPDATE_CURRENCY_FORM, UPDATE_CONVERSION_FORM
 } from "./ActionTypes";
 import {initialState} from "./Store";
 import MergeLists from "../util/MergeLists";
@@ -259,6 +259,11 @@ export function rootReducer(state = initialState, action) {
         case UPDATE_CURRENCY_FORM:
             return Object.assign({}, state, {
                 currencyForm: Object.assign({}, state.currencyForm, action.payload.fieldNameToValue)
+            })
+
+        case UPDATE_CONVERSION_FORM:
+            return Object.assign({}, state, {
+                conversionForm: Object.assign({}, state.conversionForm, action.payload.fieldNameToValue)
             })
 
         default:

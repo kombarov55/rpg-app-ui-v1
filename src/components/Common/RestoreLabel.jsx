@@ -15,7 +15,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function(props) {
             <div className={"restore-label-text"}>
                 {props.text}
             </div>
-            <div className={"restore-label-link"}>
+            <div className={"restore-label-link"} onClick={() => props.onClick()}>
                 [Восстановить]
             </div>
         </div>

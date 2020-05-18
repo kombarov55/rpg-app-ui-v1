@@ -14,8 +14,8 @@ import {
     questionnaireRulesView,
     skillslView, subnetworkView
 } from "../../../Views";
-import {httpDelete} from "../../../util/Http";
-import {deleteGame, questionnaireByIdUrl, questionnaireUrl} from "../../../util/Parameters";
+import {get, httpDelete} from "../../../util/Http";
+import {deleteGame, questionnaireByIdUrl, questionnaireRestoreUrl, questionnaireUrl} from "../../../util/Parameters";
 import Btn from "../../Common/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
@@ -51,22 +51,32 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onQuestionnaireDeleteClicked(questionnaire) {
-        httpDelete(questionnaireByIdUrl(questionnaire.id), rs => {
-            console.log(rs)
-            console.log(props.activeGame.questionnaires.map(it => it.id))
+        httpDelete(questionnaireByIdUrl(questionnaire.id))
+        const updatedList = props.activeGame.questionnaires.slice()
 
-            const updatedList = props.activeGame.questionnaires.slice()
+        updatedList
+            .find(it => it.id === questionnaire.id)
+            .deleted = true
 
-            updatedList
-                .find(it => it.id === rs.id)
-                .deleted = true
+        props.updateActiveGame({
+            questionnaires: updatedList
+        })
+        props.growl.show({severity: "info", summary: "Шаблон анкеты удалён"})
+    }
 
-            props.updateActiveGame({
-                questionnaires: updatedList
-            })
+    function onQuestionnaireRestoreClicked(questionnaire) {
+        get(questionnaireRestoreUrl(questionnaire.id))
+        const updatedList = props.activeGame.questionnaires.slice()
+
+        updatedList
+            .find(it => it.id === questionnaire.id)
+            .deleted = false
+
+        props.updateActiveGame({
+            questionnaires: updatedList
         })
 
-        props.growl.show({severity: "info", summary: "Шаблон анкеты удалён"})
+        props.growl.show({severity: "info", summary: "Шаблон анкеты восстановлен"})
     }
 
     function onEditClicked() {
@@ -118,6 +128,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     questionnaire.deleted ?
                         <RestoreLabel
                             text={"Шаблон анкеты удалён"}
+                            onClick={() => onQuestionnaireRestoreClicked(questionnaire)}
                         /> :
                         <HorizontalListItem
                             key={questionnaire.id}

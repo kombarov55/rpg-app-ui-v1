@@ -23,6 +23,8 @@ import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
 import HorizontalListItem from "../../Common/HorizontalListItem";
 import Label from "../../Common/Label";
 import RestoreLabel from "../../Common/RestoreLabel";
+import DefaultFormValues from "../../../data-layer/DefaultFormValues";
+import QuestionnaireTemplateFormMode from "../../../data-layer/enums/QuestionnaireTemplateFormMode";
 
 function mapStateToProps(state, props) {
     return {
@@ -37,7 +39,8 @@ function mapDispatchToProps(dispatch, props) {
         changeView: view => dispatch(changeView(view)),
         setGames: games => dispatch(setGames(games)),
         updateGameForm: game => dispatch(updateGameForm(game)),
-        updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue))
+        updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue)),
+        updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue))
     }
 }
 
@@ -45,6 +48,7 @@ function mapDispatchToProps(dispatch, props) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onQuestionnaireTemplateEditClicked(questionnaireTemplate) {
+        Globals.questionnaireTemplateFormMode = QuestionnaireTemplateFormMode.EDIT
         Preload.questionnaireTemplateEditView(questionnaireTemplate.id)
         props.changeView(questionnaireTemplateEditView)
     }
@@ -107,6 +111,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
     }
 
+    function onAddQuestionnaireTemplateClicked() {
+        Globals.questionnaireTemplateFormMode = QuestionnaireTemplateFormMode.CREATE
+        props.updateQuestionnaireTemplateForm(DefaultFormValues.questionnaireTemplateForm)
+        props.changeView(questionnaireRulesView)
+    }
+
     function onSkillViewClicked() {
         Preload.skills(props.activeGame.id)
         props.changeView(skillsView)
@@ -142,7 +152,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Присоединиться к игре"}/>
-                    <Btn text={"Создать шаблон анкеты"} onClick={() => props.changeView(questionnaireRulesView)}/>
+                    <Btn text={"Создать шаблон анкеты"} onClick={() => onAddQuestionnaireTemplateClicked()}/>
                     <Btn text={"Навыки"} onClick={() => onSkillViewClicked()}/>
                     <Btn text={"Редактировать"} onClick={() => onEditClicked()}/>
                     <Btn text={"Удалить"} onClick={() => onDeleteClicked()}/>

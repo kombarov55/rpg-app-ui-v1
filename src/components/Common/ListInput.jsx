@@ -1,8 +1,28 @@
-import React from "react";
+import React, {useState} from "react";
 import Icon from "./Icon";
 
 export default function (props) {
     const max = props.max != null ? props.max : Number.MAX_SAFE_INTEGER
+
+    let [justAddedValues, setJustAddedValues] = useState([])
+
+    function onSubmit(value) {
+        setJustAddedValues(justAddedValues.concat(value))
+        props.onSubmit(value)
+    }
+
+    function onDelete(value) {
+        setJustAddedValues(justAddedValues.filter(it => it !== value))
+        props.onDelete(value)
+    }
+
+    function deletionAllowed(value) {
+        if (props.deleteOnlyNew) {
+            return justAddedValues.some(it => it === value);
+        } else {
+            return true
+        }
+    }
 
     return (
         <>
@@ -14,7 +34,7 @@ export default function (props) {
                 />
                 <i className={"pi pi-plus-circle"}
                    style={{"fontSize": "5vmax"}}
-                   onClick={() => props.onSubmit(props.value)}
+                   onClick={() => onSubmit(props.value)}
                 />
             </div>
             }
@@ -31,10 +51,10 @@ export default function (props) {
                                 />
                             }
                             {
-                                props.onDelete != null &&
+                                props.onDelete != null && deletionAllowed(it) &&
                                 <Icon className={"pi pi-times"}
                                       fontSize={"2.5vmax"}
-                                      onClick={() => props.onDelete(it)}
+                                      onClick={() => onDelete(it)}
                                 />
                             }
                         </div>

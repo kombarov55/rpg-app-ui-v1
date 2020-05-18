@@ -17,6 +17,8 @@ import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 import CurrencyForm from "../CurrencyForm";
 import AddItemButton from "../../Common/AddItemButton";
 import InputLabel from "../../Common/InputLabel";
+import ListItemSmall from "../../Common/ListItemSmall";
+import NoItemsLabel from "../../Common/NoItemsLabel";
 
 function mapStateToProps(state, props) {
     return {
@@ -114,6 +116,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            onChange={e => props.updateGameForm({description: e.target.value})}
             />
             <InputLabel text={"Валюта: (макс. 3)"}/>
+
+            <div className={"list"}>
+                {props.gameForm.currencies.length === 0 ?
+                    <NoItemsLabel text={"Нет валют"}/> :
+                    props.gameForm.currencies.map(currency =>
+                        <ListItemSmall text={currency.name} subtext={currency.priceInActivityPoints}/>
+                    )
+                }
+
+            </div>
+
             {
                 props.currencyForm.visible &&
                 <CurrencyForm

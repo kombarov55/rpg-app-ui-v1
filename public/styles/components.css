@@ -55,6 +55,10 @@
     align-items: center;
 
     width: 100%;
+    padding: 1vmax 1vmin;
+
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.24);
 }
 
 .no-items-label {
@@ -174,4 +178,18 @@
 
 .input-group {
     margin-bottom: 5vh;
+}
+
+.list-item-small {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    padding: 1vmax 2vmin;
+    margin: 0.2vmax 0;
+
+    border-radius: 5px;
+    background: grey;
 }

@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import {
     changeView,
-    setGames,
+    setGames, updateConversionForm,
     updateCurrencyForm,
     updateGameForm
 } from "../../../data-layer/ActionCreators";
@@ -37,7 +37,8 @@ function mapDispatchToProps(dispatch, props) {
         updateGameForm: fieldNameToValue => dispatch(updateGameForm(fieldNameToValue)),
         changeView: view => dispatch(changeView(view)),
         setGames: games => dispatch(setGames(games)),
-        updateCurrencyForm: fieldNameToValue => dispatch(updateCurrencyForm(fieldNameToValue))
+        updateCurrencyForm: fieldNameToValue => dispatch(updateCurrencyForm(fieldNameToValue)),
+        updateConversionForm: fieldNameToValue => dispatch(updateConversionForm(fieldNameToValue))
     }
 }
 
@@ -63,19 +64,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onConversionFormSubmit() {
         setConversionFormVisible(false)
+        props.updateGameForm({conversions: props.gameForm.conversions.slice().concat(props.conversionForm)})
+        props.updateConversionForm(DefaultFormValues.conversionForm)
     }
 
     function onSkillTypeSubmitClicked(value) {
         if (value !== "") {
             props.updateGameForm({
-                skillTypes: props.gameForm.skillTypes.filter(it => it != value).concat(value),
+                skillTypes: props.gameForm.skillTypes.filter(it => it !== value).concat(value),
                 skillTypeInput: ""
             })
         }
     }
 
     function onSkillTypeDeleteClicked(value) {
-        props.updateGameForm({skillTypes: props.gameForm.skillTypes.filter(it => it != value)})
+        props.updateGameForm({skillTypes: props.gameForm.skillTypes.filter(it => it !== value)})
     }
 
     function save() {
@@ -147,7 +150,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             <InputLabel text={"Обмен валют:"}/>
             {
-                conversionFormVisible && <ConversionForm/>
+                conversionFormVisible &&
+                <ConversionForm
+                    currencies={props.gameForm.currencies}
+                    onSubmit={() => onConversionFormSubmit()}
+                />
             }
             {
                 !conversionFormVisible &&

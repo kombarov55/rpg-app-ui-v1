@@ -25,6 +25,7 @@ export default {
         currencyInput: "",
         skillTypeInput: "",
         currencies: [],
+        conversions: [],
         skillTypes: ["Общие", "Боевые", "Магические", "Прочие"]
     },
     questionnaireTemplateForm: {

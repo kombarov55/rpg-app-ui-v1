@@ -47,7 +47,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
 
         props.updateSkillForm({currenciesForUpgrade: updatedList})
-        // props.updateSkillForm({upgradeCosts: deprecated__updateupgradeCostsCurrencies(props.skillForm.upgradeCosts, updatedList)})
     }
 
     function isCurrencyChecked(name) {
@@ -114,14 +113,29 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onUpgradeOptionAddClicked() {
-        props.updateSkillForm({
-            upgradeOptions: props.skillForm.upgradeOptions.concat(props.skillForm.upgradeOptionForm),
-            upgradeOptionForm: {
-                currencies: []
-            },
-            upgradeOptionFormVisible: false
-        })
+        const isAddedPreviously = props.skillForm.upgradeOptions.some(option =>
+            option.currencies.every(alreadyAddedCurrency =>
+                props.skillForm.upgradeOptionForm.currencies.some(formCurrency => formCurrency === alreadyAddedCurrency))
+        )
 
+        const hasAnyCurrencyChecked = props.skillForm.currenciesForUpgrade.some(name => isOptionCurrencyChecked(name))
+
+        if (isAddedPreviously || !hasAnyCurrencyChecked) {
+            props.updateSkillForm({
+                upgradeOptionForm: {
+                    currencies: []
+                },
+                upgradeOptionFormVisible: false
+            })
+        } else {
+            props.updateSkillForm({
+                upgradeOptions: props.skillForm.upgradeOptions.concat(props.skillForm.upgradeOptionForm),
+                upgradeOptionForm: {
+                    currencies: []
+                },
+                upgradeOptionFormVisible: false
+            })
+        }
     }
 
     function onMaxValueChange(value) {
@@ -129,36 +143,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             maxValue: value,
             upgradeCosts: updateUpgradeCostsLength(props.skillForm.upgradeCosts, parseInt(value), props.skillForm.upgradeOptions)
         })
-        // props.updateSkillForm({upgradeCosts: deprecated__updateupgradeCostsLength(props.skillForm.upgradeCosts, parseInt(value), props.skillForm.currenciesForUpgrade)})
 
-    }
-
-    function deprecated__updateupgradeCostsCurrencies(list, updatedCurrenciesList) {
-        return list.map(item => Object.assign({}, item, {
-            costs: updatedCurrenciesList.map(name => {
-                const prevItem = item.costs.find(costItem => costItem.currencyName === name)
-
-                let amount
-                if (prevItem != null) {
-                    amount = prevItem.amount
-                } else {
-                    amount = 0
-                }
-
-                return {
-                    currencyName: name,
-                    amount: amount
-                }
-            })
-        }))
-    }
-
-    function deprecated__updateupgradeCostsLength(prevList, newLength, currencies) {
-        if (newLength > prevList.length) {
-            return prevList.concat(deprecated__buildupgradeCostsList(prevList.length + 1, newLength - prevList.length, currencies))
-        } else {
-            return prevList.slice(0, newLength - prevList.length)
-        }
     }
 
     function updateUpgradeCostsLength(prevList, newLength, options) {
@@ -167,22 +152,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         } else {
             return prevList.slice(0, newLength - prevList.length)
         }
-    }
-
-    function deprecated__buildupgradeCostsList(start, length, currencies) {
-        const result = []
-
-        for (let i = start; i < start + length; i++) {
-            result.push({
-                lvlNum: i,
-                costs: currencies.map(name => ({
-                    currencyName: name,
-                    amount: 0
-                }))
-            })
-        }
-
-        return result
     }
 
     function buildUpgradeCostsList(start, length, upgradeOptions) {
@@ -201,16 +170,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
 
         return result
-    }
-
-    function deprecated__onSkillCostUpdate(lvlNum, currencyName, amount) {
-        const newList = props.skillForm.upgradeCosts.slice()
-
-        newList.find(cost => cost.lvlNum === lvlNum)
-            .costs.find(costItem => costItem.currencyName === currencyName)
-            .amount = amount
-
-        props.updateSkillForm({upgradeCosts: newList})
     }
 
     function onSkillCostUpdate(lvlNum, optionIndex, currencyName, amount) {

@@ -27,6 +27,7 @@ import SkillEditView from "./components/Game/View/SkillEditView";
 import SkillSelectionView from "./components/QuestionnaireCreation/View/SkillSelectionView";
 import AdminPageView from "./components/Admin/View/AdminPageView";
 import Preload from "./util/Preload";
+import QuestionnaireEditView from "./components/QuestionnaireCreation/View/QuestionnaireEditView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -59,6 +60,7 @@ export const gameEditView = {component: <GameEditView/>, label: "Редакти�
 
 export const questionnaireRulesView = {component: <QuestionnaireRulesView/>, label: "Правила игры"}
 export const questionnaireCreationView = {component: <QuestionnaireCreationView/>, label: "Создание анкеты"}
+export const questionnaireEditView = {component: <QuestionnaireEditView/>, label: "Редактирование шаблона анкеты"}
 export const skillSelectionView = {component: <SkillSelectionView/>, label: "Выбор навыка"}
 
 export const skillslView = {component: <SkillView/>, label: "Навыки"}

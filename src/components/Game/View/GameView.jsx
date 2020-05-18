@@ -1,10 +1,16 @@
 import React from "react";
 import {connect} from "react-redux";
-import {changeView, setActiveGame, setGames, updateGameForm} from "../../../data-layer/ActionCreators";
+import {
+    changeView,
+    setActiveGame,
+    setGames,
+    updateGameForm,
+    updateQuestionnaireForm
+} from "../../../data-layer/ActionCreators";
 import {
     adminPageView,
     gameEditView,
-    networkView,
+    networkView, questionnaireEditView,
     questionnaireRulesView,
     skillslView, subnetworkView
 } from "../../../Views";
@@ -29,12 +35,18 @@ function mapDispatchToProps(dispatch, props) {
     return {
         changeView: view => dispatch(changeView(view)),
         setGames: games => dispatch(setGames(games)),
-        updateGameForm: game => dispatch(updateGameForm(game))
+        updateGameForm: game => dispatch(updateGameForm(game)),
+        updateQuestionnaireForm: questionnaire => dispatch(updateQuestionnaireForm(questionnaire))
     }
 }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+
+    function onQuestionnaireEditClicked(questionnaire) {
+        props.updateQuestionnaireForm(questionnaire)
+        props.changeView(questionnaireEditView)
+    }
 
     function onEditClicked() {
         props.updateGameForm(props.activeGame)
@@ -87,6 +99,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         name={questionnaire.name}
                         description={questionnaire.description}
                         imgSrc={questionnaire.imgSrc !== "" ? questionnaire.imgSrc : "https://vignette.wikia.nocookie.net/the100/images/9/95/The100215_1620.jpg/revision/latest?cb=20180104191509&path-prefix=ru"}
+                        onEdit={() => onQuestionnaireEditClicked(questionnaire)}
                     />
                 )}
 

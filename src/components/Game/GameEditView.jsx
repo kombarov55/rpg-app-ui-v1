@@ -54,20 +54,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSaveClicked() {
         let url
-        let nextView
 
         switch (Globals.gameCreationMode) {
             case GameCreationMode.OPEN:
                 url = gameUrl(props.gameForm.id)
-                nextView = adminPageView
                 break;
             case GameCreationMode.BY_NETWORK:
                 url = editGameByNetworkId(props.activeNetwork.id, props.gameForm.id)
-                nextView = networkView
                 break;
             case GameCreationMode.BY_SUBNETWORK:
                 url= editGamebySubnetworkId(props.activeNetwork.id, props.activeSubnetwork.id, props.gameForm.id)
-                nextView = subnetworkView
                 break;
 
         }
@@ -76,7 +72,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             props.growl.show({severity: "info", summary: "Игра обновлена"})
             props.setGames(props.games.filter(it => it.id !== rs.id).concat(rs))
             props.updateGameForm(DefaultFormValues.gameForm)
-            props.changeView(nextView)
+            props.setActiveGame(rs)
+            props.changeView(gameView)
         })
     }
 

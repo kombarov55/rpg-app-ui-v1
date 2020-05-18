@@ -22,6 +22,7 @@ import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
 import HorizontalListItem from "../../Common/HorizontalListItem";
 import Label from "../../Common/Label";
+import RestoreLabel from "../../Common/RestoreLabel";
 
 function mapStateToProps(state, props) {
     return {
@@ -114,14 +115,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <Label text={"Шаблоны анкет:"}/>
                 {props.activeGame.questionnaires.map(questionnaire =>
-                    <HorizontalListItem
-                        key={questionnaire.id}
-                        name={questionnaire.name}
-                        description={questionnaire.description}
-                        imgSrc={questionnaire.imgSrc !== "" ? questionnaire.imgSrc : "https://vignette.wikia.nocookie.net/the100/images/9/95/The100215_1620.jpg/revision/latest?cb=20180104191509&path-prefix=ru"}
-                        onEdit={() => onQuestionnaireEditClicked(questionnaire)}
-                        onDelete={() => onQuestionnaireDeleteClicked(questionnaire)}
-                    />
+                    questionnaire.deleted ?
+                        <RestoreLabel
+                            text={"Шаблон анкеты удалён"}
+                        /> :
+                        <HorizontalListItem
+                            key={questionnaire.id}
+                            name={questionnaire.name}
+                            description={questionnaire.description}
+                            imgSrc={questionnaire.imgSrc !== "" ? questionnaire.imgSrc : "https://vignette.wikia.nocookie.net/the100/images/9/95/The100215_1620.jpg/revision/latest?cb=20180104191509&path-prefix=ru"}
+                            onEdit={() => onQuestionnaireEditClicked(questionnaire)}
+                            onDelete={() => onQuestionnaireDeleteClicked(questionnaire)}
+                        />
                 )}
 
 

@@ -144,3 +144,23 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.restore-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.restore-label-text {
+    margin: 0 0.5vmax;
+
+    font-size: 1.5vmax;
+}
+
+.restore-label-link {
+    margin: 0 0.5vmax;
+
+    font-size: 1.5vmax;
+    color: #61dafb;
+    text-decoration: underline;
+}

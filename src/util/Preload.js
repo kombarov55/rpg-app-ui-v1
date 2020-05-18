@@ -1,5 +1,6 @@
 import {get} from "./Http";
 import {
+    conversionsByGameIdUrl,
     currenciesByGameIdUrl,
     gameByNetworkId,
     gameBySubnetworkId,
@@ -10,7 +11,7 @@ import {
     subnetworkUrl
 } from "./Parameters";
 import {
-    setActiveGame, setCurrencies,
+    setActiveGame, setConversions, setCurrencies,
     setGames,
     setNetworks,
     setSkills,
@@ -47,6 +48,7 @@ export default {
     },
 
     conversionView: gameId => {
+        get(conversionsByGameIdUrl(gameId), rs => window.store.dispatch(setConversions(rs)))
         get(currenciesByGameIdUrl(gameId), rs => window.store.dispatch(setCurrencies(rs)))
     },
 

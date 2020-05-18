@@ -5,11 +5,16 @@ import NoItemsLabel from "../../Common/NoItemsLabel";
 import ListItemSmall from "../../Common/ListItemSmall";
 import AddItemButton from "../../Common/AddItemButton";
 import ConversionForm from "../ConversionForm";
-import {setConversions, updateConversionForm} from "../../../data-layer/ActionCreators";
+import {changeView, setConversions, updateConversionForm} from "../../../data-layer/ActionCreators";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
+import Btn from "../../Common/Btn";
+import {gameView} from "../../../Views";
+import {post} from "../../../util/Http";
+import {conversionsByGameIdUrl} from "../../../util/Parameters";
 
 function mapStateToProps(state, props) {
     return {
+        activeGame: state.activeGame,
         currencies: state.currencies,
         conversions: state.conversions,
         conversionForm: state.conversionForm
@@ -19,7 +24,8 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch, props) {
     return {
         setConversions: conversions => dispatch(setConversions(conversions)),
-        updateConversionForm: fieldNameToValue => dispatch(updateConversionForm(fieldNameToValue))
+        updateConversionForm: fieldNameToValue => dispatch(updateConversionForm(fieldNameToValue)),
+        changeView: view => dispatch(changeView(view))
     }
 }
 
@@ -45,24 +51,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         <NoItemsLabel text={"Нет вариантов обмена"}/> :
                         props.conversions.map(conversion =>
                             <ListItemSmall
-                                left={"1 " + conversion.currency1.name + " = " + conversion.conversionPrice1to2 + " " + conversion.currency2.name}
-                                right={"1 " + conversion.currency2.name + " = " + conversion.conversionPrice2to1 + " " + conversion.currency1.name}
+                                left={"1 " + conversion.currency1 + " = " + conversion.conversionPrice1to2 + " " + conversion.currency2}
+                                right={"1 " + conversion.currency2 + " = " + conversion.conversionPrice2to1 + " " + conversion.currency1}
                             />
                         )
                 }
             </div>
-
             {
                 formVisible &&
                 <ConversionForm currencies={props.currencies}
                                 onSubmit={() => {
                                     setFormVisible(false)
-                                    props.setConversions(props.conversions.concat(props.conversionForm))
+                                    post(conversionsByGameIdUrl(props.activeGame.id), props.conversionForm, rs => props.setConversions(props.conversions.concat(rs)))
                                     props.updateConversionForm(DefaultFormValues.conversionForm)
+
                                 }}
                 />
             }
-
             {
                 !formVisible &&
                 <AddItemButton text={"Добавить вариант обмена"}
@@ -71,8 +76,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                }}
                 />
             }
-
-
+            <Btn text={"Назад"} onClick={() => props.changeView(gameView)}/>
         </div>
     )
 })

@@ -171,3 +171,7 @@
     color: #61dafb;
     text-decoration: underline;
 }
+
+.input-group {
+    margin-bottom: 5vh;
+}

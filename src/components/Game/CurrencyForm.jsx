@@ -20,18 +20,23 @@ function mapDispatchToProps(dispatch, props) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     return (
         <div className={"currency-form"}>
-            <InputLabel text={"Название:"}/>
-            <input
-                value={props.currencyForm.name}
-                onChange={e => props.updateCurrencyForm({name: e.target.value})}
-            />
+            <div className={"input-group"}>
+                <InputLabel text={"Название:"}/>
+                <input
+                    value={props.currencyForm.name}
+                    onChange={e => props.updateCurrencyForm({name: e.target.value})}
+                />
 
-            <InputLabel text={"Цена в баллах актива:"}/>
-            <input
-                value={props.currencyForm.priceInActivityPoints}
-                onChange={e => props.updateCurrencyForm({priceInActivityPoints: e.target.value})}
+                <InputLabel text={"Цена в баллах актива:"}/>
+                <input
+                    value={props.currencyForm.priceInActivityPoints}
+                    onChange={e => props.updateCurrencyForm({priceInActivityPoints: e.target.value})}
+                />
+            </div>
+
+            <Btn text={"Сохранить"}
+                 onClick={() => props.onSubmit()}
             />
-            <Btn text={"Сохранить"}/>
         </div>
     )
 })

@@ -4,7 +4,6 @@ import {InputTextarea} from "primereact/inputtextarea";
 import {
     changeView,
     setGames,
-    updateCommentForm,
     updateCurrencyForm,
     updateGameForm
 } from "../../../data-layer/ActionCreators";
@@ -16,7 +15,6 @@ import ListInput from "../../Common/ListInput";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 import CurrencyForm from "../CurrencyForm";
-import Label from "../../Common/Label";
 import AddItemButton from "../../Common/AddItemButton";
 import InputLabel from "../../Common/InputLabel";
 
@@ -43,9 +41,13 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
-    const [currencyForm, setCurrencyForm] = useState({
-        visible: false
-    })
+    function onCurrencyFormSubmit() {
+        props.updateGameForm({
+            currencies: props.gameForm.currencies.slice().concat(props.currencyForm)
+        })
+
+        props.updateCurrencyForm(DefaultFormValues.currencyForm)
+    }
 
     function onSkillTypeSubmitClicked(value) {
         if (value !== "") {
@@ -114,7 +116,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputLabel text={"Валюта: (макс. 3)"}/>
             {
                 props.currencyForm.visible &&
-                <CurrencyForm/>
+                <CurrencyForm
+                    onSubmit={() => onCurrencyFormSubmit()}
+                />
             }
             {
                 !props.currencyForm.visible &&

@@ -1,4 +1,4 @@
-export const rootUrl = "http://localhost:8080"
+import {rootUrl} from "./RootUrl";
 
 export const loginUrl = rootUrl + "/login"
 

@@ -5,6 +5,7 @@ import {changeView, updateQuestionnaireTemplateForm} from "../../../data-layer/A
 import {questionnaireTemplateCreationView, questionnaireTemplateEditView} from "../../../Views";
 import Globals from "../../../util/Globals";
 import QuestionnaireTemplateFormMode from "../../../data-layer/enums/QuestionnaireTemplateFormMode";
+import Btn from "../../Common/Btn";
 
 function mapStateToProps(state, props) {
     return {
@@ -33,6 +34,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         )
     }
 
+    function onBackClicked() {
+        props.changeView(Globals.questionnaireTemplateFormMode === QuestionnaireTemplateFormMode.CREATE ?
+            questionnaireTemplateCreationView :
+            questionnaireTemplateEditView
+        )
+    }
+
     return (
         <div className={"list"}>
             {props.skills.filter(it => props.questionnaireTemplateForm.skills.every(addedSkill => it.name !== addedSkill.name))
@@ -48,6 +56,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         upgradeCosts={skill.upgradeCosts}
                     />
                 )}
+                <Btn text={"Назад"}
+                     onClick={() => onBackClicked()}
+                />
         </div>
     )
 })

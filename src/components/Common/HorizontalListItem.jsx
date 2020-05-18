@@ -10,7 +10,7 @@ function mapDispatchToProps(dispatch, props) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
-    const {name, description, imgSrc, onDelete, onEdit, onClick} = props
+    const {name, description, imgSrc, onClick, onDelete, onEdit} = props
 
     return (
         <div className={"horizontal-list-item"}>

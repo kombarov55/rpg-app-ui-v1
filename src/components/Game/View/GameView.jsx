@@ -144,6 +144,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             name={questionnaireTemplate.name}
                             description={questionnaireTemplate.description}
                             imgSrc={questionnaireTemplate.imgSrc !== "" ? questionnaireTemplate.imgSrc : "https://vignette.wikia.nocookie.net/the100/images/9/95/The100215_1620.jpg/revision/latest?cb=20180104191509&path-prefix=ru"}
+                            onClick={() => window.alert("not implemented")}
                             onEdit={() => onQuestionnaireTemplateEditClicked(questionnaireTemplate)}
                             onDelete={() => onQuestionnaireTemplateDeleteClicked(questionnaireTemplate)}
                         />

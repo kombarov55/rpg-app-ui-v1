@@ -193,6 +193,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onBackClicked() {
+        props.changeView(skillsView)
+    }
+
     return (
         <>
             <div className={"questionnaire-creation-skill-item-form"}>
@@ -319,6 +323,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <Btn
                     text={"Сохранить"}
                     onClick={() => onSaveClicked()}
+                />
+
+                <Btn
+                    text={"Назад"}
+                    onClick={() => onBackClicked()}
                 />
 
             </div>

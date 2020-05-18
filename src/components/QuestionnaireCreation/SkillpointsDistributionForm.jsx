@@ -1,23 +1,23 @@
 import React from "react";
 import {connect} from "react-redux";
-import {updateQuestionnaireForm} from "../../data-layer/ActionCreators";
+import {updateQuestionnaireTemplateForm} from "../../data-layer/ActionCreators";
 
 function mapStateToProps(state, props) {
     return {
-        questionnaireForm: state.questionnaireForm
+        questionnaireTemplateForm: state.questionnaireTemplateForm
     }
 }
 
 function mapDispatchToProps(dispatch, props) {
     return {
-        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue))
+        updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue))
     }
 }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function value(name) {
-        const item = props.questionnaireForm.skillPointsDistribution
+        const item = props.questionnaireTemplateForm.skillPointsDistribution
             .find(it => it.skillType === name)
 
         if (item != null) {
@@ -28,7 +28,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function distributeSkillPoint(name, value) {
-        let updatedList = props.questionnaireForm.skillPointsDistribution.slice()
+        let updatedList = props.questionnaireTemplateForm.skillPointsDistribution.slice()
 
         const prevItem = updatedList.find(it => it.skillType === name)
         if (prevItem == null) {
@@ -48,7 +48,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         parseInt(value)
         }
 
-        props.updateQuestionnaireForm({skillPointsDistribution: updatedList})
+        props.updateQuestionnaireTemplateForm({skillPointsDistribution: updatedList})
     }
 
     return (
@@ -62,26 +62,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     />
                 </div>
             )}
-
-
-            {/*<div className={"questionnaire-creation-skillpoints-distribution-entry"}>*/}
-            {/*    <div className={"questionnaire-creation-skillpoints-distribution-name"}>*/}
-            {/*        Боевые:*/}
-            {/*    </div>*/}
-            {/*    <input className={"questionnaire-creation-skillpoints-distribution-value"}/>*/}
-            {/*</div>*/}
-            {/*<div className={"questionnaire-creation-skillpoints-distribution-entry"}>*/}
-            {/*    <div className={"questionnaire-creation-skillpoints-distribution-name"}>*/}
-            {/*        Магические:*/}
-            {/*    </div>*/}
-            {/*    <input className={"questionnaire-creation-skillpoints-distribution-value"}/>*/}
-            {/*</div>*/}
-            {/*<div className={"questionnaire-creation-skillpoints-distribution-entry"}>*/}
-            {/*    <div className={"questionnaire-creation-skillpoints-distribution-name"}>*/}
-            {/*        Прочие:*/}
-            {/*    </div>*/}
-            {/*    <input className={"questionnaire-creation-skillpoints-distribution-value"}/>*/}
-            {/*</div>*/}
         </div>
     )
 })

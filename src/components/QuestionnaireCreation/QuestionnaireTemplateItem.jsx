@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import QuestionnaireItemType from "../../data-layer/enums/QuestionnaireItemType";
+import QuestionnaireTemplateItemType from "../../data-layer/enums/QuestionnaireTemplateItemType";
 
 function mapStateToProps(state, props) {
     return {}
@@ -27,7 +27,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     />
                 </div>
             </div>
-            {props.type === QuestionnaireItemType.LIST.value && props.listValues.map(name =>
+            {props.type === QuestionnaireTemplateItemType.LIST.value && props.listValues.map(name =>
                 <div key={name}
                      className={"questionnaire-item-list-item-display"}>{name}
                 </div>

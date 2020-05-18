@@ -2,19 +2,19 @@ import React from "react";
 import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {Checkbox} from "primereact/checkbox";
-import {changeView, setSkills, updateQuestionnaireForm, updateSkillForm} from "../../../data-layer/ActionCreators";
+import {changeView, setSkills, updateQuestionnaireTemplateForm, updateSkillForm} from "../../../data-layer/ActionCreators";
 import Btn from "../../Common/Btn";
 import {InputTextarea} from "primereact/inputtextarea";
 import {post} from "../../../util/Http";
 import {skillUrl} from "../../../util/Parameters";
-import {skillslView} from "../../../Views";
+import {skillsView} from "../../../Views";
 import AddItemButton from "../../Common/AddItemButton";
 
 function mapStateToProps(state, props) {
     return {
         skillForm: state.skillForm,
         activeGame: state.activeGame,
-        questionnaireForm: state.questionnaireForm,
+        questionnaireTemplateForm: state.questionnaireTemplateForm,
         skills: state.skills,
         growl: state.growl
     }
@@ -23,7 +23,6 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch, props) {
     return {
         updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue)),
-        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue)),
         setSkills: skills => dispatch(setSkills(skills)),
         changeView: view => dispatch(changeView(view))
     }
@@ -189,7 +188,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
         post(skillUrl, body, rs => {
             props.setSkills(props.skills.concat(rs))
-            props.changeView(skillslView)
+            props.changeView(skillsView)
             props.growl.show({severity: "info", summary: "Навык создан"})
         })
     }

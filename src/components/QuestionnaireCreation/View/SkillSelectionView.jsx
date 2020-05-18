@@ -1,19 +1,19 @@
 import React from "react";
 import {connect} from "react-redux";
 import SkillItem from "../SkillItem";
-import {changeView, updateQuestionnaireForm} from "../../../data-layer/ActionCreators";
-import {questionnaireCreationView} from "../../../Views";
+import {changeView, updateQuestionnaireTemplateForm} from "../../../data-layer/ActionCreators";
+import {questionnaireTemplateCreationView} from "../../../Views";
 
 function mapStateToProps(state, props) {
     return {
         skills: state.activeGame.skills,
-        questionnaireForm: state.questionnaireForm
+        questionnaireTemplateForm: state.questionnaireTemplateForm
     }
 }
 
 function mapDispatchToProps(dispatch, props) {
     return {
-        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue)),
+        updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue)),
         changeView: view => dispatch(changeView(view))
     }
 }
@@ -21,17 +21,17 @@ function mapDispatchToProps(dispatch, props) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSkillClicked(skill) {
-        props.updateQuestionnaireForm({
-            skills: props.questionnaireForm.skills.concat(skill)
+        props.updateQuestionnaireTemplateForm({
+            skills: props.questionnaireTemplateForm.skills.concat(skill)
         })
 
-        props.changeView(questionnaireCreationView)
+        props.changeView(questionnaireTemplateCreationView)
     }
 
     return (
         <div className={"list"}>
             {props.skills.filter(it =>
-                !props.questionnaireForm.skills.some(addedSkill =>
+                !props.questionnaireTemplateForm.skills.some(addedSkill =>
                     addedSkill.name === it.name)).map(skill =>
                 <SkillItem
                     name={skill.name}

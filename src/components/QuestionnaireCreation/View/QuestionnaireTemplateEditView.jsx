@@ -1,26 +1,26 @@
 import React from "react";
 import {connect} from "react-redux";
-import QuestionnaireItemForm from "../QuestionnaireItemForm";
-import QuestionnaireAddItemButton from "../QuestionnaireAddItemButton";
-import QuestionnaireItem from "../QuestionnaireItem";
+import QuestionnaireTemplateItemForm from "../QuestionnaireTemplateItemForm";
+import QuestionnaireTemplateAddItemButton from "../QuestionnaireTemplateAddItemButton";
+import QuestionnaireTemplateItem from "../QuestionnaireTemplateItem";
 import SkillpointsDistributionForm from "../SkillpointsDistributionForm";
 import SkillItem from "../SkillItem";
-import QuestionnaireAddSkillButton from "../QuestionnaireAddSkillButton";
-import {changeView, setActiveGame, updateQuestionnaireForm} from "../../../data-layer/ActionCreators";
-import QuestionnaireItemType from "../../../data-layer/enums/QuestionnaireItemType";
+import QuestionnaireTemplateAddSkillButton from "../QuestionnaireTemplateAddSkillButton";
+import {changeView, setActiveGame, updateQuestionnaireTemplateForm} from "../../../data-layer/ActionCreators";
+import QuestionnaireTemplateItemType from "../../../data-layer/enums/QuestionnaireTemplateItemType";
 import SkillItemForm from "../../Game/View/SkillCreationView";
 import Btn from "../../Common/Btn";
 import {post, put} from "../../../util/Http";
-import {questionnaireUrl, questionnaireByIdUrl} from "../../../util/Parameters";
+import {questionnaireTemplateUrl, questionnaireTemplateByIdUrl} from "../../../util/Parameters";
 import {InputTextarea} from "primereact/inputtextarea";
-import {gameView, questionnaireEditView, skillSelectionView} from "../../../Views";
+import {gameView, questionnaireTemplateEditView, skillSelectionView} from "../../../Views";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 import Preload from "../../../util/Preload";
 
 
 function mapStateToProps(state, props) {
     return {
-        questionnaireForm: state.questionnaireForm,
+        questionnaireTemplateForm: state.questionnaireTemplateForm,
         activeGame: state.activeGame,
         growl: state.growl
     }
@@ -28,7 +28,7 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch, props) {
     return {
-        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue)),
+        updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue)),
         changeView: view => dispatch(changeView(view)),
         setActiveGame: game => dispatch(setActiveGame(game))
     }
@@ -37,21 +37,21 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
-    function onQuestionnaireItemDeleteClicked(name) {
-        props.updateQuestionnaireForm({questionnaireItems: props.questionnaireForm.questionnaireItems.filter(it => it.name !== name)})
+    function onQuestionnaireTemplateItemDeleteClicked(name) {
+        props.updateQuestionnaireTemplateForm({questionnaireTemplateItems: props.questionnaireTemplateForm.questionnaireTemplateItems.filter(it => it.name !== name)})
     }
 
     function onSkillDeleteClicked(name) {
-        props.updateQuestionnaireForm({skills: props.questionnaireForm.skills.filter(it => it.name !== name)})
+        props.updateQuestionnaireTemplateForm({skills: props.questionnaireTemplateForm.skills.filter(it => it.name !== name)})
     }
 
     function onSkillClicked(name) {
-        const item = props.questionnaireForm.skills.find(it => it.name === name)
+        const item = props.questionnaireTemplateForm.skills.find(it => it.name === name)
         if (item != null) {
             item.expand = !item.expand
         }
 
-        props.updateQuestionnaireForm({skills: props.questionnaireForm.skills})
+        props.updateQuestionnaireTemplateForm({skills: props.questionnaireTemplateForm.skills})
     }
 
     function onAddSkillClicked() {
@@ -59,17 +59,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(skillSelectionView)
     }
 
-    function onQuestionnaireEditClicked() {
-        const form = Object.assign({}, props.questionnaireForm, {
+    function onQuestionnaireTemplateEditClicked() {
+        const form = Object.assign({}, props.questionnaireTemplateForm, {
             gameId: props.activeGame.id
         })
 
-        put(questionnaireByIdUrl(form.id), form, rs => {
+        put(questionnaireTemplateByIdUrl(form.id), form, rs => {
             props.growl.show({severity: "info", summary: "Шаблон анкеты обновлен"})
-            props.updateQuestionnaireForm(DefaultFormValues.questionnaireForm)
+            props.updateQuestionnaireTemplateForm(DefaultFormValues.questionnaireTemplateForm)
 
             props.setActiveGame(Object.assign({}, props.activeGame, {
-                questionnaires: props.activeGame.questionnaires.filter(it => it.id !== rs.id).concat(rs)
+                questionnaireTemplates: props.activeGame.questionnaireTemplates.filter(it => it.id !== rs.id).concat(rs)
             }))
             props.changeView(gameView)
         })
@@ -79,33 +79,33 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         <div className={"questionnaire-creation-view"}>
             <div className={"questionnaire-creation-view-label"}>Название анкеты:</div>
             <input className={"questionnaire-creation-view-input"}
-                   value={props.questionnaireForm.name}
-                   onChange={e => props.updateQuestionnaireForm({name: e.target.value})}
+                   value={props.questionnaireTemplateForm.name}
+                   onChange={e => props.updateQuestionnaireTemplateForm({name: e.target.value})}
             />
 
             <div className={"questionnaire-creation-view-label"}>Описание анкеты:</div>
             <InputTextarea className={"questionnaire-creation-view-input"}
                            autoResize={true}
-                           value={props.questionnaireForm.description}
-                           onChange={e => props.updateQuestionnaireForm({description: e.target.value})}
+                           value={props.questionnaireTemplateForm.description}
+                           onChange={e => props.updateQuestionnaireTemplateForm({description: e.target.value})}
             />
 
             <div className={"questionnaire-creation-view-label"}>Пункты анкеты</div>
             {
-                props.questionnaireForm.questionnaireItems.map(it =>
-                    <QuestionnaireItem
+                props.questionnaireTemplateForm.questionnaireTemplateItems.map(it =>
+                    <QuestionnaireTemplateItem
                         key={it.name}
                         name={it.name}
-                        type={QuestionnaireItemType.getValueByName(it.type)}
+                        type={QuestionnaireTemplateItemType.getValueByName(it.type)}
                         listValues={it.listValues}
-                        onDelete={() => onQuestionnaireItemDeleteClicked(it.name)}
+                        onDelete={() => onQuestionnaireTemplateItemDeleteClicked(it.name)}
                     />
                 )
             }
 
-            {props.questionnaireForm.itemFormVisible && <QuestionnaireItemForm/>}
+            {props.questionnaireTemplateForm.itemFormVisible && <QuestionnaireTemplateItemForm/>}
 
-            <QuestionnaireAddItemButton onClick={() => props.updateQuestionnaireForm({itemFormVisible: true})}/>
+            <QuestionnaireTemplateAddItemButton onClick={() => props.updateQuestionnaireTemplateForm({itemFormVisible: true})}/>
 
             <div className={"questionnaire-creation-view-label"}>Распределение навыков:</div>
             <SkillpointsDistributionForm
@@ -114,7 +114,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             <div className={"questionnaire-creation-view-label"}>Навыки:</div>
 
-            {props.questionnaireForm.skills.map(skill =>
+            {props.questionnaireTemplateForm.skills.map(skill =>
                 <SkillItem
                     name={skill.name}
                     type={skill.type}
@@ -128,12 +128,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
             )}
 
-            <QuestionnaireAddSkillButton
+            <QuestionnaireTemplateAddSkillButton
                 onClick={() => onAddSkillClicked()}
             />
 
             <Btn text={"Обновить анкету"}
-                 onClick={() => onQuestionnaireEditClicked()}
+                 onClick={() => onQuestionnaireTemplateEditClicked()}
             />
 
         </div>

@@ -1,13 +1,6 @@
 import {createStore} from "redux";
 import {rootReducer} from "./Reducers";
-import {
-    adminPageView,
-    announcementView, gameCreationView, gameEditView,
-    gameView, networkCreationView,
-    networkSelectionView,
-    questionnaireCreationView,
-    questionnaireRulesView
-} from "../Views";
+import {announcementView} from "../Views";
 import DefaultFormValues from "./DefaultFormValues";
 
 export const initialState = {
@@ -39,8 +32,8 @@ export const initialState = {
     networkForm: DefaultFormValues.network,
     subnetworkForm: DefaultFormValues.subnetwork,
     gameForm: DefaultFormValues.gameForm,
-    questionnaireForm: DefaultFormValues.questionnaireForm,
-    questionnaireItemForm: DefaultFormValues.questionnaireItemForm,
+    questionnaireTemplateForm: DefaultFormValues.questionnaireTemplateForm,
+    questionnaireTemplateItemForm: DefaultFormValues.questionnaireTemplateItemForm,
     skillForm: DefaultFormValues.skillForm
 }
 

@@ -1,4 +1,4 @@
-import QuestionnaireItemType from "./enums/QuestionnaireItemType";
+import QuestionnaireTemplateItemType from "./enums/QuestionnaireTemplateItemType";
 
 export default {
     announcement: {
@@ -27,19 +27,19 @@ export default {
         currencies: [],
         skillTypes: ["Общие", "Боевые", "Магические", "Прочие"]
     },
-    questionnaireForm: {
+    questionnaireTemplateForm: {
         name: "",
         description: "",
         gameId: "",
         itemFormVisible: false,
         skillFormVisible: false,
-        questionnaireItems: [],
+        questionnaireTemplateItems: [],
         skillPointsDistribution: [],
         skills: []
     },
-    questionnaireItemForm: {
+    questionnaireTemplateItemForm: {
         name: "",
-        type: QuestionnaireItemType.STRING.name,
+        type: QuestionnaireTemplateItemType.STRING.name,
         listInput: "",
         listValues: []
     },

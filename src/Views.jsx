@@ -12,7 +12,7 @@ import NetworkSelectionView from "./components/Admin/Network/View/NetworkSelecti
 import NetworkView from "./components/Admin/Network/View/NetworkView";
 import SubnetworkView from "./components/Admin/Subnetwork/View/SubnetworkView";
 import GameView from "./components/Game/View/GameView";
-import QuestionnaireCreationView from "./components/QuestionnaireCreation/View/QuestionnaireCreationView";
+import QuestionnaireTemplateCreationView from "./components/QuestionnaireCreation/View/QuestionnaireTemplateCreationView";
 import QuestionnaireRulesView from "./components/QuestionnaireCreation/View/QuestionnaireRulesView";
 import NetworkItem from "./components/Admin/NetworkItem";
 import NetworkCreationView from "./components/Admin/Network/View/NetworkCreationView";
@@ -27,7 +27,7 @@ import SkillEditView from "./components/Game/View/SkillEditView";
 import SkillSelectionView from "./components/QuestionnaireCreation/View/SkillSelectionView";
 import AdminPageView from "./components/Admin/View/AdminPageView";
 import Preload from "./util/Preload";
-import QuestionnaireEditView from "./components/QuestionnaireCreation/View/QuestionnaireEditView";
+import QuestionnaireTemplateEditView from "./components/QuestionnaireCreation/View/QuestionnaireTemplateEditView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -59,10 +59,10 @@ export const gameCreationView = {component: <GameCreationView/>, label: "Соз�
 export const gameEditView = {component: <GameEditView/>, label: "Редактирование игры"}
 
 export const questionnaireRulesView = {component: <QuestionnaireRulesView/>, label: "Правила игры"}
-export const questionnaireCreationView = {component: <QuestionnaireCreationView/>, label: "Создание анкеты"}
-export const questionnaireEditView = {component: <QuestionnaireEditView/>, label: "Редактирование шаблона анкеты"}
+export const questionnaireTemplateCreationView = {component: <QuestionnaireTemplateCreationView/>, label: "Создание анкеты"}
+export const questionnaireTemplateEditView = {component: <QuestionnaireTemplateEditView/>, label: "Редактирование шаблона анкеты"}
 export const skillSelectionView = {component: <SkillSelectionView/>, label: "Выбор навыка"}
 
-export const skillslView = {component: <SkillView/>, label: "Навыки"}
+export const skillsView = {component: <SkillView/>, label: "Навыки"}
 export const skillCreationView = {component: <SkillItemForm/>, label: "Создание навыка"}
 export const skillEditView = {component: <SkillEditView/>, label: "Редактирование навыка"}

@@ -1,24 +1,22 @@
 import React from "react";
 import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
-import QuestionnaireInputList from "./QuestionnaireInputList";
-import Btn from "../Common/Btn";
-import {updateQuestionnaireForm, updateQuestionnaireItemForm} from "../../data-layer/ActionCreators";
+import {updateQuestionnaireTemplateForm, updateQuestionnaireTemplateItemForm} from "../../data-layer/ActionCreators";
 import ListInput from "../Common/ListInput";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
-import QuestionnaireItemType from "../../data-layer/enums/QuestionnaireItemType";
+import QuestionnaireTemplateItemType from "../../data-layer/enums/QuestionnaireTemplateItemType";
 
 function mapStateToProps(state, props) {
     return {
-        questionnaireForm: state.questionnaireForm,
-        questionnaireItemForm: state.questionnaireItemForm
+        questionnaireTemplateForm: state.questionnaireTemplateForm,
+        questionnaireTemplateItemForm: state.questionnaireTemplateItemForm
     }
 }
 
 function mapDispatchToProps(dispatch, props) {
     return {
-        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue)),
-        updateQuestionnaireItemForm: fieldNameToValue => dispatch(updateQuestionnaireItemForm(fieldNameToValue))
+        updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue)),
+        updateQuestionnaireTemplateItemForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateItemForm(fieldNameToValue))
     }
 }
 
@@ -27,25 +25,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onAddListItemClicked(value) {
         if (value !== "") {
-            props.updateQuestionnaireItemForm({
-                listValues: props.questionnaireItemForm.listValues.filter(it => it !== value).concat(value),
+            props.updateQuestionnaireTemplateItemForm({
+                listValues: props.questionnaireTemplateItemForm.listValues.filter(it => it !== value).concat(value),
                 listInput: ""
             })
         }
     }
 
     function onDeleteListItemClicked(value) {
-        props.updateQuestionnaireItemForm({
-            listValues: props.questionnaireItemForm.listValues.filter(it => it !== value),
+        props.updateQuestionnaireTemplateItemForm({
+            listValues: props.questionnaireTemplateItemForm.listValues.filter(it => it !== value),
         })
     }
 
     function onSaveClicked() {
-        props.updateQuestionnaireForm({
-            questionnaireItems: props.questionnaireForm.questionnaireItems.concat(props.questionnaireItemForm),
+        props.updateQuestionnaireTemplateForm({
+            questionnaireTemplateItems: props.questionnaireTemplateForm.questionnaireTemplateItems.concat(props.questionnaireTemplateItemForm),
             itemFormVisible: false
         })
-        props.updateQuestionnaireItemForm(DefaultFormValues.questionnaireItemForm)
+        props.updateQuestionnaireTemplateItemForm(DefaultFormValues.questionnaireTemplateItemForm)
 
     }
 
@@ -53,27 +51,27 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         <div className={"questionnaire-creation-item-form"}>
             <div className={"questionnaire-creation-item-form-label"}>Название пункта:</div>
             <input className={"questionnaire-item-name-input"}
-                   value={props.questionnaireItemForm.name}
-                   onChange={e => props.updateQuestionnaireItemForm({name: e.target.value})}
+                   value={props.questionnaireTemplateItemForm.name}
+                   onChange={e => props.updateQuestionnaireTemplateItemForm({name: e.target.value})}
             />
 
             <div className={"questionnaire-creation-item-form-label"}>Тип:</div>
-            <SelectButton value={props.questionnaireItemForm.type}
-                          onChange={e => props.updateQuestionnaireItemForm({type: e.target.value})}
+            <SelectButton value={props.questionnaireTemplateItemForm.type}
+                          onChange={e => props.updateQuestionnaireTemplateItemForm({type: e.target.value})}
                           options={[
-                              {label: QuestionnaireItemType.STRING.value, value: QuestionnaireItemType.STRING.name},
-                              {label: QuestionnaireItemType.NUMERIC.value, value: QuestionnaireItemType.NUMERIC.name},
-                              {label: QuestionnaireItemType.GRAPHIC.value, value: QuestionnaireItemType.GRAPHIC.name},
-                              {label: QuestionnaireItemType.LIST.value, value: QuestionnaireItemType.LIST.name}
+                              {label: QuestionnaireTemplateItemType.STRING.value, value: QuestionnaireTemplateItemType.STRING.name},
+                              {label: QuestionnaireTemplateItemType.NUMERIC.value, value: QuestionnaireTemplateItemType.NUMERIC.name},
+                              {label: QuestionnaireTemplateItemType.GRAPHIC.value, value: QuestionnaireTemplateItemType.GRAPHIC.name},
+                              {label: QuestionnaireTemplateItemType.LIST.value, value: QuestionnaireTemplateItemType.LIST.name}
                           ]}/>
             <div className={"questionnaire-creation-item-form-label"}>Элемент списка:</div>
-            {props.questionnaireItemForm.type === QuestionnaireItemType.LIST.name &&
+            {props.questionnaireTemplateItemForm.type === QuestionnaireTemplateItemType.LIST.name &&
             <ListInput
-                value={props.questionnaireItemForm.listInput}
-                onChange={e => props.updateQuestionnaireItemForm({listInput: e.target.value})}
+                value={props.questionnaireTemplateItemForm.listInput}
+                onChange={e => props.updateQuestionnaireTemplateItemForm({listInput: e.target.value})}
                 onSubmit={value => onAddListItemClicked(value)}
                 onDelete={value => onDeleteListItemClicked(value)}
-                values={props.questionnaireItemForm.listValues}
+                values={props.questionnaireTemplateItemForm.listValues}
             />
             }
 

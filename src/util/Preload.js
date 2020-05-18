@@ -4,7 +4,7 @@ import {
     gameBySubnetworkId,
     gamesUrl,
     gameUrl,
-    networkUrl, questionnaireByIdUrl,
+    networkUrl, questionnaireTemplateByIdUrl,
     skillsByGameIdUrl,
     subnetworkUrl
 } from "./Parameters";
@@ -14,7 +14,7 @@ import {
     setNetworks,
     setSkills,
     setSubnetworks,
-    updateQuestionnaireForm
+    updateQuestionnaireTemplateForm
 } from "../data-layer/ActionCreators";
 
 
@@ -41,8 +41,8 @@ export default {
         get(skillsByGameIdUrl(gameId), rs => window.store.dispatch(setSkills(rs)))
     },
 
-    questionnaireEditView: questionnaireId => {
-        get(questionnaireByIdUrl(questionnaireId), rs => window.store.dispatch(updateQuestionnaireForm(rs)))
+    questionnaireTemplateEditView: questionnaireId => {
+        get(questionnaireTemplateByIdUrl(questionnaireId), rs => window.store.dispatch(updateQuestionnaireTemplateForm(rs)))
     },
 
     game: gameId => {

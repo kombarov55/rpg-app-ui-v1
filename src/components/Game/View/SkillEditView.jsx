@@ -2,18 +2,17 @@ import React from "react";
 import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {Checkbox} from "primereact/checkbox";
-import {changeView, setSkills, updateQuestionnaireForm, updateSkillForm} from "../../../data-layer/ActionCreators";
+import {changeView, setSkills, updateQuestionnaireTemplateForm, updateSkillForm} from "../../../data-layer/ActionCreators";
 import Btn from "../../Common/Btn";
 import {InputTextarea} from "primereact/inputtextarea";
 import {put} from "../../../util/Http";
 import {updateSkillUrl} from "../../../util/Parameters";
-import {skillslView} from "../../../Views";
+import {skillsView} from "../../../Views";
 
 function mapStateToProps(state, props) {
     return {
         skillForm: state.skillForm,
         activeGame: state.activeGame,
-        questionnaireForm: state.questionnaireForm,
         skills: state.skills,
         growl: state.growl
     }
@@ -22,7 +21,6 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch, props) {
     return {
         updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue)),
-        updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue)),
         setSkills: skills => dispatch(setSkills(skills)),
         changeView: view => dispatch(changeView(view))
     }
@@ -235,7 +233,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
         put(updateSkillUrl(props.skillForm.id), body, rs => {
             props.setSkills(props.skills.filter(it => it.id !== rs.id).concat(rs))
-            props.changeView(skillslView)
+            props.changeView(skillsView)
             props.growl.show({severity: "info", summary: "Навык обновлен"})
         })
     }

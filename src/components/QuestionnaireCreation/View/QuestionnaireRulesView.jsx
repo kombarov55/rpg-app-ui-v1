@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {changeView} from "../../../data-layer/ActionCreators";
-import {questionnaireCreationView} from "../../../Views";
+import {questionnaireTemplateCreationView} from "../../../Views";
 
 function mapStateToProps(state, props) {
     return {
@@ -74,7 +74,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 2.4 Не превращайте локацию в срач. Разберитесь в лс, или же напишите об этом КП-ролевику. (Этот пункт обязателен)
             </div>
             <div className={"mobile-button rules-agree-button"}
-                 onClick={() => props.changeView(questionnaireCreationView)}>
+                 onClick={() => props.changeView(questionnaireTemplateCreationView)}>
                 Прочитал и согласен
             </div>
         </div>

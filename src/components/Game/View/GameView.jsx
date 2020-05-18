@@ -5,17 +5,17 @@ import {
     setActiveGame,
     setGames, updateActiveGame,
     updateGameForm,
-    updateQuestionnaireForm
+    updateQuestionnaireTemplateForm
 } from "../../../data-layer/ActionCreators";
 import {
     adminPageView,
     gameEditView,
-    networkView, questionnaireEditView,
+    networkView, questionnaireTemplateEditView,
     questionnaireRulesView,
-    skillslView, subnetworkView
+    skillsView, subnetworkView
 } from "../../../Views";
 import {get, httpDelete} from "../../../util/Http";
-import {deleteGame, questionnaireByIdUrl, questionnaireRestoreUrl, questionnaireUrl} from "../../../util/Parameters";
+import {deleteGame, questionnaireTemplateByIdUrl, questionnaireTemplateRestoreUrl} from "../../../util/Parameters";
 import Btn from "../../Common/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
@@ -37,7 +37,6 @@ function mapDispatchToProps(dispatch, props) {
         changeView: view => dispatch(changeView(view)),
         setGames: games => dispatch(setGames(games)),
         updateGameForm: game => dispatch(updateGameForm(game)),
-        updateQuestionnaireForm: questionnaire => dispatch(updateQuestionnaireForm(questionnaire)),
         updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue))
     }
 }
@@ -45,35 +44,35 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
-    function onQuestionnaireEditClicked(questionnaire) {
-        Preload.questionnaireEditView(questionnaire.id)
-        props.changeView(questionnaireEditView)
+    function onQuestionnaireTemplateEditClicked(questionnaireTemplate) {
+        Preload.questionnaireTemplateEditView(questionnaireTemplate.id)
+        props.changeView(questionnaireTemplateEditView)
     }
 
-    function onQuestionnaireDeleteClicked(questionnaire) {
-        httpDelete(questionnaireByIdUrl(questionnaire.id))
-        const updatedList = props.activeGame.questionnaires.slice()
+    function onQuestionnaireTemplateDeleteClicked(questionnaireTemplate) {
+        httpDelete(questionnaireTemplateByIdUrl(questionnaireTemplate.id))
+        const updatedList = props.activeGame.questionnaireTemplates.slice()
 
         updatedList
-            .find(it => it.id === questionnaire.id)
+            .find(it => it.id === questionnaireTemplate.id)
             .deleted = true
 
         props.updateActiveGame({
-            questionnaires: updatedList
+            questionnaireTemplates: updatedList
         })
         props.growl.show({severity: "info", summary: "Шаблон анкеты удалён"})
     }
 
-    function onQuestionnaireRestoreClicked(questionnaire) {
-        get(questionnaireRestoreUrl(questionnaire.id))
-        const updatedList = props.activeGame.questionnaires.slice()
+    function onQuestionnaireTemplateRestoreClicked(questionnaireTemplate) {
+        get(questionnaireTemplateRestoreUrl(questionnaireTemplate.id))
+        const updatedList = props.activeGame.questionnaireTemplates.slice()
 
         updatedList
-            .find(it => it.id === questionnaire.id)
+            .find(it => it.id === questionnaireTemplate.id)
             .deleted = false
 
         props.updateActiveGame({
-            questionnaires: updatedList
+            questionnaireTemplates: updatedList
         })
 
         props.growl.show({severity: "info", summary: "Шаблон анкеты восстановлен"})
@@ -110,7 +109,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSkillViewClicked() {
         Preload.skills(props.activeGame.id)
-        props.changeView(skillslView)
+        props.changeView(skillsView)
     }
 
     return (
@@ -124,19 +123,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 </div>
 
                 <Label text={"Шаблоны анкет:"}/>
-                {props.activeGame.questionnaires.map(questionnaire =>
-                    questionnaire.deleted ?
+                {props.activeGame.questionnaireTemplates.map(questionnaireTemplate =>
+                    questionnaireTemplate.deleted ?
                         <RestoreLabel
                             text={"Шаблон анкеты удалён"}
-                            onClick={() => onQuestionnaireRestoreClicked(questionnaire)}
+                            onClick={() => onQuestionnaireTemplateRestoreClicked(questionnaireTemplate)}
                         /> :
                         <HorizontalListItem
-                            key={questionnaire.id}
-                            name={questionnaire.name}
-                            description={questionnaire.description}
-                            imgSrc={questionnaire.imgSrc !== "" ? questionnaire.imgSrc : "https://vignette.wikia.nocookie.net/the100/images/9/95/The100215_1620.jpg/revision/latest?cb=20180104191509&path-prefix=ru"}
-                            onEdit={() => onQuestionnaireEditClicked(questionnaire)}
-                            onDelete={() => onQuestionnaireDeleteClicked(questionnaire)}
+                            key={questionnaireTemplate.id}
+                            name={questionnaireTemplate.name}
+                            description={questionnaireTemplate.description}
+                            imgSrc={questionnaireTemplate.imgSrc !== "" ? questionnaireTemplate.imgSrc : "https://vignette.wikia.nocookie.net/the100/images/9/95/The100215_1620.jpg/revision/latest?cb=20180104191509&path-prefix=ru"}
+                            onEdit={() => onQuestionnaireTemplateEditClicked(questionnaireTemplate)}
+                            onDelete={() => onQuestionnaireTemplateDeleteClicked(questionnaireTemplate)}
                         />
                 )}
 

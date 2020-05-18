@@ -127,10 +127,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
             }
             {
-                !currencyFormVisible &&
-                <AddItemButton text={"Добавить валюту"}
-                               onClick={() => onAddCurrencyClicked()}
-                />
+                !currencyFormVisible && props.gameForm.currencies.length < 3 &&
+                <AddItemButton text={"Добавить валюту"} onClick={() => onAddCurrencyClicked()}/>
             }
 
             <div className={"game-creation-view-label"}>Тип навыка: </div>

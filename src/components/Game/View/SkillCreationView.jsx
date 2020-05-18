@@ -31,25 +31,25 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
-    function toggleCurrency(name) {
+    function toggleCurrency(currency) {
         const list = props.skillForm.currenciesForUpgrade
 
-        const contains = list.some(it => it === name)
+        const contains = list.some(it => it === currency.name)
 
         let updatedList
 
         if (!contains) {
-            updatedList = list.concat(name)
+            updatedList = list.concat(currency.name)
         } else {
-            updatedList = list.filter(it => it !== name)
-            deleteMentionedUpgradeOptions(name)
+            updatedList = list.filter(it => it !== currency.name)
+            deleteMentionedUpgradeOptions(currency.name)
         }
 
         props.updateSkillForm({currenciesForUpgrade: updatedList})
     }
 
-    function isCurrencyChecked(name) {
-        return props.skillForm.currenciesForUpgrade.some(it => it === name)
+    function isCurrencyChecked(currency) {
+        return props.skillForm.currenciesForUpgrade.some(it => it === currency.name)
     }
 
     function onUpgradeOptionDeleteClicked(deletionCurrencies) {
@@ -219,16 +219,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <div className={"questionnaire-creation-skill-item-form-label"}>Валюта для повышения:</div>
                 {
-                    props.activeGame.currencies.map(name =>
+                    props.activeGame.currencies.map(currency =>
                         <div
                             className={"questionnaire-creation-skill-item-form-checkbox-horizontal"}
-                            key={name}
+                            key={currency.id}
                         >
                             <Checkbox
-                                onChange={() => toggleCurrency(name)}
-                                checked={isCurrencyChecked(name)}
+                                onChange={() => toggleCurrency(currency)}
+                                checked={isCurrencyChecked(currency)}
                             />
-                            <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>{name}</div>
+                            <div className={"questionnaire-creation-skill-item-form-checkbox-label"}>{currency.name}</div>
                         </div>
                     )
                 }

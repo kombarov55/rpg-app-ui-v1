@@ -85,7 +85,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 break
 
             case GameCreationMode.BY_SUBNETWORK:
-                url = gameBySubnetworkId(props.activeGame.id, props.activeSubnetwork.id)
+                url = gameBySubnetworkId(props.activeNetwork.id, props.activeSubnetwork.id)
                 nextView = subnetworkView
                 break;
         }

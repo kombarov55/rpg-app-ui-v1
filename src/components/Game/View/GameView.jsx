@@ -15,7 +15,7 @@ import {
     skillsView, subnetworkView, conversionView
 } from "../../../Views";
 import {get, httpDelete} from "../../../util/Http";
-import {deleteGame, questionnaireTemplateByIdUrl, questionnaireTemplateRestoreUrl} from "../../../util/Parameters";
+import {deleteGameUrl, questionnaireTemplateByIdUrl, questionnaireTemplateRestoreUrl} from "../../../util/Parameters";
 import Btn from "../../Common/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
@@ -90,10 +90,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onDeleteClicked() {
         if (window.confirm("Удалить игру?")) {
-            httpDelete(deleteGame(props.activeGame.id), () => {
+            httpDelete(deleteGameUrl(props.activeGame.id), () => {
                 props.growl.show({severity: "info", summary: "Игра архивирована."})
                 props.setGames(props.games.filter(it => it.id !== props.activeGame.id))
-                props.changeView(networkView)
+                onBackClicked()
             })
         }
     }

@@ -80,12 +80,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <div className={"game-description"}>{props.activeGame.description}
                 </div>
 
-                <Label text={"Шаблоны анкет"}/>
-                <HorizontalListItem
-                    name={"Анкета #1"}
-                    description={"Кто будет играть лексу?"}
-                    imgSrc={"https://sun9-50.userapi.com/c206728/v206728029/e6b05/y0oZUh43Mp4.jpg"}
-                />
+                <Label text={"Шаблоны анкет:"}/>
+                {props.activeGame.questionnaires.map(questionnaire =>
+                    <HorizontalListItem
+                        key={questionnaire.id}
+                        name={questionnaire.name}
+                        description={questionnaire.description}
+                        imgSrc={questionnaire.imgSrc !== "" ? questionnaire.imgSrc : "https://vignette.wikia.nocookie.net/the100/images/9/95/The100215_1620.jpg/revision/latest?cb=20180104191509&path-prefix=ru"}
+                    />
+                )}
+
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Присоединиться к игре"}/>

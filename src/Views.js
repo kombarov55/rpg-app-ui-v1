@@ -41,7 +41,7 @@ export const conversationView = {
     label: "Диалог"
 }
 
-export const adminPageView = {component: <AdminPageView/>, label: "Панель администратора", preload: [Preload.networks, Preload.games]}
+export const adminPageView = {component: <AdminPageView/>, label: "Панель администратора"}
 
 export const networkSelectionView = {component: <NetworkSelectionView/>, label: "Сети"}
 

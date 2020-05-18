@@ -26,6 +26,10 @@ export default {
         get(gameBySubnetworkId(networkId, subnetworkId), rs => window.store.dispatch(setGames(rs)))
     },
 
+    gameView: (gameId) => {
+        get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
+    },
+
     game: gameId => {
         get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
     },

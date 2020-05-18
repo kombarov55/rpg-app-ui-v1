@@ -6,7 +6,7 @@ import QuestionnaireItem from "../QuestionnaireItem";
 import SkillpointsDistributionForm from "../SkillpointsDistributionForm";
 import SkillItem from "../SkillItem";
 import QuestionnaireAddSkillButton from "../QuestionnaireAddSkillButton";
-import {changeView, updateQuestionnaireForm} from "../../../data-layer/ActionCreators";
+import {changeView, setActiveGame, updateQuestionnaireForm} from "../../../data-layer/ActionCreators";
 import QuestionnaireItemType from "../../../data-layer/enums/QuestionnaireItemType";
 import SkillItemForm from "../../Game/View/SkillCreationView";
 import Btn from "../../Common/Btn";
@@ -28,7 +28,8 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch, props) {
     return {
         updateQuestionnaireForm: fieldNameToValue => dispatch(updateQuestionnaireForm(fieldNameToValue)),
-        changeView: view => dispatch(changeView(view))
+        changeView: view => dispatch(changeView(view)),
+        setActiveGame: game => dispatch(setActiveGame(game))
     }
 }
 
@@ -57,9 +58,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             gameId: props.activeGame.id
         })
 
-        post(questionnaireUrl, form, () => {
+        post(questionnaireUrl, form, rs => {
             props.growl.show({severity: "info", summary: "Шаблон анкеты создан"})
             props.updateQuestionnaireForm(DefaultFormValues.questionnaireForm)
+
+            props.setActiveGame(Object.assign({}, props.activeGame, {
+                questionnaires: props.activeGame.questionnaires.concat(rs)
+            }))
             props.changeView(gameView)
         })
     }

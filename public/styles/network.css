@@ -273,3 +273,8 @@
     padding: 0.5vmin;
     margin: 0 1.5vmin;
 }
+
+.conversion-view {
+    width: 90%;
+    align-self: center;
+}

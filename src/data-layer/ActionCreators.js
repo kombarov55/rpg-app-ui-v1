@@ -32,10 +32,17 @@ import {
     SET_SUBNETWORKS,
     SET_ACTIVE_SUBNETWORK,
     UPDATE_GAME_FORM,
-    SET_GAMES, SET_ACTIVE_GAME,
+    SET_GAMES,
+    SET_ACTIVE_GAME,
     UPDATE_QUESTIONNAIRE_TEMPLATE_FORM,
     UPDATE_QUESTIONNAIRE_TEMPLATE_ITEM_FORM,
-    UPDATE_SKILL_FORM, SET_SKILLS, UPDATE_ACTIVE_GAME, UPDATE_CURRENCY_FORM, UPDATE_CONVERSION_FORM, SET_CURRENCIES
+    UPDATE_SKILL_FORM,
+    SET_SKILLS,
+    UPDATE_ACTIVE_GAME,
+    UPDATE_CURRENCY_FORM,
+    UPDATE_CONVERSION_FORM,
+    SET_CURRENCIES,
+    SET_CONVERSIONS
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -432,6 +439,15 @@ export function setCurrencies(currencies) {
         type: SET_CURRENCIES,
         payload: {
             currencies: currencies
+        }
+    }
+}
+
+export function setConversions(conversions) {
+    return {
+        type: SET_CONVERSIONS,
+        payload: {
+            conversions: conversions
         }
     }
 }

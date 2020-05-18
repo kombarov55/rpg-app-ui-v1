@@ -64,7 +64,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             gameId: props.activeGame.id
         })
 
-        put(questionnaireTemplateByIdUrl(form.id), form, rs => {
+        put(questionnaireTemplateByIdUrl(props.questionnaireTemplateForm.id), form, rs => {
             props.growl.show({severity: "info", summary: "Шаблон анкеты обновлен"})
             props.updateQuestionnaireTemplateForm(DefaultFormValues.questionnaireTemplateForm)
 

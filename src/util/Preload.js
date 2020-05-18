@@ -4,11 +4,18 @@ import {
     gameBySubnetworkId,
     gamesUrl,
     gameUrl,
-    networkUrl,
+    networkUrl, questionnaireById,
     skillsByGameIdUrl,
     subnetworkUrl
 } from "./Parameters";
-import {setActiveGame, setGames, setNetworks, setSkills, setSubnetworks} from "../data-layer/ActionCreators";
+import {
+    setActiveGame,
+    setGames,
+    setNetworks,
+    setSkills,
+    setSubnetworks,
+    updateQuestionnaireForm
+} from "../data-layer/ActionCreators";
 
 
 export default {
@@ -28,6 +35,10 @@ export default {
 
     gameView: (gameId) => {
         get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
+    },
+
+    questionnaireEditView: questionnaireId => {
+        get(questionnaireById(questionnaireId), rs => window.store.dispatch(updateQuestionnaireForm(rs)))
     },
 
     game: gameId => {

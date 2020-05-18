@@ -1,13 +1,13 @@
 export default {
-    STRING: {name: "string", value: "Текстовое"},
-    NUMERIC: {name: "numeric", value: "Числовое"},
-    GRAPHIC: {name: "graphic", value: "Графическое"},
-    LIST: {name: "list", value: "Выбор из списка"},
+    STRING: {name: "STRING", value: "Текстовое"},
+    NUMERIC: {name: "NUMERIC", value: "Числовое"},
+    GRAPHIC: {name: "GRAPHIC", value: "Графическое"},
+    LIST: {name: "LIST", value: "Выбор из списка"},
 
     getValueByName: name => [
-        {name: "string", value: "Текстовое"},
-        {name: "numeric", value: "Числовое"},
-        {name: "graphic", value: "Графическое"},
-        {name: "list", value: "Выбор из списка"}
+        {name: "STRING", value: "Текстовое"},
+        {name: "NUMERIC", value: "Числовое"},
+        {name: "GRAPHIC", value: "Графическое"},
+        {name: "LIST", value: "Выбор из списка"}
     ].find(it => it.name === name).value
 }

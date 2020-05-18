@@ -1,8 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {updateQuestionnaireForm} from "../../data-layer/ActionCreators";
-import isNumeric from "../../util/IsNumeric";
-import IsNumeric from "../../util/IsNumeric";
 
 function mapStateToProps(state, props) {
     return {
@@ -18,6 +16,17 @@ function mapDispatchToProps(dispatch, props) {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+    function value(name) {
+        const item = props.questionnaireForm.skillPointsDistribution
+            .find(it => it.skillType === name)
+
+        if (item != null) {
+            return item.maxValue
+        } else {
+            return 0
+        }
+    }
+
     function distributeSkillPoint(name, value) {
         let updatedList = props.questionnaireForm.skillPointsDistribution.slice()
 
@@ -41,6 +50,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <div key={name} className={"questionnaire-creation-skillpoints-distribution-entry"}>
                     <div className={"questionnaire-creation-skillpoints-distribution-name"}>{name}:</div>
                     <input className={"questionnaire-creation-skillpoints-distribution-value"}
+                           value={value(name)}
                            onChange={e => distributeSkillPoint(name, e.target.value)}
                     />
                 </div>

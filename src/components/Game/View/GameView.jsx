@@ -44,7 +44,7 @@ function mapDispatchToProps(dispatch, props) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onQuestionnaireEditClicked(questionnaire) {
-        props.updateQuestionnaireForm(questionnaire)
+        Preload.questionnaireEditView(questionnaire.id)
         props.changeView(questionnaireEditView)
     }
 

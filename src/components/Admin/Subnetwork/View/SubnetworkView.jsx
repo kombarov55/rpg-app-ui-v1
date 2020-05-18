@@ -1,7 +1,13 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import GameItem from "../../GameItem";
-import {changeView, setActiveGame, setSubnetworks, updateSubnetworkForm} from "../../../../data-layer/ActionCreators";
+import {
+    changeView,
+    setActiveGame,
+    setSubnetworks,
+    updateGameForm,
+    updateSubnetworkForm
+} from "../../../../data-layer/ActionCreators";
 import {gameCreationView, gameView, networkView, subnetworkEditView} from "../../../../Views";
 import AddGameItem from "../../../Game/AddGameItem";
 import Globals from "../../../../util/Globals";
@@ -9,6 +15,7 @@ import Btn from "../../../Common/Btn";
 import {httpDelete} from "../../../../util/Http";
 import {deleteSubnetworkUrl} from "../../../../util/Parameters";
 import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
+import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state, props) {
     return {
@@ -25,7 +32,8 @@ function mapDispatchToProps(dispatch, props) {
         changeView: view => dispatch(changeView(view)),
         setSubnetworks: subnetworks => dispatch(setSubnetworks(subnetworks)),
         updateSubnetworkForm: fieldNameToValue => dispatch(updateSubnetworkForm(fieldNameToValue)),
-        setActiveGame: game => dispatch(setActiveGame(game))
+        setActiveGame: game => dispatch(setActiveGame(game)),
+        clearGameForm: () => dispatch(updateGameForm(DefaultFormValues.gameForm))
     }
 }
 
@@ -39,6 +47,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onAddGameClicked() {
         Globals.gameCreationMode = GameCreationMode.BY_SUBNETWORK
+        props.clearGameForm()
         props.changeView(gameCreationView)
     }
 

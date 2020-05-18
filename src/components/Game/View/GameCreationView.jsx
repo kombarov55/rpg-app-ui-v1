@@ -134,7 +134,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
             }
             {
-                !props.currencyForm.visible &&
+                !props.currencyForm.visible && props.gameForm.currencies.length < 3 &&
                 <AddItemButton text={"Добавить валюту"}
                                onClick={() => onAddCurrencyFormClicked()}
                 />

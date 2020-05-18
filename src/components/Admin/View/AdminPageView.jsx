@@ -9,7 +9,7 @@ import {
     setActiveGame,
     setActiveNetwork,
     setGames,
-    setSubnetworks
+    setSubnetworks, updateGameForm
 } from "../../../data-layer/ActionCreators";
 import {get} from "../../../util/Http";
 import {gameByNetworkId, subnetworkUrl} from "../../../util/Parameters";
@@ -18,6 +18,7 @@ import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
 import AddItemButton from "../../Common/AddItemButtonCircle";
 import Preload from "../../../util/Preload";
+import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state, props) {
     return {
@@ -32,7 +33,8 @@ function mapDispatchToProps(dispatch, props) {
         setActiveNetwork: network => dispatch(setActiveNetwork(network)),
         setSubnetworks: subnetworks => dispatch(setSubnetworks(subnetworks)),
         setGames: games => dispatch(setGames(games)),
-        setActiveGame: game => dispatch(setActiveGame(game))
+        setActiveGame: game => dispatch(setActiveGame(game)),
+        clearGameForm: () => dispatch(updateGameForm(DefaultFormValues.gameForm))
     }
 }
 
@@ -56,6 +58,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onAddGameClick() {
         Globals.gameCreationMode = GameCreationMode.OPEN
+        props.clearGameForm()
         props.changeView(gameCreationView)
     }
 

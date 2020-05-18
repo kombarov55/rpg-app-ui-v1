@@ -17,10 +17,10 @@ import QuestionnaireRulesView from "./components/QuestionnaireTemplateCreation/V
 import NetworkItem from "./components/Admin/NetworkItem";
 import NetworkCreationView from "./components/Admin/Network/View/NetworkCreationView";
 import SubnetworkCreationView from "./components/Admin/Subnetwork/View/SubnetworkCreationView";
-import GameCreationView from "./components/Game/GameCreationView";
+import GameCreationView from "./components/Game/View/GameCreationView";
 import NetworkEditView from "./components/Admin/Network/View/NetworkEditView";
 import SubnetworkEditView from "./components/Admin/Subnetwork/View/SubnetworkEditView";
-import GameEditView from "./components/Game/GameEditView";
+import GameEditView from "./components/Game/View/GameEditView";
 import SkillView from "./components/Game/View/SkillListView";
 import SkillItemForm from "./components/Game/View/SkillCreationView";
 import SkillEditView from "./components/Game/View/SkillEditView";

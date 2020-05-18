@@ -55,5 +55,11 @@ export default {
         upgradeOptionFormVisible: false,
         maxValue: 1,
         upgradeCosts: []
+    },
+
+    currencyForm: {
+        visible: false,
+        name: "",
+        priceInActivityPoints: ""
     }
 }

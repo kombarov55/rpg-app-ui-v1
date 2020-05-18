@@ -1,14 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
-import {changeView, setActiveGame, setGames, updateGameForm} from "../../data-layer/ActionCreators";
-import {put} from "../../util/Http";
-import {editGameByNetworkId, editGamebySubnetworkId, gameByNetworkId, gamesUrl, gameUrl} from "../../util/Parameters";
-import {adminPageView, gameView, networkView, subnetworkView} from "../../Views";
-import ListInput from "../Common/ListInput";
-import Globals from "../../util/Globals";
-import GameCreationMode from "../../data-layer/enums/GameCreationMode";
-import DefaultFormValues from "../../data-layer/DefaultFormValues";
+import {changeView, setActiveGame, setGames, updateGameForm} from "../../../data-layer/ActionCreators";
+import {put} from "../../../util/Http";
+import {editGameByNetworkId, editGamebySubnetworkId, gameByNetworkId, gamesUrl, gameUrl} from "../../../util/Parameters";
+import {adminPageView, gameView, networkView, subnetworkView} from "../../../Views";
+import ListInput from "../../Common/ListInput";
+import Globals from "../../../util/Globals";
+import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
+import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state, props) {
     return {

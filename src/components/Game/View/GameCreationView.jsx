@@ -1,14 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
-import {changeView, setGames, updateGameForm} from "../../data-layer/ActionCreators";
-import {post} from "../../util/Http";
-import {gameByNetworkId, gameBySubnetworkId, gamesUrl} from "../../util/Parameters";
-import {adminPageView, networkView, subnetworkView} from "../../Views";
-import Globals from "../../util/Globals";
-import ListInput from "../Common/ListInput";
-import GameCreationMode from "../../data-layer/enums/GameCreationMode";
-import DefaultFormValues from "../../data-layer/DefaultFormValues";
+import {
+    changeView,
+    setGames,
+    updateCommentForm,
+    updateCurrencyForm,
+    updateGameForm
+} from "../../../data-layer/ActionCreators";
+import {post} from "../../../util/Http";
+import {gameByNetworkId, gameBySubnetworkId, gamesUrl} from "../../../util/Parameters";
+import {adminPageView, networkView, subnetworkView} from "../../../Views";
+import Globals from "../../../util/Globals";
+import ListInput from "../../Common/ListInput";
+import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
+import DefaultFormValues from "../../../data-layer/DefaultFormValues";
+import CurrencyForm from "../CurrencyForm";
+import Label from "../../Common/Label";
+import AddItemButton from "../../Common/AddItemButton";
+import InputLabel from "../../Common/InputLabel";
 
 function mapStateToProps(state, props) {
     return {
@@ -16,7 +26,8 @@ function mapStateToProps(state, props) {
         activeNetwork: state.activeNetwork,
         activeSubnetwork: state.activeSubnetwork,
         games: state.games,
-        growl: state.growl
+        growl: state.growl,
+        currencyForm: state.currencyForm
     }
 }
 
@@ -24,24 +35,17 @@ function mapDispatchToProps(dispatch, props) {
     return {
         updateGameForm: fieldNameToValue => dispatch(updateGameForm(fieldNameToValue)),
         changeView: view => dispatch(changeView(view)),
-        setGames: games => dispatch(setGames(games))
+        setGames: games => dispatch(setGames(games)),
+        updateCurrencyForm: fieldNameToValue => dispatch(updateCurrencyForm(fieldNameToValue))
     }
 }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
-    function onCurrencySubmitClicked(value) {
-        if (value !== "") {
-            props.updateGameForm({
-                currencies: props.gameForm.currencies.filter(it => it != value).concat(value),
-                currencyInput: ""
-            })
-        }
-    }
 
-    function onCurrencyDeleteClicked(value) {
-        props.updateGameForm({currencies: props.gameForm.currencies.filter(it => it != value)})
-    }
+    const [currencyForm, setCurrencyForm] = useState({
+        visible: false
+    })
 
     function onSkillTypeSubmitClicked(value) {
         if (value !== "") {
@@ -56,11 +60,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateGameForm({skillTypes: props.gameForm.skillTypes.filter(it => it != value)})
     }
 
+    function onAddCurrencyFormClicked() {
+        props.updateCurrencyForm({visible: true})
+    }
+
     function save() {
         let url
         let nextView
 
-        switch(Globals.gameCreationMode) {
+        switch (Globals.gameCreationMode) {
             case GameCreationMode.OPEN:
                 url = gamesUrl
                 nextView = adminPageView
@@ -88,31 +96,34 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     return (
         <div className={"game-creation-view"}>
-            <div className={"game-creation-view-label"}>Название:</div>
+            <InputLabel text={"Название:"}/>
             <input className={"game-creation-view-input"}
                    value={props.gameForm.title}
                    onChange={e => props.updateGameForm({title: e.target.value})}
             />
 
-            <div className={"game-creation-view-label"}>Картинка:</div>
+            <InputLabel text={"Картинка:"}/>
             <input type={"file"}/>
 
-            <div className={"game-creation-view-label"}>Описание:</div>
+            <InputLabel text={"Описание:"}/>
             <InputTextarea autoResize={true}
                            rows={10}
                            value={props.gameForm.description}
                            onChange={e => props.updateGameForm({description: e.target.value})}
             />
-            <div className={"game-creation-view-label"}>Валюта: (макс. 3)</div>
-            <ListInput
-                value={props.gameForm.currencyInput}
-                onChange={e => props.updateGameForm({currencyInput: e.target.value})}
-                onSubmit={value => onCurrencySubmitClicked(value)}
-                onDelete={value => onCurrencyDeleteClicked(value)}
-                values={props.gameForm.currencies}
-                max={3}
-            />
-            <div className={"game-creation-view-label"}>Тип навыка:</div>
+            <InputLabel text={"Валюта: (макс. 3)"}/>
+            {
+                props.currencyForm.visible &&
+                <CurrencyForm/>
+            }
+            {
+                !props.currencyForm.visible &&
+                <AddItemButton text={"Добавить валюту"}
+                               onClick={() => onAddCurrencyFormClicked()}
+                />
+            }
+
+            <InputLabel text={"Тип навыка:"}/>
             <ListInput
                 value={props.gameForm.skillTypeInput}
                 onChange={e => props.updateGameForm({skillTypeInput: e.target.value})}

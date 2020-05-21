@@ -1,5 +1,6 @@
 import Globals from "./Globals";
 import {uploadUrl} from "./Parameters";
+import axios from "axios"
 
 export function get(url, onSuccess) {
     const xhr = new XMLHttpRequest()
@@ -73,18 +74,11 @@ export function upload(url, file, onSuccess) {
     const formData = new FormData()
     formData.append("file", file)
 
-    const xhr = new XMLHttpRequest()
-    xhr.open("POST", url, true)
-    xhr.setRequestHeader("Authorization", "Bearer " + Globals.authToken)
-    xhr.setRequestHeader("Content-Type", "multipart/form-data")
-
-    xhr.send(formData)
-
-    if (onSuccess != null) {
-        xhr.onload = function() {
-            onSuccess(parseResponse(xhr.responseText))
+    axios.post(url, formData, {
+        headers: {
+            "content-type": "multipart/form-data"
         }
-    }
+    }).then(rs => onSuccess(rs))
 }
 
 function parseResponse(rs) {

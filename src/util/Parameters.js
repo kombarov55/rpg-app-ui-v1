@@ -8,7 +8,7 @@ export const toggleRespondAnnouncementUrl = (userId) => userAccountUrl(userId) +
 
 export const announcementUrl = rootUrl + "/announcement"
 export const restoreAnnouncementUrl = announcementId => announcementUrl + "/" + announcementId + "/restore"
-export const uploadUrl = rootUrl + "/upload"
+export const uploadUrl = "https://novemis.ru:8082/upload"
 
 export const createCommentUrl = announcementUrl + "/comment"
 export const commentUrl = (announcementId) => announcementUrl + "/" + announcementId + "/comment"

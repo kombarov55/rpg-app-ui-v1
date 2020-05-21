@@ -14,12 +14,14 @@ export default {
     networkForm: {
         title: "",
         description: "",
+        groupLink: "",
         img: "",
         background: ""
     },
     subnetworkForm: {
         title: "",
         description: "",
+        groupLink: "",
         img: "",
         background: ""
     },

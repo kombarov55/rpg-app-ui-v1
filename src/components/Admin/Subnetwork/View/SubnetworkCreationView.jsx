@@ -5,6 +5,7 @@ import {changeView, setSubnetworks, updateSubnetworkForm} from "../../../../data
 import {post, upload} from "../../../../util/Http";
 import {subnetworkUrl} from "../../../../util/Parameters";
 import {networkView} from "../../../../Views";
+import InputLabel from "../../../Common/InputLabel";
 
 function mapStateToProps(state, props) {
     return {
@@ -45,19 +46,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     return (
         <div className={"subnetwork-creation-view"}>
-            <div className={"subnetwork-creation-view-label"}>Название: </div>
+            <InputLabel text={"Название:"}/>
             <input className={"subnetwork-creation-view-input"}
                    value={props.subnetworkForm.title}
                    onChange={e => props.updateSubnetworkForm({title: e.target.value})}
             />
 
-            <div className={"subnetwork-creation-view-label"}>Картинка: </div>
+            <InputLabel text={"Ссылка на группу:"}/>
+            <input className={"subnetwork-creation-view-input"}
+                   value={props.subnetworkForm.groupLink}
+                   onChange={e => props.updateSubnetworkForm({groupLink: e.target.value})}
+            />
+
+            <InputLabel text={"Картинка:"}/>
             <input type={"file"} onChange={e => onImgFileChange(e)} />
 
-            <div className={"subnetwork-creation-view-label"}>Фон: </div>
+            <InputLabel text={"Фон:"}/>
             <input type={"file"} onChange={e => onBackgroundFileChange(e)} />
 
-            <div className={"subnetwork-creation-view-label"}>Описание:</div>
+            <InputLabel text={"Описание:"}/>
             <InputTextarea autoResize={true}
                            rows={10}
                            value={props.subnetworkForm.description}

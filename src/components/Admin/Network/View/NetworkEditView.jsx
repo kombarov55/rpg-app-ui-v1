@@ -5,6 +5,7 @@ import {post, put, upload} from "../../../../util/Http";
 import {editNetworkUrl, networkUrl} from "../../../../util/Parameters";
 import {networkSelectionView, networkView} from "../../../../Views";
 import {InputTextarea} from "primereact/inputtextarea";
+import InputLabel from "../../../Common/InputLabel";
 
 function mapStateToProps(state, props) {
     return {
@@ -47,23 +48,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     return (
         <div className={"network-creation-view"}>
-            <div className={"network-creation-view-label"}>Название: </div>
+            <InputLabel text={"Название:"}/>
             <input className={"network-creation-view-input"}
                    value={props.networkForm.title}
                    onChange={e => props.updateNetworkForm({title: e.target.value})}
             />
 
-            <div className={"network-creation-view-label"}>Картинка: </div>
-            <input type={"file"}
-                   onChange={e => onImgFileChange(e)}
+            <InputLabel text={"Ссылка на группу:"}/>
+            <input className={"network-creation-view-input"}
+                   value={props.networkForm.groupLink}
+                   onChange={e => props.updateNetworkForm({groupLink: e.target.value})}
             />
 
-            <div className={"network-creation-view-label"}>Фон: </div>
-            <input type={"file"}
-                   onChange={e => onBackgroundFileChange(e)}
-            />
+            <InputLabel text={"Картинка:"}/>
+            <input type="file" onChange={e => onImgFileChange(e)}/>
 
-            <div className={"network-creation-view-label"}>Описание:</div>
+            <InputLabel text={"Фон:"}/>
+            <input type="file" onChange={e => onBackgroundFileChange(e)}/>
+
+            <InputLabel text={"Описание:"}/>
             <InputTextarea autoResize={true}
                            rows={10}
                            value={props.networkForm.description}

@@ -7,6 +7,7 @@ import {networkUrl, uploadUrl} from "../../../../util/Parameters";
 import {adminPageView, networkSelectionView} from "../../../../Views";
 import {post, upload} from "../../../../util/Http";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
+import InputLabel from "../../../Common/InputLabel";
 
 function mapStateToProps(state, props) {
     return {
@@ -46,19 +47,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     return (
         <div className={"network-creation-view"}>
-            <div className={"network-creation-view-label"}>Название:</div>
+            <InputLabel text={"Название:"}/>
             <input className={"network-creation-view-input"}
                    value={props.networkForm.title}
                    onChange={e => props.updateNetworkForm({title: e.target.value})}
             />
 
-            <div className={"network-creation-view-label"}>Картинка:</div>
+            <InputLabel text={"Ссылка на группу:"}/>
+            <input className={"network-creation-view-input"}
+                   value={props.networkForm.groupLink}
+                   onChange={e => props.updateNetworkForm({groupLink: e.target.value})}
+            />
+
+            <InputLabel text={"Картинка:"}/>
             <input type="file" onChange={e => onImgFileChange(e)}/>
 
-            <div className={"network-creation-view-label"}>Фон:</div>
+            <InputLabel text={"Фон:"}/>
             <input type="file" onChange={e => onBackgroundFileChange(e)}/>
 
-            <div className={"network-creation-view-label"}>Описание:</div>
+            <InputLabel text={"Описание:"}/>
             <InputTextarea autoResize={true}
                            rows={10}
                            value={props.networkForm.description}

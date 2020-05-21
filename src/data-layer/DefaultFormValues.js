@@ -19,7 +19,9 @@ export default {
     },
     subnetworkForm: {
         title: "",
-        description: ""
+        description: "",
+        img: "",
+        background: ""
     },
     gameForm: {
         title: "",

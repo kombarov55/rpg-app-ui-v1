@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {changeView, setActiveNetwork, setNetworks, updateNetworkForm} from "../../../../data-layer/ActionCreators";
-import {post, put} from "../../../../util/Http";
+import {post, put, upload} from "../../../../util/Http";
 import {editNetworkUrl, networkUrl} from "../../../../util/Parameters";
 import {networkSelectionView, networkView} from "../../../../Views";
 import {InputTextarea} from "primereact/inputtextarea";
@@ -37,6 +37,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onImgFileChange(e) {
+        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateNetworkForm({img: rs.data.filename}))
+    }
+
+    function onBackgroundFileChange(e) {
+        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateNetworkForm({background: rs.data.filename}))
+    }
+
     return (
         <div className={"network-creation-view"}>
             <div className={"network-creation-view-label"}>Название: </div>
@@ -46,7 +54,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
 
             <div className={"network-creation-view-label"}>Картинка: </div>
-            <input type={"file"} />
+            <input type={"file"}
+                   onChange={e => onImgFileChange(e)}
+            />
+
+            <div className={"network-creation-view-label"}>Фон: </div>
+            <input type={"file"}
+                   onChange={e => onBackgroundFileChange(e)}
+            />
 
             <div className={"network-creation-view-label"}>Описание:</div>
             <InputTextarea autoResize={true}

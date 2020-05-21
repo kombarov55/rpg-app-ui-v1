@@ -26,6 +26,8 @@ export default {
     gameForm: {
         title: "",
         description: "",
+        img: "",
+        background: "",
         currencyInput: "",
         skillTypeInput: "",
         currencies: [],

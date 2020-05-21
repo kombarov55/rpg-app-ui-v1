@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import {changeView, setSubnetworks, updateSubnetworkForm} from "../../../../data-layer/ActionCreators";
-import {post} from "../../../../util/Http";
+import {post, upload} from "../../../../util/Http";
 import {subnetworkUrl} from "../../../../util/Parameters";
 import {networkView} from "../../../../Views";
 
@@ -35,6 +35,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onImgFileChange(e) {
+        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateSubnetworkForm({img: rs.data.filename}))
+    }
+
+    function onBackgroundFileChange(e) {
+        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateSubnetworkForm({background: rs.data.filename}))
+    }
+
     return (
         <div className={"subnetwork-creation-view"}>
             <div className={"subnetwork-creation-view-label"}>Название: </div>
@@ -44,7 +52,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
 
             <div className={"subnetwork-creation-view-label"}>Картинка: </div>
-            <input type={"file"} />
+            <input type={"file"} onChange={e => onImgFileChange(e)} />
+
+            <div className={"subnetwork-creation-view-label"}>Фон: </div>
+            <input type={"file"} onChange={e => onBackgroundFileChange(e)} />
 
             <div className={"subnetwork-creation-view-label"}>Описание:</div>
             <InputTextarea autoResize={true}

@@ -8,7 +8,7 @@ import {
     updateCurrencyForm,
     updateGameForm
 } from "../../../data-layer/ActionCreators";
-import {put} from "../../../util/Http";
+import {put, upload} from "../../../util/Http";
 import {editGameByNetworkId, editGamebySubnetworkId, gameByNetworkId, gamesUrl, gameUrl} from "../../../util/Parameters";
 import {adminPageView, gameView, networkView, subnetworkView} from "../../../Views";
 import ListInput from "../../Common/ListInput";
@@ -62,6 +62,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateGameForm({skillTypeInput: ""})
     }
 
+    function onImgFileChange(e) {
+        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateGameForm({img: rs.data.filename}))
+    }
+
+    function onBackgroundFileChange(e) {
+        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateGameForm({background: rs.data.filename}))
+    }
+
     function onDeleteSkillTypeClicked(value) {
         props.updateGameForm({skillTypes: props.gameForm.skillTypes.filter(it => it !== value)})
     }
@@ -99,8 +107,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                    onChange={e => props.updateGameForm({title: e.target.value})}
             />
 
-            <div className={"game-creation-view-label"}>Картинка:</div>
-            <input type={"file"}/>
+            <InputLabel text={"Картинка:"}/>
+            <input type={"file"} onChange={e => onImgFileChange(e)}/>
+
+            <InputLabel text={"Фон:"}/>
+            <input type={"file"} onChange={e => onBackgroundFileChange(e)}/>
 
             <div className={"game-creation-view-label"}>Описание:</div>
             <InputTextarea autoResize={true}

@@ -7,7 +7,7 @@ import {
     updateCurrencyForm,
     updateGameForm
 } from "../../../data-layer/ActionCreators";
-import {post} from "../../../util/Http";
+import {post, upload} from "../../../util/Http";
 import {gameByNetworkId, gameBySubnetworkId, gamesUrl} from "../../../util/Parameters";
 import {adminPageView, networkView, subnetworkView} from "../../../Views";
 import Globals from "../../../util/Globals";
@@ -54,6 +54,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         setCurrencyFormVisible(false)
         props.updateGameForm({currencies: props.gameForm.currencies.slice().concat(props.currencyForm)})
         props.updateCurrencyForm(DefaultFormValues.currencyForm)
+    }
+
+    function onImgFileChange(e) {
+        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateGameForm({img: rs.data.filename}))
+    }
+
+    function onBackgroundFileChange(e) {
+        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateGameForm({background: rs.data.filename}))
     }
 
     function onSkillTypeSubmitClicked(value) {
@@ -108,7 +116,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
 
             <InputLabel text={"Картинка:"}/>
-            <input type={"file"}/>
+            <input type={"file"} onChange={e => onImgFileChange(e)}/>
+
+            <InputLabel text={"Фон:"}/>
+            <input type={"file"} onChange={e => onBackgroundFileChange(e)}/>
 
             <InputLabel text={"Описание:"}/>
             <InputTextarea autoResize={true}

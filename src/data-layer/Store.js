@@ -31,8 +31,8 @@ export const initialState = {
     commentForm: DefaultFormValues.comment,
     messageForm: DefaultFormValues.message,
 
-    networkForm: DefaultFormValues.network,
-    subnetworkForm: DefaultFormValues.subnetwork,
+    networkForm: DefaultFormValues.networkForm,
+    subnetworkForm: DefaultFormValues.subnetworkForm,
     gameForm: DefaultFormValues.gameForm,
     questionnaireTemplateForm: DefaultFormValues.questionnaireTemplateForm,
     questionnaireTemplateItemForm: DefaultFormValues.questionnaireTemplateItemForm,

@@ -11,11 +11,13 @@ export default {
     message: {
         text: ""
     },
-    network: {
+    networkForm: {
         title: "",
-        description: ""
+        description: "",
+        img: "",
+        background: ""
     },
-    subnetwork: {
+    subnetworkForm: {
         title: "",
         description: ""
     },

@@ -4,8 +4,9 @@ import {InputTextarea} from "primereact/inputtextarea";
 import Btn from "../../../Common/Btn";
 import {changeView, setActiveNetwork, setNetworks, updateNetworkForm} from "../../../../data-layer/ActionCreators";
 import {networkUrl, uploadUrl} from "../../../../util/Parameters";
-import {networkSelectionView} from "../../../../Views";
+import {adminPageView, networkSelectionView} from "../../../../Views";
 import {post, upload} from "../../../../util/Http";
+import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state, props) {
     return {
@@ -26,27 +27,19 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
-    function onFileChange(e) {
-        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => console.log(rs))
-
+    function onImgFileChange(e) {
+        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateNetworkForm({img: rs.data.filename}))
     }
 
-    function onSubmit(e) {
-        // e.preventDefault()
-        // const formData = new FormData()
-        // formData.append("file", file)
-        // post("https://novemis.ru:8082/uploadfile", formData, {
-        //     headers: {
-        //         "content-type": "multipart/form-data"
-        //     }
-        // }).then(rs => console.log(rs.filename))
+    function onBackgroundFileChange(e) {
+        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateNetworkForm({background: rs.data.filename}))
     }
 
-    function save() {
+    function onSaveClicked() {
         post(networkUrl, props.networkForm, rs => {
             props.setNetworks(props.networks.concat(rs))
-            updateNetworkForm({title: "", description: ""})
-            props.changeView(networkSelectionView)
+            updateNetworkForm(DefaultFormValues.networkForm)
+            props.changeView(adminPageView)
             props.growl.show({severity: "info", summary: "Сеть создана"})
         })
     }
@@ -60,10 +53,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
 
             <div className={"network-creation-view-label"}>Картинка:</div>
-            <form onSubmit={e => onSubmit(e)}>
-                <input type="file" onChange={e => onFileChange(e)}/>
-                <button type={"submit"}>upload</button>
-            </form>
+            <input type="file" onChange={e => onImgFileChange(e)}/>
+
+            <div className={"network-creation-view-label"}>Фон:</div>
+            <input type="file" onChange={e => onBackgroundFileChange(e)}/>
 
             <div className={"network-creation-view-label"}>Описание:</div>
             <InputTextarea autoResize={true}
@@ -72,7 +65,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            onChange={e => props.updateNetworkForm({description: e.target.value})}
             />
             <div className={"network-creation-save-button"}
-                 onClick={() => save()}>
+                 onClick={() => onSaveClicked()}>
                 Сохранить
             </div>
         </div>

@@ -115,6 +115,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                    onChange={e => props.updateGameForm({title: e.target.value})}
             />
 
+            <InputLabel text={"Ссылка на группу:"}/>
+            <input className={"game-creation-view-input"}
+                   value={props.gameForm.groupLink}
+                   onChange={e => props.updateGameForm({groupLink: e.target.value})}
+            />
+
             <InputLabel text={"Картинка:"}/>
             <input type={"file"} onChange={e => onImgFileChange(e)}/>
 

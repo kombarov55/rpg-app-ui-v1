@@ -101,10 +101,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     return (
         <div className={"game-creation-view"}>
-            <div className={"game-creation-view-label"}>Название:</div>
+            <InputLabel text={"Название:"}/>
             <input className={"game-creation-view-input"}
                    value={props.gameForm.title}
                    onChange={e => props.updateGameForm({title: e.target.value})}
+            />
+
+            <InputLabel text={"Ссылка на группу:"}/>
+            <input className={"game-creation-view-input"}
+                   value={props.gameForm.groupLink}
+                   onChange={e => props.updateGameForm({groupLink: e.target.value})}
             />
 
             <InputLabel text={"Картинка:"}/>
@@ -113,14 +119,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputLabel text={"Фон:"}/>
             <input type={"file"} onChange={e => onBackgroundFileChange(e)}/>
 
-            <div className={"game-creation-view-label"}>Описание:</div>
+            <InputLabel text={"Описание:"}/>
             <InputTextarea autoResize={true}
                            rows={10}
                            value={props.gameForm.description}
                            onChange={e => props.updateGameForm({description: e.target.value})}
             />
-            <InputLabel text={"Валюта: (макс. 3)"}/>
 
+            <InputLabel text={"Валюта: (макс. 3)"}/>
             <div className={"list"}>
                 {props.gameForm.currencies.length === 0 ?
                     <NoItemsLabel text={"Нет валют"}/> :
@@ -128,9 +134,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         <ListItemSmall left={currency.name} right={currency.priceInActivityPoints}/>
                     )
                 }
-
             </div>
-
             {
                 currencyFormVisible &&
                 <CurrencyForm
@@ -142,7 +146,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <AddItemButton text={"Добавить валюту"} onClick={() => onAddCurrencyClicked()}/>
             }
 
-            <div className={"game-creation-view-label"}>Тип навыка: </div>
+            <InputLabel text={"Тип навыка:"}/>
             <ListInput
                 value={props.gameForm.skillTypeInput}
                 onChange={e => props.updateGameForm({skillTypeInput: e.target.value})}

@@ -106,7 +106,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
                 <div className={"network-name"}>{props.activeNetwork.title}</div>
                 <div className={"network-description"}>{props.activeNetwork.description}</div>
-                <div className={"network-description"}><a href="https://vk.com/im">Ссылка на группу</a></div>
+                <div className={"network-description"}><a href={props.activeNetwork.groupLink}>Ссылка на группу</a></div>
             </div>
             <Btn text={"Редактировать"}
                  onClick={() => onEditClicked()}

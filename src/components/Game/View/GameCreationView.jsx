@@ -8,7 +8,7 @@ import {
     updateGameForm
 } from "../../../data-layer/ActionCreators";
 import {post, upload} from "../../../util/Http";
-import {gameByNetworkId, gameBySubnetworkId, gamesUrl} from "../../../util/Parameters";
+import {gameByNetworkId, gameBySubnetworkId, gamesUrl, uploadUrl} from "../../../util/Parameters";
 import {adminPageView, networkView, subnetworkView} from "../../../Views";
 import Globals from "../../../util/Globals";
 import ListInput from "../../Common/ListInput";
@@ -57,11 +57,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onImgFileChange(e) {
-        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateGameForm({img: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({img: rs.data.filename}))
     }
 
     function onBackgroundFileChange(e) {
-        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateGameForm({background: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({background: rs.data.filename}))
     }
 
     function onSkillTypeSubmitClicked(value) {

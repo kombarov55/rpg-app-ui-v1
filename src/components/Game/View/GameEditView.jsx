@@ -9,7 +9,14 @@ import {
     updateGameForm
 } from "../../../data-layer/ActionCreators";
 import {put, upload} from "../../../util/Http";
-import {editGameByNetworkId, editGamebySubnetworkId, gameByNetworkId, gamesUrl, gameUrl} from "../../../util/Parameters";
+import {
+    editGameByNetworkId,
+    editGamebySubnetworkId,
+    gameByNetworkId,
+    gamesUrl,
+    gameUrl,
+    uploadUrl
+} from "../../../util/Parameters";
 import {adminPageView, gameView, networkView, subnetworkView} from "../../../Views";
 import ListInput from "../../Common/ListInput";
 import Globals from "../../../util/Globals";
@@ -63,11 +70,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onImgFileChange(e) {
-        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateGameForm({img: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({img: rs.data.filename}))
     }
 
     function onBackgroundFileChange(e) {
-        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateGameForm({background: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({background: rs.data.filename}))
     }
 
     function onDeleteSkillTypeClicked(value) {

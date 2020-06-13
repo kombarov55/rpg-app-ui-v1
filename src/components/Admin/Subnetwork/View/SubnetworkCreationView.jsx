@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import {changeView, setSubnetworks, updateSubnetworkForm} from "../../../../data-layer/ActionCreators";
 import {post, upload} from "../../../../util/Http";
-import {subnetworkUrl} from "../../../../util/Parameters";
+import {subnetworkUrl, uploadUrl} from "../../../../util/Parameters";
 import {networkView} from "../../../../Views";
 import InputLabel from "../../../Common/InputLabel";
 
@@ -37,11 +37,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onImgFileChange(e) {
-        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateSubnetworkForm({img: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateSubnetworkForm({img: rs.data.filename}))
     }
 
     function onBackgroundFileChange(e) {
-        upload("https://novemis.ru:8082/uploadfile", e.target.files[0], rs => props.updateSubnetworkForm({background: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateSubnetworkForm({background: rs.data.filename}))
     }
 
     return (

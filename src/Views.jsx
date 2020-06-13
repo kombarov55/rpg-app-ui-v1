@@ -29,6 +29,7 @@ import AdminPageView from "./components/Admin/View/AdminPageView";
 import Preload from "./util/Preload";
 import QuestionnaireTemplateEditView from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateEditView";
 import ConversionView from "./components/Game/View/ConversionView";
+import SkillCategoryForm from "./components/Game/SkillCategoryForm";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -58,6 +59,8 @@ export const subnetworkEditView = {component: <SubnetworkEditView/>, label: "Р�
 export const gameView = {component: <GameView/>, label: "Игра"}
 export const gameCreationView = {component: <GameCreationView/>, label: "Создание игры"}
 export const gameEditView = {component: <GameEditView/>, label: "Редактирование игры"}
+
+export const skillCategoryFormView = {component: <SkillCategoryForm/>, label: "Создание категории навыка"}
 
 export const questionnaireRulesView = {component: <QuestionnaireRulesView/>, label: "Правила игры"}
 export const questionnaireTemplateCreationView = {component: <QuestionnaireTemplateCreationView/>, label: "Создание анкеты"}

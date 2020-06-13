@@ -31,10 +31,9 @@ export default {
         img: "",
         background: "",
         currencyInput: "",
-        skillTypeInput: "",
         currencies: [],
         conversions: [],
-        skillTypes: ["Общие", "Боевые", "Магические", "Прочие"]
+        skillCategories: []
     },
     questionnaireTemplateForm: {
         name: "",
@@ -75,5 +74,11 @@ export default {
         currency2: "",
         conversionPrice1to2: 0,
         conversionPrice2to1: 0
+    },
+    skillCategoryForm: {
+        name: "",
+        img: "",
+        description: "",
+        complex: false
     }
 }

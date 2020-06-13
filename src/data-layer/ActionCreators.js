@@ -42,7 +42,7 @@ import {
     UPDATE_CURRENCY_FORM,
     UPDATE_CONVERSION_FORM,
     SET_CURRENCIES,
-    SET_CONVERSIONS
+    SET_CONVERSIONS, UPDATE_SKILL_CATEGORY_FORM
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -448,6 +448,15 @@ export function setConversions(conversions) {
         type: SET_CONVERSIONS,
         payload: {
             conversions: conversions
+        }
+    }
+}
+
+export function updateSkillCategoryForm(fieldNameToValue) {
+    return {
+        type: UPDATE_SKILL_CATEGORY_FORM,
+        payload: {
+            fieldNameToValue: fieldNameToValue
         }
     }
 }

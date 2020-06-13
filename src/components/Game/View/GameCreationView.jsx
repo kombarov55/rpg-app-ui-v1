@@ -9,7 +9,7 @@ import {
 } from "../../../data-layer/ActionCreators";
 import {post, upload} from "../../../util/Http";
 import {gameByNetworkId, gameBySubnetworkId, gamesUrl, uploadUrl} from "../../../util/Parameters";
-import {adminPageView, networkView, subnetworkView} from "../../../Views";
+import {adminPageView, networkView, skillCategoryFormView, subnetworkView} from "../../../Views";
 import Globals from "../../../util/Globals";
 import ListInput from "../../Common/ListInput";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
@@ -20,6 +20,8 @@ import InputLabel from "../../Common/InputLabel";
 import ListItemSmall from "../../Common/ListItemSmall";
 import NoItemsLabel from "../../Common/NoItemsLabel";
 import {useForm} from "react-hook-form";
+import SkillCategoryForm from "../SkillCategoryForm";
+import SkillCategoryFormMode from "../../../data-layer/enums/SkillCategoryFormMode";
 
 function mapStateToProps(state, props) {
     return {
@@ -65,17 +67,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({background: rs.data.filename}))
     }
 
-    function onSkillTypeSubmitClicked(value) {
-        if (value !== "") {
-            props.updateGameForm({
-                skillTypes: props.gameForm.skillTypes.filter(it => it !== value).concat(value),
-                skillTypeInput: ""
-            })
-        }
-    }
-
-    function onSkillTypeDeleteClicked(value) {
-        props.updateGameForm({skillTypes: props.gameForm.skillTypes.filter(it => it !== value)})
+    function onAddSkillCategoryClicked() {
+        Globals.skillCategoryFormMode = SkillCategoryFormMode.CREATE
+        props.changeView(skillCategoryFormView)
     }
 
     function onSaveClicked() {
@@ -172,14 +166,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <AddItemButton text={"Добавить валюту"} onClick={() => onAddCurrencyClicked()}/>
             }
 
-            <InputLabel text={"Тип навыка:"}/>
-            <ListInput
-                value={props.gameForm.skillTypeInput}
-                onChange={e => props.updateGameForm({skillTypeInput: e.target.value})}
-                onSubmit={value => onSkillTypeSubmitClicked(value)}
-                onDelete={value => onSkillTypeDeleteClicked(value)}
-                values={props.gameForm.skillTypes}
-            />
+            <InputLabel text={"Категории навыков:"}/>
+            <AddItemButton text={"Добавить категорию навыка"} onClick={() => onAddSkillCategoryClicked()}/>
+
             <input className={"network-creation-save-button"}
                    type={"submit"}
                    value={"Сохранить"}/>

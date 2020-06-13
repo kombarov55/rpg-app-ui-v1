@@ -11,6 +11,7 @@ import {post, put, upload} from "../../../../util/Http";
 import {editSubnetworkUrl, subnetworkUrl, uploadUrl} from "../../../../util/Parameters";
 import {networkView, subnetworkView} from "../../../../Views";
 import InputLabel from "../../../Common/InputLabel";
+import {useForm} from "react-hook-form";
 
 function mapStateToProps(state, props) {
     return {
@@ -52,25 +53,43 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         upload(uploadUrl, e.target.files[0], rs => props.updateSubnetworkForm({background: rs.data.filename}))
     }
 
+    const {register, handleSubmit, errors} = useForm()
+
     return (
-        <div className={"subnetwork-creation-view"}>
+        <form className={"subnetwork-creation-view"}
+              onSubmit={handleSubmit(onSaveClicked)}>
+
             <InputLabel text={"Название:"}/>
             <input className={"subnetwork-creation-view-input"}
+                   name={"title"}
+                   ref={register({required: true})}
                    value={props.subnetworkForm.title}
                    onChange={e => props.updateSubnetworkForm({title: e.target.value})}
             />
+            <div className={"error-label"}>{errors.title &&  "Введите название"}</div>
 
             <InputLabel text={"Ссылка на группу:"}/>
             <input className={"subnetwork-creation-view-input"}
+                   name={"groupLink"}
+                   ref={register({required: true})}
                    value={props.subnetworkForm.groupLink}
                    onChange={e => props.updateSubnetworkForm({groupLink: e.target.value})}
             />
+            <div className={"error-label"}>{errors.groupLink &&  "Неверная ссылка на группу"}</div>
 
             <InputLabel text={"Картинка:"}/>
-            <input type={"file"} onChange={e => onImgFileChange(e)} />
+            <input type={"file"}
+                   name={"img"}
+                   ref={register({required: true})}
+                   onChange={e => onImgFileChange(e)}/>
+            <div className={"error-label"}>{errors.img &&  "Загрузите картинку"}</div>
 
             <InputLabel text={"Фон:"}/>
-            <input type={"file"} onChange={e => onBackgroundFileChange(e)} />
+            <input type={"file"}
+                   name={"background"}
+                   ref={register({required: true})}
+                   onChange={e => onBackgroundFileChange(e)}/>
+            <div className={"error-label"}>{errors.background &&  "Загрузите фон"}</div>
 
             <InputLabel text={"Описание:"}/>
             <InputTextarea autoResize={true}
@@ -78,10 +97,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            value={props.subnetworkForm.description}
                            onChange={e => props.updateSubnetworkForm({description: e.target.value})}
             />
-            <div className={"subnetwork-creation-save-button"}
-                 onClick={() => onSaveClicked()}>
-                Сохранить
-            </div>
-        </div>
+            <input className={"network-creation-save-button"}
+                   type={"submit"}
+                   value={"Сохранить"}/>
+        </form>
     )
 })

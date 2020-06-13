@@ -6,6 +6,7 @@ import {editNetworkUrl, networkUrl, uploadUrl} from "../../../../util/Parameters
 import {networkSelectionView, networkView} from "../../../../Views";
 import {InputTextarea} from "primereact/inputtextarea";
 import InputLabel from "../../../Common/InputLabel";
+import {useForm} from "react-hook-form";
 
 function mapStateToProps(state, props) {
     return {
@@ -46,25 +47,41 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         upload(uploadUrl, e.target.files[0], rs => props.updateNetworkForm({background: rs.data.filename}))
     }
 
+    const {handleSubmit, register, errors} = useForm()
+
     return (
-        <div className={"network-creation-view"}>
+        <form className={"network-creation-view"} onSubmit={handleSubmit(onSaveClicked)}>
             <InputLabel text={"Название:"}/>
             <input className={"network-creation-view-input"}
+                   name={"title"}
+                   ref={register({required: true})}
                    value={props.networkForm.title}
                    onChange={e => props.updateNetworkForm({title: e.target.value})}
             />
+            <div className={"error-label"}>{errors.title && "Введите название"}</div>
 
             <InputLabel text={"Ссылка на группу:"}/>
             <input className={"network-creation-view-input"}
+                   name={"groupLink"}
+                   ref={register({required: true})}
                    value={props.networkForm.groupLink}
                    onChange={e => props.updateNetworkForm({groupLink: e.target.value})}
             />
+            <div className={"error-label"}>{errors.groupLink && "Неверная ссылка на группу"}</div>
 
             <InputLabel text={"Картинка:"}/>
-            <input type="file" onChange={e => onImgFileChange(e)}/>
+            <input type="file"
+                   name={"img"}
+                   ref={register({required: true})}
+                   onChange={e => onImgFileChange(e)}/>
+            <div className={"error-label"}>{errors.img && "Загрузите картинку"}</div>
 
             <InputLabel text={"Фон:"}/>
-            <input type="file" onChange={e => onBackgroundFileChange(e)}/>
+            <input type="file"
+                   name={"background"}
+                   ref={register({required: true})}
+                   onChange={e => onBackgroundFileChange(e)}/>
+            <div className={"error-label"}>{errors.background && "Загрузите картинку"}</div>
 
             <InputLabel text={"Описание:"}/>
             <InputTextarea autoResize={true}
@@ -72,10 +89,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            value={props.networkForm.description}
                            onChange={e => props.updateNetworkForm({description: e.target.value})}
             />
-            <div className={"network-creation-save-button"}
-                 onClick={() => onSaveClicked()}>
-                Сохранить
-            </div>
-        </div>
+            <input type={"submit"}
+                   className={"network-creation-save-button"}
+                   value={"Сохранить"}/>
+        </form>
     )
 })

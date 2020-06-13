@@ -208,3 +208,7 @@
     background: rgba(134, 134, 134, 0.03);
     border-radius: 5px;
 }
+
+.error-label {
+    color: red;
+}

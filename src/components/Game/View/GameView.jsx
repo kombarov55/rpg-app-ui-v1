@@ -136,7 +136,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
                 <div className={"game-name"}>{props.activeGame.title}</div>
                 <div className={"game-description"}>{props.activeGame.description}</div>
-
+                <div className={"game-description"}><a href={props.activeGame.groupLink}>Ссылка на группу</a></div>
                 <Label text={"Шаблоны анкет:"}/>
                 {props.activeGame.questionnaireTemplates.length === 0 ?
                     <NoItemsLabel text={"Нет шаблонов"}/> :

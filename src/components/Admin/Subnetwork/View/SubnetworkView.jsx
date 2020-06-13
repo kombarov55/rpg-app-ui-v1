@@ -77,6 +77,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <img className={"network-info-img"} src={props.activeSubnetwork.imgSrc}/>
                 <div className={"network-name"}>{props.activeSubnetwork.title}</div>
                 <div className={"network-description"}>{props.activeSubnetwork.description}</div>
+                <div className={"network-description"}><a href={props.activeSubnetwork.groupLink}>Ссылка на группу</a></div>
             </div>
 
             <Btn text={"Редактировать"}

@@ -27,6 +27,7 @@ import NoItemsLabel from "../../Common/NoItemsLabel";
 import ListItemSmall from "../../Common/ListItemSmall";
 import CurrencyForm from "../CurrencyForm";
 import AddItemButton from "../../Common/AddItemButton";
+import {useForm} from "react-hook-form";
 
 function mapStateToProps(state, props) {
     return {
@@ -92,7 +93,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 url = editGameByNetworkId(props.activeNetwork.id, props.gameForm.id)
                 break;
             case GameCreationMode.BY_SUBNETWORK:
-                url= editGamebySubnetworkId(props.activeNetwork.id, props.activeSubnetwork.id, props.gameForm.id)
+                url = editGamebySubnetworkId(props.activeNetwork.id, props.activeSubnetwork.id, props.gameForm.id)
                 break;
 
         }
@@ -106,25 +107,43 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    const {register, errors, handleSubmit} = useForm()
+
     return (
-        <div className={"game-creation-view"}>
+        <form className={"game-creation-view"}
+              onSubmit={handleSubmit(onSaveClicked)}>
+
             <InputLabel text={"Название:"}/>
             <input className={"game-creation-view-input"}
+                   name={"groupLink"}
+                   ref={register({required: true})}
                    value={props.gameForm.title}
                    onChange={e => props.updateGameForm({title: e.target.value})}
             />
+            <div className={"error-label"}>{errors.title && "Введите название"}</div>
 
             <InputLabel text={"Ссылка на группу:"}/>
             <input className={"game-creation-view-input"}
+                   name={"groupLink"}
+                   ref={register({required: true})}
                    value={props.gameForm.groupLink}
                    onChange={e => props.updateGameForm({groupLink: e.target.value})}
             />
+            <div className={"error-label"}>{errors.groupLink && "Неверная ссылка"}</div>
 
             <InputLabel text={"Картинка:"}/>
-            <input type={"file"} onChange={e => onImgFileChange(e)}/>
+            <input type={"file"}
+                   name={"img"}
+                   ref={register({required: true})}
+                   onChange={e => onImgFileChange(e)}/>
+            <div className={"error-label"}>{errors.img && "Загрузите картинку"}</div>
 
             <InputLabel text={"Фон:"}/>
-            <input type={"file"} onChange={e => onBackgroundFileChange(e)}/>
+            <input type={"file"}
+                   name={"background"}
+                   ref={register({required: true})}
+                   onChange={e => onBackgroundFileChange(e)}/>
+            <div className={"error-label"}>{errors.background && "Загрузите фон"}</div>
 
             <InputLabel text={"Описание:"}/>
             <InputTextarea autoResize={true}
@@ -162,10 +181,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 onDelete={value => onDeleteSkillTypeClicked(value)}
                 deleteOnlyNew={true}
             />
-            <div className={"game-creation-save-button"}
-                 onClick={() => onSaveClicked()}>
-                Сохранить
-            </div>
-        </div>
+            <input className={"network-creation-save-button"}
+                   type={"submit"}
+                   value={"Сохранить"}/>
+        </form>
     )
 })

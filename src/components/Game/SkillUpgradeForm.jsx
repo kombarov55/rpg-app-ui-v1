@@ -9,6 +9,7 @@ import ListItemSmall from "../Common/ListItemSmall";
 import Icon from "../Common/Icon";
 import _ from "lodash"
 import IsNumeric from "../../util/IsNumeric";
+import PriceInput from "../Common/PriceInput";
 
 const style = {
     padding: "0.1vmax 2vmin 1vmax 2vmin",
@@ -46,47 +47,29 @@ function OptionInput(props) {
     )
 }
 
-const defaultFormValue = {
+const defaultFormValues = {
     description: "",
     selectedCurrencies: [],
-    upgradeOptionsForm: [],
     upgradeOptions: []
 }
 
 export default function (props) {
-    const [form, setForm] = useState(defaultFormValue)
+    const [form, setForm] = useState(defaultFormValues)
 
-    function onOptionValueChanged(name, value) {
-        setForm(Object.assign({}, form, {
-            upgradeOptionsForm:
-                form
-                    .upgradeOptionsForm
-                    .filter(it => it.name !== name)
-                    .concat({name: name, amount: value})
-        }))
-    }
-
-    function upgradeOptionFormValue(name) {
-        const x = form.upgradeOptionsForm.find(it => it.name === name)
-
-        if (x != null) {
-            return x.amount
-        } else {
-            return ""
-        }
-    }
-
-    function optionAdded() {
-        const formOptionNames = form.upgradeOptionsForm.map(it => it.name)
+    function optionAdded(currencyToAmountList) {
+        const formOptionNames = currencyToAmountList.map(it => it.name)
         const listOfListOfNames = form.upgradeOptions.map(list => list.map(it => it.name))
 
         const exists = listOfListOfNames.some(list => _.isEqual(list, formOptionNames))
-        const validInput = form.upgradeOptionsForm.length !== 0 && form.upgradeOptionsForm.map(it => it.amount).every(it => IsNumeric(it))
+        const validInput = currencyToAmountList.length !== 0 && currencyToAmountList.map(it => it.amount).every(it => IsNumeric(it))
+
+        console.log(currencyToAmountList)
+        console.log(exists)
+        console.log(validInput)
 
         if (!exists && validInput) {
             setForm(Object.assign({}, form, {
-                upgradeOptions: form.upgradeOptions.concat([form.upgradeOptionsForm]),
-                upgradeOptionsForm: [],
+                upgradeOptions: form.upgradeOptions.concat([currencyToAmountList]),
                 selectedCurrencies: []
             }))
         }
@@ -105,27 +88,28 @@ export default function (props) {
                 <InputLabel text={"Описание:"}/>
                 <InputTextarea/>
                 <InputLabel text={"Повышение: (+)"}/>
-                <List noItemsText={"Нет вариантов повышения"}
-                      values={form.upgradeOptions.map(entries =>
-                          <ListItemSmall left={entries.map(it => it.name + ": " + it.amount).join(" + ")}
-                                         right={
-                                             <Icon
-                                                 className={"pi pi-times"}
-                                                 onClick={() => optionDeleted(entries)}
-                                             />
-                                         }
-                          />
-                      )}
-                />
+                <div>
+                    <List noItemsText={"Нет вариантов повышения"}
+                          values={
+                              form.upgradeOptions.map(entries =>
+                                  <ListItemSmall left={entries.map(it => it.name + ": " + it.amount).join(" + ")}
+                                                 right={
+                                                     <Icon
+                                                         className={"pi pi-times"}
+                                                         onClick={() => optionDeleted(entries)}
+                                                     />
+                                                 }
+                                  />
+                              )
+                          }
+                    />
 
-                {["Золото", "Серебро", "Опыт"].map(name =>
-                    <OptionInput name={name}
-                                 value={upgradeOptionFormValue(name)}
-                                 onChange={e => onOptionValueChanged(name, e.target.value)}
-                    />)
-                }
+                    <PriceInput
+                        currencies={["Золото", "Серебро", "Опыт"]}
+                        onSubmit={list => optionAdded(list)}
+                    />
 
-                <CenterPlusButton onClick={() => optionAdded(form.upgradeOptionsForm)}/>
+                </div>
                 <AddItemButton text={"Добавить"} onClick={() => props.onSubmit()}/>
             </div>
         </div>

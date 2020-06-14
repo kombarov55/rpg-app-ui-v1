@@ -40,51 +40,6 @@ const formStyle = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
-    const [visibility, setVisibility] = useState({
-        currency: false,
-        currencyCombination: false,
-        skillUpgrade: false
-    })
-
-    function onCurrencyForUpgradeChecked(name, checked) {
-        if (checked && !props.skillForm.currenciesForUpgrade.some(it => it === name)) {
-            props.updateSkillForm({currenciesForUpgrade: props.skillForm.currenciesForUpgrade.concat(name)})
-        } else {
-            props.updateSkillForm({currenciesForUpgrade: props.skillForm.currenciesForUpgrade.filter(it => it !== name)})
-        }
-    }
-
-    function onCurrencyCombinationFormSubmit(data) {
-        console.log(data)
-        const checkedCurrencyNames = data.filter(it => it.checked).map(it => it.name)
-
-        const combinationExists =
-            props
-                .skillForm
-                .skillUpgradeCurrencyCombinations
-                .some(savedCombination => _.isEqual(savedCombination.sort(), checkedCurrencyNames.sort()))
-
-        if (!combinationExists && checkedCurrencyNames.length !== 0) {
-            props.updateSkillForm({
-                skillUpgradeCurrencyCombinations: props
-                    .skillForm
-                    .skillUpgradeCurrencyCombinations
-                    .concat([checkedCurrencyNames])
-            })
-        }
-
-        setVisibility(updateObject(visibility, {currencyCombination: false}))
-    }
-
-    function onCurrencyCombinationDeleteClicked(currencyNames) {
-        props.updateSkillForm({
-            skillUpgradeCurrencyCombinations: props
-                .skillForm
-                .skillUpgradeCurrencyCombinations
-                .filter(list => !_.isEqual(list, currencyNames))
-        })
-    }
-
     const {register, errors, handleSubmit} = useForm()
 
     return (
@@ -110,25 +65,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputLabel text={"Описание:"}/>
             <InputTextarea autoResize={true}/>
 
-            <InputLabel text={"Валюты для повышения:"}/>
-            <MultiCheckButtonGroup options={["Золото", "Опыт", "Серебро"]}
-                                   onChecked={({name, checked}) => onCurrencyForUpgradeChecked(name, checked)}
-            />
-
-            <InputLabel text={"Сочетания валют для повышения:"}/>
-            <List noItemsText={"нет сочетаний"}
-                  values={props.skillForm.skillUpgradeCurrencyCombinations.map(names =>
-                      <ListItemSmall
-                          left={names.join(" + ")}
-                          right={<Icon className={"pi pi-times"}
-                                       onClick={() => onCurrencyCombinationDeleteClicked(names)}/>}
-                      />
-                  )}
-            />
-            <SkillUpgradeCurrencyCombinationForm
-                currencyNames={props.skillForm.currenciesForUpgrade}
-                onSubmit={data => onCurrencyCombinationFormSubmit(data)}
-            />
+            <InputLabel text={"Стоимость:"}/>
+            <input />
 
             <InputLabel text={"Прокачиваемый?"}/>
             <InputSwitch checked={props.skillForm.upgradable}

@@ -55,17 +55,6 @@ const defaultFormValue = {
 export default function (props) {
     const [form, setForm] = useState(defaultFormValue)
 
-    function onCurrencyChecked(name, checked) {
-        if (checked) {
-            const exists = form.selectedCurrencies.some(it => it === name)
-            if (!exists) {
-                setForm(Object.assign({}, form, {selectedCurrencies: form.selectedCurrencies.concat(name)}))
-            }
-        } else {
-            setForm(Object.assign({}, form, {selectedCurrencies: form.selectedCurrencies.filter(it => it !== name)}))
-        }
-    }
-
     function onOptionValueChanged(name, value) {
         setForm(Object.assign({}, form, {
             upgradeOptionsForm:
@@ -76,15 +65,24 @@ export default function (props) {
         }))
     }
 
-    function optionToString(name, amount) {
-        return name + ": " + amount
+    function upgradeOptionFormValue(name) {
+        const x = form.upgradeOptionsForm.find(it => it.name === name)
+
+        if (x != null) {
+            return x.amount
+        } else {
+            return ""
+        }
     }
 
     function optionAdded() {
         const formOptionNames = form.upgradeOptionsForm.map(it => it.name)
         const listOfListOfNames = form.upgradeOptions.map(list => list.map(it => it.name))
 
-        const exists = listOfListOfNames.some(listOfNames => !_.isEqual(listOfNames, listOfListOfNames))
+        window.formOptionNames = formOptionNames
+        window.listOfListOfNames = listOfListOfNames
+
+        const exists = listOfListOfNames.some(list => _.isEqual(list, formOptionNames))
 
         if (!exists) {
             setForm(Object.assign({}, form, {
@@ -120,11 +118,10 @@ export default function (props) {
                           />
                       )}
                 />
-                <MultiCheckButtonGroup options={["Золото", "Опыт", "Серебро"]}
-                                       onChecked={({name, checked}) => onCurrencyChecked(name, checked)}
-                />
-                {form.selectedCurrencies.map(name =>
+
+                {["Золото", "Серебро", "Опыт"].map(name =>
                     <OptionInput name={name}
+                                 value={upgradeOptionFormValue(name)}
                                  onChange={e => onOptionValueChanged(name, e.target.value)}
                     />)
                 }

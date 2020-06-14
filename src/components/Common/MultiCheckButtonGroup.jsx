@@ -28,8 +28,9 @@ export default function (props) {
         const checkedStyle = copy(uncheckedStyle, {background: "grey"})
 
         function onClick() {
-            onChecked({name: props.text, checked: !checked})
-            setChecked(!checked)
+            const newValue = !checked
+            setChecked(newValue)
+            onChecked({name: props.text, checked: newValue})
         }
 
         return (

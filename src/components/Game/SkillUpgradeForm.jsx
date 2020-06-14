@@ -57,7 +57,10 @@ export default function (props) {
 
     function onCurrencyChecked(name, checked) {
         if (checked) {
-            setForm(Object.assign({}, form, {selectedCurrencies: form.selectedCurrencies.concat(name)}))
+            const exists = form.selectedCurrencies.some(it => it === name)
+            if (!exists) {
+                setForm(Object.assign({}, form, {selectedCurrencies: form.selectedCurrencies.concat(name)}))
+            }
         } else {
             setForm(Object.assign({}, form, {selectedCurrencies: form.selectedCurrencies.filter(it => it !== name)}))
         }
@@ -78,11 +81,18 @@ export default function (props) {
     }
 
     function optionAdded() {
-        setForm(Object.assign({}, form, {
-            upgradeOptions: form.upgradeOptions.concat([form.upgradeOptionsForm]),
-            upgradeOptionsForm: [],
-            selectedCurrencies: []
-        }))
+        const formOptionNames = form.upgradeOptionsForm.map(it => it.name)
+        const listOfListOfNames = form.upgradeOptions.map(list => list.map(it => it.name))
+
+        const exists = listOfListOfNames.some(listOfNames => !_.isEqual(listOfNames, listOfListOfNames))
+
+        if (!exists) {
+            setForm(Object.assign({}, form, {
+                upgradeOptions: form.upgradeOptions.concat([form.upgradeOptionsForm]),
+                upgradeOptionsForm: [],
+                selectedCurrencies: []
+            }))
+        }
     }
 
     function optionDeleted(paramEntries) {

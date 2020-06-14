@@ -14,6 +14,7 @@ import ListItemSmall from "../../Common/ListItemSmall";
 import Icon from "../../Common/Icon";
 import MultiCheckButtonGroup from "../../Common/MultiCheckButtonGroup";
 import _ from "lodash"
+import List from "../../Common/List";
 
 function mapStateToProps(state) {
     return {
@@ -113,20 +114,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
 
             <InputLabel text={"Сочетания валют для повышения:"}/>
-            <div className={"list"}>
-                {
-                    props.skillForm.skillUpgradeCurrencyCombinations.length === 0 ?
-                        <NoItemsLabel text={"Нет сочетаний"}/> :
-                        props.skillForm.skillUpgradeCurrencyCombinations.map(names =>
-                            <ListItemSmall
-                                left={names.join(" + ")}
-                                right={<Icon className={"pi pi-times"}
-                                             onClick={() => onCurrencyCombinationDeleteClicked(names)}/>}
-                            />
-                        )
-
-                }
-            </div>
+            <List noItemsText={"нет сочетаний"}
+                  values={props.skillForm.skillUpgradeCurrencyCombinations.map(names =>
+                      <ListItemSmall
+                          left={names.join(" + ")}
+                          right={<Icon className={"pi pi-times"}
+                                       onClick={() => onCurrencyCombinationDeleteClicked(names)}/>}
+                      />
+                  )}
+            />
             <SkillUpgradeCurrencyCombinationForm
                 currencyNames={props.skillForm.currenciesForUpgrade}
                 onSubmit={data => onCurrencyCombinationFormSubmit(data)}

@@ -61,10 +61,6 @@ export default function (props) {
         const exists = listOfListOfNames.some(list => _.isEqual(list, formOptionNames))
         const validInput = currencyToAmountList.length !== 0 && currencyToAmountList.map(it => it.amount).every(it => IsNumeric(it))
 
-        console.log(currencyToAmountList)
-        console.log(exists)
-        console.log(validInput)
-
         if (!exists && validInput) {
             setForm(Object.assign({}, form, {
                 upgradeOptions: form.upgradeOptions.concat([currencyToAmountList]),

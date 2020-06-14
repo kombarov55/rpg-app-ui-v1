@@ -54,6 +54,7 @@ function OptionInput(props) {
     const formStyle = {
         display: "flex",
         flexDirection: "row",
+        justifyContent: "space-between",
 
         margin: "2vmax 0 1vmax 0"
     }
@@ -63,7 +64,8 @@ function OptionInput(props) {
     }
 
     const inputStyle = {
-        height: "4vmax"
+        height: "4vmax",
+        width: "65%"
     }
 
     return (

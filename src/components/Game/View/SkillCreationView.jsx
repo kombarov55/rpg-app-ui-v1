@@ -140,9 +140,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <>
                     <InputLabel text={"Уровни навыка:"}/>
                     <List noItemsText={"Нет уровней"}/>
-                    <SkillUpgradeForm
-
-                    />
+                    <SkillUpgradeForm/>
                     <AddItemButton text={"Добавить"}/>
                 </>
             }

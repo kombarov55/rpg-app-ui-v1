@@ -1,11 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import InputLabel from "../Common/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
-import AddItemButton from "../Common/AddItemButton";
 import MultiCheckButtonGroup from "../Common/MultiCheckButtonGroup";
-import Icon from "../Common/Icon";
-import AddItemButtonCircle from "../Common/AddItemButtonCircle";
 import CenterPlusButton from "../Common/CenterPlusButton";
+import AddItemButton from "../Common/AddItemButton";
+import List from "../Common/List";
+import ListItemSmall from "../Common/ListItemSmall";
+import Icon from "../Common/Icon";
+import _ from "lodash"
 
 const style = {
     padding: "0.1vmax 2vmin 1vmax 2vmin",
@@ -33,7 +35,7 @@ function OptionInput(props) {
 
     return (
         <form style={formStyle}>
-            <div style={nameStyle}>{props.name}</div>
+            <div style={nameStyle}>{props.name + ":"}</div>
             <input
                 style={inputStyle}
                 value={props.value}
@@ -43,20 +45,83 @@ function OptionInput(props) {
     )
 }
 
+const defaultFormValue = {
+    description: "",
+    selectedCurrencies: [],
+    upgradeOptionsForm: [],
+    upgradeOptions: []
+}
+
 export default function (props) {
+    const [form, setForm] = useState(defaultFormValue)
+
+    function onCurrencyChecked(name, checked) {
+        if (checked) {
+            setForm(Object.assign({}, form, {selectedCurrencies: form.selectedCurrencies.concat(name)}))
+        } else {
+            setForm(Object.assign({}, form, {selectedCurrencies: form.selectedCurrencies.filter(it => it !== name)}))
+        }
+    }
+
+    function onOptionValueChanged(name, value) {
+        setForm(Object.assign({}, form, {
+            upgradeOptionsForm:
+                form
+                    .upgradeOptionsForm
+                    .filter(it => it.name !== name)
+                    .concat({name: name, amount: value})
+        }))
+    }
+
+    function optionToString(name, amount) {
+        return name + ": " + amount
+    }
+
+    function optionAdded() {
+        setForm(Object.assign({}, form, {
+            upgradeOptions: form.upgradeOptions.concat([form.upgradeOptionsForm]),
+            upgradeOptionsForm: [],
+            selectedCurrencies: []
+        }))
+    }
+
+    function optionDeleted(paramEntries) {
+        setForm(Object.assign({}, form, {
+            upgradeOptions: form.upgradeOptions.filter(savedEntries => !_.isEqual(paramEntries, savedEntries))
+        }))
+    }
 
     return (
-        <form style={style}>
+        <div style={style}>
             <div>
                 <InputLabel text={"1 Уровень:"}/>
                 <InputLabel text={"Описание:"}/>
                 <InputTextarea/>
                 <InputLabel text={"Повышение: (+)"}/>
-                <MultiCheckButtonGroup options={["Золото", "Опыт", "Серебро"]}
-                                       onChecked={({name, checked}) => {}}
+                <List noItemsText={"Нет вариантов повышения"}
+                      values={form.upgradeOptions.map(entries =>
+                          <ListItemSmall left={entries.map(it => it.name + ": " + it.amount).join(" + ")}
+                                         right={
+                                             <Icon
+                                                 className={"pi pi-times"}
+                                                 onClick={() => optionDeleted(entries)}
+                                             />
+                                         }
+                          />
+                      )}
                 />
-                <OptionInput name={"Золото:"}/>
+                <MultiCheckButtonGroup options={["Золото", "Опыт", "Серебро"]}
+                                       onChecked={({name, checked}) => onCurrencyChecked(name, checked)}
+                />
+                {form.selectedCurrencies.map(name =>
+                    <OptionInput name={name}
+                                 onChange={e => onOptionValueChanged(name, e.target.value)}
+                    />)
+                }
+
+                <CenterPlusButton onClick={() => optionAdded(form.upgradeOptionsForm)}/>
+                <AddItemButton text={"Добавить"} onClick={() => props.onSubmit()}/>
             </div>
-        </form>
+        </div>
     )
 }

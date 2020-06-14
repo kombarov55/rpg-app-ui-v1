@@ -32,7 +32,9 @@ export default function (props) {
         }
 
         return (
-            <div style={checked ? checkedStyle : uncheckedStyle} onClick={() => onClick()}>
+            <div style={checked ? checkedStyle : uncheckedStyle}
+                 onClick={() => onClick()}
+                 key={"multicheck + " + text}>
                 <div>{text}</div>
             </div>
         )

@@ -14,6 +14,7 @@ import setProperty from "../../../util/setProperty";
 import ListItemSmall from "../../Common/ListItemSmall";
 import Icon from "../../Common/Icon";
 import MultiCheckButtonGroup from "../../Common/MultiCheckButtonGroup";
+import EqLists from "../../../util/EqLists";
 
 function mapStateToProps(state) {
     return {
@@ -58,13 +59,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onCurrencyCombinationFormSubmit(data) {
         const checkedCurrencyNames = Object.keys(data).filter(key => data[key] === true)
 
-        const combinationExists = props
-            .skillForm
-            .skillUpgradeCurrencyCombinations
-            .some(combination =>
-                eqCurrencyCombination(combination, checkedCurrencyNames))
+        const combinationExists =
+            props
+                .skillForm
+                .skillUpgradeCurrencyCombinations
+                .some(savedCombination => EqLists(savedCombination, checkedCurrencyNames)
+    )
 
-        if (!combinationExists) {
+        if (!combinationExists && checkedCurrencyNames.length !== 0) {
             props.updateSkillForm({
                 skillUpgradeCurrencyCombinations: props
                     .skillForm
@@ -77,18 +79,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onCurrencyCombinationDeleteClicked(currencyNames) {
-        props.updateSkillForm({
-            skillUpgradeCurrencyCombinations: props
-                .skillForm
-                .skillUpgradeCurrencyCombinations
-                .filter(savedCombination => !eqCurrencyCombination,)
-        })
-    }
 
-    function eqCurrencyCombination(listOfCombinations, combination) {
-        return listOfCombinations.some(combination =>
-            combination.length === combination.length && combination.every(checkedCurrency =>
-                combination.some(savedCurrency => checkedCurrency === savedCurrency)))
     }
 
     const {register, errors, handleSubmit} = useForm()

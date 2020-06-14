@@ -15,6 +15,7 @@ export default function (props) {
         <form style={{margin: "1vmax 0"}}>
             {props.currencyNames.map(name =>
                 <LabeledCheckbox
+                    key={"labeled-checkbox " + name}
                     text={name}
                     checked={checkedValues[name]}
                     onChange={e => setCheckedValues(setProperty(checkedValues, name, e.target.checked))}

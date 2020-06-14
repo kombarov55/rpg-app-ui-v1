@@ -5,7 +5,7 @@ import {InputTextarea} from "primereact/inputtextarea";
 import {SelectButton} from "primereact/selectbutton";
 import {changeView, updateGameForm, updateSkillCategoryForm} from "../../data-layer/ActionCreators";
 import {upload} from "../../util/Http";
-import {uploadUrl} from "../../util/Parameters";
+import {uploadServerUrl, uploadUrl} from "../../util/Parameters";
 import {useForm} from "react-hook-form";
 import {gameCreationView, gameEditView} from "../../Views";
 import Globals from "../../util/Globals";
@@ -66,7 +66,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                    onChange={e => upload(
                        uploadUrl,
                        e.target.files[0],
-                       rs => setForm(Object.assign({}, form, {img: rs.data.filename})))}
+                       rs => setForm(Object.assign({}, form, {img: uploadServerUrl + "/" + rs.data.filename})))}
             />
             <div className={"error-label"}>{errors.img && "Загрузите картинку"}</div>
 

@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import Btn from "../../../Common/Btn";
 import {changeView, setActiveNetwork, setNetworks, updateNetworkForm} from "../../../../data-layer/ActionCreators";
-import {networkUrl, uploadUrl} from "../../../../util/Parameters";
+import {networkUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
 import {adminPageView} from "../../../../Views";
 import {post, upload} from "../../../../util/Http";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
@@ -30,11 +30,11 @@ function mapDispatchToProps(dispatch, props) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onImgFileChange(e) {
-        upload(uploadUrl, e.target.files[0], rs => props.updateNetworkForm({img: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateNetworkForm({img: uploadServerUrl + "/" + rs.data.filename}))
     }
 
     function onBackgroundFileChange(e) {
-        upload(uploadUrl, e.target.files[0], rs => props.updateNetworkForm({background: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateNetworkForm({background: uploadServerUrl + "/" + rs.data.filename}))
     }
 
     function onSaveClicked() {

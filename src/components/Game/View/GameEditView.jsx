@@ -14,10 +14,10 @@ import {
     editGamebySubnetworkId,
     gameByNetworkId,
     gamesUrl,
-    gameUrl,
+    gameUrl, uploadServerUrl,
     uploadUrl
 } from "../../../util/Parameters";
-import {adminPageView, gameView, networkView, subnetworkView} from "../../../Views";
+import {adminPageView, gameView, networkView, skillCategoryFormView, subnetworkView} from "../../../Views";
 import ListInput from "../../Common/ListInput";
 import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
@@ -28,6 +28,8 @@ import ListItemSmall from "../../Common/ListItemSmall";
 import CurrencyForm from "../CurrencyForm";
 import AddItemButton from "../../Common/AddItemButton";
 import {useForm} from "react-hook-form";
+import HorizontalListItem from "../../Common/HorizontalListItem";
+import SkillCategoryFormMode from "../../../data-layer/enums/SkillCategoryFormMode";
 
 function mapStateToProps(state, props) {
     return {
@@ -65,21 +67,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateCurrencyForm(DefaultFormValues.currencyForm)
     }
 
-    function onAddSkillTypeClicked(value) {
-        props.updateGameForm({skillTypes: props.gameForm.skillTypes.filter(it => it !== value).concat(value)})
-        props.updateGameForm({skillTypeInput: ""})
+    function onAddSkillCategoryClicked() {
+        Globals.skillCategoryFormMode = SkillCategoryFormMode.EDIT
+        props.changeView(skillCategoryFormView)
     }
 
     function onImgFileChange(e) {
-        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({img: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({img: uploadServerUrl + "/" + rs.data.filename}))
     }
 
     function onBackgroundFileChange(e) {
-        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({background: rs.data.filename}))
-    }
-
-    function onDeleteSkillTypeClicked(value) {
-        props.updateGameForm({skillTypes: props.gameForm.skillTypes.filter(it => it !== value)})
+        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({background: uploadServerUrl + "/" + rs.data.filename}))
     }
 
     function onSaveClicked() {
@@ -172,15 +170,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <AddItemButton text={"Добавить валюту"} onClick={() => onAddCurrencyClicked()}/>
             }
 
-            <InputLabel text={"Тип навыка:"}/>
-            <ListInput
-                value={props.gameForm.skillTypeInput}
-                onChange={e => props.updateGameForm({skillTypeInput: e.target.value})}
-                values={props.gameForm.skillTypes}
-                onSubmit={value => onAddSkillTypeClicked(value)}
-                onDelete={value => onDeleteSkillTypeClicked(value)}
-                deleteOnlyNew={true}
-            />
+            <InputLabel text={"Категории навыков:"}/>
+            <div className={"list"}>
+                {props.gameForm.skillCategories.length === 0 ?
+                    <NoItemsLabel text={"Нет категорий навыков"}/> :
+                    props.gameForm.skillCategories.map(skillCategory =>
+                        <HorizontalListItem
+                            name={skillCategory.name}
+                            description={skillCategory.description}
+                            imgSrc={skillCategory.img}
+                            onDelete={() => props.updateGameForm({skillCategories: props.gameForm.skillCategories.filter(it => it.name !== skillCategory.name)})}
+                        />)
+                }
+            </div>
+            <AddItemButton text={"Добавить категорию навыка"} onClick={() => onAddSkillCategoryClicked()}/>
+
             <input className={"network-creation-save-button"}
                    type={"submit"}
                    value={"Сохранить"}/>

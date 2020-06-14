@@ -8,7 +8,7 @@ import {
     updateSubnetworkForm
 } from "../../../../data-layer/ActionCreators";
 import {post, put, upload} from "../../../../util/Http";
-import {editSubnetworkUrl, subnetworkUrl, uploadUrl} from "../../../../util/Parameters";
+import {editSubnetworkUrl, subnetworkUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
 import {networkView, subnetworkView} from "../../../../Views";
 import InputLabel from "../../../Common/InputLabel";
 import {useForm} from "react-hook-form";
@@ -46,11 +46,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onImgFileChange(e) {
-        upload(uploadUrl, e.target.files[0], rs => props.updateSubnetworkForm({img: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateSubnetworkForm({img: uploadServerUrl + "/" + rs.data.filename}))
     }
 
     function onBackgroundFileChange(e) {
-        upload(uploadUrl, e.target.files[0], rs => props.updateSubnetworkForm({background: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateSubnetworkForm({background: uploadServerUrl + "/" + rs.data.filename}))
     }
 
     const {register, handleSubmit, errors} = useForm()

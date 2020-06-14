@@ -8,7 +8,10 @@ export const toggleRespondAnnouncementUrl = (userId) => userAccountUrl(userId) +
 
 export const announcementUrl = rootUrl + "/announcement"
 export const restoreAnnouncementUrl = announcementId => announcementUrl + "/" + announcementId + "/restore"
-export const uploadUrl = "http://localhost:8081/uploadfile"
+
+export const uploadServerUrl = "http://localhost:8081"
+
+export const uploadUrl = uploadServerUrl + "/uploadfile"
 
 export const createCommentUrl = announcementUrl + "/comment"
 export const commentUrl = (announcementId) => announcementUrl + "/" + announcementId + "/comment"

@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {changeView, setActiveNetwork, setNetworks, updateNetworkForm} from "../../../../data-layer/ActionCreators";
 import {post, put, upload} from "../../../../util/Http";
-import {editNetworkUrl, networkUrl, uploadUrl} from "../../../../util/Parameters";
+import {editNetworkUrl, networkUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
 import {networkSelectionView, networkView} from "../../../../Views";
 import {InputTextarea} from "primereact/inputtextarea";
 import InputLabel from "../../../Common/InputLabel";
@@ -40,11 +40,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onImgFileChange(e) {
-        upload(uploadUrl, e.target.files[0], rs => props.updateNetworkForm({img: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateNetworkForm({img: uploadServerUrl + "/" + rs.data.filename}))
     }
 
     function onBackgroundFileChange(e) {
-        upload(uploadUrl, e.target.files[0], rs => props.updateNetworkForm({background: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateNetworkForm({background: uploadServerUrl + "/" + rs.data.filename}))
     }
 
     const {handleSubmit, register, errors} = useForm()

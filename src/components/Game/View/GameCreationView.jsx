@@ -8,7 +8,7 @@ import {
     updateGameForm
 } from "../../../data-layer/ActionCreators";
 import {post, upload} from "../../../util/Http";
-import {gameByNetworkId, gameBySubnetworkId, gamesUrl, uploadUrl} from "../../../util/Parameters";
+import {gameByNetworkId, gameBySubnetworkId, gamesUrl, uploadServerUrl, uploadUrl} from "../../../util/Parameters";
 import {adminPageView, networkView, skillCategoryFormView, subnetworkView} from "../../../Views";
 import Globals from "../../../util/Globals";
 import ListInput from "../../Common/ListInput";
@@ -22,6 +22,7 @@ import NoItemsLabel from "../../Common/NoItemsLabel";
 import {useForm} from "react-hook-form";
 import SkillCategoryForm from "../SkillCategoryForm";
 import SkillCategoryFormMode from "../../../data-layer/enums/SkillCategoryFormMode";
+import HorizontalListItem from "../../Common/HorizontalListItem";
 
 function mapStateToProps(state, props) {
     return {
@@ -60,11 +61,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onImgFileChange(e) {
-        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({img: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({img: uploadServerUrl + "/" + rs.data.filename}))
     }
 
     function onBackgroundFileChange(e) {
-        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({background: rs.data.filename}))
+        upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({background: uploadServerUrl + "/" + rs.data.filename}))
     }
 
     function onAddSkillCategoryClicked() {
@@ -106,7 +107,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     return (
         <form className={"game-creation-view"}
-        onSubmit={handleSubmit(onSaveClicked)}>
+              onSubmit={handleSubmit(onSaveClicked)}>
 
             <InputLabel text={"Название:"}/>
             <input className={"game-creation-view-input"}
@@ -167,6 +168,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             }
 
             <InputLabel text={"Категории навыков:"}/>
+            <div className={"list"}>
+                {props.gameForm.skillCategories.length === 0 ?
+                    <NoItemsLabel text={"Нет категорий навыков"}/> :
+                    props.gameForm.skillCategories.map(skillCategory =>
+                        <HorizontalListItem
+                            name={skillCategory.name}
+                            description={skillCategory.description}
+                            imgSrc={skillCategory.img}
+                            onDelete={() => props.updateGameForm({skillCategories: props.gameForm.skillCategories.filter(it => it.name !== skillCategory.name)})}
+                        />)
+                }
+            </div>
             <AddItemButton text={"Добавить категорию навыка"} onClick={() => onAddSkillCategoryClicked()}/>
 
             <input className={"network-creation-save-button"}

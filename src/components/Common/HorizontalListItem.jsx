@@ -1,7 +1,12 @@
 import React from "react";
+import getOrDefault from "../../util/getOrDefault";
 
 export default function (props) {
-    const {name, description, imgSrc, onClick, onDelete, onEdit} = props
+    const {name, description, imgSrc} = props
+
+    const onClick = getOrDefault(props.onClick, () => {})
+    const onDelete = getOrDefault(props.onDelete, () => {})
+    const onEdit = getOrDefault(props.onEdit, () => {})
 
     return (
         <div className={"horizontal-list-item"}>

@@ -45,25 +45,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onCurrencyForUpgradeChecked(name, checked) {
         if (checked) {
-            props.appendElement("currenciesForUpgrade", name)
+            props.updateSkillForm({currenciesForUpgrade: props.skillForm.currenciesForUpgrade.concat(name)})
         } else {
-            props.filterList("currenciesForUpgrade", it => it !== name)
+            props.updateSkillForm({currenciesForUpgrade: props.skillForm.currenciesForUpgrade.filter(it => it !== name)})
         }
     }
 
-    function onAddCurrencyCombinationClicked() {
-        setVisibility(updateObject(visibility, {currencyCombination: true}))
-    }
-
     function onCurrencyCombinationFormSubmit(data) {
-        const checkedCurrencyNames = Object.keys(data).filter(key => data[key] === true)
+        console.log(data)
+        const checkedCurrencyNames = data.filter(it => it.checked).map(it => it.name)
 
         const combinationExists =
             props
                 .skillForm
                 .skillUpgradeCurrencyCombinations
-                .some(savedCombination => _.isEqual(savedCombination.sort(), checkedCurrencyNames.sort())
-                )
+                .some(savedCombination => _.isEqual(savedCombination.sort(), checkedCurrencyNames.sort()))
 
         if (!combinationExists && checkedCurrencyNames.length !== 0) {
             props.updateSkillForm({
@@ -131,20 +127,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 }
             </div>
-            {
-                visibility.currencyCombination &&
-                <SkillUpgradeCurrencyCombinationForm
-                    currencyNames={props.skillForm.currenciesForUpgrade}
-                    onSubmit={data => onCurrencyCombinationFormSubmit(data)}
-                />
-            }
-            {
-                !visibility.currencyCombination &&
-                <AddItemButton text={"Добавить"}
-                               onClick={() => onAddCurrencyCombinationClicked()}
-                />
-            }
-
+            <SkillUpgradeCurrencyCombinationForm
+                currencyNames={props.skillForm.currenciesForUpgrade}
+                onSubmit={data => onCurrencyCombinationFormSubmit(data)}
+            />
 
             <InputLabel text={"Уровни навыка:"}/>
             <div className={"list"}>

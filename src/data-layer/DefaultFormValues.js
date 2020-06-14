@@ -55,8 +55,7 @@ export default {
         name: "",
         img: "",
         description: "",
-        currenciesForUpgrade: [],
-        skillUpgradeCurrencyCombinations: [],
+        priceOptions: [],
         upgradable: false,
         skillUpgrades: []
     },

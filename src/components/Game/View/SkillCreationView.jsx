@@ -1,22 +1,19 @@
-import React, {useState} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import InputLabel from "../../Common/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
-import NoItemsLabel from "../../Common/NoItemsLabel";
 import AddItemButton from "../../Common/AddItemButton";
-import {appendElement, filterList, updateSkillForm} from "../../../data-layer/ActionCreators";
+import {updateSkillForm} from "../../../data-layer/ActionCreators";
 import {useForm} from "react-hook-form";
 import {upload} from "../../../util/Http";
 import {uploadServerUrl, uploadUrl} from "../../../util/Parameters";
-import updateObject from "../../../util/updateObject";
-import SkillUpgradeCurrencyCombinationForm from "../SkillUpgradeCurrencyCombinationForm";
-import ListItemSmall from "../../Common/ListItemSmall";
-import Icon from "../../Common/Icon";
-import MultiCheckButtonGroup from "../../Common/MultiCheckButtonGroup";
-import _ from "lodash"
 import List from "../../Common/List";
 import {InputSwitch} from "primereact/inputswitch";
 import SkillUpgradeForm from "../SkillUpgradeForm";
+import PriceInput from "../../Common/PriceInput";
+import ListItemSmall from "../../Common/ListItemSmall";
+import Icon from "../../Common/Icon";
+import _ from "lodash"
 
 function mapStateToProps(state) {
     return {
@@ -27,8 +24,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        filterList: (propertyName, predicate) => dispatch(filterList("skillForm", propertyName, predicate)),
-        appendElement: (propertyName, element) => dispatch(appendElement("skillForm", propertyName, element)),
         updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue))
     }
 }
@@ -41,6 +36,18 @@ const formStyle = {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     const {register, errors, handleSubmit} = useForm()
+
+    function onPriceAdded(list) {
+        props.updateSkillForm({
+            priceOptions: props.skillForm.priceOptions.concat([list])
+        })
+    }
+
+    function onPriceDeleted(listOfCurrencyNameToAmount) {
+        props.updateSkillForm({
+            priceOptions: props.skillForm.priceOptions.filter(options => !_.isEqual(options, listOfCurrencyNameToAmount))
+        })
+    }
 
     return (
         <form style={formStyle}>
@@ -66,7 +73,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputTextarea autoResize={true}/>
 
             <InputLabel text={"Стоимость:"}/>
-            <input />
+            <List noItemsText={"Не указана"}
+                  values={props.skillForm.priceOptions.map(listOfCurrencyNameToAmount =>
+                      <ListItemSmall
+                          left={
+                              listOfCurrencyNameToAmount
+                                  .map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount)
+                                  .join(" + ")}
+                          right={
+                              <Icon
+                                  className={"pi pi-times"}
+                                  onClick={() => onPriceDeleted(listOfCurrencyNameToAmount)}
+                              />
+                          }
+                      />
+                  )}
+            />
+            <PriceInput currencies={["Золото", "Серебро", "Опыт"]} onSubmit={list => onPriceAdded(list)}/>
 
             <InputLabel text={"Прокачиваемый?"}/>
             <InputSwitch checked={props.skillForm.upgradable}

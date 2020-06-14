@@ -69,9 +69,9 @@ export default function (props) {
         }
     }
 
-    function optionDeleted(paramEntries) {
+    function optionDeleted(paramList) {
         setForm(Object.assign({}, form, {
-            upgradeOptions: form.upgradeOptions.filter(savedEntries => !_.isEqual(paramEntries, savedEntries))
+            upgradeOptions: form.upgradeOptions.filter(savedEntries => !_.isEqual(paramList, savedEntries))
         }))
     }
 
@@ -83,16 +83,20 @@ export default function (props) {
                 <InputTextarea/>
                 <InputLabel text={"Повышение: (+)"}/>
                 <div>
-                    <List noItemsText={"Нет вариантов повышения"}
+                    <List noItemsText={"Нет вариантов покупки"}
                           values={
-                              form.upgradeOptions.map(entries =>
-                                  <ListItemSmall left={entries.map(it => it.name + ": " + it.amount).join(" + ")}
-                                                 right={
-                                                     <Icon
-                                                         className={"pi pi-times"}
-                                                         onClick={() => optionDeleted(entries)}
-                                                     />
-                                                 }
+                              form.upgradeOptions.map(listOfCurrencyNameToAmount =>
+                                  <ListItemSmall
+                                      left={listOfCurrencyNameToAmount
+                                          .map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount)
+                                          .join(" + ")
+                                      }
+                                      right={
+                                          <Icon
+                                              className={"pi pi-times"}
+                                              onClick={() => optionDeleted(listOfCurrencyNameToAmount)}
+                                          />
+                                      }
                                   />
                               )
                           }

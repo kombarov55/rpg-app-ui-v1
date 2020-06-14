@@ -79,6 +79,8 @@ export default {
         name: "",
         img: "",
         description: "",
-        complex: false
+        complex: false,
+        skills: [],
+        spellSchools: []
     }
 }

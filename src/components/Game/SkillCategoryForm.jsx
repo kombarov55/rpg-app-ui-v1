@@ -22,12 +22,13 @@ const formStyle = {
 
 function mapStateToProps(state) {
     return {
-        gameForm: state.gameForm
+        skillCategoryForm: state.skillCategoryForm
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
+        updateSkillCategoryForm: fieldNameToValue => dispatch(updateSkillCategoryForm(fieldNameToValue)),
         updateGameForm: fieldNameToValue => dispatch(updateGameForm(fieldNameToValue)),
         changeView: view => dispatch(changeView(view))
     }
@@ -36,7 +37,6 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSkillCategoryFormSubmit() {
-        props.updateGameForm({skillCategories: props.gameForm.skillCategories.concat(form)})
         props.changeView(Globals.skillCategoryFormMode === SkillCategoryFormMode.CREATE ?
             gameCreationView :
             gameEditView
@@ -54,14 +54,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         spellSchools: []
     })
 
-    const [skillForm, setSkillForm] = useState({
-        name: "",
-        img: "",
-        description: "",
-        price: 0,
-        upgradable: false
-    })
-
     const {register, errors, handleSubmit} = useForm()
 
     return (
@@ -71,8 +63,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <input
                 name={"name"}
                 ref={register({required: true})}
-                value={form.name}
-                onChange={e => setForm(Object.assign({}, form, {name: e.target.value}))}/>
+                value={props.skillCategoryForm.name}
+                onChange={e => props.updateSkillCategoryForm({name: e.target.value})}/>
             <div className={"error-label"}>{errors.name && "Введите название"}</div>
 
             <InputLabel text={"Картинка:"}/>
@@ -82,7 +74,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                    onChange={e => upload(
                        uploadUrl,
                        e.target.files[0],
-                       rs => setForm(Object.assign({}, form, {img: uploadServerUrl + "/" + rs.data.filename})))}
+                       rs => props.updateSkillCategoryForm({img: uploadServerUrl + "/" + rs.data.filename}))}
             />
             <div className={"error-label"}>{errors.img && "Загрузите картинку"}</div>
 
@@ -90,8 +82,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputTextarea autoResize={true}
                            name={"description"}
                            ref={register({required: true})}
-                           value={form.description}
-                           onChange={e => setForm(Object.assign({}, form, {description: e.target.value}))}
+                           value={props.skillCategoryForm.description}
+                           onChange={e => props.updateSkillCategoryForm({description: e.target.value})}
             />
 
             <InputLabel text={"Тип:"}/>
@@ -100,20 +92,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     {label: "Простой", value: false},
                     {label: "Сложный", value: true}
                 ]}
-                value={form.complex}
-                onChange={e => setForm(Object.assign({}, form, {complex: e.target.value}))}
+                value={props.skillCategoryForm.complex}
+                onChange={e => props.updateSkillCategoryForm({complex: e.target.value})}
             />
-            {!form.complex ?
+            {!props.skillCategoryForm.complex ?
                 <>
                     <InputLabel text={"Навыки:"}/>
                     <div className={"list"}>
                         {
-                            form.skills.length === 0 ?
+                            props.skillCategoryForm.skills.length === 0 ?
                                 <NoItemsLabel text={"Нет навыков"}/> :
-                                form.skills.map(skill =>
+                                props.skillCategoryForm.skills.map(skill =>
                                     <SkillItem
                                         name={skill.name}
-                                        type={form.name}
+                                        type={props.skillCategoryForm.name}
                                         description={skill.description}
                                         imgSrc={skill.img}
                                     />
@@ -126,9 +118,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                   <InputLabel text={"Школы заклинаний:"}/>
                   <div className={"list"}>
                       {
-                          form.spellSchools.length === 0 ?
+                          props.skillCategoryForm.spellSchools.length === 0 ?
                               <NoItemsLabel text={"Нет школ заклинаний"}/> :
-                              form.spellSchools.map(school => <HorizontalListItem/>)
+                              props.skillCategoryForm.spellSchools.map(school => <HorizontalListItem/>)
                       }
                   </div>
                     <AddItemButton text={"Добавить школу заклинаний"}/>

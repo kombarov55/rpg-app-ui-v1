@@ -37,7 +37,6 @@ import {
     UPDATE_QUESTIONNAIRE_TEMPLATE_FORM,
     UPDATE_QUESTIONNAIRE_TEMPLATE_ITEM_FORM,
     UPDATE_SKILL_FORM,
-    SET_SKILLS,
     UPDATE_ACTIVE_GAME,
     UPDATE_CURRENCY_FORM,
     UPDATE_CONVERSION_FORM,
@@ -403,15 +402,6 @@ export function updateSkillForm(fieldNameToValue) {
         type: UPDATE_SKILL_FORM,
         payload: {
             fieldNameToValue: fieldNameToValue
-        }
-    }
-}
-
-export function setSkills(skills) {
-    return {
-        type: SET_SKILLS,
-        payload: {
-            skills: skills
         }
     }
 }

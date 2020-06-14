@@ -119,7 +119,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onSkillViewClicked() {
-        Preload.skills(props.activeGame.id)
         props.changeView(skillsView)
     }
 

@@ -22,7 +22,6 @@ export const initialState = {
     networks: [],
     subnetworks: [],
     games: [],
-    skills: [],
     currencies: [],
     conversions: [],
 

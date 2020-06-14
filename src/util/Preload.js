@@ -14,7 +14,6 @@ import {
     setActiveGame, setConversions, setCurrencies,
     setGames,
     setNetworks,
-    setSkills,
     setSubnetworks,
     updateQuestionnaireTemplateForm
 } from "../data-layer/ActionCreators";
@@ -39,10 +38,6 @@ export default {
         get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
     },
 
-    skillSelectionView: gameId => {
-        get(skillsByGameIdUrl(gameId), rs => window.store.dispatch(setSkills(rs)))
-    },
-
     questionnaireTemplateEditView: questionnaireId => {
         get(questionnaireTemplateByIdUrl(questionnaireId), rs => window.store.dispatch(updateQuestionnaireTemplateForm(rs)))
     },
@@ -54,10 +49,6 @@ export default {
 
     game: gameId => {
         get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
-    },
-
-    skills: gameId => {
-        get(skillsByGameIdUrl(gameId), rs => window.store.dispatch(setSkills(rs)))
-    },
+    }
 
 }

@@ -36,7 +36,6 @@ import {
     UPDATE_QUESTIONNAIRE_TEMPLATE_FORM,
     UPDATE_QUESTIONNAIRE_TEMPLATE_ITEM_FORM,
     UPDATE_SKILL_FORM,
-    SET_SKILLS,
     UPDATE_ACTIVE_GAME,
     UPDATE_CURRENCY_FORM,
     UPDATE_CONVERSION_FORM,
@@ -254,11 +253,6 @@ export function rootReducer(state = initialState, action) {
         case UPDATE_SKILL_FORM:
             return Object.assign({}, state, {
                 skillForm: Object.assign({}, state.skillForm, action.payload.fieldNameToValue)
-            })
-
-        case SET_SKILLS:
-            return Object.assign({}, state, {
-                skills: action.payload.skills
             })
 
         case UPDATE_CURRENCY_FORM:

@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {Checkbox} from "primereact/checkbox";
-import {changeView, setSkills, updateQuestionnaireTemplateForm, updateSkillForm} from "../../../data-layer/ActionCreators";
+import {changeView, updateQuestionnaireTemplateForm, updateSkillForm} from "../../../data-layer/ActionCreators";
 import Btn from "../../Common/Btn";
 import {InputTextarea} from "primereact/inputtextarea";
 import {put} from "../../../util/Http";
@@ -13,7 +13,6 @@ function mapStateToProps(state, props) {
     return {
         skillForm: state.skillForm,
         activeGame: state.activeGame,
-        skills: state.skills,
         growl: state.growl
     }
 }
@@ -21,7 +20,6 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch, props) {
     return {
         updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue)),
-        setSkills: skills => dispatch(setSkills(skills)),
         changeView: view => dispatch(changeView(view))
     }
 }
@@ -232,7 +230,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
 
         put(updateSkillUrl(props.skillForm.id), body, rs => {
-            props.setSkills(props.skills.filter(it => it.id !== rs.id).concat(rs))
             props.changeView(skillsView)
             props.growl.show({severity: "info", summary: "Навык обновлен"})
         })

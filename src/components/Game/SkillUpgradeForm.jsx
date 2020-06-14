@@ -8,6 +8,7 @@ import List from "../Common/List";
 import ListItemSmall from "../Common/ListItemSmall";
 import Icon from "../Common/Icon";
 import _ from "lodash"
+import IsNumeric from "../../util/IsNumeric";
 
 const style = {
     padding: "0.1vmax 2vmin 1vmax 2vmin",
@@ -79,12 +80,10 @@ export default function (props) {
         const formOptionNames = form.upgradeOptionsForm.map(it => it.name)
         const listOfListOfNames = form.upgradeOptions.map(list => list.map(it => it.name))
 
-        window.formOptionNames = formOptionNames
-        window.listOfListOfNames = listOfListOfNames
-
         const exists = listOfListOfNames.some(list => _.isEqual(list, formOptionNames))
+        const validInput = form.upgradeOptionsForm.length !== 0 && form.upgradeOptionsForm.map(it => it.amount).every(it => IsNumeric(it))
 
-        if (!exists) {
+        if (!exists && validInput) {
             setForm(Object.assign({}, form, {
                 upgradeOptions: form.upgradeOptions.concat([form.upgradeOptionsForm]),
                 upgradeOptionsForm: [],

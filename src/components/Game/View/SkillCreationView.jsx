@@ -10,11 +10,10 @@ import {upload} from "../../../util/Http";
 import {uploadServerUrl, uploadUrl} from "../../../util/Parameters";
 import updateObject from "../../../util/updateObject";
 import SkillUpgradeCurrencyCombinationForm from "../SkillUpgradeCurrencyCombinationForm";
-import setProperty from "../../../util/setProperty";
 import ListItemSmall from "../../Common/ListItemSmall";
 import Icon from "../../Common/Icon";
 import MultiCheckButtonGroup from "../../Common/MultiCheckButtonGroup";
-import EqLists from "../../../util/EqLists";
+import _ from "lodash"
 
 function mapStateToProps(state) {
     return {
@@ -25,8 +24,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        filterList: (stateObjectName, propertyName, predicate) => dispatch(filterList(stateObjectName, propertyName, predicate)),
-        appendElement: (stateObjectName, propertyName, element) => dispatch(appendElement(stateObjectName, propertyName, element)),
+        filterList: (propertyName, predicate) => dispatch(filterList("skillForm", propertyName, predicate)),
+        appendElement: (propertyName, element) => dispatch(appendElement("skillForm", propertyName, element)),
         updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue))
     }
 }
@@ -46,9 +45,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onCurrencyForUpgradeChecked(name, checked) {
         if (checked) {
-            props.appendElement("skillForm", "currenciesForUpgrade", name)
+            props.appendElement("currenciesForUpgrade", name)
         } else {
-            props.filterList("skillForm", "currenciesForUpgrade", it => it !== name)
+            props.filterList("currenciesForUpgrade", it => it !== name)
         }
     }
 
@@ -63,8 +62,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             props
                 .skillForm
                 .skillUpgradeCurrencyCombinations
-                .some(savedCombination => EqLists(savedCombination, checkedCurrencyNames)
-    )
+                .some(savedCombination => _.isEqual(savedCombination.sort(), checkedCurrencyNames.sort())
+                )
 
         if (!combinationExists && checkedCurrencyNames.length !== 0) {
             props.updateSkillForm({
@@ -79,7 +78,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onCurrencyCombinationDeleteClicked(currencyNames) {
-
+        props.updateSkillForm({
+            skillUpgradeCurrencyCombinations: props
+                .skillForm
+                .skillUpgradeCurrencyCombinations
+                .filter(list => !_.isEqual(list, currencyNames))
+        })
     }
 
     const {register, errors, handleSubmit} = useForm()
@@ -120,7 +124,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         props.skillForm.skillUpgradeCurrencyCombinations.map(names =>
                             <ListItemSmall
                                 left={names.join(" + ")}
-                                right={<Icon className={"pi pi-times"}/>}
+                                right={<Icon className={"pi pi-times"}
+                                             onClick={() => onCurrencyCombinationDeleteClicked(names)}/>}
                             />
                         )
 

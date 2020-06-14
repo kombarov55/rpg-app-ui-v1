@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import {Provider} from "react-redux";
 import {store} from "./data-layer/Store";
 import {onStartup} from "./util/OnStartup";
+import _ from "lodash"
 
 ReactDOM.render(
     <Provider store={store}>
@@ -24,3 +25,4 @@ serviceWorker.unregister();
 
 
 window.store = store
+window._ = _

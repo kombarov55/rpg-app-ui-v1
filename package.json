@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "@vkontakte/vk-bridge": "^2.1.8",
     "axios": "^0.19.2",
+    "lodash": "^4.17.15",
     "primeflex": "^1.0.0",
     "primeicons": "^2.0.0",
     "primereact": "^4.2.0",

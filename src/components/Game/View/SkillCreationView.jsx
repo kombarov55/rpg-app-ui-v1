@@ -14,6 +14,7 @@ import PriceInput from "../../Common/PriceInput";
 import ListItemSmall from "../../Common/ListItemSmall";
 import Icon from "../../Common/Icon";
 import _ from "lodash"
+import Btn from "../../Common/Btn";
 
 function mapStateToProps(state) {
     return {
@@ -102,10 +103,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     <InputLabel text={"Уровни навыка:"}/>
                     <List noItemsText={"Нет уровней"}/>
                     <SkillUpgradeForm/>
-                    <AddItemButton text={"Добавить"}/>
                 </>
             }
-
+            <Btn text={"Сохранить"}/>
+            <Btn text={"Назад"}/>
         </form>
     )
 })

@@ -44,7 +44,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     })
 
     function onCurrencyForUpgradeChecked(name, checked) {
-        if (checked) {
+        if (checked && !props.skillForm.currenciesForUpgrade.some(it => it === name)) {
             props.updateSkillForm({currenciesForUpgrade: props.skillForm.currenciesForUpgrade.concat(name)})
         } else {
             props.updateSkillForm({currenciesForUpgrade: props.skillForm.currenciesForUpgrade.filter(it => it !== name)})

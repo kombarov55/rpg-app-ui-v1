@@ -57,6 +57,7 @@ export default {
         description: "",
         currenciesForUpgrade: [],
         skillUpgradeCurrencyCombinations: [],
+        upgradable: false,
         skillUpgrades: []
     },
 

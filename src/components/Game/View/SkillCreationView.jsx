@@ -15,6 +15,8 @@ import Icon from "../../Common/Icon";
 import MultiCheckButtonGroup from "../../Common/MultiCheckButtonGroup";
 import _ from "lodash"
 import List from "../../Common/List";
+import {InputSwitch} from "primereact/inputswitch";
+import SkillUpgradeForm from "../SkillUpgradeForm";
 
 function mapStateToProps(state) {
     return {
@@ -128,10 +130,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 onSubmit={data => onCurrencyCombinationFormSubmit(data)}
             />
 
-            <InputLabel text={"Уровни навыка:"}/>
-            <List noItemsText={"Нет уровней"}/>
-            <AddItemButton text={"Добавить"}/>
+            <InputLabel text={"Прокачиваемый?"}/>
+            <InputSwitch checked={props.skillForm.upgradable}
+                         onChange={e => props.updateSkillForm({upgradable: e.value})}
+            />
 
+            {
+                props.skillForm.upgradable &&
+                <>
+                    <InputLabel text={"Уровни навыка:"}/>
+                    <List noItemsText={"Нет уровней"}/>
+                    <SkillUpgradeForm
+
+                    />
+                    <AddItemButton text={"Добавить"}/>
+                </>
+            }
 
         </form>
     )

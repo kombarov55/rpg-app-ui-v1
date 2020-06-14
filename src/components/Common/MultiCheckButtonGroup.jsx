@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import copy from "../../util/updateObject";
 import getOrDefault from "../../util/getOrDefault";
+import CenterPlusButton from "./CenterPlusButton";
 
 export default function (props) {
     const {options} = props
@@ -41,10 +42,16 @@ export default function (props) {
     }
 
     return (
-        <div className={"list"}>
+        <>
+            <div className={"list"}>
+                {
+                    options.map(x => <CheckButton text={x}/>)
+                }
+            </div>
             {
-                options.map(x => <CheckButton text={x}/>)
+                props.onSubmit != null &&
+                <CenterPlusButton onClick={() => props.onSubmit()}/>
             }
-        </div>
+        </>
     )
 }

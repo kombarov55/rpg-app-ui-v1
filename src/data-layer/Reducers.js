@@ -41,7 +41,7 @@ import {
     UPDATE_CONVERSION_FORM,
     SET_CURRENCIES,
     SET_CONVERSIONS,
-    UPDATE_SKILL_CATEGORY_FORM
+    UPDATE_SKILL_CATEGORY_FORM, FILTER_LIST, APPEND_ELEMENT
 } from "./ActionTypes";
 import {initialState} from "./Store";
 import MergeLists from "../util/MergeLists";
@@ -280,6 +280,13 @@ export function rootReducer(state = initialState, action) {
                 skillCategoryForm: Object.assign({}, state.skillCategoryForm, action.payload.fieldNameToValue)
             })
 
+        case FILTER_LIST:
+            return filterList(state, action.payload)
+
+        case APPEND_ELEMENT:
+            return appendElement(state, action.payload)
+
+
         default:
             return state;
     }
@@ -413,4 +420,32 @@ function handleToggleRespondAnnouncement(state, action) {
             })
         })
     })
+}
+
+function filterList(state, payload) {
+    const {stateObjectName, propertyName, predicate} = payload
+    const obj = state[stateObjectName]
+    const list = obj[propertyName]
+    const filteredList = list.filter(predicate)
+    const updatedObj = obj[propertyName] = filteredList
+
+    const updatedState = Object.assign({}, state)
+
+    updatedState[stateObjectName] = updatedObj
+
+    return state
+}
+
+function appendElement(state, payload) {
+    const {stateObjectName, propertyName, element} = payload
+    const obj = state[stateObjectName]
+    const list = obj[propertyName]
+    const updatedList = list.concat(element)
+    const updatedObj = obj[propertyName] = updatedList
+
+    const updatedState = Object.assign({}, state)
+
+    updatedState[stateObjectName] = updatedObj
+
+    return state
 }

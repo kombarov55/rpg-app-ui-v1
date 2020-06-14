@@ -7,7 +7,7 @@ import {changeView, updateGameForm, updateSkillCategoryForm} from "../../data-la
 import {upload} from "../../util/Http";
 import {uploadServerUrl, uploadUrl} from "../../util/Parameters";
 import {useForm} from "react-hook-form";
-import {gameCreationView, gameEditView} from "../../Views";
+import {gameCreationView, gameEditView, skillCreationView} from "../../Views";
 import Globals from "../../util/Globals";
 import SkillCategoryFormMode from "../../data-layer/enums/SkillCategoryFormMode";
 import NoItemsLabel from "../Common/NoItemsLabel";
@@ -43,16 +43,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         )
     }
 
-    const [form, setForm] = useState({
-        name: "",
-        img: "",
-        description: "",
-        complex: false,
+    function onAddSkillClicked() {
+        props.changeView(skillCreationView)
+    }
 
-        skills: [],
+    function onAddSpellSchoolClicked() {
 
-        spellSchools: []
-    })
+    }
 
     const {register, errors, handleSubmit} = useForm()
 
@@ -112,7 +109,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                 )
                         }
                     </div>
-                    <AddItemButton text={"Добавить навык"}/>
+                    <AddItemButton text={"Добавить навык"} onClick={() => onAddSkillClicked()}/>
                 </> :
                 <>
                   <InputLabel text={"Школы заклинаний:"}/>
@@ -123,7 +120,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               props.skillCategoryForm.spellSchools.map(school => <HorizontalListItem/>)
                       }
                   </div>
-                    <AddItemButton text={"Добавить школу заклинаний"}/>
+                    <AddItemButton text={"Добавить школу заклинаний"} onClick={() => onAddSpellSchoolClicked()}/>
                 </>
             }
 

@@ -1,12 +1,12 @@
 import {createStore} from "redux";
 import {rootReducer} from "./Reducers";
-import {announcementView, skillCategoryFormView} from "../Views";
+import {announcementView} from "../Views";
 import DefaultFormValues from "./DefaultFormValues";
 
 export const initialState = {
     sidebarVisible: false,
     growl: null,
-    currentView: skillCategoryFormView,
+    currentView: announcementView,
     userAccount: {
 
     },

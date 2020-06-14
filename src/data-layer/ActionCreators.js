@@ -41,7 +41,7 @@ import {
     UPDATE_CURRENCY_FORM,
     UPDATE_CONVERSION_FORM,
     SET_CURRENCIES,
-    SET_CONVERSIONS, UPDATE_SKILL_CATEGORY_FORM
+    SET_CONVERSIONS, UPDATE_SKILL_CATEGORY_FORM, FILTER_LIST, APPEND_ELEMENT
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -447,6 +447,28 @@ export function updateSkillCategoryForm(fieldNameToValue) {
         type: UPDATE_SKILL_CATEGORY_FORM,
         payload: {
             fieldNameToValue: fieldNameToValue
+        }
+    }
+}
+
+export function filterList(stateObjectName, propertyName, predicate) {
+    return {
+        type: FILTER_LIST,
+        payload: {
+            stateObjectName: stateObjectName,
+            propertyName: propertyName,
+            predicate: predicate
+        }
+    }
+}
+
+export function appendElement(stateObjectName, propertyName, element) {
+    return {
+        type: APPEND_ELEMENT,
+        payload: {
+            stateObjectName: stateObjectName,
+            propertyName: propertyName,
+            element: element
         }
     }
 }

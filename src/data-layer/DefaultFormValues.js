@@ -53,16 +53,11 @@ export default {
     },
     skillForm: {
         name: "",
+        img: "",
         description: "",
-        type: "",
         currenciesForUpgrade: [],
-        upgradeOptions: [],
-        upgradeOptionForm: {
-            currencies: []
-        },
-        upgradeOptionFormVisible: false,
-        maxValue: 1,
-        upgradeCosts: []
+        skillUpgradeCurrencyCombinations: [],
+        skillUpgrades: []
     },
 
     currencyForm: {

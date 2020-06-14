@@ -4,7 +4,7 @@ import Label from "../../Common/Label";
 import SkillItem from "../../QuestionnaireTemplateCreation/SkillItem";
 import Btn from "../../Common/Btn";
 import {changeView, updateSkillForm} from "../../../data-layer/ActionCreators";
-import {gameView, skillCreationView, skillEditView} from "../../../Views";
+import {gameView, skillCategoryFormView, skillCreationView, skillEditView} from "../../../Views";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 import AddItemButton from "../../Common/AddItemButton";
 
@@ -22,6 +22,10 @@ function mapDispatchToProps(dispatch, props) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
+    function onAddSkillCategoryClicked() {
+        props.changeView(skillCategoryFormView)
+    }
+
     function onBackClicked() {
         props.changeView(gameView)
     }
@@ -29,7 +33,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     return (
         <div className={"skills-view"}>
             <Label text={"Категории навыков"}/>
-            <AddItemButton text={"Добавить категорию навыков"}/>
+            <AddItemButton text={"Добавить категорию навыков"}
+                           onClick={() => onAddSkillCategoryClicked()}
+            />
                 <Btn
                     text={"Назад"}
                     onClick={() => onBackClicked()}

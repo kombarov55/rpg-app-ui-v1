@@ -10,6 +10,10 @@ import {useForm} from "react-hook-form";
 import {gameCreationView, gameEditView} from "../../Views";
 import Globals from "../../util/Globals";
 import SkillCategoryFormMode from "../../data-layer/enums/SkillCategoryFormMode";
+import NoItemsLabel from "../Common/NoItemsLabel";
+import SkillItem from "../QuestionnaireTemplateCreation/SkillItem";
+import AddItemButton from "../Common/AddItemButton";
+import HorizontalListItem from "../Common/HorizontalListItem";
 
 const formStyle = {
     width: "90%",
@@ -43,7 +47,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         name: "",
         img: "",
         description: "",
-        complex: false
+        complex: false,
+
+        skills: [],
+
+        spellSchools: []
+    })
+
+    const [skillForm, setSkillForm] = useState({
+        name: "",
+        img: "",
+        description: "",
+        price: 0,
+        upgradable: false
     })
 
     const {register, errors, handleSubmit} = useForm()
@@ -78,6 +94,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            onChange={e => setForm(Object.assign({}, form, {description: e.target.value}))}
             />
 
+            <InputLabel text={"Тип:"}/>
             <SelectButton
                 options={[
                     {label: "Простой", value: false},
@@ -86,6 +103,38 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 value={form.complex}
                 onChange={e => setForm(Object.assign({}, form, {complex: e.target.value}))}
             />
+            {!form.complex ?
+                <>
+                    <InputLabel text={"Навыки:"}/>
+                    <div className={"list"}>
+                        {
+                            form.skills.length === 0 ?
+                                <NoItemsLabel text={"Нет навыков"}/> :
+                                form.skills.map(skill =>
+                                    <SkillItem
+                                        name={skill.name}
+                                        type={form.name}
+                                        description={skill.description}
+                                        imgSrc={skill.img}
+                                    />
+                                )
+                        }
+                    </div>
+                    <AddItemButton text={"Добавить навык"}/>
+                </> :
+                <>
+                  <InputLabel text={"Школы заклинаний:"}/>
+                  <div className={"list"}>
+                      {
+                          form.spellSchools.length === 0 ?
+                              <NoItemsLabel text={"Нет школ заклинаний"}/> :
+                              form.spellSchools.map(school => <HorizontalListItem/>)
+                      }
+                  </div>
+                    <AddItemButton text={"Добавить школу заклинаний"}/>
+                </>
+            }
+
             <input type={"submit"}
                    className={"network-creation-save-button"}
                    value={"Сохранить"}

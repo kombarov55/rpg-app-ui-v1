@@ -129,9 +129,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
 
             <InputLabel text={"Уровни навыка:"}/>
-            <div className={"list"}>
-                <NoItemsLabel text={"Нет уровней"}/>
-            </div>
+            <List noItemsText={"Нет уровней"}/>
             <AddItemButton text={"Добавить"}/>
 
 

@@ -1,10 +1,7 @@
 import React, {useState} from "react";
-import SubmitButton from "../Common/SubmitButton";
 import LabeledCheckbox from "../Common/LabeledCheckbox";
-import updateObject from "../../util/updateObject";
 import getOrDefault from "../../util/getOrDefault";
 import Btn from "../Common/Btn";
-import setProperty from "../../util/setProperty";
 
 export default function (props) {
     const onSubmit = getOrDefault(props.onSubmit, () => {
@@ -26,7 +23,6 @@ export default function (props) {
             }
             <Btn text={"Добавить"} onClick={() => {
                 onSubmit(checkedValues)
-                // setCheckedValues([])
             }}
             />
         </form>

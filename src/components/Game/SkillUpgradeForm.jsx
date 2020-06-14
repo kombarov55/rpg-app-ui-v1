@@ -1,8 +1,6 @@
 import React, {useState} from "react";
 import InputLabel from "../Common/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
-import MultiCheckButtonGroup from "../Common/MultiCheckButtonGroup";
-import CenterPlusButton from "../Common/CenterPlusButton";
 import AddItemButton from "../Common/AddItemButton";
 import List from "../Common/List";
 import ListItemSmall from "../Common/ListItemSmall";

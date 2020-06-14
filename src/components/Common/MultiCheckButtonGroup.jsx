@@ -1,17 +1,42 @@
-import React, {useState} from "react";
+import React from "react";
 import copy from "../../util/updateObject";
 import getOrDefault from "../../util/getOrDefault";
 import CenterPlusButton from "./CenterPlusButton";
 
-export default function (props) {
-    const {options} = props
-    const onChecked = getOrDefault(props.onChecked, () => {
-    })
+export default class MultiCheckButtonGroup extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {}
+    }
 
-    function CheckButton(props) {
-        const {text} = props
-        const [checked, setChecked] = useState(false)
+    render() {
+        const {options} = this.props
+        const onChecked = getOrDefault(this.props.onChecked, () => {
+        })
 
+        return (
+            <>
+                <div className={"list"}>
+                    {options.map(x => <CheckButton text={x}/>)}
+                </div>
+                {
+                    this.props.onSubmit != null &&
+                    <CenterPlusButton onClick={() => this.props.onSubmit()} onChecked={onChecked}/>
+                }
+            </>
+        )
+    }
+}
+
+class CheckButton extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            checked: false
+        }
+    }
+
+    render() {
         const uncheckedStyle = {
             display: "flex",
             flexDirection: "row",
@@ -28,31 +53,17 @@ export default function (props) {
         const checkedStyle = copy(uncheckedStyle, {background: "grey"})
 
         function onClick() {
-            const newValue = !checked
-            setChecked(newValue)
-            onChecked({name: props.text, checked: newValue})
+            const newValue = !this.state.checked
+            this.setState({checked: newValue})
+            this.props.onChecked({name: this.props.text, checked: newValue})
         }
 
         return (
-            <div style={checked ? checkedStyle : uncheckedStyle}
+            <div style={this.state.checked ? checkedStyle : uncheckedStyle}
                  onClick={() => onClick()}
-                 key={"multicheck + " + text}>
-                <div>{text}</div>
+                 key={"multicheck + " + this.state.text}>
+                <div>{this.state.text}</div>
             </div>
         )
     }
-
-    return (
-        <>
-            <div className={"list"}>
-                {
-                    options.map(x => <CheckButton text={x}/>)
-                }
-            </div>
-            {
-                props.onSubmit != null &&
-                <CenterPlusButton onClick={() => props.onSubmit()}/>
-            }
-        </>
-    )
 }

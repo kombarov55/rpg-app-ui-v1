@@ -4,16 +4,20 @@ import BulletList from "../Common/BulletList";
 export default function (props) {
     return (
         <div style={containerStyle}>
-            <div style={lvlNumStyle}>{props.title}</div>
+            <div style={lvlNumStyle}>{props.lvlNum} Уровень:</div>
             <div style={descriptionStyle}>{props.description}</div>
-            <BulletList title={"Прокачка:"}
-                        values={props.prices
-                            .map(currencyToAmountList =>
-                                currencyToAmountList
-                                    .map(currencyToAmount => currencyToAmount.name + ": " + currencyToAmount.amount)
-                                    .join(" + "))
-                        }
-            />
+            {
+                props.prices.length !== 0 &&
+                <BulletList title={"Варианты повышения:"}
+                            values={props.prices
+                                .map(currencyToAmountList =>
+                                    currencyToAmountList
+                                        .map(currencyToAmount => currencyToAmount.name + ": " + currencyToAmount.amount)
+                                        .join(" + "))
+                            }
+                />
+            }
+
         </div>
     )
 }
@@ -21,8 +25,14 @@ export default function (props) {
 const containerStyle = {
     display: "flex",
     flexDirection: "column",
+
     width: "100%",
-    padding: "0 3vmin"
+    padding: "0 3vmin",
+    margin: "0 0 0.5vmax 0",
+
+    background: "#212121",
+    borderRadius: "5px"
+
 }
 
 const lvlNumStyle = {

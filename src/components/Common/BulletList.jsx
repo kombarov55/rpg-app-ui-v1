@@ -13,7 +13,9 @@ export default function (props) {
 
 const bulletContainerStyle = {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+
+    margin: "1vmax 0"
 }
 
 const bulletContainerTitleStyle = {

@@ -9,107 +9,91 @@ import _ from "lodash"
 import IsNumeric from "../../util/IsNumeric";
 import PriceInput from "../Common/PriceInput";
 
+export default class SkillUpgradeForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = this.initialState
+    }
+
+    initialState = {
+        description: "",
+        prices: []
+    }
+
+    render() {
+        return (
+            <div style={style}>
+                <div>
+                    <InputLabel text={this.props.lvlNum + " Уровень:"}/>
+                    <InputLabel text={"Описание:"}/>
+                    <InputTextarea value={this.state.description}
+                                   onChange={e => this.setState({description: e.target.value})}
+                    />
+                    <InputLabel text={"Варианты повышения:"}/>
+                    <div>
+                        <List noItemsText={"Нет вариантов покупки"}
+                              values={
+                                  this.state.prices.map(listOfCurrencyNameToAmount =>
+                                      <ListItemSmall
+                                          left={listOfCurrencyNameToAmount
+                                              .map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount)
+                                              .join(" + ")
+                                          }
+                                          right={
+                                              <Icon
+                                                  className={"pi pi-times"}
+                                                  onClick={() => this.optionDeleted(listOfCurrencyNameToAmount)}
+                                              />
+                                          }
+                                      />
+                                  )
+                              }
+                        />
+
+                        <PriceInput
+                            currencies={this.props.currencies}
+                            onSubmit={list => this.optionAdded(list)}
+                        />
+
+                    </div>
+                    <AddItemButton text={"Добавить"} onClick={() => this.onSubmit()}/>
+                </div>
+            </div>
+        )
+    }
+
+    optionAdded(currencyToAmountList) {
+        const formOptionNames = currencyToAmountList.map(it => it.name)
+        const listOfListOfNames = this.state.prices.map(list => list.map(it => it.name))
+
+        const exists = listOfListOfNames.some(list => _.isEqual(list, formOptionNames))
+        const validInput = currencyToAmountList.length !== 0 && currencyToAmountList.map(it => it.amount).every(it => IsNumeric(it))
+
+        if (!exists && validInput) {
+            this.setState(state => ({
+                prices: state.prices.concat([currencyToAmountList])
+            }))
+        }
+    }
+
+    optionDeleted(paramList) {
+        this.setState(state => ({
+            prices: state.prices.filter(savedEntries => !_.isEqual(paramList, savedEntries))
+        }))
+    }
+
+    onSubmit() {
+        const data = Object.assign({}, this.state, {lvlNum: this.props.lvlNum})
+        this.props.onSubmit(data)
+        this.setState(this.initialState)
+    }
+}
+
 const style = {
     padding: "0.1vmax 2vmin 1vmax 2vmin",
     margin: "2vmax 0",
 
     background: "rgba(0, 0, 0, 0.24)",
     borderRadius: "5px"
-}
-
-function OptionInput(props) {
-    const formStyle = {
-        display: "flex",
-        flexDirection: "row",
-
-        margin: "2vmax 0 1vmax 0"
-    }
-
-    const nameStyle = {
-        margin: "1vmax 2vmin"
-    }
-
-    const inputStyle = {
-        height: "4vmax"
-    }
-
-    return (
-        <form style={formStyle}>
-            <div style={nameStyle}>{props.name + ":"}</div>
-            <input
-                style={inputStyle}
-                value={props.value}
-                onChange={e => props.onChange(e)}
-            />
-        </form>
-    )
-}
-
-const defaultFormValues = {
-    description: "",
-    selectedCurrencies: [],
-    upgradeOptions: []
-}
-
-export default function (props) {
-    const [form, setForm] = useState(defaultFormValues)
-
-    function optionAdded(currencyToAmountList) {
-        const formOptionNames = currencyToAmountList.map(it => it.name)
-        const listOfListOfNames = form.upgradeOptions.map(list => list.map(it => it.name))
-
-        const exists = listOfListOfNames.some(list => _.isEqual(list, formOptionNames))
-        const validInput = currencyToAmountList.length !== 0 && currencyToAmountList.map(it => it.amount).every(it => IsNumeric(it))
-
-        if (!exists && validInput) {
-            setForm(Object.assign({}, form, {
-                upgradeOptions: form.upgradeOptions.concat([currencyToAmountList]),
-                selectedCurrencies: []
-            }))
-        }
-    }
-
-    function optionDeleted(paramList) {
-        setForm(Object.assign({}, form, {
-            upgradeOptions: form.upgradeOptions.filter(savedEntries => !_.isEqual(paramList, savedEntries))
-        }))
-    }
-
-    return (
-        <div style={style}>
-            <div>
-                <InputLabel text={"1 Уровень:"}/>
-                <InputLabel text={"Описание:"}/>
-                <InputTextarea/>
-                <InputLabel text={"Повышение: (+)"}/>
-                <div>
-                    <List noItemsText={"Нет вариантов покупки"}
-                          values={
-                              form.upgradeOptions.map(listOfCurrencyNameToAmount =>
-                                  <ListItemSmall
-                                      left={listOfCurrencyNameToAmount
-                                          .map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount)
-                                          .join(" + ")
-                                      }
-                                      right={
-                                          <Icon
-                                              className={"pi pi-times"}
-                                              onClick={() => optionDeleted(listOfCurrencyNameToAmount)}
-                                          />
-                                      }
-                                  />
-                              )
-                          }
-                    />
-
-                    <PriceInput
-                        currencies={["Золото", "Серебро", "Опыт"]}
-                        onSubmit={list => optionAdded(list)}
-                    />
-
-                </div>
-                <AddItemButton text={"Добавить"} onClick={() => props.onSubmit()}/>
-            </div>
-        </div>
-    )
 }

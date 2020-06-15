@@ -195,7 +195,9 @@
     margin: 0.2vmax 0;
 
     border-radius: 5px;
-    background: grey;
+    background: #212121;
+
+    font-size: 1.5vmax;
 }
 
 .form-view {

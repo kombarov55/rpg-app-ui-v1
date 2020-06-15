@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 import InputLabel from "../../Common/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
-import AddItemButton from "../../Common/AddItemButton";
 import {updateSkillForm} from "../../../data-layer/ActionCreators";
 import {useForm} from "react-hook-form";
 import {upload} from "../../../util/Http";
@@ -30,11 +29,6 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-const formStyle = {
-    alignSelf: "center",
-    width: "90%"
-}
-
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     const {register, errors, handleSubmit} = useForm()
@@ -48,6 +42,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onPriceDeleted(listOfCurrencyNameToAmount) {
         props.updateSkillForm({
             priceOptions: props.skillForm.priceOptions.filter(options => !_.isEqual(options, listOfCurrencyNameToAmount))
+        })
+    }
+
+    function onUpgradeFormSubmit(data) {
+        props.updateSkillForm({
+            skillUpgrades: props.skillForm.skillUpgrades.concat(data)
         })
     }
 
@@ -103,19 +103,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <>
                     <InputLabel text={"Уровни навыка:"}/>
                     <List noItemsText={"Нет уровней"}
-                          values={[
-                              <UpgradeView
-                                  title={"1 Уровень"}
-                                  description={"Пощечина, урон 1 (по умолчанию у всех)"}
-                                  prices={[
-                                      [{name: "Золото", amount: 100}],
-                                      [{name: "Опыт", amount: 5000}],
-                                      [{name: "Золото", amount: 50}, {name: "Опыт", amount: 500}]
-                                  ]}
-                              />
-                          ]}
+                          values={props.skillForm.skillUpgrades.map(upgrade =>
+                              <UpgradeView lvlNum={upgrade.lvlNum}
+                                           description={upgrade.description}
+                                           prices={upgrade.prices}
+                              />)}
                     />
-                    <SkillUpgradeForm/>
+                    <SkillUpgradeForm
+                        lvlNum={props.skillForm.skillUpgrades.length + 1}
+                        currencies={["Золото", "Опыт", "Серебро"]}
+                        onSubmit={data => onUpgradeFormSubmit(data)}/>
                 </>
             }
             <Btn text={"Сохранить"}/>
@@ -123,3 +120,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         </form>
     )
 })
+
+const formStyle = {
+    alignSelf: "center",
+    width: "90%"
+}

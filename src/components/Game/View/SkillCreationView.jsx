@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import InputLabel from "../../Common/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
-import {updateSkillForm} from "../../../data-layer/ActionCreators";
+import {changeView, updateSkillCategoryForm, updateSkillForm} from "../../../data-layer/ActionCreators";
 import {useForm} from "react-hook-form";
 import {upload} from "../../../util/Http";
 import {uploadServerUrl, uploadUrl} from "../../../util/Parameters";
@@ -15,17 +15,23 @@ import Icon from "../../Common/Icon";
 import _ from "lodash"
 import Btn from "../../Common/Btn";
 import UpgradeView from "../LvlUpgradeView";
+import SubmitButton from "../../Common/SubmitButton";
+import {skillCategoryFormView} from "../../../Views";
 
 function mapStateToProps(state) {
     return {
         skillForm: state.skillForm,
-        activeGame: state.activeGame
+        skillCategoryForm: state.skillCategoryForm,
+        activeGame: state.activeGame,
+        growl: state.growl
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue))
+        updateSkillForm: fieldNameToValue => dispatch(updateSkillForm(fieldNameToValue)),
+        updateSkillCategoryForm: fieldNameToValue => dispatch(updateSkillCategoryForm(fieldNameToValue)),
+        changeView: view => dispatch(changeView(view))
     }
 }
 
@@ -51,8 +57,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onSaveClicked() {
+        props.updateSkillCategoryForm({skills: props.skillCategoryForm.skills.concat(props.skillForm)})
+        props.changeView(skillCategoryFormView)
+        props.growl.show({severity: "info", summary: "Навык создан"})
+    }
+
+    function onBackClicked() {
+        props.changeView(skillCategoryFormView)
+    }
+
     return (
-        <form style={formStyle}>
+        <form style={formStyle} onSubmit={handleSubmit(onSaveClicked)}>
             <InputLabel text={"Название:"}/>
             <input
                 name={"name"}
@@ -66,13 +82,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <input
                 type={"file"}
                 name={"img"}
-                ref={register({required: true})}
                 onChange={e => upload(uploadUrl, e.target.files[0], rs => props.updateSkillForm({img: uploadServerUrl + "/" + rs.data.filename}))}
             />
             <div className={"error-label"}>{errors.img && "Загрузите картинку"}</div>
 
             <InputLabel text={"Описание:"}/>
-            <InputTextarea autoResize={true}/>
+            <InputTextarea autoResize={true}
+                           value={props.skillForm.description}
+                           onChange={e => props.updateSkillForm({description: e.target.value})}
+            />
 
             <InputLabel text={"Стоимость:"}/>
             <List noItemsText={"Не указана"}
@@ -115,8 +133,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         onSubmit={data => onUpgradeFormSubmit(data)}/>
                 </>
             }
-            <Btn text={"Сохранить"}/>
-            <Btn text={"Назад"}/>
+            <SubmitButton text={"Сохранить"} />
+            {/*<Btn text={"Сохранить"}/>*/}
+            <Btn text={"Назад"} onClick={() => onBackClicked()}/>
         </form>
     )
 })

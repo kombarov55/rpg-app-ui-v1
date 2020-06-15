@@ -55,7 +55,7 @@ export default {
         name: "",
         img: "",
         description: "",
-        priceOptions: [],
+        prices: [],
         upgradable: false,
         skillUpgrades: []
     },

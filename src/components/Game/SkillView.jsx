@@ -12,8 +12,16 @@ export default class SkillView extends React.Component {
         expand: false
     }
 
-
     render() {
+
+        let bulletValues = [
+            "Стоимость покупки: " + this.props.priceStr
+        ]
+
+        if (this.props.lvlNum != null && this.props.lvlNum !== 0) {
+            bulletValues = bulletValues.concat("Макс. уровень: " + this.props.maxLvl)
+        }
+
         return (
             <div style={containerStyle} onClick={() => this.onClick()}>
                 <div style={innerHorizontalStyle}>
@@ -21,14 +29,10 @@ export default class SkillView extends React.Component {
                          src={this.props.img}/>
                     <div style={nameStyle}>{this.props.name}</div>
                 </div>
-                { this.state.expand &&
+                {this.state.expand &&
                 <>
                     <div style={descriptionStyle}>{this.props.description}</div>
-                    <BulletList title={"Прокачка: "}
-                                values={[
-                                    "1 Уровень: 100 золота",
-                                    "2 Уровень: 100 золота или 1000 опыта"
-                                ]}
+                    <BulletList values={bulletValues}
                     />
                 </>
                 }

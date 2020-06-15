@@ -41,13 +41,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onPriceAdded(list) {
         props.updateSkillForm({
-            priceOptions: props.skillForm.priceOptions.concat([list])
+            prices: props.skillForm.prices.concat([list])
         })
     }
 
     function onPriceDeleted(listOfCurrencyNameToAmount) {
         props.updateSkillForm({
-            priceOptions: props.skillForm.priceOptions.filter(options => !_.isEqual(options, listOfCurrencyNameToAmount))
+            prices: props.skillForm.prices.filter(options => !_.isEqual(options, listOfCurrencyNameToAmount))
         })
     }
 
@@ -94,7 +94,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             <InputLabel text={"Стоимость:"}/>
             <List noItemsText={"Не указана"}
-                  values={props.skillForm.priceOptions.map(listOfCurrencyNameToAmount =>
+                  values={props.skillForm.prices.map(listOfCurrencyNameToAmount =>
                       <ListItemSmall
                           left={
                               listOfCurrencyNameToAmount

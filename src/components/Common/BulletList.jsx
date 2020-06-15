@@ -3,7 +3,9 @@ import React from "react";
 export default function (props) {
     return (
         <div style={bulletContainerStyle}>
-            <div style={bulletContainerTitleStyle}>{props.title}</div>
+            { props.title != null &&
+                <div style={bulletContainerTitleStyle}>{props.title}</div>
+            }
             <div style={bulletListStyle}>
                 {props.values.map(name => <div style={bulletContainerItemStyle}>- {name}</div>)}
             </div>

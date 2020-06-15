@@ -98,14 +98,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <>
                     <InputLabel text={"Навыки:"}/>
                     <List noItemsText={"Нет навыков"}
-                          values={[{
-                              name: "Рукопашный бой",
-                              description: "Навыки, позволяющие использовать оружие и броню. Все боевые приемы можно применить 1 раз за бой, вне зависимости от успеха приема. В остальных случаях урон равен уровню навыка",
-                              img: "https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"
-                          }].map(skill =>
+                          values={props.skillCategoryForm.skills.map(skill =>
                               <SkillView name={skill.name}
                                          img={skill.img}
                                          description={skill.description}
+                                         maxLvl={skill.skillUpgrades.length}
+                                         priceStr={skill.prices
+                                             .map(price =>
+                                                 price
+                                                     .map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount)
+                                                     .join(" + "))
+                                             .join(" или ")}
                               />)}
                     />
                     <AddItemButton text={"Добавить навык"} onClick={() => onAddSkillClicked()}/>

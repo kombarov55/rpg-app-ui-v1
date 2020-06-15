@@ -15,6 +15,7 @@ import ListItemSmall from "../../Common/ListItemSmall";
 import Icon from "../../Common/Icon";
 import _ from "lodash"
 import Btn from "../../Common/Btn";
+import UpgradeView from "../LvlUpgradeView";
 
 function mapStateToProps(state) {
     return {
@@ -101,7 +102,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 props.skillForm.upgradable &&
                 <>
                     <InputLabel text={"Уровни навыка:"}/>
-                    <List noItemsText={"Нет уровней"}/>
+                    <List noItemsText={"Нет уровней"}
+                          values={[
+                              <UpgradeView
+                                  title={"1 Уровень"}
+                                  description={"Пощечина, урон 1 (по умолчанию у всех)"}
+                                  prices={[
+                                      [{name: "Золото", amount: 100}],
+                                      [{name: "Опыт", amount: 5000}],
+                                      [{name: "Золото", amount: 50}, {name: "Опыт", amount: 500}]
+                                  ]}
+                              />
+                          ]}
+                    />
                     <SkillUpgradeForm/>
                 </>
             }

@@ -14,6 +14,8 @@ import NoItemsLabel from "../Common/NoItemsLabel";
 import SkillItem from "../QuestionnaireTemplateCreation/SkillItem";
 import AddItemButton from "../Common/AddItemButton";
 import HorizontalListItem from "../Common/HorizontalListItem";
+import List from "../Common/List";
+import SkillView from "./SkillView";
 
 const formStyle = {
     width: "90%",
@@ -95,31 +97,28 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             {!props.skillCategoryForm.complex ?
                 <>
                     <InputLabel text={"Навыки:"}/>
-                    <div className={"list"}>
-                        {
-                            props.skillCategoryForm.skills.length === 0 ?
-                                <NoItemsLabel text={"Нет навыков"}/> :
-                                props.skillCategoryForm.skills.map(skill =>
-                                    <SkillItem
-                                        name={skill.name}
-                                        type={props.skillCategoryForm.name}
-                                        description={skill.description}
-                                        imgSrc={skill.img}
-                                    />
-                                )
-                        }
-                    </div>
+                    <List noItemsText={"Нет навыков"}
+                          values={[{
+                              name: "Рукопашный бой",
+                              description: "Навыки, позволяющие использовать оружие и броню. Все боевые приемы можно применить 1 раз за бой, вне зависимости от успеха приема. В остальных случаях урон равен уровню навыка",
+                              img: "https://gamepedia.cursecdn.com/dota2_gamepedia/7/7a/Strength_attribute_symbol.png?version=d8564cc61841b6a816a9b1e6fd528f91"
+                          }].map(skill =>
+                              <SkillView name={skill.name}
+                                         img={skill.img}
+                                         description={skill.description}
+                              />)}
+                    />
                     <AddItemButton text={"Добавить навык"} onClick={() => onAddSkillClicked()}/>
                 </> :
                 <>
-                  <InputLabel text={"Школы заклинаний:"}/>
-                  <div className={"list"}>
-                      {
-                          props.skillCategoryForm.spellSchools.length === 0 ?
-                              <NoItemsLabel text={"Нет школ заклинаний"}/> :
-                              props.skillCategoryForm.spellSchools.map(school => <HorizontalListItem/>)
-                      }
-                  </div>
+                    <InputLabel text={"Школы заклинаний:"}/>
+                    <div className={"list"}>
+                        {
+                            props.skillCategoryForm.spellSchools.length === 0 ?
+                                <NoItemsLabel text={"Нет школ заклинаний"}/> :
+                                props.skillCategoryForm.spellSchools.map(school => <HorizontalListItem/>)
+                        }
+                    </div>
                     <AddItemButton text={"Добавить школу заклинаний"} onClick={() => onAddSpellSchoolClicked()}/>
                 </>
             }

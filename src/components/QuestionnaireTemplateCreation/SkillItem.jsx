@@ -11,7 +11,7 @@ function mapDispatchToProps(dispatch, props) {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
-    const {name, type, description, imgSrc, onDelete, onClick, onEdit, expand, maxValue, upgradeCosts} = props
+    const {name, description, imgSrc, onDelete, onClick, onEdit, expand, maxValue, upgradeCosts} = props
 
     function optionsToString(options) {
         return options.map(({costs}) => buildCostLabel(costs)).join(" или ")
@@ -32,7 +32,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     <div className={"questionnaire-skill-item-vertical"}
                          onClick={() => onClick()}>
                         <div className={"questionnaire-skill-name"}>{name}</div>
-                        <div className={"questionnaire-skill-type"}>{type}</div>
                     </div>
                     <div className={"questionaire-skill-item-horizontal-button-group"}>
                         {

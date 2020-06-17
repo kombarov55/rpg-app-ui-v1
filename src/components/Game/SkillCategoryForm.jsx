@@ -15,7 +15,9 @@ import SkillItem from "../QuestionnaireTemplateCreation/SkillItem";
 import AddItemButton from "../Common/AddItemButton";
 import HorizontalListItem from "../Common/HorizontalListItem";
 import List from "../Common/List";
-import SkillView from "./SkillView";
+import ListItemExpand from "./ListItemExpand";
+import nonNullList from "../../util/nonNullList";
+import priceListToString from "../../util/priceListToString";
 
 const formStyle = {
     width: "90%",
@@ -99,16 +101,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     <InputLabel text={"Навыки:"}/>
                     <List noItemsText={"Нет навыков"}
                           values={props.skillCategoryForm.skills.map(skill =>
-                              <SkillView name={skill.name}
-                                         img={skill.img}
-                                         description={skill.description}
-                                         maxLvl={skill.skillUpgrades.length}
-                                         priceStr={skill.prices
-                                             .map(price =>
-                                                 price
-                                                     .map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount)
-                                                     .join(" + "))
-                                             .join(" или ")}
+                              <ListItemExpand name={skill.name}
+                                              img={skill.img}
+                                              description={skill.description}
+                                              bullets={nonNullList(
+                                                  skill.skillUpgrades.length !== 0 ?
+                                                      "Максимальный уровень: " + skill.skillUpgrades.length :
+                                                      null,
+
+                                                  "Стоимость покупки: " + priceListToString(skill.prices)
+                                              )}
                               />)}
                     />
                     <AddItemButton text={"Добавить навык"} onClick={() => onAddSkillClicked()}/>

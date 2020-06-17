@@ -1,7 +1,7 @@
 import React from "react";
 import BulletList from "../Common/BulletList";
 
-export default class SkillView extends React.Component {
+export default class ListItemExpand extends React.Component {
 
     constructor(props) {
         super(props);
@@ -13,15 +13,6 @@ export default class SkillView extends React.Component {
     }
 
     render() {
-
-        let bulletValues = [
-            "Стоимость покупки: " + this.props.priceStr
-        ]
-
-        if (this.props.lvlNum != null && this.props.lvlNum !== 0) {
-            bulletValues = bulletValues.concat("Макс. уровень: " + this.props.maxLvl)
-        }
-
         return (
             <div style={containerStyle} onClick={() => this.onClick()}>
                 <div style={innerHorizontalStyle}>
@@ -32,7 +23,7 @@ export default class SkillView extends React.Component {
                 {this.state.expand &&
                 <>
                     <div style={descriptionStyle}>{this.props.description}</div>
-                    <BulletList values={bulletValues}
+                    <BulletList values={this.props.bullets}
                     />
                 </>
                 }

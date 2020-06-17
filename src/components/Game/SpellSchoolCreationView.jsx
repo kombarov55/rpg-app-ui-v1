@@ -6,6 +6,7 @@ import Btn from "../Common/Btn";
 import {changeView, updateSkillCategoryForm, updateSpellSchoolForm} from "../../data-layer/ActionCreators";
 import {skillCategoryFormView} from "../../Views";
 import {upload} from "../../util/HttpRequests";
+import DefaultFormValues from "../../data-layer/DefaultFormValues";
 
 function mapStateToProps(state) {
     return {
@@ -26,7 +27,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSaveClicked() {
         props.updateParentForm({spellSchools: props.parentForm.spellSchools.concat(props.form)})
-        props.updateForm({})
+        props.updateForm(DefaultFormValues.spellSchoolForm)
         props.changeView(skillCategoryFormView)
     }
 

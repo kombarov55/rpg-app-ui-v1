@@ -7,6 +7,9 @@ import {changeView, updateSkillCategoryForm, updateSpellSchoolForm} from "../../
 import {skillCategoryFormView} from "../../Views";
 import {upload} from "../../util/HttpRequests";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
+import AddItemButton from "../Common/AddItemButton";
+import List from "../Common/List";
+import InnerFormStyle from "../../styles/InnerFormStyle";
 
 function mapStateToProps(state) {
     return {
@@ -36,7 +39,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     return (
-        <div style={style}>
+        <div style={InnerFormStyle}>
             <InputLabel text={"Название:"}/>
             <input name={"name"}
                    value={props.form.name}
@@ -57,20 +60,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            onChange={e => props.updateForm({description: e.target.value})}
             />
 
-            <InputLabel text={"Заклинания:"}/>
-            <InputLabel text={"Стоимость перехода на новый круг:"}/>
+            <InputLabel text={"Круги заклинаний:"}/>
+            <List noItemsText={"Нет кругов заклинаний"}/>
+            <AddItemButton text={"Добавить круг заклинаний"}/>
 
             <Btn text={"Сохранить"} onClick={() => onSaveClicked()}/>
             <Btn text={"Назад"} onClick={() => onBackClicked()}/>
         </div>
     )
 })
-
-const style = {
-    display: "flex",
-    flexDirection: "column",
-    alignSelf: "center",
-
-    width: "90%"
-
-}

@@ -1,12 +1,18 @@
 import {createStore} from "redux";
 import {rootReducer} from "./Reducers";
-import {announcementView, skillCategoryFormView, skillCreationView, spellSchoolCreationView} from "../Views";
+import {
+    announcementView,
+    skillCategoryFormView,
+    skillCreationView,
+    spellCreationView,
+    spellSchoolCreationView
+} from "../Views";
 import DefaultFormValues from "./DefaultFormValues";
 
 export const initialState = {
     sidebarVisible: false,
     growl: null,
-    currentView: spellSchoolCreationView,
+    currentView: spellCreationView,
     userAccount: {
 
     },

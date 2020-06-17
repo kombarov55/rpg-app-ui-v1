@@ -4,12 +4,13 @@ import InputLabel from "../Common/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
 import Btn from "../Common/Btn";
 import {changeView, updateSkillCategoryForm, updateSpellSchoolForm} from "../../data-layer/ActionCreators";
-import {skillCategoryFormView} from "../../Views";
+import {skillCategoryFormView, spellCreationView} from "../../Views";
 import {upload} from "../../util/HttpRequests";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
 import AddItemButton from "../Common/AddItemButton";
 import List from "../Common/List";
 import InnerFormStyle from "../../styles/InnerFormStyle";
+import CenterPlusButton from "../Common/CenterPlusButton";
 
 function mapStateToProps(state) {
     return {
@@ -34,12 +35,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(skillCategoryFormView)
     }
 
+    function onAddSpellClicked() {
+        props.changeView(spellCreationView)
+    }
+
     function onBackClicked() {
         props.changeView(skillCategoryFormView)
     }
 
     return (
-        <div style={InnerFormStyle}>
+        <div style={style}>
             <InputLabel text={"Название:"}/>
             <input name={"name"}
                    value={props.form.name}
@@ -62,6 +67,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             <InputLabel text={"Круги заклинаний:"}/>
             <List noItemsText={"Нет кругов заклинаний"}/>
+            <div style={InnerFormStyle}>
+                <InputLabel text={"1 круг:"}/>
+                <InputLabel text={"Заклинания:"}/>
+                <List noItemsText={"Нет заклинаний"}/>
+                <CenterPlusButton onClick={() => onAddSpellClicked()} />
+
+                <InputLabel text={"Стоимость заклинаний:"}/>
+            </div>
             <AddItemButton text={"Добавить круг заклинаний"}/>
 
             <Btn text={"Сохранить"} onClick={() => onSaveClicked()}/>
@@ -69,3 +82,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         </div>
     )
 })
+
+const style = {
+    display: "flex",
+    flexDirection: "column",
+    alignSelf: "center",
+
+    width: "90%"
+}

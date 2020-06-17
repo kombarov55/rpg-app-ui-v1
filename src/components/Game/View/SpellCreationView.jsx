@@ -11,7 +11,7 @@ function mapDispatchToProps(dispatch) {
     return {}
 }
 
-return connect(mapStateToProps, mapDispatchToProps)(function (props) {
+export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     return (
         <div style={style}>
             <InputLabel text={"Название заклинания:"}/>

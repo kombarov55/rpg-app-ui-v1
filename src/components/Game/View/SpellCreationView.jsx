@@ -62,6 +62,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class SpellCreationV
     }
 
     onSaveClicked() {
+        if (this.state.name == "" || this.state.description == "") return
+
         this.props.updateParentForm({spells: this.props.parentForm.spells.concat(this.state)})
         this.setState(this.initialState)
         this.props.changeView(spellSchoolCreationView)

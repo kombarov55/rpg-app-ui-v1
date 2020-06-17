@@ -3,24 +3,32 @@ import {connect} from "react-redux";
 import InputLabel from "../Common/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
 import Btn from "../Common/Btn";
-import {changeView, updateSpellSchoolForm} from "../../data-layer/ActionCreators";
+import {changeView, updateSkillCategoryForm, updateSpellSchoolForm} from "../../data-layer/ActionCreators";
 import {skillCategoryFormView} from "../../Views";
 import {upload} from "../../util/HttpRequests";
 
 function mapStateToProps(state) {
     return {
-        form: state.spellSchoolForm
+        form: state.spellSchoolForm,
+        parentForm: state.skillCategoryForm
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         changeView: view => dispatch(changeView(view)),
-        updateForm: fieldNameToValue => dispatch(updateSpellSchoolForm(fieldNameToValue))
+        updateForm: fieldNameToValue => dispatch(updateSpellSchoolForm(fieldNameToValue)),
+        updateParentForm: fieldNameToValue => dispatch(updateSkillCategoryForm(fieldNameToValue))
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+
+    function onSaveClicked() {
+        props.updateParentForm({spellSchools: props.parentForm.spellSchools.concat(props.form)})
+        props.updateForm({})
+        props.changeView(skillCategoryFormView)
+    }
 
     function onBackClicked() {
         props.changeView(skillCategoryFormView)
@@ -51,7 +59,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputLabel text={"Заклинания:"}/>
             <InputLabel text={"Стоимость перехода на новый круг:"}/>
 
-            <Btn text={"Сохранить"}/>
+            <Btn text={"Сохранить"} onClick={() => onSaveClicked()}/>
             <Btn text={"Назад"} onClick={() => onBackClicked()}/>
         </div>
     )

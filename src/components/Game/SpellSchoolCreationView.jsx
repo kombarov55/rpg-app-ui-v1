@@ -11,6 +11,7 @@ import AddItemButton from "../Common/AddItemButton";
 import List from "../Common/List";
 import InnerFormStyle from "../../styles/InnerFormStyle";
 import CenterPlusButton from "../Common/CenterPlusButton";
+import ListItemExpand from "./ListItemExpand";
 
 function mapStateToProps(state) {
     return {
@@ -70,8 +71,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <div style={InnerFormStyle}>
                 <InputLabel text={"1 круг:"}/>
                 <InputLabel text={"Заклинания:"}/>
-                <List noItemsText={"Нет заклинаний"}/>
-                <CenterPlusButton onClick={() => onAddSpellClicked()} />
+                <List noItemsText={"Нет заклинаний"}
+                      values={props.form.spells.map(spell =>
+                          <ListItemExpand
+                              name={spell.name}
+                              img={spell.img}
+                              description={spell.description}
+                          />
+                      )}
+                />
+                <CenterPlusButton onClick={() => onAddSpellClicked()}/>
 
                 <InputLabel text={"Стоимость заклинаний:"}/>
             </div>

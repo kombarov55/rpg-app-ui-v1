@@ -1,6 +1,7 @@
 import {post, httpDelete} from "./Http";
-import {announcementUrl} from "./Parameters";
+import {announcementUrl, uploadServerUrl, uploadUrl} from "./Parameters";
 import Globals from "./Globals";
+import axios from "axios"
 
 export async function createAnnouncement(
     title,
@@ -34,4 +35,15 @@ export async function createAnnouncement(
 
 export async function deleteAnnouncementFromServer(id) {
     return httpDelete(announcementUrl + "/" + id)
+}
+
+export function upload(eventFile, filenameConsumer) {
+    const formData = new FormData()
+    formData.append("file", eventFile)
+
+    axios.post(uploadUrl, formData, {
+        headers: {
+            "content-type": "multipart/form-data"
+        }
+    }).then(rs => filenameConsumer(uploadServerUrl + "/" + rs.data.filename))
 }

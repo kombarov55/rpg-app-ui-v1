@@ -41,7 +41,7 @@ import {
     UPDATE_CURRENCY_FORM,
     UPDATE_CONVERSION_FORM,
     SET_CURRENCIES,
-    SET_CONVERSIONS, UPDATE_SKILL_CATEGORY_FORM, FILTER_LIST, APPEND_ELEMENT
+    SET_CONVERSIONS, UPDATE_SKILL_CATEGORY_FORM, FILTER_LIST, APPEND_ELEMENT, UPDATE_SPELL_SCHOOL_FORM
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -469,6 +469,15 @@ export function appendElement(stateObjectName, propertyName, element) {
             stateObjectName: stateObjectName,
             propertyName: propertyName,
             element: element
+        }
+    }
+}
+
+export function updateSpellSchoolForm(fieldNameToValue) {
+    return {
+        type: UPDATE_SPELL_SCHOOL_FORM,
+        payload: {
+            fieldNameToValue: fieldNameToValue
         }
     }
 }

@@ -77,5 +77,13 @@ export default {
         complex: false,
         skills: [],
         spellSchools: []
+    },
+
+    spellSchoolForm: {
+        name: "",
+        img: "",
+        description: "",
+        spells: [],
+        upgradePrices: []
     }
 }

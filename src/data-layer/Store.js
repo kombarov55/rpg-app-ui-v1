@@ -1,12 +1,12 @@
 import {createStore} from "redux";
 import {rootReducer} from "./Reducers";
-import {announcementView, skillCategoryFormView, skillCreationView} from "../Views";
+import {announcementView, skillCategoryFormView, skillCreationView, spellSchoolCreationView} from "../Views";
 import DefaultFormValues from "./DefaultFormValues";
 
 export const initialState = {
     sidebarVisible: false,
     growl: null,
-    currentView: skillCategoryFormView,
+    currentView: spellSchoolCreationView,
     userAccount: {
 
     },
@@ -38,7 +38,8 @@ export const initialState = {
     skillForm: DefaultFormValues.skillForm,
     currencyForm: DefaultFormValues.currencyForm,
     conversionForm: DefaultFormValues.conversionForm,
-    skillCategoryForm: DefaultFormValues.skillCategoryForm
+    skillCategoryForm: DefaultFormValues.skillCategoryForm,
+    spellSchoolForm: DefaultFormValues.spellSchoolForm
 }
 
 export const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

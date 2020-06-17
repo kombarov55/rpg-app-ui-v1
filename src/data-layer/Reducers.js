@@ -41,7 +41,7 @@ import {
     UPDATE_CONVERSION_FORM,
     SET_CURRENCIES,
     SET_CONVERSIONS,
-    UPDATE_SKILL_CATEGORY_FORM, FILTER_LIST, APPEND_ELEMENT
+    UPDATE_SKILL_CATEGORY_FORM, FILTER_LIST, APPEND_ELEMENT, UPDATE_SPELL_SCHOOL_FORM
 } from "./ActionTypes";
 import {initialState} from "./Store";
 import MergeLists from "../util/MergeLists";
@@ -278,6 +278,11 @@ export function rootReducer(state = initialState, action) {
         case UPDATE_SKILL_CATEGORY_FORM:
             return Object.assign({}, state, {
                 skillCategoryForm: Object.assign({}, state.skillCategoryForm, action.payload.fieldNameToValue)
+            })
+
+        case UPDATE_SPELL_SCHOOL_FORM:
+            return Object.assign({}, state, {
+                spellSchoolForm: Object.assign({}, state.spellSchoolForm, action.payload.fieldNameToValue)
             })
 
         case FILTER_LIST:

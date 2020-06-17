@@ -7,7 +7,7 @@ import {changeView, updateGameForm, updateSkillCategoryForm} from "../../data-la
 import {upload} from "../../util/Http";
 import {uploadServerUrl, uploadUrl} from "../../util/Parameters";
 import {useForm} from "react-hook-form";
-import {gameCreationView, gameEditView, skillCreationView} from "../../Views";
+import {gameCreationView, gameEditView, skillCreationView, spellSchoolCreationView} from "../../Views";
 import Globals from "../../util/Globals";
 import SkillCategoryFormMode from "../../data-layer/enums/SkillCategoryFormMode";
 import NoItemsLabel from "../Common/NoItemsLabel";
@@ -50,7 +50,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onAddSpellSchoolClicked() {
-
+        props.changeView(spellSchoolCreationView)
     }
 
     const {register, errors, handleSubmit} = useForm()

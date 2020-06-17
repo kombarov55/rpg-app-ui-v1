@@ -30,6 +30,7 @@ import Preload from "./util/Preload";
 import QuestionnaireTemplateEditView from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateEditView";
 import ConversionView from "./components/Game/View/ConversionView";
 import SkillCategoryForm from "./components/Game/SkillCategoryForm";
+import SpellSchoolCreationView from "./components/Game/SpellSchoolCreationView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -72,3 +73,5 @@ export const skillCreationView = {component: <SkillItemForm/>, label: "Созд�
 export const skillEditView = {component: <SkillEditView/>, label: "Редактирование навыка"}
 
 export const conversionView = {component: <ConversionView/>, label: "Обмен валют"}
+
+export const spellSchoolCreationView = {component: <SpellSchoolCreationView/>, label: "Создание школы навыка"}

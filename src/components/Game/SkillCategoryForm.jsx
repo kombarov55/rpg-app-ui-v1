@@ -121,7 +121,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         {
                             props.skillCategoryForm.spellSchools.length === 0 ?
                                 <NoItemsLabel text={"Нет школ заклинаний"}/> :
-                                props.skillCategoryForm.spellSchools.map(school => <HorizontalListItem/>)
+                                props.skillCategoryForm.spellSchools.map(school =>
+                                    <ListItemExpand
+                                        name={school.name}
+                                        img={school.img}
+                                        description={school.description}
+                                    />)
                         }
                     </div>
                     <AddItemButton text={"Добавить школу заклинаний"} onClick={() => onAddSpellSchoolClicked()}/>

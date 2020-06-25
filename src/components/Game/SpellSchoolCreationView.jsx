@@ -9,14 +9,11 @@ import {upload} from "../../util/HttpRequests";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
 import AddItemButton from "../Common/AddItemButton";
 import List from "../Common/List";
-import InnerFormStyle from "../../styles/InnerFormStyle";
-import CenterPlusButton from "../Common/CenterPlusButton";
-import ListItemExpand from "./ListItemExpand";
-import {Input} from "uikit-react";
 import PriceInput from "../Common/PriceInput";
-import SpellSchoolLvlUpgradePriceForm from "./SpellSchoolLvlUpgradePriceForm";
-import FormTitleLabel from "../Common/FormTitleLabel";
 import AddSchoolLvlForm from "./AddSchoolLvlForm";
+import priceListToString from "../../util/priceCombinationListToString";
+import priceCombinationToString from "../../util/priceCombinationToString";
+import ListItemSmall from "../Common/ListItemSmall";
 
 function mapStateToProps(state) {
     return {
@@ -72,15 +69,24 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputLabel text={"Мин. заклинаний для перехода на сл. круг: "}/>
             <input/>
 
-            <InputLabel text={"Стоимость покупки школы: "}/>
-            <List noItemsText={"Пусто"}/>
-            <PriceInput currencies={["Серебро", "Золото", "Опыт"]}/>
+            <InputLabel text={"Варианты покупки школы: "}/>
+            <List noItemsText={"Пусто"}
+                  values={
+                      props.form.purchasePriceCombinations.map(priceCombination =>
+                          <ListItemSmall left={priceCombinationToString(priceCombination)}/>
+                      )}
+            />
+            <PriceInput currencies={["Серебро", "Золото", "Опыт"]}
+                        onSubmit={priceCombination => props.updateForm({
+                            purchasePriceCombinations: props.form.purchasePriceCombinations.concat([priceCombination])
+                        })}
+            />
 
             <InputLabel text={"Круги заклинаний:"}/>
             <List noItemsText={"Нет кругов заклинаний"}/>
 
             {
-                addSchoolVisible && <AddSchoolLvlForm />
+                addSchoolVisible && <AddSchoolLvlForm/>
             }
 
             {

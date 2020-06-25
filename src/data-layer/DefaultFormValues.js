@@ -84,6 +84,7 @@ export default {
         img: "",
         description: "",
         spells: [],
-        upgradePrices: []
+        purchasePriceCombinations: [],
+        upgradePriceCombinations: []
     }
 }

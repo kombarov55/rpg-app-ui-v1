@@ -17,7 +17,7 @@ import HorizontalListItem from "../Common/HorizontalListItem";
 import List from "../Common/List";
 import ListItemExpand from "./ListItemExpand";
 import nonNullList from "../../util/nonNullList";
-import priceListToString from "../../util/priceListToString";
+import priceListToString from "../../util/priceCombinationListToString";
 
 const formStyle = {
     width: "90%",

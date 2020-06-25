@@ -4,8 +4,8 @@ import AddItemButton from "../Common/AddItemButton";
 import PriceInput from "../Common/PriceInput";
 import List from "../Common/List";
 import ListItemSmall from "../Common/ListItemSmall";
-import priceListToString from "../../util/priceListToString";
-import priceToString from "../../util/priceToString";
+import priceListToString from "../../util/priceCombinationListToString";
+import priceToString from "../../util/priceCombinationToString";
 import FormTitleLabel from "../Common/FormTitleLabel";
 import Btn from "../Common/Btn";
 

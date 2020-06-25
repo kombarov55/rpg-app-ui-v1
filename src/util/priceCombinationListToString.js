@@ -1,5 +1,5 @@
-export default function (prices) {
-    return prices
+export default function (priceCombination) {
+    return priceCombination
         .map(price =>
             price
                 .map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount)

@@ -1,26 +1,12 @@
 import React from "react";
-import {connect} from "react-redux"
 import InputLabel from "../../Common/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
 import Btn from "../../Common/Btn";
-import {changeView, updateSpellSchoolForm} from "../../../data-layer/ActionCreators";
 import {spellSchoolCreationView} from "../../../Views";
 import {upload} from "../../../util/HttpRequests";
+import FormTitleLabel from "../../Common/FormTitleLabel";
 
-function mapStateToProps(state) {
-    return {
-        parentForm: state.spellSchoolForm
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        changeView: view => dispatch(changeView(view)),
-        updateParentForm: fieldNameToValue => dispatch(updateSpellSchoolForm(fieldNameToValue))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(class SpellCreationView extends React.Component {
+export default class SpellCreationView extends React.Component {
 
     constructor(props) {
         super(props);
@@ -36,6 +22,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class SpellCreationV
     render() {
         return (
             <div style={style}>
+                <FormTitleLabel text={"Создание заклинания:"}/>
+
                 <InputLabel text={"Название заклинания:"}/>
                 <input name={"name"}
                        value={this.state.name}
@@ -56,23 +44,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(class SpellCreationV
                 />
 
                 <Btn text={"Сохранить"} onClick={() => this.onSaveClicked()}/>
-                <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
             </div>
         )
     }
 
     onSaveClicked() {
         if (this.state.name == "" || this.state.description == "") return
-
-        this.props.updateParentForm({spells: this.props.parentForm.spells.concat(this.state)})
+        this.props.onSubmit(this.state)
         this.setState(this.initialState)
-        this.props.changeView(spellSchoolCreationView)
     }
-
-    onBackClicked() {
-        this.props.changeView(spellSchoolCreationView)
-    }
-})
+}
 
 const style = {
     display: "flex",

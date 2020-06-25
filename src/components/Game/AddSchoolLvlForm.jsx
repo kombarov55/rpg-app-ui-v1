@@ -8,6 +8,7 @@ import SpellSchoolLvlUpgradePriceForm from "./SpellSchoolLvlUpgradePriceForm";
 import InnerFormStyle from "../../styles/InnerFormStyle";
 import {spellCreationView} from "../../Views";
 import AddItemButton from "../Common/AddItemButton";
+import SpellCreationView from "./View/SpellCreationView";
 
 export default class AddSchoolLvlForm extends React.PureComponent {
     constructor(props) {
@@ -16,39 +17,48 @@ export default class AddSchoolLvlForm extends React.PureComponent {
     }
 
     initialState = {
-        spells: []
+        spells: [],
+
+        addSpellFormVisible: false
     }
 
     render() {
         return (
-            <>
+            <div style={InnerFormStyle}>
                 <FormTitleLabel text={"Создание круга заклинаний:"}/>
 
-                <div style={InnerFormStyle}>
-                    <InputLabel text={"1 круг:"}/>
-                    <InputLabel text={"Заклинания:"}/>
-                    <List noItemsText={"Нет заклинаний"}
-                          values={this.state.spells.map(spell =>
-                              <ListItemExpand
-                                  name={spell.name}
-                                  img={spell.img}
-                                  description={spell.description}
-                              />
-                          )}
+                <InputLabel text={"1 круг:"}/>
+                <InputLabel text={"Заклинания:"}/>
+                <List noItemsText={"Нет заклинаний"}
+                      values={this.state.spells.map(spell =>
+                          <ListItemExpand
+                              name={spell.name}
+                              img={spell.img}
+                              description={spell.description}
+                          />
+                      )}
+                />
+                {
+                    this.state.addSpellFormVisible && <SpellCreationView
+                        onSubmit={data => console.log(data)}
                     />
-                    <AddItemButton text={"Добавить заклинание"} onClick={() => this.onAddSpellClicked()}/>
+                }
+                {
+                    !this.state.addSpellFormVisible &&
+                    <AddItemButton text={"Создать заклинание"} onClick={() => this.onAddSpellClicked()}/>
+                }
 
-                    <InputLabel text={"Стоимость заклинаний:"}/>
-                    <List noItemsText={"Не указана"}/>
 
-                    <SpellSchoolLvlUpgradePriceForm onSubmit={data => console.log(data)}/>
-                </div>
-            </>
+                <InputLabel text={"Стоимость заклинаний:"}/>
+                <List noItemsText={"Не указана"}/>
+
+                <SpellSchoolLvlUpgradePriceForm onSubmit={data => console.log(data)}/>
+            </div>
         )
     }
 
     onAddSpellClicked() {
-        this.props.changeView(spellCreationView)
+        this.setState({addSpellFormVisible: true})
     }
 
 }

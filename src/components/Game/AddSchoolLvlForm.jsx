@@ -16,6 +16,7 @@ export default class AddSchoolLvlForm extends React.PureComponent {
 
     initialState = {
         spells: [],
+        schoolLvlUpgradePriceCombinations: [],
 
         addSpellFormVisible: false
     }
@@ -50,7 +51,9 @@ export default class AddSchoolLvlForm extends React.PureComponent {
                 <InputLabel text={"Стоимость заклинаний:"}/>
                 <List noItemsText={"Не указана"}/>
 
-                <SpellSchoolLvlUpgradePriceForm onSubmit={data => console.log(data)}/>
+                <SpellSchoolLvlUpgradePriceForm onSubmit={data => this.setState(state => ({
+                    schoolLvlUpgradePriceCombinations: this.state.schoolLvlUpgradePriceCombinations.concat(data)
+                }))}/>
             </div>
         )
     }

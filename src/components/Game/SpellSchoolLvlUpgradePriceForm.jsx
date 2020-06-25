@@ -34,7 +34,7 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
                     onChange={e => this.setState({spellCount: e.target.value})}
                 />
 
-                <InputLabel text={"Цена:"}/>
+                <InputLabel text={"Варианты цен:"}/>
                 <List noItemsText={"Цены не указаны"}
                       values={this.state.priceCombinationList.map(priceCombination => <ListItemSmall left={priceCombinationToString(priceCombination)}/>)}
                 />

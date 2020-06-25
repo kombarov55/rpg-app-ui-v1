@@ -16,6 +16,7 @@ import {Input} from "uikit-react";
 import PriceInput from "../Common/PriceInput";
 import SpellSchoolLvlUpgradePriceForm from "./SpellSchoolLvlUpgradePriceForm";
 import FormTitleLabel from "../Common/FormTitleLabel";
+import AddSchoolLvlForm from "./AddSchoolLvlForm";
 
 function mapStateToProps(state) {
     return {
@@ -38,10 +39,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateParentForm({spellSchools: props.parentForm.spellSchools.concat(props.form)})
         props.updateForm(DefaultFormValues.spellSchoolForm)
         props.changeView(skillCategoryFormView)
-    }
-
-    function onAddSpellClicked() {
-        props.changeView(spellCreationView)
     }
 
     function onBackClicked() {
@@ -76,30 +73,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <List noItemsText={"Нет кругов заклинаний"}/>
 
             {
-                addSchoolVisible &&
-                <>
-                    <FormTitleLabel text={"Создание круга заклинаний:"}/>
-
-                    <div style={InnerFormStyle}>
-                        <InputLabel text={"1 круг:"}/>
-                        <InputLabel text={"Заклинания:"}/>
-                        <List noItemsText={"Нет заклинаний"}
-                              values={props.form.spells.map(spell =>
-                                  <ListItemExpand
-                                      name={spell.name}
-                                      img={spell.img}
-                                      description={spell.description}
-                                  />
-                              )}
-                        />
-                        <CenterPlusButton onClick={() => onAddSpellClicked()}/>
-
-                        <InputLabel text={"Стоимость заклинаний:"}/>
-                        <List noItemsText={"Не указана"}/>
-
-                        <SpellSchoolLvlUpgradePriceForm onSubmit={data => console.log(data)}/>
-                    </div>
-                </>
+                addSchoolVisible && <AddSchoolLvlForm />
             }
 
             {

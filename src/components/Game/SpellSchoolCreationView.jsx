@@ -11,7 +11,6 @@ import AddItemButton from "../Common/AddItemButton";
 import List from "../Common/List";
 import PriceInput from "../Common/PriceInput";
 import AddSchoolLvlForm from "./AddSchoolLvlForm";
-import priceListToString from "../../util/priceCombinationListToString";
 import priceCombinationToString from "../../util/priceCombinationToString";
 import ListItemSmall from "../Common/ListItemSmall";
 

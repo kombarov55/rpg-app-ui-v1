@@ -4,11 +4,13 @@ import AddItemButton from "../Common/AddItemButton";
 import PriceInput from "../Common/PriceInput";
 import List from "../Common/List";
 import ListItemSmall from "../Common/ListItemSmall";
-import priceListToString from "../../util/priceCombinationListToString";
-import priceToString from "../../util/priceCombinationToString";
+import priceCombinationToString from "../../util/priceCombinationToString";
 import FormTitleLabel from "../Common/FormTitleLabel";
 import Btn from "../Common/Btn";
 
+/**
+ * onSubmit: {spellCount: Int, priceCombinationList: [[{name: String, amount: Int}]]}
+ */
 export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +19,7 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
 
     initialState = {
         spellCount: 0,
-        prices: []
+        priceCombinationList: []
     }
 
     render() {
@@ -34,7 +36,7 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
 
                 <InputLabel text={"Цена:"}/>
                 <List noItemsText={"Цены не указаны"}
-                      values={this.state.prices.map(price => <ListItemSmall left={priceToString(price)}/>)}
+                      values={this.state.priceCombinationList.map(priceCombination => <ListItemSmall left={priceCombinationToString(priceCombination)}/>)}
                 />
                 <PriceInput currencies={["Золото", "Серебро", "Опыт"]}
                             onSubmit={price => this.onPriceSubmitted(price)}
@@ -49,8 +51,8 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
         this.setState(this.initialState)
     }
 
-    onPriceSubmitted(currencyNameToAmountList) {
-        console.log(currencyNameToAmountList)
-        this.setState(state => ({prices: state.prices.concat(currencyNameToAmountList)}))
+    onPriceSubmitted(priceCombination) {
+        console.log(priceCombination)
+        this.setState(state => ({priceCombinationList: state.priceCombinationList.concat([priceCombination])}))
     }
 }

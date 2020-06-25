@@ -1,6 +1,9 @@
 import React from "react";
 import CenterPlusButton from "./CenterPlusButton";
 
+/**
+ * onSubmit: [{ name: String, amount: Long }]
+ */
 export default class PriceInput extends React.Component {
     constructor(props) {
         super(props);

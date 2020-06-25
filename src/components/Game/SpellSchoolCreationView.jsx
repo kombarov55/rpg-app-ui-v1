@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import InputLabel from "../Common/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
@@ -48,6 +48,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(skillCategoryFormView)
     }
 
+    const [addSchoolVisible, setAddSchoolVisible] = useState(false)
+
     return (
         <div style={style}>
             <InputLabel text={"Название:"}/>
@@ -73,30 +75,38 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputLabel text={"Круги заклинаний:"}/>
             <List noItemsText={"Нет кругов заклинаний"}/>
 
-            <FormTitleLabel text={"Создание круга заклинаний:"}/>
+            {
+                addSchoolVisible &&
+                <>
+                    <FormTitleLabel text={"Создание круга заклинаний:"}/>
 
-            <div style={InnerFormStyle}>
-                <InputLabel text={"1 круг:"}/>
-                <InputLabel text={"Заклинания:"}/>
-                <List noItemsText={"Нет заклинаний"}
-                      values={props.form.spells.map(spell =>
-                          <ListItemExpand
-                              name={spell.name}
-                              img={spell.img}
-                              description={spell.description}
-                          />
-                      )}
-                />
-                <CenterPlusButton onClick={() => onAddSpellClicked()}/>
+                    <div style={InnerFormStyle}>
+                        <InputLabel text={"1 круг:"}/>
+                        <InputLabel text={"Заклинания:"}/>
+                        <List noItemsText={"Нет заклинаний"}
+                              values={props.form.spells.map(spell =>
+                                  <ListItemExpand
+                                      name={spell.name}
+                                      img={spell.img}
+                                      description={spell.description}
+                                  />
+                              )}
+                        />
+                        <CenterPlusButton onClick={() => onAddSpellClicked()}/>
 
-                <InputLabel text={"Стоимость заклинаний:"}/>
-                <List noItemsText={"Не указана"}/>
+                        <InputLabel text={"Стоимость заклинаний:"}/>
+                        <List noItemsText={"Не указана"}/>
 
-                <SpellSchoolLvlUpgradePriceForm onSubmit={data => console.log(data)}/>
+                        <SpellSchoolLvlUpgradePriceForm onSubmit={data => console.log(data)}/>
+                    </div>
+                </>
+            }
 
-            </div>
-
-            <AddItemButton text={"Добавить круг заклинаний"}/>
+            {
+                !addSchoolVisible &&
+                <AddItemButton text={"Добавить круг заклинаний"}
+                               onClick={() => setAddSchoolVisible(true)}
+                />}
 
 
             <Btn text={"Сохранить"} onClick={() => onSaveClicked()}/>

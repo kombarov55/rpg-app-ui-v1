@@ -6,6 +6,8 @@ import List from "../Common/List";
 import ListItemSmall from "../Common/ListItemSmall";
 import priceListToString from "../../util/priceListToString";
 import priceToString from "../../util/priceToString";
+import FormTitleLabel from "../Common/FormTitleLabel";
+import Btn from "../Common/Btn";
 
 export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
     constructor(props) {
@@ -21,6 +23,8 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
     render() {
         return (
             <div>
+                <FormTitleLabel text={"Стоимость покупки заклинания:"}/>
+
                 <InputLabel text={"Количество заклинаний:"}/>
                 <input
                     name={"spellCount"}
@@ -28,14 +32,14 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
                     onChange={e => this.setState({spellCount: e.target.value})}
                 />
 
-                <List noItemsText={"Стоимость не указана"}
+                <InputLabel text={"Цена:"}/>
+                <List noItemsText={"Цены не указаны"}
                       values={this.state.prices.map(price => <ListItemSmall left={priceToString(price)}/>)}
                 />
-
-                <InputLabel text={"Стоимость:"}/>
                 <PriceInput currencies={["Золото", "Серебро", "Опыт"]}
-                            onSubmit={price => this.onPriceSubmitted(price)} />
-                <AddItemButton text={"Добавить"} onClick={() => this.onSaveClicked()}/>
+                            onSubmit={price => this.onPriceSubmitted(price)}
+                />
+                <Btn text={"Сохранить"} onClick={() => this.onSaveClicked()}/>
             </div>
         )
     }

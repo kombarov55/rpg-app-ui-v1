@@ -69,6 +69,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            onChange={e => props.updateForm({description: e.target.value})}
             />
 
+            <InputLabel text={"Мин. заклинаний для перехода на сл. круг: "}/>
+            <input/>
+
+            <InputLabel text={"Стоимость покупки школы: "}/>
+            <List noItemsText={"Пусто"}/>
+            <PriceInput currencies={["Серебро", "Золото", "Опыт"]}/>
+
             <InputLabel text={"Круги заклинаний:"}/>
             <List noItemsText={"Нет кругов заклинаний"}/>
 

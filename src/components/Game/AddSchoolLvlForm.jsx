@@ -10,6 +10,7 @@ import SpellCreationView from "./View/SpellCreationView";
 import {ListItem} from "uikit-react";
 import ListItemSmall from "../Common/ListItemSmall";
 import priceCombinationListToString from "../../util/priceCombinationListToString";
+import ListItemSmallDeletable from "../Common/ListItemSmallDeletable";
 
 export default class AddSchoolLvlForm extends React.PureComponent {
     constructor(props) {
@@ -54,13 +55,16 @@ export default class AddSchoolLvlForm extends React.PureComponent {
                 <InputLabel text={"Стоимость заклинаний:"}/>
                 <List noItemsText={"Не указана"}
                       values={this.state.schoolLvlUpgradePriceCombinations.map(schoolLvlUpgradePriceCombination =>
-                          <ListItemSmall
-                              left={schoolLvlUpgradePriceCombination.spellCount + " заклинаний: " + priceCombinationListToString(schoolLvlUpgradePriceCombination.priceCombinationList)}
+                          <ListItemSmallDeletable
+                              text={schoolLvlUpgradePriceCombination.spellCount + " заклинаний: " + priceCombinationListToString(schoolLvlUpgradePriceCombination.priceCombinationList)}
+                              onDelete={() => this.setState(state => ({
+                                  schoolLvlUpgradePriceCombinations: this.state.schoolLvlUpgradePriceCombinations.filter(it => it !== schoolLvlUpgradePriceCombination)
+                              }))}
                           />
                       )}
                 />
 
-                <SpellSchoolLvlUpgradePriceForm onSubmit={data => this.setState(state => ({
+                <SpellSchoolLvlUpgradePriceForm spellCount={this.state.schoolLvlUpgradePriceCombinations.length} onSubmit={data => this.setState(state => ({
                     schoolLvlUpgradePriceCombinations: this.state.schoolLvlUpgradePriceCombinations.concat(data)
                 }))}/>
             </div>

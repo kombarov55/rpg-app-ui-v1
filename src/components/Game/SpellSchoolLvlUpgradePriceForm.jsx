@@ -27,12 +27,7 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
             <div>
                 <FormTitleLabel text={"Стоимость покупки заклинания:"}/>
 
-                <InputLabel text={"Количество заклинаний:"}/>
-                <input
-                    name={"spellCount"}
-                    value={this.state.spellCount}
-                    onChange={e => this.setState({spellCount: e.target.value})}
-                />
+                <InputLabel text={"При " + this.props.spellCount + " выученном заклинании"}/>
 
                 <InputLabel text={"Варианты цен:"}/>
                 <List noItemsText={"Цены не указаны"}
@@ -49,12 +44,11 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
     onSaveClicked() {
         if (this.state.priceCombinationList.length === 0) return
 
-        this.props.onSubmit(this.state)
+        this.props.onSubmit(Object.assign({}, this.state, {spellCount: this.props.spellCount}))
         this.setState(this.initialState)
     }
 
     onPriceSubmitted(priceCombination) {
-        console.log(priceCombination)
         this.setState(state => ({priceCombinationList: state.priceCombinationList.concat([priceCombination])}))
     }
 }

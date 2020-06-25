@@ -12,6 +12,10 @@ import List from "../Common/List";
 import InnerFormStyle from "../../styles/InnerFormStyle";
 import CenterPlusButton from "../Common/CenterPlusButton";
 import ListItemExpand from "./ListItemExpand";
+import {Input} from "uikit-react";
+import PriceInput from "../Common/PriceInput";
+import SpellSchoolLvlUpgradePriceForm from "./SpellSchoolLvlUpgradePriceForm";
+import FormTitleLabel from "../Common/FormTitleLabel";
 
 function mapStateToProps(state) {
     return {
@@ -68,6 +72,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             <InputLabel text={"Круги заклинаний:"}/>
             <List noItemsText={"Нет кругов заклинаний"}/>
+
+            <FormTitleLabel text={"Создание круга заклинаний:"}/>
+
             <div style={InnerFormStyle}>
                 <InputLabel text={"1 круг:"}/>
                 <InputLabel text={"Заклинания:"}/>
@@ -83,8 +90,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <CenterPlusButton onClick={() => onAddSpellClicked()}/>
 
                 <InputLabel text={"Стоимость заклинаний:"}/>
+                <List noItemsText={"Не указана"}/>
+
+                <SpellSchoolLvlUpgradePriceForm onSubmit={data => console.log(data)}/>
+
             </div>
+
             <AddItemButton text={"Добавить круг заклинаний"}/>
+
 
             <Btn text={"Сохранить"} onClick={() => onSaveClicked()}/>
             <Btn text={"Назад"} onClick={() => onBackClicked()}/>

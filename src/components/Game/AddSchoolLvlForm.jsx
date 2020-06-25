@@ -40,7 +40,7 @@ export default class AddSchoolLvlForm extends React.PureComponent {
                 />
                 {
                     this.state.addSpellFormVisible && <SpellCreationView
-                        onSubmit={data => console.log(data)}
+                        onSubmit={data => this.onaAddSpellFormSubmitted(data)}
                     />
                 }
                 {
@@ -59,6 +59,13 @@ export default class AddSchoolLvlForm extends React.PureComponent {
 
     onAddSpellClicked() {
         this.setState({addSpellFormVisible: true})
+    }
+
+    onaAddSpellFormSubmitted(data) {
+        this.setState(state => ({
+            spells: state.spells.concat(data),
+            addSpellFormVisible: false
+        }))
     }
 
 }

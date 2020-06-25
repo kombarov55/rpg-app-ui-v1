@@ -47,6 +47,8 @@ export default class PriceInput extends React.Component {
     }
 
     onSubmit() {
+        if (this.state.currencyToAmountList.length === 0) return
+
         this.props.onSubmit(this.state.currencyToAmountList)
         this.setState({currencyToAmountList: []})
     }

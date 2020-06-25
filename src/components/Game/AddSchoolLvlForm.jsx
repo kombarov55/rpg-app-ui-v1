@@ -7,6 +7,9 @@ import SpellSchoolLvlUpgradePriceForm from "./SpellSchoolLvlUpgradePriceForm";
 import InnerFormStyle from "../../styles/InnerFormStyle";
 import AddItemButton from "../Common/AddItemButton";
 import SpellCreationView from "./View/SpellCreationView";
+import {ListItem} from "uikit-react";
+import ListItemSmall from "../Common/ListItemSmall";
+import priceCombinationListToString from "../../util/priceCombinationListToString";
 
 export default class AddSchoolLvlForm extends React.PureComponent {
     constructor(props) {
@@ -49,7 +52,13 @@ export default class AddSchoolLvlForm extends React.PureComponent {
 
 
                 <InputLabel text={"Стоимость заклинаний:"}/>
-                <List noItemsText={"Не указана"}/>
+                <List noItemsText={"Не указана"}
+                      values={this.state.schoolLvlUpgradePriceCombinations.map(schoolLvlUpgradePriceCombination =>
+                          <ListItemSmall
+                              left={schoolLvlUpgradePriceCombination.spellCount + " заклинаний: " + priceCombinationListToString(schoolLvlUpgradePriceCombination.priceCombinationList)}
+                          />
+                      )}
+                />
 
                 <SpellSchoolLvlUpgradePriceForm onSubmit={data => this.setState(state => ({
                     schoolLvlUpgradePriceCombinations: this.state.schoolLvlUpgradePriceCombinations.concat(data)

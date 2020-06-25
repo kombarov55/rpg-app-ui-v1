@@ -47,6 +47,8 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
     }
 
     onSaveClicked() {
+        if (this.state.priceCombinationList.length === 0) return
+
         this.props.onSubmit(this.state)
         this.setState(this.initialState)
     }

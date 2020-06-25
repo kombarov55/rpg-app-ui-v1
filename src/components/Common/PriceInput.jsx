@@ -1,5 +1,6 @@
 import React from "react";
 import CenterPlusButton from "./CenterPlusButton";
+import IsNumeric from "../../util/IsNumeric";
 
 /**
  * onSubmit: [{ name: String, amount: Long }]
@@ -8,7 +9,7 @@ export default class PriceInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currencyToAmountList: []
+            prices: []
         }
     }
 
@@ -27,7 +28,7 @@ export default class PriceInput extends React.Component {
     }
 
     upgradeOptionFormValue(name) {
-        const x = this.state.currencyToAmountList.find(it => it.name === name)
+        const x = this.state.prices.find(it => it.name === name)
 
         if (x != null) {
             return x.amount
@@ -38,19 +39,19 @@ export default class PriceInput extends React.Component {
 
     onOptionValueChanged(name, value) {
         this.setState({
-            currencyToAmountList:
-                this.state
-                    .currencyToAmountList
+            prices:
+                this.state.prices
                     .filter(it => it.name !== name)
                     .concat({name: name, amount: value})
         })
     }
 
     onSubmit() {
-        if (this.state.currencyToAmountList.length === 0) return
+        if (this.state.prices.length === 0) return
+        if (this.state.prices.some(it => !IsNumeric(it.amount))) return
 
-        this.props.onSubmit(this.state.currencyToAmountList)
-        this.setState({currencyToAmountList: []})
+        this.props.onSubmit(this.state.prices)
+        this.setState({prices: []})
     }
 
 }

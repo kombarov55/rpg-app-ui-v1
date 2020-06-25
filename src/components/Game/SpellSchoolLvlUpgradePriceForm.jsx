@@ -27,7 +27,7 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
             <div>
                 <FormTitleLabel text={"Стоимость покупки заклинания:"}/>
 
-                <InputLabel text={"При " + this.props.spellCount + " выученном заклинании"}/>
+                <InputLabel text={this.props.spellCount + " заклинаний выучено"}/>
 
                 <InputLabel text={"Варианты цен:"}/>
                 <List noItemsText={"Цены не указаны"}

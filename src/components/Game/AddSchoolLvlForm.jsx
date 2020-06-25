@@ -7,6 +7,7 @@ import ListItemExpand from "./ListItemExpand";
 import SpellSchoolLvlUpgradePriceForm from "./SpellSchoolLvlUpgradePriceForm";
 import InnerFormStyle from "../../styles/InnerFormStyle";
 import {spellCreationView} from "../../Views";
+import AddItemButton from "../Common/AddItemButton";
 
 export default class AddSchoolLvlForm extends React.PureComponent {
     constructor(props) {
@@ -35,7 +36,7 @@ export default class AddSchoolLvlForm extends React.PureComponent {
                               />
                           )}
                     />
-                    <CenterPlusButton onClick={() => this.onAddSpellClicked()}/>
+                    <AddItemButton text={"Добавить заклинание"} onClick={() => this.onAddSpellClicked()}/>
 
                     <InputLabel text={"Стоимость заклинаний:"}/>
                     <List noItemsText={"Не указана"}/>

@@ -38,12 +38,20 @@ export default class PriceInput extends React.Component {
     }
 
     onOptionValueChanged(name, value) {
-        this.setState({
-            prices:
-                this.state.prices
-                    .filter(it => it.name !== name)
-                    .concat({name: name, amount: value})
-        })
+        if (value === "") {
+            this.setState({
+                prices:
+                    this.state.prices
+                        .filter(it => it.name !== name)
+            })
+        } else {
+            this.setState({
+                prices:
+                    this.state.prices
+                        .filter(it => it.name !== name)
+                        .concat({name: name, amount: value})
+            })
+        }
     }
 
     onSubmit() {

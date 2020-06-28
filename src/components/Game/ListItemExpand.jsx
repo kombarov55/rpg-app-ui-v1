@@ -16,8 +16,10 @@ export default class ListItemExpand extends React.Component {
         return (
             <div style={containerStyle} onClick={() => this.onClick()}>
                 <div style={innerHorizontalStyle}>
-                    <img style={imgStyle}
-                         src={this.props.img}/>
+                    {
+                        this.props.img &&
+                        <img style={imgStyle} src={this.props.img}/>
+                    }
                     <div style={nameStyle}>{this.props.name}</div>
                 </div>
                 {this.state.expand &&

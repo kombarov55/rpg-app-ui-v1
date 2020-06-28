@@ -41,10 +41,12 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSkillCategoryFormSubmit() {
-        props.changeView(Globals.skillCategoryFormMode === SkillCategoryFormMode.CREATE ?
-            gameCreationView :
-            gameEditView
-        )
+        console.log(props.skillCategoryForm)
+
+        // props.changeView(Globals.skillCategoryFormMode === SkillCategoryFormMode.CREATE ?
+        //     gameCreationView :
+        //     gameEditView
+        // )
     }
 
     function onAddSkillClicked() {

@@ -12,7 +12,8 @@ import List from "../Common/List";
 import PriceInput from "../Common/PriceInput";
 import AddSchoolLvlForm from "./AddSchoolLvlForm";
 import priceCombinationToString from "../../util/priceCombinationToString";
-import ListItemSmall from "../Common/ListItemSmall";
+import ListItemSmallDeletable from "../Common/ListItemSmallDeletable";
+import ListItemExpand from "./ListItemExpand";
 
 function mapStateToProps(state) {
     return {
@@ -41,6 +42,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(skillCategoryFormView)
     }
 
+    function onSchoolLvlFormSubmitted(schoolLvl) {
+        props.updateForm({
+            schoolLvls: props.form.schoolLvls.concat(schoolLvl)
+        })
+        setAddSchoolVisible(false)
+    }
+
     const [addSchoolVisible, setAddSchoolVisible] = useState(false)
 
     return (
@@ -66,13 +74,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
 
             <InputLabel text={"Мин. заклинаний для перехода на сл. круг: "}/>
-            <input/>
+            <input value={props.form.minSpellCountToUpgrade}
+                   onChange={e => props.updateForm({minSpellCountToUpgrade: e.target.value})}
+            />
 
             <InputLabel text={"Варианты покупки школы: "}/>
             <List noItemsText={"Пусто"}
                   values={
                       props.form.purchasePriceCombinations.map(priceCombination =>
-                          <ListItemSmall left={priceCombinationToString(priceCombination)}/>
+                          <ListItemSmallDeletable
+                              text={priceCombinationToString(priceCombination)}
+                              onDelete={() => props.updateForm({
+                                  purchasePriceCombinations: props.form.purchasePriceCombinations.filter(it => it !== priceCombination)
+                              })}
+                          />
                       )}
             />
             <PriceInput currencies={["Серебро", "Золото", "Опыт"]}
@@ -82,10 +97,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             />
 
             <InputLabel text={"Круги заклинаний:"}/>
-            <List noItemsText={"Нет кругов заклинаний"}/>
+            <List noItemsText={"Нет кругов заклинаний"}
+                  values={props.form.schoolLvls.map((schoolLvl, i) =>
+                      <ListItemExpand
+                          name={(i + 1) + " круг:"}
+                          description={"Заклинания:"}
+                          bullets={schoolLvl.spells.map(spell => spell.name)}
+                      />)}
+            />
 
             {
-                addSchoolVisible && <AddSchoolLvlForm/>
+                addSchoolVisible &&
+                <AddSchoolLvlForm
+                    lvl={props.form.schoolLvls.length + 1}
+                    onSubmit={form => onSchoolLvlFormSubmitted(form)}
+                />
             }
 
             {

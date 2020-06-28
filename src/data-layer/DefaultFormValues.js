@@ -83,8 +83,8 @@ export default {
         name: "",
         img: "",
         description: "",
-        spells: [],
-        purchasePriceCombinations: [],
-        upgradePriceCombinations: []
+        minSpellCountToUpgrade: 3,
+        schoolLvls: [],
+        purchasePriceCombinations: []
     }
 }

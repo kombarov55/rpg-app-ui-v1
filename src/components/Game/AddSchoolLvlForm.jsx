@@ -7,10 +7,9 @@ import SpellSchoolLvlUpgradePriceForm from "./SpellSchoolLvlUpgradePriceForm";
 import InnerFormStyle from "../../styles/InnerFormStyle";
 import AddItemButton from "../Common/AddItemButton";
 import SpellCreationView from "./View/SpellCreationView";
-import {ListItem} from "uikit-react";
-import ListItemSmall from "../Common/ListItemSmall";
 import priceCombinationListToString from "../../util/priceCombinationListToString";
 import ListItemSmallDeletable from "../Common/ListItemSmallDeletable";
+import Btn from "../Common/Btn";
 
 export default class AddSchoolLvlForm extends React.PureComponent {
     constructor(props) {
@@ -30,7 +29,7 @@ export default class AddSchoolLvlForm extends React.PureComponent {
             <div style={InnerFormStyle}>
                 <FormTitleLabel text={"Создание круга заклинаний:"}/>
 
-                <InputLabel text={"1 круг:"}/>
+                <InputLabel text={this.props.lvl + " круг:"}/>
                 <InputLabel text={"Заклинания:"}/>
                 <List noItemsText={"Нет заклинаний"}
                       values={this.state.spells.map(spell =>
@@ -67,6 +66,8 @@ export default class AddSchoolLvlForm extends React.PureComponent {
                 <SpellSchoolLvlUpgradePriceForm spellCount={this.state.schoolLvlUpgradePriceCombinations.length} onSubmit={data => this.setState(state => ({
                     schoolLvlUpgradePriceCombinations: this.state.schoolLvlUpgradePriceCombinations.concat(data)
                 }))}/>
+
+                <Btn text={"Сохранить круг заклинаний"} onClick={() => this.onSubmit()}/>
             </div>
         )
     }
@@ -80,6 +81,15 @@ export default class AddSchoolLvlForm extends React.PureComponent {
             spells: state.spells.concat(data),
             addSpellFormVisible: false
         }))
+    }
+
+    onSubmit() {
+        const result = Object.assign({}, this.state, {
+            lvl: this.props.lvl
+        })
+
+        this.props.onSubmit(result)
+        this.setState(this.initialState)
     }
 
 }

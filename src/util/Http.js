@@ -48,16 +48,21 @@ export function httpDelete(url, onSuccess) {
 }
 
 
-export function patch(url, body, onSuccess) {
+export function patch(url, body, onSuccess, onFailure) {
+    const onSuccessCallback = getOrDefault(onSuccess, () => {})
+    const onFailureCallback = getOrDefault(onFailure, () => {})
+
     const xhr = new XMLHttpRequest()
     xhr.open("PATCH", url, true)
     xhr.setRequestHeader("Authorization", "Bearer " + Globals.authToken)
     xhr.setRequestHeader("Content-Type", "application/json")
-    xhr.send(body)
+    xhr.send(JSON.stringify(body))
 
-    if (onSuccess != null) {
-        xhr.onload = function () {
-            onSuccess(parseResponse(xhr.responseText))
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            onSuccessCallback(parseResponse(xhr.responseText))
+        } else {
+            onFailureCallback()
         }
     }
 }

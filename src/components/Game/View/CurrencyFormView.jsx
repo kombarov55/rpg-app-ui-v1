@@ -6,9 +6,10 @@ import {changeView, updateActiveGame} from "../../../data-layer/ActionCreators";
 import {gameView} from "../../../Views";
 import IsNumeric from "../../../util/IsNumeric";
 import SubmitButton from "../../Common/SubmitButton";
-import {post, put} from "../../../util/Http";
-import {saveCurrencyUrl} from "../../../util/Parameters";
+import {patch, post} from "../../../util/Http";
+import {saveCurrencyUrl, updateCurrencyUrl} from "../../../util/Parameters";
 import FormType from "../../../data-layer/enums/FormType";
+import Btn from "../../Common/Btn";
 
 function mapStateToProps(state) {
     return {
@@ -65,6 +66,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class CurrencyFormVi
                         this.onEditClicked()
                     }
                 />
+
+                <Btn text={"Назад"} onClick={() => this.props.toPrevView()} />
             </div>
         )
     }
@@ -86,7 +89,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class CurrencyFormVi
     onEditClicked() {
         if (!IsNumeric(this.state.priceInActivityPoints)) return
 
-        put(saveCurrencyUrl(this.props.activeGame.id), this.state, rs => {
+        patch(updateCurrencyUrl(this.props.activeGame.id, this.state.id), this.state, rs => {
             this.props.growl.show({severity: "info", summary: "Валюта обновлена"})
             this.props.updateActiveGame({
                 currencies: this.props.activeGame.currencies.filter(it => it.id !== rs.id).concat(rs)

@@ -1,6 +1,7 @@
 import Globals from "./Globals";
 import {uploadUrl} from "./Parameters";
 import axios from "axios"
+import getOrDefault from "./getOrDefault";
 
 export function get(url, onSuccess) {
     const xhr = new XMLHttpRequest()
@@ -61,16 +62,21 @@ export function patch(url, body, onSuccess) {
     }
 }
 
-export function put(url, body, onSuccess) {
+export function put(url, body, onSuccess, onFailure) {
+    const onSuccessCallback = getOrDefault(onSuccess, () => {})
+    const onFailureCallback = getOrDefault(onFailure, () => {})
+
     const xhr = new XMLHttpRequest()
     xhr.open("PUT", url, true)
     xhr.setRequestHeader("Authorization", "Bearer " + Globals.authToken)
     xhr.setRequestHeader("Content-Type", "application/json")
     xhr.send(JSON.stringify(body))
 
-    if (onSuccess != null) {
-        xhr.onload = function () {
-            onSuccess(parseResponse(xhr.responseText))
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            onSuccessCallback(parseResponse(xhr.responseText))
+        } else {
+            onFailureCallback()
         }
     }
 }

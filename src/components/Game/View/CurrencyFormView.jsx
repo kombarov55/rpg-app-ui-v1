@@ -6,11 +6,13 @@ import {changeView, updateActiveGame} from "../../../data-layer/ActionCreators";
 import {gameView} from "../../../Views";
 import IsNumeric from "../../../util/IsNumeric";
 import SubmitButton from "../../Common/SubmitButton";
-import {post} from "../../../util/Http";
+import {post, put} from "../../../util/Http";
 import {saveCurrencyUrl} from "../../../util/Parameters";
+import FormType from "../../../data-layer/enums/FormType";
 
 function mapStateToProps(state) {
     return {
+        params: state.changeViewParams,
         activeGame: state.activeGame,
         growl: state.growl
     }
@@ -23,11 +25,19 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(class CurrencyCreationView extends React.Component {
+export default connect(mapStateToProps, mapDispatchToProps)(class CurrencyFormView extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = this.initialState
+
+        console.log(props.params)
+
+        const {formType, formState} = props.params
+
+        this.formType = formType
+        this.state = formType === FormType.CREATE ?
+            this.initialState :
+            formState
     }
 
     initialState = {
@@ -50,7 +60,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(class CurrencyCreati
                 />
                 <SubmitButton
                     text={"Сохранить"}
-                    onClick={() => this.onSaveClicked()}
+                    onClick={() => this.formType === FormType.CREATE ?
+                        this.onSaveClicked() :
+                        this.onEditClicked()
+                    }
                 />
             </div>
         )
@@ -65,6 +78,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(class CurrencyCreati
                 currencies: this.props.activeGame.currencies.concat(rs)
             })
         }, () => this.props.growl.show({severity: "error", summary: "Валюта добавлена"}))
+
+        this.setState(this.initialState)
+        this.props.toPrevView()
+    }
+
+    onEditClicked() {
+        if (!IsNumeric(this.state.priceInActivityPoints)) return
+
+        put(saveCurrencyUrl(this.props.activeGame.id), this.state, rs => {
+            this.props.growl.show({severity: "info", summary: "Валюта обновлена"})
+            this.props.updateActiveGame({
+                currencies: this.props.activeGame.currencies.filter(it => it.id !== rs.id).concat(rs)
+            })
+        }, () => this.props.growl.show({
+            severity: "error",
+            summary: "Ошибка при добавлении валюты. Обратитесь к администратору"
+        }))
 
         this.setState(this.initialState)
         this.props.toPrevView()

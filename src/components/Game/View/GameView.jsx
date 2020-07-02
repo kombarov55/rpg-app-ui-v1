@@ -9,11 +9,11 @@ import {
 } from "../../../data-layer/ActionCreators";
 import {
     adminPageView,
-    conversionView, currencyCreationView,
+    conversionView,
+    currencyFormView,
     gameEditView,
     networkView,
     questionnaireRulesView,
-    skillsView,
     subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
@@ -25,11 +25,8 @@ import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 import QuestionnaireTemplateFormMode from "../../../data-layer/enums/QuestionnaireTemplateFormMode";
 import List from "../../Common/List";
-import ListItemSmallDeletable from "../../Common/ListItemSmallDeletable";
-import FormTitleLabel from "../../Common/FormTitleLabel";
-import {FormLabel} from "uikit-react";
-import InputLabel from "../../Common/InputLabel";
-import AddItemButton from "../../Common/AddItemButton";
+import ListItemSmallEditable from "../../Common/ListItemSmallEditable";
+import FormType from "../../../data-layer/enums/FormType";
 
 function mapStateToProps(state, props) {
     return {
@@ -39,9 +36,9 @@ function mapStateToProps(state, props) {
     }
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapDispatchToProps(dispatch) {
     return {
-        changeView: view => dispatch(changeView(view)),
+        changeView: (view, params = {}) => dispatch(changeView(view, params)),
         setGames: games => dispatch(setGames(games)),
         updateGameForm: game => dispatch(updateGameForm(game)),
         updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue)),
@@ -93,7 +90,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onAddCurrencyClicked() {
-        props.changeView(currencyCreationView)
+        props.changeView(currencyFormView, {
+            formType: FormType.CREATE
+        })
+    }
+
+    function onEditCurrencyClicked(currency) {
+        props.changeView(currencyFormView, {
+            formType: FormType.EDIT,
+            formState: currency
+        })
     }
 
     return (
@@ -109,7 +115,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <List title={"Валюты: (макс. 3)"}
                       noItemsText={"Нет валют"}
                       values={props.activeGame.currencies.map(currency =>
-                          <ListItemSmallDeletable text={currency.name}/>
+                          <ListItemSmallEditable text={currency.name}
+                                                 onEditClicked={() => onEditCurrencyClicked(currency)}
+                          />
                       )}
                       addButtonVisible={props.activeGame.currencies.length < 3}
                       onAddClicked={() => onAddCurrencyClicked()}

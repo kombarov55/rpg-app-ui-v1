@@ -32,7 +32,7 @@ import ConversionView from "./components/Game/View/ConversionView";
 import SkillCategoryForm from "./components/Game/SkillCategoryForm";
 import SpellSchoolCreationView from "./components/Game/SpellSchoolCreationView";
 import SpellCreationView from "./components/Game/View/SpellCreationView";
-import CurrencyCreationView from "./components/Game/View/CurrencyCreationView";
+import CurrencyCreationView from "./components/Game/View/CurrencyFormView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -79,4 +79,4 @@ export const conversionView = {component: <ConversionView/>, label: "Обмен 
 export const spellSchoolCreationView = {component: <SpellSchoolCreationView/>, label: "Создание школы навыка"}
 export const spellCreationView = {component: <SpellCreationView/>, label: "Создание заклинания"}
 
-export const currencyCreationView = {component: <CurrencyCreationView/>, label: "Создание валюты"}
+export const currencyFormView = {component: <CurrencyCreationView/>, label: "Валюта"}

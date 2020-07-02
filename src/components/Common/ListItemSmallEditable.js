@@ -7,7 +7,7 @@ export default class ListItemSmallEditable extends React.PureComponent {
         return (
             <ListItemSmall
                 left={this.props.text}
-                right={<Icon className={"pi pi-pencil"} onClick={(() => this.props.onEdit())}/>}
+                right={<Icon className={"pi pi-pencil"} onClick={(() => this.props.onEditClicked())}/>}
             />
         )
     }

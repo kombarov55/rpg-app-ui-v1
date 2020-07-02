@@ -45,11 +45,12 @@ import {
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
-export function changeView(nextView = announcementView) {
+export function changeView(nextView = announcementView, params = {}) {
     return {
         type: CHANGE_VIEW,
         payload: {
-            nextView: nextView
+            nextView: nextView,
+            params: params
         }
     }
 }

@@ -23,7 +23,6 @@ import {
     ADD_MESSAGES,
     TOGGLE_RESPOND_ANNOUNCEMENT,
     SET_GROWL,
-    SHOW_GROWL,
     UPDATE_NETWORK_FORM,
     SET_NETWORKS,
     SET_ACTIVE_NETWORK,
@@ -55,7 +54,8 @@ export function rootReducer(state = initialState, action) {
 
         case CHANGE_VIEW:
             return Object.assign({}, state, {
-                currentView: action.payload.nextView
+                currentView: action.payload.nextView,
+                changeViewParams: action.payload.params
             })
 
         case TOGGLE_SIDEBAR:

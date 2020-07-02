@@ -2,30 +2,34 @@ import React from "react";
 import {connect} from "react-redux";
 import {
     changeView,
-    setActiveGame,
-    setGames, updateActiveGame,
+    setGames,
+    updateActiveGame,
     updateGameForm,
     updateQuestionnaireTemplateForm
 } from "../../../data-layer/ActionCreators";
 import {
     adminPageView,
+    conversionView,
     gameEditView,
-    networkView, questionnaireTemplateEditView,
+    networkView,
     questionnaireRulesView,
-    skillsView, subnetworkView, conversionView
+    skillsView,
+    subnetworkView
 } from "../../../Views";
-import {get, httpDelete} from "../../../util/Http";
-import {deleteGameUrl, questionnaireTemplateByIdUrl, questionnaireTemplateRestoreUrl} from "../../../util/Parameters";
+import {httpDelete} from "../../../util/Http";
+import {deleteGameUrl} from "../../../util/Parameters";
 import Btn from "../../Common/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
-import HorizontalListItem from "../../Common/HorizontalListItem";
-import Label from "../../Common/Label";
-import RestoreLabel from "../../Common/RestoreLabel";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 import QuestionnaireTemplateFormMode from "../../../data-layer/enums/QuestionnaireTemplateFormMode";
-import NoItemsLabel from "../../Common/NoItemsLabel";
+import List from "../../Common/List";
+import ListItemSmallDeletable from "../../Common/ListItemSmallDeletable";
+import FormTitleLabel from "../../Common/FormTitleLabel";
+import {FormLabel} from "uikit-react";
+import InputLabel from "../../Common/InputLabel";
+import AddItemButton from "../../Common/AddItemButton";
 
 function mapStateToProps(state, props) {
     return {
@@ -47,41 +51,6 @@ function mapDispatchToProps(dispatch, props) {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
-
-    function onQuestionnaireTemplateEditClicked(questionnaireTemplate) {
-        Globals.questionnaireTemplateFormMode = QuestionnaireTemplateFormMode.EDIT
-        Preload.questionnaireTemplateEditView(questionnaireTemplate.id)
-        props.changeView(questionnaireTemplateEditView)
-    }
-
-    function onQuestionnaireTemplateDeleteClicked(questionnaireTemplate) {
-        httpDelete(questionnaireTemplateByIdUrl(questionnaireTemplate.id))
-        const updatedList = props.activeGame.questionnaireTemplates.slice()
-
-        updatedList
-            .find(it => it.id === questionnaireTemplate.id)
-            .deleted = true
-
-        props.updateActiveGame({
-            questionnaireTemplates: updatedList
-        })
-        props.growl.show({severity: "info", summary: "Шаблон анкеты удалён"})
-    }
-
-    function onQuestionnaireTemplateRestoreClicked(questionnaireTemplate) {
-        get(questionnaireTemplateRestoreUrl(questionnaireTemplate.id))
-        const updatedList = props.activeGame.questionnaireTemplates.slice()
-
-        updatedList
-            .find(it => it.id === questionnaireTemplate.id)
-            .deleted = false
-
-        props.updateActiveGame({
-            questionnaireTemplates: updatedList
-        })
-
-        props.growl.show({severity: "info", summary: "Шаблон анкеты восстановлен"})
-    }
 
     function onEditClicked() {
         props.updateGameForm(props.activeGame)
@@ -118,10 +87,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(questionnaireRulesView)
     }
 
-    function onSkillViewClicked() {
-        props.changeView(skillsView)
-    }
-
     function onConversionClicked() {
         Preload.conversionView(props.activeGame.id)
         props.changeView(conversionView)
@@ -137,10 +102,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <div className={"game-description"}>{props.activeGame.description}</div>
                 <div className={"game-description"}><a href={props.activeGame.groupLink}>Ссылка на группу</a></div>
 
+                <List title={"Валюты:"}
+                      noItemsText={"Нет валют"}
+                      values={props.activeGame.currencies.map(currency =>
+                          <ListItemSmallDeletable text={currency.name}/>
+                      )}
+                />
+
+                <List title={"Категории навыков:"}
+                      noItemsText={"Нет категорий навыков"}
+                />
+
                 <div className={"game-view-button-group"}>
                     <Btn text={"Присоединиться к игре"}/>
                     <Btn text={"Создать шаблон анкеты"} onClick={() => onAddQuestionnaireTemplateClicked()}/>
-                    <Btn text={"Навыки"} onClick={() => onSkillViewClicked()}/>
                     <Btn text={"Настройки обмена валют"} onClick={() => onConversionClicked()}/>
                     <Btn text={"Редактировать"} onClick={() => onEditClicked()}/>
                     <Btn text={"Удалить"} onClick={() => onDeleteClicked()}/>

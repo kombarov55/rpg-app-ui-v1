@@ -1,5 +1,6 @@
 import React from "react";
 import NoItemsLabel from "./NoItemsLabel";
+import CenterPlusButton from "./CenterPlusButton";
 
 export default function (props) {
     return (
@@ -12,6 +13,7 @@ export default function (props) {
                         props.values
                 }
             </div>
+            <CenterPlusButton/>
         </div>
     )
 }

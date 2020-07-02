@@ -130,14 +130,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputLabel text={"Картинка:"}/>
             <input type={"file"}
                    name={"img"}
-                   ref={register({required: true})}
+                   // ref={register({required: true})}
+                   ref={register()}
                    onChange={e => onImgFileChange(e)}/>
             <div className={"error-label"}>{errors.img && "Загрузите картинку"}</div>
 
             <InputLabel text={"Фон:"}/>
             <input type={"file"}
                    name={"background"}
-                   ref={register({required: true})}
+                   // ref={register({required: true})}
+                   ref={register()}
                    onChange={e => onBackgroundFileChange(e)}/>
             <div className={"error-label"}>{errors.background && "Загрузите фон"}</div>
 
@@ -147,40 +149,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            value={props.gameForm.description}
                            onChange={e => props.updateGameForm({description: e.target.value})}
             />
-            <InputLabel text={"Валюта: (макс. 3)"}/>
-            <div className={"list"}>
-                {props.gameForm.currencies.length === 0 ?
-                    <NoItemsLabel text={"Нет валют"}/> :
-                    props.gameForm.currencies.map(currency =>
-                        <ListItemSmall left={currency.name} right={currency.priceInActivityPoints}/>
-                    )
-                }
-            </div>
-            {
-                currencyFormVisible &&
-                <CurrencyForm
-                    onSubmit={() => onCurrencyFormSubmit()}
-                />
-            }
-            {
-                !currencyFormVisible && props.gameForm.currencies.length < 3 &&
-                <AddItemButton text={"Добавить валюту"} onClick={() => onAddCurrencyClicked()}/>
-            }
-
-            <InputLabel text={"Категории навыков:"}/>
-            <div className={"list"}>
-                {props.gameForm.skillCategories.length === 0 ?
-                    <NoItemsLabel text={"Нет категорий навыков"}/> :
-                    props.gameForm.skillCategories.map(skillCategory =>
-                        <HorizontalListItem
-                            name={skillCategory.name}
-                            description={skillCategory.description}
-                            imgSrc={skillCategory.img}
-                            onDelete={() => props.updateGameForm({skillCategories: props.gameForm.skillCategories.filter(it => it.name !== skillCategory.name)})}
-                        />)
-                }
-            </div>
-            <AddItemButton text={"Добавить категорию навыка"} onClick={() => onAddSkillCategoryClicked()}/>
 
             <input className={"network-creation-save-button"}
                    type={"submit"}

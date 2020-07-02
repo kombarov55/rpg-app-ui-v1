@@ -14,6 +14,7 @@ function saveAuthToken() {
     const userId = urlSearchParams.get("user_id")
     Globals.userId = userId == null ? "33167934" : userId
 
+
     return fetch(loginUrl, {
         method: "POST",
         headers: new Headers({

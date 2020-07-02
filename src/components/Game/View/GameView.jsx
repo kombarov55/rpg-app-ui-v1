@@ -136,25 +136,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <div className={"game-name"}>{props.activeGame.title}</div>
                 <div className={"game-description"}>{props.activeGame.description}</div>
                 <div className={"game-description"}><a href={props.activeGame.groupLink}>Ссылка на группу</a></div>
-                <Label text={"Шаблоны анкет:"}/>
-                {props.activeGame.questionnaireTemplates.length === 0 ?
-                    <NoItemsLabel text={"Нет шаблонов"}/> :
-                    props.activeGame.questionnaireTemplates.map(questionnaireTemplate =>
-                        questionnaireTemplate.deleted ?
-                            <RestoreLabel
-                                text={"Шаблон анкеты удалён"}
-                                onClick={() => onQuestionnaireTemplateRestoreClicked(questionnaireTemplate)}
-                            /> :
-                            <HorizontalListItem
-                                key={questionnaireTemplate.id}
-                                name={questionnaireTemplate.name}
-                                description={questionnaireTemplate.description}
-                                imgSrc={questionnaireTemplate.imgSrc !== "" ? questionnaireTemplate.imgSrc : "https://vignette.wikia.nocookie.net/the100/images/9/95/The100215_1620.jpg/revision/latest?cb=20180104191509&path-prefix=ru"}
-                                onClick={() => window.alert("not implemented")}
-                                onEdit={() => onQuestionnaireTemplateEditClicked(questionnaireTemplate)}
-                                onDelete={() => onQuestionnaireTemplateDeleteClicked(questionnaireTemplate)}
-                            />
-                    )}
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Присоединиться к игре"}/>

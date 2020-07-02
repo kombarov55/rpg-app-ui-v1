@@ -20,6 +20,7 @@ const listWrapperStyle = {
     display: "flex",
     flexDirection: "column",
 
+    margin: "1vmax 0",
     width: "100%"
 }
 

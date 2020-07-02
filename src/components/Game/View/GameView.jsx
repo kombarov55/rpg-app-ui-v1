@@ -13,7 +13,7 @@ import {
     currencyFormView,
     gameEditView,
     networkView,
-    questionnaireRulesView,
+    questionnaireRulesView, skillCategoryFormView,
     subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
@@ -102,6 +102,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onAddSkillCategoryClicked() {
+        props.changeView(skillCategoryFormView)
+    }
+
     return (
         <div className={"game-view"}>
             <div className={"game-info"}>
@@ -125,6 +129,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <List title={"Категории навыков:"}
                       noItemsText={"Нет категорий навыков"}
+                      addButtonVisible={true}
+                      onAddClicked={() => onAddSkillCategoryClicked()}
                 />
 
                 <div className={"game-view-button-group"}>

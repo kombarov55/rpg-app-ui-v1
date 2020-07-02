@@ -3,11 +3,11 @@ import {connect} from "react-redux";
 import InputLabel from "../Common/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
 import {SelectButton} from "primereact/selectbutton";
-import {changeView, updateGameForm, updateSkillCategoryForm} from "../../data-layer/ActionCreators";
-import {upload} from "../../util/Http";
-import {uploadServerUrl, uploadUrl} from "../../util/Parameters";
+import {changeView, updateActiveGame, updateGameForm, updateSkillCategoryForm} from "../../data-layer/ActionCreators";
+import {post, upload} from "../../util/Http";
+import {saveSkillCategory, uploadServerUrl, uploadUrl} from "../../util/Parameters";
 import {useForm} from "react-hook-form";
-import {gameCreationView, gameEditView, skillCreationView, spellSchoolCreationView} from "../../Views";
+import {gameCreationView, gameEditView, gameView, skillCreationView, spellSchoolCreationView} from "../../Views";
 import Globals from "../../util/Globals";
 import SkillCategoryFormMode from "../../data-layer/enums/SkillCategoryFormMode";
 import NoItemsLabel from "../Common/NoItemsLabel";
@@ -18,6 +18,7 @@ import List from "../Common/List";
 import ListItemExpand from "./ListItemExpand";
 import nonNullList from "../../util/nonNullList";
 import priceListToString from "../../util/priceCombinationListToString";
+import DefaultFormValues from "../../data-layer/DefaultFormValues";
 
 const formStyle = {
     width: "90%",
@@ -26,7 +27,9 @@ const formStyle = {
 
 function mapStateToProps(state) {
     return {
-        skillCategoryForm: state.skillCategoryForm
+        skillCategoryForm: state.skillCategoryForm,
+        activeGame: state.activeGame,
+        growl: state.growl
     }
 }
 
@@ -34,19 +37,24 @@ function mapDispatchToProps(dispatch) {
     return {
         updateSkillCategoryForm: fieldNameToValue => dispatch(updateSkillCategoryForm(fieldNameToValue)),
         updateGameForm: fieldNameToValue => dispatch(updateGameForm(fieldNameToValue)),
-        changeView: view => dispatch(changeView(view))
+        changeView: view => dispatch(changeView(view)),
+        updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue))
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
-    function onSkillCategoryFormSubmit() {
-        console.log(props.skillCategoryForm)
+    function onSaveClicked() {
+        post(saveSkillCategory(props.activeGame.id), props.skillCategoryForm, rs => {
+            props.updateActiveGame({skillCategories: props.activeGame.skillCategories.concat(props.skillCategoryForm)})
+            props.updateSkillCategoryForm(DefaultFormValues.skillCategoryForm)
+            props.growl.show({severity: "info", summary: "Категория создана."})
+        }, () => props.growl.show({
+            severity: "info",
+            summary: "Ошибка при создании категории навыка. Обратитесь к администратору."
+        }))
 
-        // props.changeView(Globals.skillCategoryFormMode === SkillCategoryFormMode.CREATE ?
-        //     gameCreationView :
-        //     gameEditView
-        // )
+        props.changeView(gameView)
     }
 
     function onAddSkillClicked() {
@@ -61,7 +69,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     return (
         <form style={formStyle}
-              onSubmit={handleSubmit(onSkillCategoryFormSubmit)}>
+              onSubmit={handleSubmit(onSaveClicked)}>
             <InputLabel text={"Название категории"}/>
             <input
                 name={"name"}

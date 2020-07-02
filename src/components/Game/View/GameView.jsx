@@ -9,7 +9,7 @@ import {
 } from "../../../data-layer/ActionCreators";
 import {
     adminPageView,
-    conversionView,
+    conversionView, currencyCreationView,
     gameEditView,
     networkView,
     questionnaireRulesView,
@@ -92,6 +92,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(conversionView)
     }
 
+    function onAddCurrencyClicked() {
+        props.changeView(currencyCreationView)
+    }
+
     return (
         <div className={"game-view"}>
             <div className={"game-info"}>
@@ -102,11 +106,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <div className={"game-description"}>{props.activeGame.description}</div>
                 <div className={"game-description"}><a href={props.activeGame.groupLink}>Ссылка на группу</a></div>
 
-                <List title={"Валюты:"}
+                <List title={"Валюты: (макс. 3)"}
                       noItemsText={"Нет валют"}
                       values={props.activeGame.currencies.map(currency =>
                           <ListItemSmallDeletable text={currency.name}/>
                       )}
+                      addButtonVisible={props.activeGame.currencies.length < 3}
+                      onAddClicked={() => onAddCurrencyClicked()}
                 />
 
                 <List title={"Категории навыков:"}

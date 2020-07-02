@@ -2,17 +2,24 @@ import React from "react";
 
 export default function (props) {
     return (
-        <input
-            style={{
-                borderRadius: "5px",
-                color: "white",
-                backgroundColor: "#592E83",
-                border: "0px",
-                padding: "1.5vmax 0",
-                margin: "1vmax 0",
-                fontSize: "1.8vmax"
-            }}
-            type={"submit"} value={props.text}
-        />
+        <div
+            style={style}
+            onClick={() => props.onClick()}
+        >
+            {props.text}
+        </div>
     )
+}
+
+const style = {
+    alignSelf: "center",
+
+    padding: "1vmax 0",
+    margin: "2.5vmax 0",
+    width: "100%",
+
+    textAlign: "center",
+    fontSize: "2.5vmax",
+
+    background: "#592e83"
 }

@@ -12,9 +12,9 @@ import NetworkSelectionView from "./components/Admin/Network/View/NetworkSelecti
 import NetworkView from "./components/Admin/Network/View/NetworkView";
 import SubnetworkView from "./components/Admin/Subnetwork/View/SubnetworkView";
 import GameView from "./components/Game/View/GameView";
-import QuestionnaireTemplateCreationView from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateCreationView";
+import QuestionnaireTemplateCreationView
+    from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateCreationView";
 import QuestionnaireRulesView from "./components/QuestionnaireTemplateCreation/View/QuestionnaireRulesView";
-import NetworkItem from "./components/Admin/NetworkItem";
 import NetworkCreationView from "./components/Admin/Network/View/NetworkCreationView";
 import SubnetworkCreationView from "./components/Admin/Subnetwork/View/SubnetworkCreationView";
 import GameCreationView from "./components/Game/View/GameCreationView";
@@ -26,12 +26,13 @@ import SkillItemForm from "./components/Game/View/SkillCreationView";
 import SkillEditView from "./components/Game/View/SkillEditView";
 import SkillSelectionView from "./components/QuestionnaireTemplateCreation/View/SkillSelectionView";
 import AdminPageView from "./components/Admin/View/AdminPageView";
-import Preload from "./util/Preload";
-import QuestionnaireTemplateEditView from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateEditView";
+import QuestionnaireTemplateEditView
+    from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateEditView";
 import ConversionView from "./components/Game/View/ConversionView";
 import SkillCategoryForm from "./components/Game/SkillCategoryForm";
 import SpellSchoolCreationView from "./components/Game/SpellSchoolCreationView";
 import SpellCreationView from "./components/Game/View/SpellCreationView";
+import CurrencyCreationView from "./components/Game/View/CurrencyCreationView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -77,3 +78,5 @@ export const conversionView = {component: <ConversionView/>, label: "Обмен 
 
 export const spellSchoolCreationView = {component: <SpellSchoolCreationView/>, label: "Создание школы навыка"}
 export const spellCreationView = {component: <SpellCreationView/>, label: "Создание заклинания"}
+
+export const currencyCreationView = {component: <CurrencyCreationView/>, label: "Создание валюты"}

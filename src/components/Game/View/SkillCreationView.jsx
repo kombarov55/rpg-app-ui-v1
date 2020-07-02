@@ -15,7 +15,7 @@ import Icon from "../../Common/Icon";
 import _ from "lodash"
 import Btn from "../../Common/Btn";
 import UpgradeView from "../LvlUpgradeView";
-import SubmitButton from "../../Common/SubmitButton";
+import SubmitButton from "../../Common/FormSubmitButton";
 import {skillCategoryFormView} from "../../../Views";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 

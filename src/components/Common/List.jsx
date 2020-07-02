@@ -3,6 +3,8 @@ import NoItemsLabel from "./NoItemsLabel";
 import CenterPlusButton from "./CenterPlusButton";
 
 export default function (props) {
+    const onAddClicked = props.onAddClicked == null ? () => {} : props.onAddClicked
+
     return (
         <div style={listWrapperStyle}>
             <div style={listTitleStyle}>{props.title}</div>
@@ -13,7 +15,11 @@ export default function (props) {
                         props.values
                 }
             </div>
-            <CenterPlusButton/>
+            {
+                props.addButtonVisible &&
+                <CenterPlusButton onClick={() => onAddClicked()} />
+            }
+
         </div>
     )
 }

@@ -14,16 +14,21 @@ export function get(url, onSuccess) {
     }
 }
 
-export function post(url, body, onSuccess) {
+export function post(url, body, onSuccess, onFailure) {
+    const onSuccessCallback = onSuccess == null ? () => {} : onSuccess
+    const onFailureCallback = onFailure == null ? () => {} : onFailure
+
     const xhr = new XMLHttpRequest()
     xhr.open("POST", url, true)
     xhr.setRequestHeader("Authorization", "Bearer " + Globals.authToken)
     xhr.setRequestHeader("Content-Type", "application/json")
     xhr.send(JSON.stringify(body))
 
-    if (onSuccess != null) {
-        xhr.onload = function () {
-            onSuccess(parseResponse(xhr.responseText))
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            onSuccessCallback(parseResponse(xhr.responseText))
+        } else {
+            onFailureCallback()
         }
     }
 }

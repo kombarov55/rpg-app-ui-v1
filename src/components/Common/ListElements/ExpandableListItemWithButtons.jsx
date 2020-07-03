@@ -2,6 +2,7 @@ import React from "react";
 import BulletList from "../Lists/BulletList";
 import ExpandableListItem from "./ExpandableListItem";
 import Btn from "../Buttons/Btn";
+import GreyButton from "../Buttons/GreyButton";
 
 export default class ExpandableListItemWithButtons extends React.Component {
 
@@ -12,7 +13,7 @@ export default class ExpandableListItemWithButtons extends React.Component {
                 name={this.props.name}
                 expandableElements={[
                     <div style={descriptionStyle}>{this.props.description}</div>,
-                    <Btn text={"Подробнее"}/>
+                    <GreyButton text={"Подробнее"}/>
                 ]}
             />
         )

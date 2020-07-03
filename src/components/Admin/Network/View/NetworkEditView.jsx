@@ -5,7 +5,7 @@ import {post, put, upload} from "../../../../util/Http";
 import {editNetworkUrl, networkUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
 import {networkSelectionView, networkView} from "../../../../Views";
 import {InputTextarea} from "primereact/inputtextarea";
-import InputLabel from "../../../Common/InputLabel";
+import InputLabel from "../../../Common/Labels/InputLabel";
 import {useForm} from "react-hook-form";
 
 function mapStateToProps(state, props) {

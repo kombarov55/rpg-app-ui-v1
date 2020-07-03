@@ -1,15 +1,15 @@
 import React from "react";
 import FormViewStyle from "../../../styles/FormViewStyle";
-import InputLabel from "../../Common/InputLabel";
+import InputLabel from "../../Common/Labels/InputLabel";
 import {connect} from "react-redux";
 import {changeView, updateActiveGame} from "../../../data-layer/ActionCreators";
 import {gameView} from "../../../Views";
 import IsNumeric from "../../../util/IsNumeric";
-import SubmitButton from "../../Common/SubmitButton";
+import SubmitButton from "../../Common/Buttons/SubmitButton";
 import {patch, post} from "../../../util/Http";
 import {saveCurrencyUrl, updateCurrencyUrl} from "../../../util/Parameters";
 import FormType from "../../../data-layer/enums/FormType";
-import Btn from "../../Common/Btn";
+import Btn from "../../Common/Buttons/Btn";
 
 function mapStateToProps(state) {
     return {

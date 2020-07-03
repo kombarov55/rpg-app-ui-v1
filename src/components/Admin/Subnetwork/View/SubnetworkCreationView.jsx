@@ -5,7 +5,7 @@ import {changeView, setSubnetworks, updateSubnetworkForm} from "../../../../data
 import {post, upload} from "../../../../util/Http";
 import {subnetworkUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
 import {networkView} from "../../../../Views";
-import InputLabel from "../../../Common/InputLabel";
+import InputLabel from "../../../Common/Labels/InputLabel";
 import {useForm} from "react-hook-form";
 
 function mapStateToProps(state, props) {

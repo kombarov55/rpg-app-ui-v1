@@ -1,7 +1,7 @@
 import React from "react";
-import copy from "../../util/updateObject";
-import getOrDefault from "../../util/getOrDefault";
-import CenterPlusButton from "./CenterPlusButton";
+import copy from "../../../util/updateObject";
+import getOrDefault from "../../../util/getOrDefault";
+import CenterPlusButton from "../Buttons/CenterPlusButton";
 
 export default class MultiCheckButtonGroup extends React.Component {
     constructor(props) {

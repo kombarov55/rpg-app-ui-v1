@@ -1,15 +1,15 @@
 import React from "react";
-import FormTitleLabel from "../Common/FormTitleLabel";
-import InputLabel from "../Common/InputLabel";
-import List from "../Common/List";
-import ListItemExpand from "./ListItemExpand";
+import FormTitleLabel from "../Common/Labels/FormTitleLabel";
+import InputLabel from "../Common/Labels/InputLabel";
+import List from "../Common/Lists/List";
+import ExpandableListItemWithBullets from "../Common/ListElements/ExpandableListItemWithBullets";
 import SpellSchoolLvlUpgradePriceForm from "./SpellSchoolLvlUpgradePriceForm";
 import InnerFormStyle from "../../styles/InnerFormStyle";
-import AddItemButton from "../Common/AddItemButton";
+import AddItemButton from "../Common/Buttons/AddItemButton";
 import SpellCreationView from "./View/SpellCreationView";
 import priceCombinationListToString from "../../util/priceCombinationListToString";
-import ListItemSmallDeletable from "../Common/ListItemSmallDeletable";
-import Btn from "../Common/Btn";
+import SmallDeletableListItem from "../Common/ListElements/SmallDeletableListItem";
+import Btn from "../Common/Buttons/Btn";
 
 export default class AddSchoolLvlForm extends React.PureComponent {
     constructor(props) {
@@ -33,7 +33,7 @@ export default class AddSchoolLvlForm extends React.PureComponent {
                 <InputLabel text={"Заклинания:"}/>
                 <List noItemsText={"Нет заклинаний"}
                       values={this.state.spells.map(spell =>
-                          <ListItemExpand
+                          <ExpandableListItemWithBullets
                               name={spell.name}
                               img={spell.img}
                               description={spell.description}
@@ -54,7 +54,7 @@ export default class AddSchoolLvlForm extends React.PureComponent {
                 <InputLabel text={"Стоимость заклинаний:"}/>
                 <List noItemsText={"Не указана"}
                       values={this.state.schoolLvlUpgradePriceCombinations.map(schoolLvlUpgradePriceCombination =>
-                          <ListItemSmallDeletable
+                          <SmallDeletableListItem
                               text={schoolLvlUpgradePriceCombination.spellCount + " заклинаний: " + priceCombinationListToString(schoolLvlUpgradePriceCombination.priceCombinationList)}
                               onDelete={() => this.setState(state => ({
                                   schoolLvlUpgradePriceCombinations: this.state.schoolLvlUpgradePriceCombinations.filter(it => it !== schoolLvlUpgradePriceCombination)

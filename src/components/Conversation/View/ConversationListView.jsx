@@ -6,7 +6,7 @@ import {conversationView} from "../../../Views";
 import {get} from "../../../util/Http";
 import {getAllConversationsUrl} from "../../../util/Parameters";
 import Globals from "../../../util/Globals";
-import NoItemsLabel from "../../Common/NoItemsLabel";
+import NoItemsLabel from "../../Common/Labels/NoItemsLabel";
 
 function mapStateToProps(state, props) {
     return {

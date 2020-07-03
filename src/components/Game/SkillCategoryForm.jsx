@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import InputLabel from "../Common/InputLabel";
+import InputLabel from "../Common/Labels/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
 import {SelectButton} from "primereact/selectbutton";
 import {changeView, updateActiveGame, updateGameForm, updateSkillCategoryForm} from "../../data-layer/ActionCreators";
@@ -10,12 +10,11 @@ import {useForm} from "react-hook-form";
 import {gameCreationView, gameEditView, gameView, skillCreationView, spellSchoolCreationView} from "../../Views";
 import Globals from "../../util/Globals";
 import SkillCategoryFormMode from "../../data-layer/enums/SkillCategoryFormMode";
-import NoItemsLabel from "../Common/NoItemsLabel";
+import NoItemsLabel from "../Common/Labels/NoItemsLabel";
 import SkillItem from "../QuestionnaireTemplateCreation/SkillItem";
-import AddItemButton from "../Common/AddItemButton";
-import HorizontalListItem from "../Common/HorizontalListItem";
-import List from "../Common/List";
-import ListItemExpand from "./ListItemExpand";
+import AddItemButton from "../Common/Buttons/AddItemButton";
+import List from "../Common/Lists/List";
+import ExpandableListItemWithBullets from "../Common/ListElements/ExpandableListItemWithBullets";
 import nonNullList from "../../util/nonNullList";
 import priceListToString from "../../util/priceCombinationListToString";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
@@ -111,10 +110,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     <InputLabel text={"Навыки:"}/>
                     <List noItemsText={"Нет навыков"}
                           values={props.skillCategoryForm.skills.map(skill =>
-                              <ListItemExpand name={skill.name}
-                                              img={skill.img}
-                                              description={skill.description}
-                                              bullets={nonNullList(
+                              <ExpandableListItemWithBullets name={skill.name}
+                                                             img={skill.img}
+                                                             description={skill.description}
+                                                             bullets={nonNullList(
                                                   skill.skillUpgrades.length !== 0 ?
                                                       "Максимальный уровень: " + skill.skillUpgrades.length :
                                                       null,
@@ -132,7 +131,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             props.skillCategoryForm.spellSchools.length === 0 ?
                                 <NoItemsLabel text={"Нет школ заклинаний"}/> :
                                 props.skillCategoryForm.spellSchools.map(school =>
-                                    <ListItemExpand
+                                    <ExpandableListItemWithBullets
                                         name={school.name}
                                         img={school.img}
                                         description={school.description}

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {changeView, setActiveNetwork, setGames, setNetworks, setSubnetworks} from "../../../../data-layer/ActionCreators";
-import Btn from "../../../Common/Btn";
+import Btn from "../../../Common/Buttons/Btn";
 import {networkCreationView, networkView} from "../../../../Views";
 import {get} from "../../../../util/Http";
 import {gameByNetworkId, subnetworkUrl} from "../../../../util/Parameters";

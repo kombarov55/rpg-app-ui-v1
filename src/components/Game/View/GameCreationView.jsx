@@ -11,18 +11,17 @@ import {post, upload} from "../../../util/Http";
 import {gameByNetworkId, gameBySubnetworkId, gamesUrl, uploadServerUrl, uploadUrl} from "../../../util/Parameters";
 import {adminPageView, networkView, skillCategoryFormView, subnetworkView} from "../../../Views";
 import Globals from "../../../util/Globals";
-import ListInput from "../../Common/ListInput";
+import ListInput from "../../Common/Input/ListInput";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 import CurrencyForm from "../CurrencyForm";
-import AddItemButton from "../../Common/AddItemButton";
-import InputLabel from "../../Common/InputLabel";
-import ListItemSmall from "../../Common/ListItemSmall";
-import NoItemsLabel from "../../Common/NoItemsLabel";
+import AddItemButton from "../../Common/Buttons/AddItemButton";
+import InputLabel from "../../Common/Labels/InputLabel";
+import ListItemSmall from "../../Common/ListElements/SmallListItem";
+import NoItemsLabel from "../../Common/Labels/NoItemsLabel";
 import {useForm} from "react-hook-form";
 import SkillCategoryForm from "../SkillCategoryForm";
 import SkillCategoryFormMode from "../../../data-layer/enums/SkillCategoryFormMode";
-import HorizontalListItem from "../../Common/HorizontalListItem";
 
 function mapStateToProps(state, props) {
     return {

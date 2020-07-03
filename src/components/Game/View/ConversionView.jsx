@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import Label from "../../Common/Label";
-import NoItemsLabel from "../../Common/NoItemsLabel";
-import ListItemSmall from "../../Common/ListItemSmall";
-import AddItemButton from "../../Common/AddItemButton";
+import Label from "../../Common/Labels/Label";
+import NoItemsLabel from "../../Common/Labels/NoItemsLabel";
+import ListItemSmall from "../../Common/ListElements/SmallListItem";
+import AddItemButton from "../../Common/Buttons/AddItemButton";
 import ConversionForm from "../ConversionForm";
 import {changeView, setConversions, updateConversionForm} from "../../../data-layer/ActionCreators";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
-import Btn from "../../Common/Btn";
+import Btn from "../../Common/Buttons/Btn";
 import {gameView} from "../../../Views";
 import {post} from "../../../util/Http";
 import {conversionsByGameIdUrl} from "../../../util/Parameters";

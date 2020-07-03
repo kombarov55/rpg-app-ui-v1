@@ -1,5 +1,5 @@
 import React from "react";
-import BulletList from "../Common/BulletList";
+import BulletList from "../Common/Lists/BulletList";
 
 export default function (props) {
     return (

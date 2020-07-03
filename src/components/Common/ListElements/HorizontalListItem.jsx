@@ -1,5 +1,5 @@
 import React from "react";
-import getOrDefault from "../../util/getOrDefault";
+import getOrDefault from "../../../util/getOrDefault";
 
 export default function (props) {
     const {name, description, imgSrc} = props
@@ -38,7 +38,6 @@ export default function (props) {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

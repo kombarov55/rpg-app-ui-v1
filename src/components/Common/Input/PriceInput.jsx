@@ -1,6 +1,6 @@
 import React from "react";
-import CenterPlusButton from "./CenterPlusButton";
-import IsNumeric from "../../util/IsNumeric";
+import CenterPlusButton from "../Buttons/CenterPlusButton";
+import IsNumeric from "../../../util/IsNumeric";
 
 /**
  * onSubmit: [{ name: String, amount: Long }]

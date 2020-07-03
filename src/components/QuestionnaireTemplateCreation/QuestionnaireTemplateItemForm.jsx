@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {updateQuestionnaireTemplateForm, updateQuestionnaireTemplateItemForm} from "../../data-layer/ActionCreators";
-import ListInput from "../Common/ListInput";
+import ListInput from "../Common/Input/ListInput";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
 import QuestionnaireTemplateItemType from "../../data-layer/enums/QuestionnaireTemplateItemType";
 

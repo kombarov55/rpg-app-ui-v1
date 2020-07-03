@@ -1,13 +1,13 @@
 import React from "react";
-import InputLabel from "../Common/InputLabel";
-import AddItemButton from "../Common/AddItemButton";
-import PriceInput from "../Common/PriceInput";
-import List from "../Common/List";
-import ListItemSmall from "../Common/ListItemSmall";
+import InputLabel from "../Common/Labels/InputLabel";
+import AddItemButton from "../Common/Buttons/AddItemButton";
+import PriceInput from "../Common/Input/PriceInput";
+import List from "../Common/Lists/List";
+import ListItemSmall from "../Common/ListElements/SmallListItem";
 import priceCombinationToString from "../../util/priceCombinationToString";
-import FormTitleLabel from "../Common/FormTitleLabel";
-import Btn from "../Common/Btn";
-import ListItemSmallDeletable from "../Common/ListItemSmallDeletable";
+import FormTitleLabel from "../Common/Labels/FormTitleLabel";
+import Btn from "../Common/Buttons/Btn";
+import SmallDeletableListItem from "../Common/ListElements/SmallDeletableListItem";
 
 /**
  * onSubmit: {spellCount: Int, priceCombinationList: [[{name: String, amount: Int}]]}
@@ -33,7 +33,7 @@ export default class SpellSchoolLvlUpgradePriceForm extends React.Component {
                 <InputLabel text={"Варианты цен:"}/>
                 <List noItemsText={"Цены не указаны"}
                       values={this.state.priceCombinationList.map(priceCombination =>
-                          <ListItemSmallDeletable text={priceCombinationToString(priceCombination)}
+                          <SmallDeletableListItem text={priceCombinationToString(priceCombination)}
                                                   onDelete={() => this.setState(state => ({
                                                       priceCombinationList: this.state.priceCombinationList.filter(it => it !== priceCombination)
                                                   }))}

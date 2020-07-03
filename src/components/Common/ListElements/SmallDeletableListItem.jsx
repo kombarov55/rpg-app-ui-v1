@@ -1,8 +1,8 @@
 import React from "react";
-import ListItemSmall from "./ListItemSmall";
-import Icon from "./Icon";
+import ListItemSmall from "./SmallListItem";
+import Icon from "../Input/Icon";
 
-export default class ListItemSmallDeletable extends React.PureComponent {
+export default class SmallDeletableListItem extends React.PureComponent {
     render() {
         return (
             <ListItemSmall

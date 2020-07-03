@@ -10,7 +10,7 @@ import {
 import {post, put, upload} from "../../../../util/Http";
 import {editSubnetworkUrl, subnetworkUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
 import {networkView, subnetworkView} from "../../../../Views";
-import InputLabel from "../../../Common/InputLabel";
+import InputLabel from "../../../Common/Labels/InputLabel";
 import {useForm} from "react-hook-form";
 
 function mapStateToProps(state, props) {

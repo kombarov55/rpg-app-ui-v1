@@ -1,6 +1,6 @@
 import React from "react";
-import NoItemsLabel from "./NoItemsLabel";
-import CenterPlusButton from "./CenterPlusButton";
+import NoItemsLabel from "../Labels/NoItemsLabel";
+import CenterPlusButton from "../Buttons/CenterPlusButton";
 
 export default function (props) {
     const onAddClicked = props.onAddClicked == null ? () => {} : props.onAddClicked

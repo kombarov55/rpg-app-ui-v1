@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
-import Btn from "../Common/Btn";
-import InputLabel from "../Common/InputLabel";
+import Btn from "../Common/Buttons/Btn";
+import InputLabel from "../Common/Labels/InputLabel";
 import {SelectButton} from "primereact/selectbutton";
 import {updateConversionForm} from "../../data-layer/ActionCreators";
 

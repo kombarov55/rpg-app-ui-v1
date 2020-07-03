@@ -22,11 +22,11 @@ import Globals from "../../../../util/Globals";
 import GameItem from "../../GameItem";
 import {get, httpDelete} from "../../../../util/Http";
 import {deleteNetworkUrl, gameBySubnetworkId} from "../../../../util/Parameters";
-import Btn from "../../../Common/Btn";
+import Btn from "../../../Common/Buttons/Btn";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 import Preload from "../../../../util/Preload";
 import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
-import Label from "../../../Common/Label";
+import Label from "../../../Common/Labels/Label";
 
 function mapStateToProps(state, props) {
     return {

@@ -1,5 +1,5 @@
 import React from "react";
-import getOrDefault from "../../util/getOrDefault";
+import getOrDefault from "../../../util/getOrDefault";
 
 export default function (props) {
     const onChange = getOrDefault(props.onChange, () => {})

@@ -5,7 +5,7 @@ import {changeView, updateQuestionnaireTemplateForm} from "../../../data-layer/A
 import {questionnaireTemplateCreationView, questionnaireTemplateEditView} from "../../../Views";
 import Globals from "../../../util/Globals";
 import QuestionnaireTemplateFormMode from "../../../data-layer/enums/QuestionnaireTemplateFormMode";
-import Btn from "../../Common/Btn";
+import Btn from "../../Common/Buttons/Btn";
 
 function mapStateToProps(state, props) {
     return {

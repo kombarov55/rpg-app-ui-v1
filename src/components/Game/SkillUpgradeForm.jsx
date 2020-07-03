@@ -1,13 +1,13 @@
 import React, {useState} from "react";
-import InputLabel from "../Common/InputLabel";
+import InputLabel from "../Common/Labels/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
-import AddItemButton from "../Common/AddItemButton";
-import List from "../Common/List";
-import ListItemSmall from "../Common/ListItemSmall";
-import Icon from "../Common/Icon";
+import AddItemButton from "../Common/Buttons/AddItemButton";
+import List from "../Common/Lists/List";
+import ListItemSmall from "../Common/ListElements/SmallListItem";
+import Icon from "../Common/Input/Icon";
 import _ from "lodash"
 import IsNumeric from "../../util/IsNumeric";
-import PriceInput from "../Common/PriceInput";
+import PriceInput from "../Common/Input/PriceInput";
 
 export default class SkillUpgradeForm extends React.Component {
 

@@ -1,21 +1,21 @@
 import React from "react";
 import {connect} from "react-redux";
-import InputLabel from "../../Common/InputLabel";
+import InputLabel from "../../Common/Labels/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
 import {changeView, updateSkillCategoryForm, updateSkillForm} from "../../../data-layer/ActionCreators";
 import {useForm} from "react-hook-form";
 import {upload} from "../../../util/Http";
 import {uploadServerUrl, uploadUrl} from "../../../util/Parameters";
-import List from "../../Common/List";
+import List from "../../Common/Lists/List";
 import {InputSwitch} from "primereact/inputswitch";
 import SkillUpgradeForm from "../SkillUpgradeForm";
-import PriceInput from "../../Common/PriceInput";
-import ListItemSmall from "../../Common/ListItemSmall";
-import Icon from "../../Common/Icon";
+import PriceInput from "../../Common/Input/PriceInput";
+import ListItemSmall from "../../Common/ListElements/SmallListItem";
+import Icon from "../../Common/Input/Icon";
 import _ from "lodash"
-import Btn from "../../Common/Btn";
+import Btn from "../../Common/Buttons/Btn";
 import UpgradeView from "../LvlUpgradeView";
-import SubmitButton from "../../Common/FormSubmitButton";
+import SubmitButton from "../../Common/Buttons/FormSubmitButton";
 import {skillCategoryFormView} from "../../../Views";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 

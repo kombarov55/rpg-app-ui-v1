@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
-import Label from "../../Common/Label";
+import Label from "../../Common/Labels/Label";
 import NetworkItem from "../NetworkItem";
 import {gameCreationView, gameView, networkCreationView, networkView} from "../../../Views";
-import Btn from "../../Common/Btn";
+import Btn from "../../Common/Buttons/Btn";
 import {
     changeView,
     setActiveGame,
@@ -16,7 +16,7 @@ import {gameByNetworkId, subnetworkUrl} from "../../../util/Parameters";
 import GameItem from "../GameItem";
 import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
-import AddItemButton from "../../Common/AddItemButtonCircle";
+import AddItemButton from "../../Common/Buttons/AddItemButtonCircle";
 import Preload from "../../../util/Preload";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import RestoreAnnouncement from "./RestoreAnnouncement";
 import AnnouncementItem from "./AnnouncementItem";
-import NoItemsLabel from "../Common/NoItemsLabel";
+import NoItemsLabel from "../Common/Labels/NoItemsLabel";
 
 class ConnectedAnnouncementView extends React.Component {
     render() {

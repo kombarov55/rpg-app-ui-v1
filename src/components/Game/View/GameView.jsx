@@ -18,15 +18,17 @@ import {
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
 import {deleteGameUrl} from "../../../util/Parameters";
-import Btn from "../../Common/Btn";
+import Btn from "../../Common/Buttons/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 import QuestionnaireTemplateFormMode from "../../../data-layer/enums/QuestionnaireTemplateFormMode";
-import List from "../../Common/List";
-import ListItemSmallEditable from "../../Common/ListItemSmallEditable";
+import List from "../../Common/Lists/List";
+import SmallEditableListItem from "../../Common/ListElements/SmallEditableListItem";
 import FormType from "../../../data-layer/enums/FormType";
+import ExpandableListItem from "../../Common/ListElements/ExpandableListItem";
+import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableListItemWithButtons";
 
 function mapStateToProps(state, props) {
     return {
@@ -119,7 +121,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <List title={"Валюты: (макс. 3)"}
                       noItemsText={"Нет валют"}
                       values={props.activeGame.currencies.map(currency =>
-                          <ListItemSmallEditable text={currency.name}
+                          <SmallEditableListItem text={currency.name}
                                                  onEditClicked={() => onEditCurrencyClicked(currency)}
                           />
                       )}
@@ -129,6 +131,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <List title={"Категории навыков:"}
                       noItemsText={"Нет категорий навыков"}
+                      values={props.activeGame.skillCategories.map(skillCategory =>
+                          <ExpandableListItemWithButtons
+                              img={skillCategory.img}
+                              name={skillCategory.name}
+                              description={skillCategory.description}
+                          />
+                      )}
                       addButtonVisible={true}
                       onAddClicked={() => onAddSkillCategoryClicked()}
                 />

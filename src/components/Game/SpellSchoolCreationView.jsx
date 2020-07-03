@@ -1,19 +1,19 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import InputLabel from "../Common/InputLabel";
+import InputLabel from "../Common/Labels/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
-import Btn from "../Common/Btn";
+import Btn from "../Common/Buttons/Btn";
 import {changeView, updateSkillCategoryForm, updateSpellSchoolForm} from "../../data-layer/ActionCreators";
 import {skillCategoryFormView, spellCreationView} from "../../Views";
 import {upload} from "../../util/HttpRequests";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
-import AddItemButton from "../Common/AddItemButton";
-import List from "../Common/List";
-import PriceInput from "../Common/PriceInput";
+import AddItemButton from "../Common/Buttons/AddItemButton";
+import List from "../Common/Lists/List";
+import PriceInput from "../Common/Input/PriceInput";
 import AddSchoolLvlForm from "./AddSchoolLvlForm";
 import priceCombinationToString from "../../util/priceCombinationToString";
-import ListItemSmallDeletable from "../Common/ListItemSmallDeletable";
-import ListItemExpand from "./ListItemExpand";
+import SmallDeletableListItem from "../Common/ListElements/SmallDeletableListItem";
+import ExpandableListItemWithBullets from "../Common/ListElements/ExpandableListItemWithBullets";
 
 function mapStateToProps(state) {
     return {
@@ -82,7 +82,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <List noItemsText={"Пусто"}
                   values={
                       props.form.purchasePriceCombinations.map(priceCombination =>
-                          <ListItemSmallDeletable
+                          <SmallDeletableListItem
                               text={priceCombinationToString(priceCombination)}
                               onDelete={() => props.updateForm({
                                   purchasePriceCombinations: props.form.purchasePriceCombinations.filter(it => it !== priceCombination)
@@ -99,7 +99,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputLabel text={"Круги заклинаний:"}/>
             <List noItemsText={"Нет кругов заклинаний"}
                   values={props.form.schoolLvls.map((schoolLvl, i) =>
-                      <ListItemExpand
+                      <ExpandableListItemWithBullets
                           name={(i + 1) + " круг:"}
                           description={"Заклинания:"}
                           bullets={schoolLvl.spells.map(spell => spell.name)}

@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
-import Btn from "../../../Common/Btn";
+import Btn from "../../../Common/Buttons/Btn";
 import {changeView, setActiveNetwork, setNetworks, updateNetworkForm} from "../../../../data-layer/ActionCreators";
 import {networkUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
 import {adminPageView} from "../../../../Views";
 import {post, upload} from "../../../../util/Http";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
-import InputLabel from "../../../Common/InputLabel";
+import InputLabel from "../../../Common/Labels/InputLabel";
 import {useForm} from "react-hook-form";
 
 function mapStateToProps(state, props) {

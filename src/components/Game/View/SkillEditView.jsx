@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {Checkbox} from "primereact/checkbox";
 import {changeView, updateQuestionnaireTemplateForm, updateSkillForm} from "../../../data-layer/ActionCreators";
-import Btn from "../../Common/Btn";
+import Btn from "../../Common/Buttons/Btn";
 import {InputTextarea} from "primereact/inputtextarea";
 import {put} from "../../../util/Http";
 import {updateSkillUrl} from "../../../util/Parameters";

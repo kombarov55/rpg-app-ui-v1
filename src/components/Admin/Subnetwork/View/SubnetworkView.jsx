@@ -11,7 +11,7 @@ import {
 import {gameCreationView, gameView, networkView, subnetworkEditView} from "../../../../Views";
 import AddGameItem from "../../../Game/AddGameItem";
 import Globals from "../../../../util/Globals";
-import Btn from "../../../Common/Btn";
+import Btn from "../../../Common/Buttons/Btn";
 import {httpDelete} from "../../../../util/Http";
 import {deleteSubnetworkUrl} from "../../../../util/Parameters";
 import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";

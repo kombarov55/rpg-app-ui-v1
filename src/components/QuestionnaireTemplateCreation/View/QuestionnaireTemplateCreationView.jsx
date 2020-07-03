@@ -8,7 +8,7 @@ import SkillItem from "../SkillItem";
 import QuestionnaireTemplateAddSkillButton from "../QuestionnaireTemplateAddSkillButton";
 import {changeView, setActiveGame, updateQuestionnaireTemplateForm} from "../../../data-layer/ActionCreators";
 import QuestionnaireTemplateItemType from "../../../data-layer/enums/QuestionnaireTemplateItemType";
-import Btn from "../../Common/Btn";
+import Btn from "../../Common/Buttons/Btn";
 import {post} from "../../../util/Http";
 import {questionnaireTemplateUrl} from "../../../util/Parameters";
 import {InputTextarea} from "primereact/inputtextarea";

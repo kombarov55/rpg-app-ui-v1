@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
-import Label from "../Common/Label";
-import InputLabel from "../Common/InputLabel";
+import Label from "../Common/Labels/Label";
+import InputLabel from "../Common/Labels/InputLabel";
 import {updateCurrencyForm} from "../../data-layer/ActionCreators";
-import Btn from "../Common/Btn";
+import Btn from "../Common/Buttons/Btn";
 
 function mapStateToProps(state, props) {
     return {

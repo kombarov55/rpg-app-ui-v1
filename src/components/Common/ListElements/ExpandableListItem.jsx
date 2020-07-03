@@ -1,7 +1,6 @@
 import React from "react";
-import BulletList from "../Common/BulletList";
 
-export default class ListItemExpand extends React.Component {
+export default class ExpandableListItem extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,12 +21,9 @@ export default class ListItemExpand extends React.Component {
                     }
                     <div style={nameStyle}>{this.props.name}</div>
                 </div>
-                {this.state.expand &&
-                <>
-                    <div style={descriptionStyle}>{this.props.description}</div>
-                    <BulletList values={this.props.bullets}
-                    />
-                </>
+                {
+                    this.state.expand && this.props.expandableElements &&
+                    this.props.expandableElements
                 }
             </div>
         )

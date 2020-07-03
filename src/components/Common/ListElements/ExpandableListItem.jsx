@@ -15,11 +15,14 @@ export default class ExpandableListItem extends React.Component {
         return (
             <div style={containerStyle} onClick={() => this.onClick()}>
                 <div style={innerHorizontalStyle}>
-                    {
-                        this.props.img &&
-                        <img style={imgStyle} src={this.props.img}/>
-                    }
-                    <div style={nameStyle}>{this.props.name}</div>
+                    <div style={imgAndName}>
+                        {
+                            this.props.img &&
+                            <img style={imgStyle} src={this.props.img}/>
+                        }
+                        <div style={nameStyle}>{this.props.name}</div>
+                    </div>
+                    <div style={upperButtonsStyle}>{this.props.upperButtons}</div>
                 </div>
                 {
                     this.state.expand && this.props.expandableElements &&
@@ -48,8 +51,16 @@ const containerStyle = {
 
 const innerHorizontalStyle = {
     display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+}
+
+const imgAndName = {
+    display: "flex",
     flexDirection: "row"
 }
+
+const upperButtonsStyle = {}
 
 const imgStyle = {
     width: "40px",

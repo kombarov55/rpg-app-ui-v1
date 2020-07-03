@@ -138,9 +138,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               description={skillCategory.description}
                           />
                       )}
-                      addButtonVisible={true}
                       onAddClicked={() => onAddSkillCategoryClicked()}
                 />
+
+                <List title={"Магазины:"}
+                      noItemsText={"Нет магазинов"}
+                      onAddClicked={() => alert("add shop")}
+                      />
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Присоединиться к игре"}/>

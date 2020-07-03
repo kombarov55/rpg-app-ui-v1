@@ -16,7 +16,7 @@ export default function (props) {
                 }
             </div>
             {
-                props.addButtonVisible &&
+                props.onAddClicked &&
                 <CenterPlusButton onClick={() => onAddClicked()} />
             }
 

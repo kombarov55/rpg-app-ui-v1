@@ -36,6 +36,11 @@ export default connect(
                     noItemsText={"Нет товаров"}
                 />
 
+                <List
+                    title={"Заполнить магазин:"}
+                    noItemsText={"Магазин пуст"}
+                />
+
                 <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
             </div>
         )

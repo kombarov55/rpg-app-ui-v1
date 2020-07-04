@@ -18,7 +18,7 @@ export default class ExpandableListItemWithButtons extends React.Component {
                 ]}
                 expandableElements={[
                     <div style={descriptionStyle}>{this.props.description}</div>,
-                    <GreyButton text={"Подробнее"}/>
+                    <GreyButton text={"Подробнее"} onClick={() => this.props.onDetailsClicked()}/>
                 ]}
             />
         )

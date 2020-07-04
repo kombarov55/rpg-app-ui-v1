@@ -13,7 +13,7 @@ import {
     currencyFormView,
     gameEditView,
     networkView,
-    questionnaireRulesView, shopCreationView, skillCategoryFormView,
+    questionnaireRulesView, shopCreationView, shopView, skillCategoryFormView,
     subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
@@ -112,6 +112,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(shopCreationView)
     }
 
+    function onShopClicked() {
+        props.changeView(shopView)
+    }
+
     return (
         <div className={"game-view"}>
             <div className={"game-info"}>
@@ -152,6 +156,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                           <ExpandableListItemWithButtons
                               img={shop.img}
                               name={shop.name}
+                              onDetailsClicked={() => onShopClicked()}
                           />
                       )}
                       onAddClicked={() => onAddShopClicked()}

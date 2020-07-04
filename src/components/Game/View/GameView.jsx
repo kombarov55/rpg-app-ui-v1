@@ -148,8 +148,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <List title={"Магазины:"}
                       noItemsText={"Нет магазинов"}
+                      values={props.activeGame.shops.map(shop =>
+                          <ExpandableListItemWithButtons
+                              img={shop.img}
+                              name={shop.name}
+                          />
+                      )}
                       onAddClicked={() => onAddShopClicked()}
-                      />
+                />
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Присоединиться к игре"}/>

@@ -3,10 +3,15 @@ import {connect} from "react-redux"
 import FormViewStyle from "../../../styles/FormViewStyle";
 import ViewInfo from "../../Common/Constructions/ViewInfo";
 import List from "../../Common/Lists/List";
+import Btn from "../../Common/Buttons/Btn";
+import {gameView} from "../../../Views";
+import {changeView} from "../../../data-layer/ActionCreators";
 
 export default connect(
     state => ({}),
-    dispatch => ({})
+    dispatch => ({
+        toPrevView: () => dispatch(changeView(gameView))
+    })
 )(class ShopView extends React.Component {
     render() {
         return (
@@ -30,7 +35,13 @@ export default connect(
                     title={"Товары:"}
                     noItemsText={"Нет товаров"}
                 />
+
+                <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
             </div>
         )
+    }
+
+    onBackClicked() {
+        this.props.toPrevView()
     }
 })

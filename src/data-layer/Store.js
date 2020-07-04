@@ -1,7 +1,7 @@
 import {createStore} from "redux";
 import {rootReducer} from "./Reducers";
 import {
-    announcementView,
+    announcementView, shopView,
     skillCategoryFormView,
     skillCreationView,
     spellCreationView,
@@ -13,7 +13,7 @@ export const initialState = {
     sidebarVisible: false,
     growl: null,
 
-    currentView: announcementView,
+    currentView: shopView,
     changeViewParams: {},
 
     userAccount: {

@@ -13,6 +13,20 @@ export default connect(
         toPrevView: () => dispatch(changeView(gameView))
     })
 )(class ShopView extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = this.initialState
+    }
+
+    initialState = {
+        merchandiseCategoryFormVisible: false,
+        merchandiseTypeFormVisible: false,
+        merchandiseFormVisible: false,
+        merchandiseAmountFormVisible: false
+    }
+
     render() {
         return (
             <div style={FormViewStyle}>
@@ -24,26 +38,51 @@ export default connect(
                 <List
                     title={"Категории товаров:"}
                     noItemsText={"Нет категорий"}
+                    isAddButtonVisible={!this.state.merchandiseCategoryFormVisible}
+                    onAddClicked={() => this.onAddMerchandiseCategoryClicked()}
                 />
 
                 <List
                     title={"Типы товаров:"}
+                    isAddButtonVisible={!this.state.merchandiseTypeFormVisible}
                     noItemsText={"Нет типов"}
+                    onAddClicked={() => this.onAddMerchandiseTypeClicked()}
                 />
 
                 <List
                     title={"Товары:"}
+                    isAddButtonVisible={!this.state.merchandiseFormVisible}
                     noItemsText={"Нет товаров"}
+                    onAddClicked={() => this.onAddMerchandiseClicked()}
                 />
 
                 <List
                     title={"Заполнить магазин:"}
+                    isAddButtonVisible={!this.state.merchandiseAmountFormVisible}
                     noItemsText={"Магазин пуст"}
+                    onAddClicked={() => this.onAddMerchandiseAmountClicked()}
                 />
 
                 <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
             </div>
         )
+    }
+
+    onAddMerchandiseCategoryClicked() {
+        this.setState({merchandiseCategoryFormVisible: true})
+    }
+
+    onAddMerchandiseTypeClicked() {
+        this.setState({merchandiseTypeFormVisible: true})
+    }
+
+    onAddMerchandiseClicked() {
+        this.setState({merchandiseFormVisible: true})
+    }
+
+    onAddMerchandiseAmountClicked() {
+        this.setState({merchandiseAmountFormVisible: true})
+
     }
 
     onBackClicked() {

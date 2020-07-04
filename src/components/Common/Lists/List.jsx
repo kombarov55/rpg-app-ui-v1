@@ -16,6 +16,7 @@ export default function (props) {
                 }
             </div>
             {
+                (props.isAddButtonVisible !== undefined ? props.isAddButtonVisible : true) &&
                 props.onAddClicked &&
                 <CenterPlusButton onClick={() => onAddClicked()} />
             }

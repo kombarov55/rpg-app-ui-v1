@@ -6,6 +6,8 @@ import List from "../../Common/Lists/List";
 import Btn from "../../Common/Buttons/Btn";
 import {gameView} from "../../../Views";
 import {changeView} from "../../../data-layer/ActionCreators";
+import MerchandiseCategoryForm from "../MerchandiseCategoryForm";
+import SmallDeletableListItem from "../../Common/ListElements/SmallDeletableListItem";
 
 export default connect(
     state => ({}),
@@ -21,6 +23,8 @@ export default connect(
     }
 
     initialState = {
+        merchandiseCategories: [],
+
         merchandiseCategoryFormVisible: false,
         merchandiseTypeFormVisible: false,
         merchandiseFormVisible: false,
@@ -38,9 +42,17 @@ export default connect(
                 <List
                     title={"Категории товаров:"}
                     noItemsText={"Нет категорий"}
+                    values={this.state.merchandiseCategories.map(category =>
+                        <SmallDeletableListItem text={category.name}/>
+                    )}
                     isAddButtonVisible={!this.state.merchandiseCategoryFormVisible}
                     onAddClicked={() => this.onAddMerchandiseCategoryClicked()}
                 />
+
+                {
+                    this.state.merchandiseCategoryFormVisible &&
+                    <MerchandiseCategoryForm onSubmit={(form) => this.onMerchandiseCategoryFormSubmit(form)}/>
+                }
 
                 <List
                     title={"Типы товаров:"}
@@ -70,6 +82,13 @@ export default connect(
 
     onAddMerchandiseCategoryClicked() {
         this.setState({merchandiseCategoryFormVisible: true})
+    }
+
+    onMerchandiseCategoryFormSubmit(form) {
+        this.setState({
+            merchandiseCategories: this.state.merchandiseCategories.concat(form),
+            merchandiseCategoryFormVisible: false
+        })
     }
 
     onAddMerchandiseTypeClicked() {

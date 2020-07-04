@@ -8,9 +8,14 @@ import {gameView} from "../../../Views";
 import {changeView} from "../../../data-layer/ActionCreators";
 import MerchandiseCategoryForm from "../MerchandiseCategoryForm";
 import SmallDeletableListItem from "../../Common/ListElements/SmallDeletableListItem";
+import {post} from "../../../util/Http";
+import {saveMerchandiseCategoryUrl} from "../../../util/Parameters";
 
 export default connect(
-    state => ({}),
+    state => ({
+        growl: state.growl,
+        changeViewParams: state.changeViewParams
+    }),
     dispatch => ({
         toPrevView: () => dispatch(changeView(gameView))
     })
@@ -19,12 +24,12 @@ export default connect(
     constructor(props) {
         super(props)
 
-        this.state = this.initialState
+        const {shop} = this.props.changeViewParams
+
+        this.state = Object.assign({}, shop, this.initialState)
     }
 
     initialState = {
-        merchandiseCategories: [],
-
         merchandiseCategoryFormVisible: false,
         merchandiseTypeFormVisible: false,
         merchandiseFormVisible: false,
@@ -89,6 +94,13 @@ export default connect(
             merchandiseCategories: this.state.merchandiseCategories.concat(form),
             merchandiseCategoryFormVisible: false
         })
+
+        post(saveMerchandiseCategoryUrl(this.state.id), form, rs => {
+            this.props.growl.show({severity: "info", summary: "Категория товара создана."})
+        }, () => this.props.growl.show({
+            severity: "error",
+            summary: "Ошибка при создании категории товара. Обратитесь к администратору."
+        }))
     }
 
     onAddMerchandiseTypeClicked() {

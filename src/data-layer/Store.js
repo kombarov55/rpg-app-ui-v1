@@ -13,7 +13,7 @@ export const initialState = {
     sidebarVisible: false,
     growl: null,
 
-    currentView: shopView,
+    currentView: announcementView,
     changeViewParams: {},
 
     userAccount: {

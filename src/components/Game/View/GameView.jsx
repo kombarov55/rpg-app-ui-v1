@@ -112,8 +112,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(shopCreationView)
     }
 
-    function onShopClicked() {
-        props.changeView(shopView)
+    function onShopClicked(shop) {
+        console.log(shop)
+        props.changeView(shopView, {
+            shop: shop
+        })
     }
 
     return (
@@ -156,7 +159,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                           <ExpandableListItemWithButtons
                               img={shop.img}
                               name={shop.name}
-                              onDetailsClicked={() => onShopClicked()}
+                              onDetailsClicked={() => onShopClicked(shop)}
                           />
                       )}
                       onAddClicked={() => onAddShopClicked()}

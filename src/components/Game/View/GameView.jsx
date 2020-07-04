@@ -13,7 +13,7 @@ import {
     currencyFormView,
     gameEditView,
     networkView,
-    questionnaireRulesView, skillCategoryFormView,
+    questionnaireRulesView, shopCreationView, skillCategoryFormView,
     subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
@@ -108,6 +108,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(skillCategoryFormView)
     }
 
+    function onAddShopClicked() {
+        props.changeView(shopCreationView)
+    }
+
     return (
         <div className={"game-view"}>
             <div className={"game-info"}>
@@ -141,9 +145,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                       onAddClicked={() => onAddSkillCategoryClicked()}
                 />
 
+
                 <List title={"Магазины:"}
                       noItemsText={"Нет магазинов"}
-                      onAddClicked={() => alert("add shop")}
+                      onAddClicked={() => onAddShopClicked()}
                       />
 
                 <div className={"game-view-button-group"}>

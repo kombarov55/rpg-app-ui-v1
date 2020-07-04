@@ -57,4 +57,6 @@ export const conversionsByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/
 export const saveCurrencyUrl = gameId => rootUrl + "/game/" + gameId + "/currency"
 export const updateCurrencyUrl = (gameId, currencyId) => rootUrl + "/game/" + gameId + "/currency/" + currencyId
 
-export const saveSkillCategory = gameId => rootUrl + "/game/" + gameId + "/skillCategory"
+export const saveSkillCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/skillCategory"
+
+export const saveShopUrl = gameId => rootUrl + "/game/" + gameId + "/shop"

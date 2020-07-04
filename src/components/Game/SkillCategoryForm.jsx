@@ -5,7 +5,7 @@ import {InputTextarea} from "primereact/inputtextarea";
 import {SelectButton} from "primereact/selectbutton";
 import {changeView, updateActiveGame, updateGameForm, updateSkillCategoryForm} from "../../data-layer/ActionCreators";
 import {post, upload} from "../../util/Http";
-import {saveSkillCategory, uploadServerUrl, uploadUrl} from "../../util/Parameters";
+import {saveSkillCategoryUrl, uploadServerUrl, uploadUrl} from "../../util/Parameters";
 import {useForm} from "react-hook-form";
 import {gameCreationView, gameEditView, gameView, skillCreationView, spellSchoolCreationView} from "../../Views";
 import Globals from "../../util/Globals";
@@ -44,7 +44,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSaveClicked() {
-        post(saveSkillCategory(props.activeGame.id), props.skillCategoryForm, rs => {
+        post(saveSkillCategoryUrl(props.activeGame.id), props.skillCategoryForm, rs => {
             props.updateActiveGame({skillCategories: props.activeGame.skillCategories.concat(props.skillCategoryForm)})
             props.updateSkillCategoryForm(DefaultFormValues.skillCategoryForm)
             props.growl.show({severity: "info", summary: "Категория создана."})

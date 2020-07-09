@@ -8,8 +8,8 @@ import {gameView} from "../../../Views";
 import {changeView} from "../../../data-layer/ActionCreators";
 import MerchandiseCategoryForm from "../MerchandiseCategoryForm";
 import SmallDeletableListItem from "../../Common/ListElements/SmallDeletableListItem";
-import {post} from "../../../util/Http";
-import {saveMerchandiseCategoryUrl} from "../../../util/Parameters";
+import {httpDelete, post} from "../../../util/Http";
+import {deleteMerchandiseCategoryUrl, saveMerchandiseCategoryUrl} from "../../../util/Parameters";
 
 export default connect(
     state => ({
@@ -48,7 +48,9 @@ export default connect(
                     title={"Категории товаров:"}
                     noItemsText={"Нет категорий"}
                     values={this.state.merchandiseCategories.map(category =>
-                        <SmallDeletableListItem text={category.name}/>
+                        <SmallDeletableListItem text={category.name}
+                                                onDelete={() => this.onMerchandiseCategoryItemDelete(category)}
+                        />
                     )}
                     isAddButtonVisible={!this.state.merchandiseCategoryFormVisible}
                     onAddClicked={() => this.onAddMerchandiseCategoryClicked()}
@@ -101,6 +103,22 @@ export default connect(
             severity: "error",
             summary: "Ошибка при создании категории товара. Обратитесь к администратору."
         }))
+    }
+
+    onMerchandiseCategoryItemDelete(category) {
+        httpDelete(deleteMerchandiseCategoryUrl(this.state.id, category.id), () => {
+                this.setState(state => ({
+                    merchandiseCategories: state.merchandiseCategories.filter(it => it !== category)
+                }))
+                this.props.growl.show({
+                    severity: "info",
+                    summary: "Категория удалена"
+                })
+            },
+            () => this.props.growl.show({
+                severity: "error",
+                summary: "Ошибка при удалении категории"
+            }))
     }
 
     onAddMerchandiseTypeClicked() {

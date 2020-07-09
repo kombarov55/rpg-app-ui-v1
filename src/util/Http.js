@@ -34,15 +34,17 @@ export function post(url, body, onSuccess, onFailure) {
     }
 }
 
-export function httpDelete(url, onSuccess) {
+export function httpDelete(url, onSuccess = () => {}, onFailure = () => {}) {
     const xhr = new XMLHttpRequest()
     xhr.open("DELETE", url, true)
     xhr.setRequestHeader("Authorization", "Bearer " + Globals.authToken)
     xhr.send()
 
-    if (onSuccess != null) {
-        xhr.onload = function () {
+    xhr.onload = function () {
+        if (xhr.status === 200) {
             onSuccess(parseResponse(xhr.responseText))
+        } else {
+            onFailure()
         }
     }
 }

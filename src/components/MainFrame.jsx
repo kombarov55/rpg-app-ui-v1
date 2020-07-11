@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import AppMenu from "./AppMenu";
 import {Sidebar} from "primereact/sidebar";
 import {Growl} from "primereact/components/growl/Growl";
+import Globals from "../util/Globals";
 
 function mapStateToProps(state) {
     return {
@@ -33,7 +34,7 @@ class ConnectedMainFrame extends React.Component {
                 >
                     <AppMenu/>
                 </Sidebar>
-                <Growl ref={el => this.props.setGrowl(el)}/>
+                <Growl ref={el => Globals.growl = el}/>
                 {
                     this.props.currentView.header == null ?
                         <div className={"main-frame-header"}>

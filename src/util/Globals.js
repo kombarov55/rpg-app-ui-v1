@@ -7,5 +7,6 @@ export default {
     authToken: null,
     gameCreationMode: GameCreationMode.OPEN,
     questionnaireTemplateFormMode: QuestionnaireTemplateFormMode.CREATE,
-    skillCategoryFormMode: SkillCategoryFormMode.CREATE
+    skillCategoryFormMode: SkillCategoryFormMode.CREATE,
+    growl: null
 }

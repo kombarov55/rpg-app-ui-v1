@@ -11,6 +11,7 @@ import SmallDeletableListItem from "../../Common/ListElements/SmallDeletableList
 import {httpDelete, post} from "../../../util/Http";
 import {deleteMerchandiseCategoryUrl, saveMerchandiseCategoryUrl} from "../../../util/Parameters";
 import ListItem from "../../Common/ListElements/ListItem";
+import Popup from "../../../util/Popup";
 
 export default connect(
     state => ({
@@ -100,27 +101,18 @@ export default connect(
                 merchandiseCategoryFormVisible: false
             })
 
-            this.props.growl.show({severity: "info", summary: "Категория товара создана."})
-        }, () => this.props.growl.show({
-            severity: "error",
-            summary: "Ошибка при создании категории товара. Обратитесь к администратору."
-        }))
+            Popup.info("Категория создана")
+        }, () => Popup.error("Ошибка при создании категории товара. Обратитесь к администратору."))
     }
 
     onMerchandiseCategoryItemDelete(category) {
-        httpDelete(deleteMerchandiseCategoryUrl(this.state.id, category.id), () => {
-                this.setState(state => ({
-                    merchandiseCategories: state.merchandiseCategories.filter(it => it !== category)
-                }))
-                this.props.growl.show({
-                    severity: "info",
-                    summary: "Категория удалена"
-                })
-            },
-            () => this.props.growl.show({
-                severity: "error",
-                summary: "Ошибка при удалении категории"
+        httpDelete(
+            deleteMerchandiseCategoryUrl(this.state.id, category.id), () => {
+            this.setState(state => ({
+                merchandiseCategories: state.merchandiseCategories.filter(it => it !== category)
             }))
+            Popup.info("Категория удалена")
+        }, () => Popup.error("Ошибка при удалении категории"))
     }
 
     onAddMerchandiseTypeClicked() {

@@ -94,12 +94,12 @@ export default connect(
     }
 
     onMerchandiseCategoryFormSubmit(form) {
-        this.setState({
-            merchandiseCategories: this.state.merchandiseCategories.concat(form),
-            merchandiseCategoryFormVisible: false
-        })
-
         post(saveMerchandiseCategoryUrl(this.state.id), form, rs => {
+            this.setState({
+                merchandiseCategories: this.state.merchandiseCategories.concat(rs),
+                merchandiseCategoryFormVisible: false
+            })
+
             this.props.growl.show({severity: "info", summary: "Категория товара создана."})
         }, () => this.props.growl.show({
             severity: "error",

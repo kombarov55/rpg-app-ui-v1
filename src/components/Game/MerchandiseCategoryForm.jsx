@@ -30,6 +30,8 @@ export default class MerchandiseCategoryForm extends React.Component {
     }
 
     onSubmitClicked() {
+        if (this.state.name === "") return
+
         this.props.onSubmit(this.state)
         this.setState(this.initialState)
     }

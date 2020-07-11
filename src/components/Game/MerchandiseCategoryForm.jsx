@@ -7,7 +7,7 @@ export default class MerchandiseCategoryForm extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = this.initialState
+        this.state = props.initialState != null ? props.initialState : this.initialState
     }
 
     initialState = {

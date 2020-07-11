@@ -8,7 +8,7 @@ import IsNumeric from "../../../util/IsNumeric";
 import SubmitButton from "../../Common/Buttons/SubmitButton";
 import {patch, post} from "../../../util/Http";
 import {saveCurrencyUrl, updateCurrencyUrl} from "../../../util/Parameters";
-import FormType from "../../../data-layer/enums/FormType";
+import FormType from "../../../data-layer/enums/FormMode";
 import Btn from "../../Common/Buttons/Btn";
 
 function mapStateToProps(state) {

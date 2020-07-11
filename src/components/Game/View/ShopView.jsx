@@ -8,10 +8,11 @@ import {gameView} from "../../../Views";
 import {changeView} from "../../../data-layer/ActionCreators";
 import MerchandiseCategoryForm from "../MerchandiseCategoryForm";
 import SmallDeletableListItem from "../../Common/ListElements/SmallDeletableListItem";
-import {httpDelete, post} from "../../../util/Http";
+import {httpDelete, post, put} from "../../../util/Http";
 import {deleteMerchandiseCategoryUrl, saveMerchandiseCategoryUrl} from "../../../util/Parameters";
 import ListItem from "../../Common/ListElements/ListItem";
 import Popup from "../../../util/Popup";
+import FormMode from "../../../data-layer/enums/FormMode";
 
 export default connect(
     state => ({
@@ -32,9 +33,20 @@ export default connect(
     }
 
     initialState = {
+        merchandiseCategoryFormMode: FormMode.CREATE,
+        merchandiseCategoryObjToUpdate: null,
         merchandiseCategoryFormVisible: false,
+
+        merchandiseTypeFormMode: FormMode.CREATE,
+        merchandiseTypeObjToUpdate: null,
         merchandiseTypeFormVisible: false,
+
+        merchandiseFormMode: FormMode.CREATE,
+        merchandiseObjToUpdate: null,
         merchandiseFormVisible: false,
+
+        merchandiseAmountFormMode: FormMode.CREATE,
+        merchandiseAmountObjToUpdate: null,
         merchandiseAmountFormVisible: false
     }
 
@@ -52,16 +64,23 @@ export default connect(
                     values={this.state.merchandiseCategories.map(category =>
                         <ListItem text={category.name}
                                   onDelete={() => this.onMerchandiseCategoryItemDelete(category)}
-                                  onUpdate={() => alert("update")}
+                                  onEdit={() => this.onEditMerchandiseCategoryClicked(category)}
                         />
                     )}
                     isAddButtonVisible={!this.state.merchandiseCategoryFormVisible}
                     onAddClicked={() => this.onAddMerchandiseCategoryClicked()}
                 />
-
                 {
-                    this.state.merchandiseCategoryFormVisible &&
-                    <MerchandiseCategoryForm onSubmit={(form) => this.onMerchandiseCategoryFormSubmit(form)}/>
+                    this.state.merchandiseCategoryFormVisible && (
+                        this.state.merchandiseCategoryFormMode === FormMode.CREATE ?
+                            <MerchandiseCategoryForm
+                                onSubmit={(form) => this.saveMerchandiseCategory(form)}
+                            /> :
+                            <MerchandiseCategoryForm
+                                initialState={this.state.merchandiseCategoryObjToUpdate}
+                                onSubmit={(form) => this.updateMerchandiseCategory(form)}
+                            />
+                    )
                 }
 
                 <List
@@ -91,10 +110,21 @@ export default connect(
     }
 
     onAddMerchandiseCategoryClicked() {
-        this.setState({merchandiseCategoryFormVisible: true})
+        this.setState({
+            merchandiseCategoryFormVisible: true,
+            merchandiseCategoryFormMode: FormMode.CREATE
+        })
     }
 
-    onMerchandiseCategoryFormSubmit(form) {
+    onEditMerchandiseCategoryClicked(category) {
+        this.setState({
+            merchandiseCategoryFormVisible: true,
+            merchandiseCategoryFormMode: FormMode.EDIT,
+            merchandiseCategoryObjToUpdate: category
+        })
+    }
+
+    saveMerchandiseCategory(form) {
         post(saveMerchandiseCategoryUrl(this.state.id), form, rs => {
             this.setState({
                 merchandiseCategories: this.state.merchandiseCategories.concat(rs),
@@ -105,14 +135,25 @@ export default connect(
         }, () => Popup.error("Ошибка при создании категории товара. Обратитесь к администратору."))
     }
 
+    updateMerchandiseCategory(form) {
+        put(saveMerchandiseCategoryUrl(this.state.id), form, rs => {
+            this.setState({
+                merchandiseCategories: this.state.merchandiseCategories.filter(it => it.id !== rs.id).concat(rs),
+                merchandiseCategoryFormVisible: false
+            })
+
+            Popup.info("Категория создана")
+        }, () => Popup.error("Ошибка при создании категории товара. Обратитесь к администратору."))
+    }
+
     onMerchandiseCategoryItemDelete(category) {
         httpDelete(
             deleteMerchandiseCategoryUrl(this.state.id, category.id), () => {
-            this.setState(state => ({
-                merchandiseCategories: state.merchandiseCategories.filter(it => it !== category)
-            }))
-            Popup.info("Категория удалена")
-        }, () => Popup.error("Ошибка при удалении категории"))
+                this.setState(state => ({
+                    merchandiseCategories: state.merchandiseCategories.filter(it => it !== category)
+                }))
+                Popup.info("Категория удалена")
+            }, () => Popup.error("Ошибка при удалении категории"))
     }
 
     onAddMerchandiseTypeClicked() {

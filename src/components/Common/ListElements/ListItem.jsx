@@ -9,7 +9,7 @@ export default function (props) {
             </div>
             <div className={"list-item-small-right"}>
                 {
-                    props.onUpdate && <Icon className={"pi pi-pencil"} onClick={(() => props.onUpdate())}/>
+                    props.onEdit && <Icon className={"pi pi-pencil"} onClick={(() => props.onEdit())}/>
                 }
                 {
                     props.onDelete != null && <Icon className={"pi pi-times"} onClick={(() => props.onDelete())}/>

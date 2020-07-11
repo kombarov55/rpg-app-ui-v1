@@ -26,7 +26,7 @@ import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 import QuestionnaireTemplateFormMode from "../../../data-layer/enums/QuestionnaireTemplateFormMode";
 import List from "../../Common/Lists/List";
 import SmallEditableListItem from "../../Common/ListElements/SmallEditableListItem";
-import FormType from "../../../data-layer/enums/FormType";
+import FormType from "../../../data-layer/enums/FormMode";
 import ExpandableListItem from "../../Common/ListElements/ExpandableListItem";
 import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableListItemWithButtons";
 

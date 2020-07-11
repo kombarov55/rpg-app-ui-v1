@@ -10,6 +10,7 @@ import MerchandiseCategoryForm from "../MerchandiseCategoryForm";
 import SmallDeletableListItem from "../../Common/ListElements/SmallDeletableListItem";
 import {httpDelete, post} from "../../../util/Http";
 import {deleteMerchandiseCategoryUrl, saveMerchandiseCategoryUrl} from "../../../util/Parameters";
+import ListItem from "../../Common/ListElements/ListItem";
 
 export default connect(
     state => ({
@@ -48,8 +49,9 @@ export default connect(
                     title={"Категории товаров:"}
                     noItemsText={"Нет категорий"}
                     values={this.state.merchandiseCategories.map(category =>
-                        <SmallDeletableListItem text={category.name}
-                                                onDelete={() => this.onMerchandiseCategoryItemDelete(category)}
+                        <ListItem text={category.name}
+                                  onDelete={() => this.onMerchandiseCategoryItemDelete(category)}
+                                  onUpdate={() => alert("update")}
                         />
                     )}
                     isAddButtonVisible={!this.state.merchandiseCategoryFormVisible}

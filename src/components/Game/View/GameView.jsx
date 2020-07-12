@@ -13,7 +13,10 @@ import {
     currencyFormView,
     gameEditView,
     networkView,
-    questionnaireRulesView, shopCreationView, shopView, skillCategoryFormView,
+    questionnaireRulesView,
+    shopCreationView,
+    shopView,
+    skillCategoryFormView,
     subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
@@ -27,7 +30,6 @@ import QuestionnaireTemplateFormMode from "../../../data-layer/enums/Questionnai
 import List from "../../Common/Lists/List";
 import SmallEditableListItem from "../../Common/ListElements/SmallEditableListItem";
 import FormType from "../../../data-layer/enums/FormMode";
-import ExpandableListItem from "../../Common/ListElements/ExpandableListItem";
 import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableListItemWithButtons";
 
 function mapStateToProps(state, props) {

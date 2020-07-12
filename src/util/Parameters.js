@@ -62,3 +62,6 @@ export const saveSkillCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/sk
 export const saveShopUrl = gameId => rootUrl + "/game/" + gameId + "/shop"
 export const saveMerchandiseCategoryUrl = shopId => rootUrl + "/shop/" + shopId + "/merchandiseCategory"
 export const deleteMerchandiseCategoryUrl = (shopId, merchandiseCategoryId) => rootUrl + "/shop/" + shopId + "/merchandiseCategory/" + merchandiseCategoryId
+
+export const merchandiseTypeUrl = shopId => rootUrl + "/shop/" + shopId + "/merchandiseType"
+export const merchandiseTypeByIdUrl = (shopId, merchandiseTypeId) => rootUrl + "/shop/" + shopId + "/merchandiseType/" + merchandiseTypeId

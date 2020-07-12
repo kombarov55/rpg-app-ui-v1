@@ -17,6 +17,7 @@ import ListItem from "../../Common/ListElements/ListItem";
 import Popup from "../../../util/Popup";
 import FormMode from "../../../data-layer/enums/FormMode";
 import MerchandiseTypeForm from "../MerchandiseTypeForm";
+import MerchandiseForm from "../MerchandiseForm";
 
 export default connect(
     state => ({
@@ -120,6 +121,25 @@ export default connect(
                     onAddClicked={() => this.onAddMerchandiseClicked()}
                 />
 
+                {
+                    this.state.merchandiseFormVisible && (
+                        this.state.merchandiseFormMode === FormMode.CREATE ?
+                            <MerchandiseForm
+                                merchandiseCategories={this.state.merchandiseCategories}
+                                merchandiseTypes={this.state.merchandiseTypes}
+
+                                onSubmit={form => this.addMerchandise(form)}
+                            /> :
+                            <MerchandiseForm
+                                merchandiseCategories={this.state.merchandiseCategories}
+                                merchandiseTypes={this.state.merchandiseTypes}
+
+                                initialState={this.state.merchandiseObjToUpdate}
+                                onSubmit={form => this.updateMerchandise(form)}
+                            />
+                    )
+                }
+
                 <List
                     title={"Заполнить магазин:"}
                     isAddButtonVisible={!this.state.merchandiseAmountFormVisible}
@@ -127,6 +147,7 @@ export default connect(
                     onAddClicked={() => this.onAddMerchandiseAmountClicked()}
                 />
 
+                <Btn text={"DEBUG"} onClick={() => console.log(this.state)}/>
                 <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
             </div>
         )
@@ -226,6 +247,14 @@ export default connect(
 
     onAddMerchandiseClicked() {
         this.setState({merchandiseFormVisible: true})
+    }
+
+    addMerchandise(form) {
+        console.log(form)
+    }
+
+    updateMerchandise(form) {
+        console.log(form)
     }
 
     onAddMerchandiseAmountClicked() {

@@ -35,6 +35,7 @@ import SpellCreationView from "./components/Game/View/SpellCreationView";
 import CurrencyCreationView from "./components/Game/View/CurrencyFormView";
 import ShopCreationView from "./components/Game/View/ShopCreationView";
 import ShopView from "./components/Game/View/ShopView";
+import MerchandiseView from "./components/Game/View/MerchandiseView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -85,3 +86,5 @@ export const currencyFormView = {component: <CurrencyCreationView/>, label: "В�
 
 export const shopCreationView = {component: <ShopCreationView/>, label: "Создание магазина"}
 export const shopView = {component: <ShopView/>, label: "Магазин"}
+
+export const merchandiseView = {component: <MerchandiseView/>, label: "Товары"}

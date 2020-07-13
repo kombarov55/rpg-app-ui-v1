@@ -11,8 +11,6 @@ import priceCombinationToString from "../../util/priceCombinationToString";
 import SkillInfluenceForm from "./SkillInfluenceForm";
 import FormMode from "../../data-layer/enums/FormMode";
 import {connect} from "react-redux"
-import {currenciesByGameIdUrl, skillsByGameIdUrl} from "../../util/Parameters";
-import {get} from "../../util/Http"
 
 export default connect(
     state => ({
@@ -20,13 +18,21 @@ export default connect(
     }), null
 )(class MerchandiseForm extends React.Component {
 
+    /**
+     * @param props: {
+     *   types:      [{MerchandiseType}],
+     *   categories: [{MerchandiseCategory}],
+     *   skills:     [{Skill}]
+     *   currencies: [{Currency}]
+     * }
+     */
     constructor(props) {
         super(props)
 
         this.state = props.initialState != null ? props.initialState : this.initialState
 
-        get(skillsByGameIdUrl(this.props.gameId), rs => this.setState({skills: rs}))
-        get(currenciesByGameIdUrl(this.props.gameId), rs => this.setState({currencies: rs}))
+        // get(shortSkillsByGameIdUrl(this.props.gameId), rs => this.setState({skills: rs}))
+        // get(currenciesByGameIdUrl(this.props.gameId), rs => this.setState({currencies: rs}))
     }
 
     initialState = {
@@ -38,8 +44,8 @@ export default connect(
         prices: [],
         skillInfluences: [],
 
-        skills: [],
-        currencies: [],
+        // skills: [],
+        // currencies: [],
 
         skillInfluenceFormVisible: false,
         skillInfluenceFormMode: FormMode.CREATE,
@@ -63,7 +69,7 @@ export default connect(
                 <SelectButton
                     options={this.props.merchandiseCategories.map(category => ({
                         label: category.name,
-                        value: category.id
+                        value: category
                     }))}
                     value={this.state.category}
                     onChange={e => this.setState({category: e.target.value})}
@@ -71,7 +77,7 @@ export default connect(
 
                 <InputLabel text={"Тип:"}/>
                 <SelectButton
-                    options={this.props.merchandiseTypes.map(type => ({label: type.name, value: type.id}))}
+                    options={this.props.merchandiseTypes.map(type => ({label: type.name, value: type}))}
                     value={this.state.type}
                     onChange={e => this.setState({type: e.target.value})}
                 />
@@ -89,7 +95,7 @@ export default connect(
                           />
                       )}
                 />
-                <PriceInput currencies={this.state.currencies.map(it => it.name)}
+                <PriceInput currencies={this.props.currencies.map(it => it.name)}
                             onSubmit={priceList => this.setState(state => ({prices: state.prices.concat([priceList])}))}
                 />
 
@@ -108,11 +114,11 @@ export default connect(
                     this.state.skillInfluenceFormVisible && (
                         this.state.skillInfluenceFormMode === FormMode.CREATE ?
                             <SkillInfluenceForm
-                                skills={this.state.skills}
+                                skills={this.props.skills}
                                 onSubmit={form => this.saveSkillInfluence(form)}
                             /> :
                             <SkillInfluenceForm
-                                skills={this.state.skills}
+                                skills={this.props.skills}
                                 initialState={this.state.skillInfluenceObjToUpdate}
                                 onSubmit={form => this.saveSkillInfluence(form)}
                             />
@@ -142,7 +148,8 @@ export default connect(
 
     saveSkillInfluence(form) {
         this.setState(state => ({
-            skillInfluences: state.skillInfluences.concat(form)
+            skillInfluences: state.skillInfluences.concat(form),
+            skillInfluenceFormVisible: false
         }))
     }
 
@@ -154,7 +161,15 @@ export default connect(
     }
 
     onSubmitClicked() {
-        this.props.onSubmit(this.state)
+        this.props.onSubmit({
+            name: this.state.name,
+            img: this.state.img,
+            category: this.state.category,
+            type: this.state.type,
+            slots: this.state.slots,
+            prices: this.state.prices,
+            skillInfluences: this.state.skillInfluences
+        })
         this.setState(this.initialState)
     }
 })

@@ -1,43 +1,53 @@
-import React from "react"
+import React from "react";
 import {connect} from "react-redux"
-import FormViewStyle from "../../../styles/FormViewStyle";
-import ViewInfo from "../../Common/Constructions/ViewInfo";
-import List from "../../Common/Lists/List";
-import Btn from "../../Common/Buttons/Btn";
-import {gameView} from "../../../Views";
 import {changeView} from "../../../data-layer/ActionCreators";
-import MerchandiseCategoryForm from "../MerchandiseCategoryForm";
-import {httpDelete, post, put} from "../../../util/Http";
-import {
-    merchandiseCategoryByIdUrl,
-    merchandiseTypeByIdUrl, merchandiseTypeUrl,
-    merchandiseCategoryUrl
-} from "../../../util/Parameters";
-import ListItem from "../../Common/ListElements/ListItem";
-import Popup from "../../../util/Popup";
+import {gameView} from "../../../Views";
+import Btn from "../../Common/Buttons/Btn";
 import FormMode from "../../../data-layer/enums/FormMode";
+import FormViewStyle from "../../../styles/FormViewStyle";
+import List from "../../Common/Lists/List";
+import ListItem from "../../Common/ListElements/ListItem";
+import MerchandiseCategoryForm from "../MerchandiseCategoryForm";
 import MerchandiseTypeForm from "../MerchandiseTypeForm";
 import MerchandiseForm from "../MerchandiseForm";
+import {get, httpDelete, post, put} from "../../../util/Http";
+import Popup from "../../../util/Popup";
+import {
+    currenciesByGameIdUrl,
+    merchandiseCategoryByIdUrl,
+    merchandiseCategoryUrl,
+    merchandiseTypeByIdUrl,
+    merchandiseTypeUrl, shortSkillsByGameIdUrl
+} from "../../../util/Parameters";
 
 export default connect(
     state => ({
-        gameId: state.activeGame.id,
         changeViewParams: state.changeViewParams
     }),
+
     dispatch => ({
         toPrevView: () => dispatch(changeView(gameView))
     })
-)(class ShopView extends React.Component {
-
+)(class MerchandiseView extends React.Component {
     constructor(props) {
         super(props)
 
-        const {shop} = this.props.changeViewParams
+        this.gameId = props.changeViewParams.gameId
 
-        this.state = Object.assign({}, shop, this.initialState)
+        this.state = this.initialState
+
+        get(merchandiseCategoryUrl(this.gameId), rs => this.setState({merchandiseCategories: rs}))
+        get(merchandiseTypeUrl(this.gameId), rs => this.setState({merchandiseTypes: rs}))
+        get(shortSkillsByGameIdUrl(this.gameId), rs => this.setState({skills: rs}))
+        get(currenciesByGameIdUrl(this.gameId), rs => this.setState({currencies: rs}))
     }
 
     initialState = {
+        merchandiseCategories: [],
+        merchandiseTypes: [],
+        skills: [],
+        currencies: [],
+
         merchandiseCategoryFormMode: FormMode.CREATE,
         merchandiseCategoryObjToUpdate: null,
         merchandiseCategoryFormVisible: false,
@@ -48,21 +58,12 @@ export default connect(
 
         merchandiseFormMode: FormMode.CREATE,
         merchandiseObjToUpdate: null,
-        merchandiseFormVisible: false,
-
-        merchandiseAmountFormMode: FormMode.CREATE,
-        merchandiseAmountObjToUpdate: null,
-        merchandiseAmountFormVisible: false
+        merchandiseFormVisible: false
     }
 
     render() {
         return (
             <div style={FormViewStyle}>
-                <ViewInfo
-                    name={"Магазин"}
-                    description={"Магазин для игроков"}
-                />
-
                 <List
                     title={"Категории товаров:"}
                     noItemsText={"Нет категорий"}
@@ -127,25 +128,22 @@ export default connect(
                             <MerchandiseForm
                                 merchandiseCategories={this.state.merchandiseCategories}
                                 merchandiseTypes={this.state.merchandiseTypes}
+                                currencies={this.state.currencies}
+                                skills={this.state.skills}
 
                                 onSubmit={form => this.addMerchandise(form)}
                             /> :
                             <MerchandiseForm
                                 merchandiseCategories={this.state.merchandiseCategories}
                                 merchandiseTypes={this.state.merchandiseTypes}
+                                currencies={this.state.currencies}
+                                skills={this.state.skills}
 
                                 initialState={this.state.merchandiseObjToUpdate}
                                 onSubmit={form => this.updateMerchandise(form)}
                             />
                     )
                 }
-
-                <List
-                    title={"Заполнить магазин:"}
-                    isAddButtonVisible={!this.state.merchandiseAmountFormVisible}
-                    noItemsText={"Магазин пуст"}
-                    onAddClicked={() => this.onAddMerchandiseAmountClicked()}
-                />
 
                 <Btn text={"DEBUG"} onClick={() => console.log(this.state)}/>
                 <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
@@ -185,7 +183,7 @@ export default connect(
 
     onDeleteMerchandiseTypeClicked(merchandiseType) {
         httpDelete(
-            merchandiseTypeByIdUrl(this.props.gameId, merchandiseType.id), () => {
+            merchandiseTypeByIdUrl(this.gameId, merchandiseType.id), () => {
                 this.setState(state => ({
                     merchandiseTypes: state.merchandiseTypes.filter(it => it.id !== merchandiseType.id)
                 }))
@@ -194,7 +192,7 @@ export default connect(
     }
 
     saveMerchandiseCategory(form) {
-        post(merchandiseCategoryUrl(this.props.gameId), form, rs => {
+        post(merchandiseCategoryUrl(this.gameId), form, rs => {
             this.setState({
                 merchandiseCategories: this.state.merchandiseCategories.concat(rs),
                 merchandiseCategoryFormVisible: false
@@ -205,7 +203,7 @@ export default connect(
     }
 
     updateMerchandiseCategory(form) {
-        put(merchandiseCategoryUrl(this.props.gameId), form, rs => {
+        put(merchandiseCategoryUrl(this.gameId), form, rs => {
             this.setState({
                 merchandiseCategories: this.state.merchandiseCategories.filter(it => it.id !== rs.id).concat(rs),
                 merchandiseCategoryFormVisible: false
@@ -216,7 +214,7 @@ export default connect(
     }
 
     saveMerchandiseType(form) {
-        post(merchandiseTypeUrl(this.props.gameId), form, rs => {
+        post(merchandiseTypeUrl(this.gameId), form, rs => {
             this.setState(state => ({
                 merchandiseTypes: state.merchandiseTypes.concat(rs),
                 merchandiseTypeFormVisible: false
@@ -226,7 +224,7 @@ export default connect(
     }
 
     updateMerchandiseType(form) {
-        put(merchandiseTypeByIdUrl(this.props.gameId, form.id), form, rs => {
+        put(merchandiseTypeByIdUrl(this.gameId, form.id), form, rs => {
             this.setState(state => ({
                 merchandiseTypes: state.merchandiseTypes.filter(it => it.id !== rs.id).concat(rs),
                 merchandiseTypeFormVisible: false
@@ -237,7 +235,7 @@ export default connect(
 
     onMerchandiseCategoryItemDelete(category) {
         httpDelete(
-            merchandiseCategoryByIdUrl(this.props.gameId, category.id), () => {
+            merchandiseCategoryByIdUrl(this.gameId, category.id), () => {
                 this.setState(state => ({
                     merchandiseCategories: state.merchandiseCategories.filter(it => it !== category)
                 }))
@@ -255,11 +253,6 @@ export default connect(
 
     updateMerchandise(form) {
         console.log(form)
-    }
-
-    onAddMerchandiseAmountClicked() {
-        this.setState({merchandiseAmountFormVisible: true})
-
     }
 
     onBackClicked() {

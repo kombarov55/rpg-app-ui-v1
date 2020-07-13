@@ -11,7 +11,7 @@ import {
     adminPageView,
     conversionView,
     currencyFormView,
-    gameEditView,
+    gameEditView, merchandiseView,
     networkView,
     questionnaireRulesView,
     shopCreationView,
@@ -81,6 +81,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 props.changeView(subnetworkView)
                 break
         }
+    }
+
+    function onMerchandiseClicked() {
+        props.changeView(merchandiseView, {
+            gameId: props.activeGame.id
+        })
     }
 
     function onAddQuestionnaireTemplateClicked() {
@@ -169,6 +175,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
 
                 <div className={"game-view-button-group"}>
+                    <Btn text={"Товары"} onClick={() => onMerchandiseClicked()}/>
                     <Btn text={"Присоединиться к игре"}/>
                     <Btn text={"Создать шаблон анкеты"} onClick={() => onAddQuestionnaireTemplateClicked()}/>
                     <Btn text={"Настройки обмена валют"} onClick={() => onConversionClicked()}/>

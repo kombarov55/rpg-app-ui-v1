@@ -47,6 +47,7 @@ export const questionnaireTemplateRestoreUrl = questionnaireId => questionnaireT
 
 
 export const skillsByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/skill"
+export const shortSkillsByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/skill/short"
 export const skillUrl = rootUrl + "/skill"
 export const updateSkillUrl = skillId => skillUrl + "/" + skillId
 
@@ -60,8 +61,12 @@ export const updateCurrencyUrl = (gameId, currencyId) => rootUrl + "/game/" + ga
 export const saveSkillCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/skillCategory"
 
 export const saveShopUrl = gameId => rootUrl + "/game/" + gameId + "/shop"
-export const saveMerchandiseCategoryUrl = shopId => rootUrl + "/shop/" + shopId + "/merchandiseCategory"
-export const deleteMerchandiseCategoryUrl = (shopId, merchandiseCategoryId) => rootUrl + "/shop/" + shopId + "/merchandiseCategory/" + merchandiseCategoryId
 
-export const merchandiseTypeUrl = shopId => rootUrl + "/shop/" + shopId + "/merchandiseType"
-export const merchandiseTypeByIdUrl = (shopId, merchandiseTypeId) => rootUrl + "/shop/" + shopId + "/merchandiseType/" + merchandiseTypeId
+export const merchandiseCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/merchandiseCategory"
+export const merchandiseCategoryByIdUrl = (gameId, merchandiseCategoryId) => rootUrl + "/game/" + gameId + "/merchandiseCategory/" + merchandiseCategoryId
+
+export const merchandiseTypeUrl = gameId => rootUrl + "/game/" + gameId + "/merchandiseType"
+export const merchandiseTypeByIdUrl = (gameId, merchandiseTypeId) => rootUrl + "/game/" + gameId + "/merchandiseType/" + merchandiseTypeId
+
+export const merchandiseUrl = gameId => rootUrl + "/game/" + gameId + "/merchandise"
+export const merchandiseByIdUrl = (gameId, merchandiseId) => rootUrl + "/game/" + gameId + "/merchandise/" + merchandiseId

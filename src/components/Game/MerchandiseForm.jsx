@@ -95,6 +95,7 @@ export default connect(
 
                 <InputLabel text={"Влияние на навыки:"}/>
                 <List noItemsText={"Пусто"}
+                      values={this.state.skillInfluences.map(skillInfluence => <ListItem text={skillInfluence.skill.name + " " + skillInfluence.modifier.name + " " + skillInfluence.amount}/>)}
                       isAddButtonVisible={!this.state.skillInfluenceFormVisible}
                       onAddClicked={() => this.onAddInfluenceClicked()}
                 />
@@ -114,7 +115,7 @@ export default connect(
                 }
 
 
-                <SubmitButton text={"Сохранить"}
+                <SubmitButton text={"Сохранить товар"}
                               onClick={() => this.onSubmitClicked()}
                 />
             </div>

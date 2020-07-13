@@ -4,6 +4,7 @@ import InputLabel from "../Common/Labels/InputLabel";
 import SubmitButton from "../Common/Buttons/SubmitButton";
 import {SelectButton} from "primereact/selectbutton";
 import {FormLabel} from "uikit-react";
+import ArithmeticModifiers from "../../data-layer/enums/AriphmeticModifiers";
 
 export default class SkillInfluenceForm extends React.Component {
     constructor(props) {
@@ -13,7 +14,7 @@ export default class SkillInfluenceForm extends React.Component {
     }
 
     initialState = {
-        skillId: "",
+        skill: {},
         modifier: "",
         amount: 0
     }
@@ -24,19 +25,14 @@ export default class SkillInfluenceForm extends React.Component {
                 <FormLabel text={"Влияние на навык:"}/>
                 <InputLabel text={"Навык:"}/>
                 <SelectButton
-                    options={this.props.skills.map(skill => ({label: skill.name, value: skill.id}))}
-                    value={this.state.skillId}
-                    onChange={e => this.setState({skillId: e.target.value})}
+                    options={this.props.skills.map(skill => ({label: skill.name, value: skill}))}
+                    value={this.state.skill}
+                    onChange={e => this.setState({skill: e.target.value})}
                 />
 
                 <InputLabel text={"Модификатор:"}/>
                 <SelectButton
-                    options={[
-                        {label: "+", value: "PLUS"},
-                        {label: "-", value: "MINUS"},
-                        {label: "*", value: "MULTIPLY"},
-                        {label: "/", value: "DIVIDE"}
-                    ]}
+                    options={ArithmeticModifiers.values.map(it => ({label: it.name, value: it}))}
                     value={this.state.modifier}
                     onChange={e => this.setState({modifier: e.target.value})}
                 />
@@ -46,7 +42,7 @@ export default class SkillInfluenceForm extends React.Component {
                        onChange={e => this.setState({amount: e.target.value})}
                 />
 
-                <SubmitButton text={"Сохранить"}
+                <SubmitButton text={"Сохранить влияние на навык"}
                               onClick={() => this.onSubmitClicked()}
                 />
             </div>

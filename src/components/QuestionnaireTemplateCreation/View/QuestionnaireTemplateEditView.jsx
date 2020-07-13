@@ -16,6 +16,7 @@ import {InputTextarea} from "primereact/inputtextarea";
 import {gameView, questionnaireTemplateEditView, skillSelectionView} from "../../../Views";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
 import Preload from "../../../util/Preload";
+import Popup from "../../../util/Popup";
 
 
 function mapStateToProps(state, props) {
@@ -65,7 +66,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
 
         put(questionnaireTemplateByIdUrl(props.questionnaireTemplateForm.id), form, rs => {
-            props.growl.show({severity: "info", summary: "Шаблон анкеты обновлен"})
+            Popup.info("Шаблон анкеты обновлен")
             props.updateQuestionnaireTemplateForm(DefaultFormValues.questionnaireTemplateForm)
 
             props.setActiveGame(Object.assign({}, props.activeGame, {

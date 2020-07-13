@@ -9,6 +9,7 @@ import {post, upload} from "../../../../util/Http";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import {useForm} from "react-hook-form";
+import Popup from "../../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -42,7 +43,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             props.setNetworks(props.networks.concat(rs))
             updateNetworkForm(DefaultFormValues.networkForm)
             props.changeView(adminPageView)
-            props.growl.show({severity: "info", summary: "Сеть создана"})
+            Popup.info("Сеть создана")
         })
     }
 

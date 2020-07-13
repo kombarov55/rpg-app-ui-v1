@@ -31,6 +31,7 @@ import List from "../../Common/Lists/List";
 import SmallEditableListItem from "../../Common/ListElements/SmallEditableListItem";
 import FormType from "../../../data-layer/enums/FormMode";
 import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableListItemWithButtons";
+import Popup from "../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -61,7 +62,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onDeleteClicked() {
         if (window.confirm("Удалить игру?")) {
             httpDelete(deleteGameUrl(props.activeGame.id), () => {
-                props.growl.show({severity: "info", summary: "Игра архивирована."})
+                Popup.info("Игра архивирована.")
                 props.setGames(props.games.filter(it => it.id !== props.activeGame.id))
                 onBackClicked()
             })

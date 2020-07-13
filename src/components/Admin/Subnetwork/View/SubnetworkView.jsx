@@ -16,6 +16,7 @@ import {httpDelete} from "../../../../util/Http";
 import {deleteSubnetworkUrl} from "../../../../util/Parameters";
 import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
+import Popup from "../../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -59,7 +60,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onDeleteClicked() {
         if (window.confirm("Удалить подсеть?")) {
             httpDelete(deleteSubnetworkUrl(props.activeNetwork.id, props.activeSubnetwork.id), () => {
-                props.growl.show({severity: "info", summary: "Подсеть архивирована."})
+                Popup.info("Подсеть архивирована.")
                 props.setSubnetworks(props.subnetworks.filter(it => it.id !== props.activeSubnetwork.id))
                 props.changeView(networkView)
             })

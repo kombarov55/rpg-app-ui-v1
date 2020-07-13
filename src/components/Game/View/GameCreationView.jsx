@@ -22,6 +22,7 @@ import NoItemsLabel from "../../Common/Labels/NoItemsLabel";
 import {useForm} from "react-hook-form";
 import SkillCategoryForm from "../SkillCategoryForm";
 import SkillCategoryFormMode from "../../../data-layer/enums/SkillCategoryFormMode";
+import Popup from "../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -98,7 +99,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             props.setGames(props.games.concat(rs))
             props.updateGameForm(DefaultFormValues.gameForm)
             props.changeView(nextView)
-            props.growl.show({severity: "info", summary: "Игра создана"})
+            Popup.info("Игра создана")
         })
     }
 

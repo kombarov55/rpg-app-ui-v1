@@ -7,6 +7,7 @@ import {networkSelectionView, networkView} from "../../../../Views";
 import {InputTextarea} from "primereact/inputtextarea";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import {useForm} from "react-hook-form";
+import Popup from "../../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -35,7 +36,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             props.setActiveNetwork(rs)
             updateNetworkForm({title: "", description: ""})
             props.changeView(networkView)
-            props.growl.show({severity: "info", summary: "Сеть обновлена"})
+            Popup.info("Сеть обновлена")
         })
     }
 

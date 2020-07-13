@@ -17,6 +17,7 @@ import {
 import FormatDate from "../../util/FormatDate";
 import Globals from "../../util/Globals";
 import {conversationListView, conversationView} from "../../Views";
+import Popup from "../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -75,12 +76,9 @@ class ConnectedAnnouncementItem extends React.Component {
 
     onFavoriteClicked() {
         this.props.toggleFavorite()
-        this.props.growl.show({
-            severity: "info",
-            summary: !this.props.favAnnouncements.some(it => it === this.props.id) ?
-                "Объявление добавлено в избранное" :
-                "Объявление удалено из избранных"
-        })
+        Popup.info(!this.props.favAnnouncements.some(it => it === this.props.id) ?
+            "Объявление добавлено в избранное" :
+            "Объявление удалено из избранных")
         patch(toggleFavAnnouncementUrl(Globals.userId), JSON.stringify({announcementId: this.props.id}))
     }
 
@@ -96,12 +94,9 @@ class ConnectedAnnouncementItem extends React.Component {
 
     onRespondClicked() {
         this.props.toggleRespond()
-        this.props.growl.show({
-            severity: "info",
-            summary: !this.props.respondedAnnouncements.some(it => it === this.props.id) ?
-                "Вы откликнулись на объявление" :
-                "Отклик с объявления убран"
-        })
+        Popup.info(!this.props.respondedAnnouncements.some(it => it === this.props.id) ?
+            "Вы откликнулись на объявление" :
+            "Отклик с объявления убран")
         patch(toggleRespondAnnouncementUrl(Globals.userId), JSON.stringify({announcementId: this.props.id}))
     }
 

@@ -3,14 +3,16 @@ import {uploadUrl} from "./Parameters";
 import axios from "axios"
 import getOrDefault from "./getOrDefault";
 
-export function get(url, onSuccess) {
+export function get(url, onSuccess = () => {}, onFailure = () => {}) {
     const xhr = new XMLHttpRequest()
     xhr.open("GET", url, true)
     xhr.setRequestHeader("Authorization", "Bearer " + Globals.authToken)
     xhr.send()
-    if (onSuccess != null) {
-        xhr.onload = function () {
+    xhr.onload = function () {
+        if (xhr.status == 200) {
             onSuccess(parseResponse(xhr.responseText))
+        } else {
+            onFailure()
         }
     }
 }

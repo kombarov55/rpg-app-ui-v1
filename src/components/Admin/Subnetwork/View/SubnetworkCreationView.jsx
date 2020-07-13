@@ -7,6 +7,7 @@ import {subnetworkUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parame
 import {networkView} from "../../../../Views";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import {useForm} from "react-hook-form";
+import Popup from "../../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -33,7 +34,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             props.setSubnetworks(props.subnetworks.concat(rs))
             props.updateSubnetworkForm({title: "", description: ""})
             props.changeView(networkView)
-            props.growl.show({severity: "info", summary: "Подсеть создана"})
+            Popup.info("Подсеть создана")
         })
     }
 

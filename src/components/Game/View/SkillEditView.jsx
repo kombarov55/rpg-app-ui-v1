@@ -8,6 +8,7 @@ import {InputTextarea} from "primereact/inputtextarea";
 import {put} from "../../../util/Http";
 import {updateSkillUrl} from "../../../util/Parameters";
 import {skillsView} from "../../../Views";
+import Popup from "../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -231,7 +232,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
         put(updateSkillUrl(props.skillForm.id), body, rs => {
             props.changeView(skillsView)
-            props.growl.show({severity: "info", summary: "Навык обновлен"})
+            Popup.info("Навык обновлен")
         })
     }
 

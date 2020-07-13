@@ -15,6 +15,7 @@ import {announcementView} from "../../Views";
 import {GameTypes} from "../../data-layer/enums/GameType";
 import {Sex} from "../../data-layer/enums/Sex";
 import {createAnnouncement} from "../../util/HttpRequests";
+import Popup from "../../util/Popup";
 
 const uploadUid = generateUuid()
 
@@ -65,7 +66,7 @@ function ConnectedAnnoucementCreation(props) {
                 props.addAnouncement(json)
                 props.changeView()
                 props.clearAnnouncementForm()
-                props.growl.show({severity: "info", summary: "Объявление опубликовано"})
+                Popup.info("Объявление опубликовано")
             }
         )
     }

@@ -27,6 +27,7 @@ import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 import Preload from "../../../../util/Preload";
 import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
 import Label from "../../../Common/Labels/Label";
+import Popup from "../../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -85,7 +86,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         const toDelete = window.confirm("Удалить сеть?")
         if (toDelete) {
             httpDelete(deleteNetworkUrl(props.activeNetwork.id), () => {
-                props.growl.show({severity: "info", summary: "Сеть архивирована."})
+                Popup.info("Сеть архивирована.")
                 props.setNetworks(props.networks.filter(it => it.id !== props.activeNetwork.id))
                 props.changeView(adminPageView)
             })

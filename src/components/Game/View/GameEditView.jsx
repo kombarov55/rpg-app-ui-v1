@@ -30,6 +30,7 @@ import AddItemButton from "../../Common/Buttons/AddItemButton";
 import {useForm} from "react-hook-form";
 import HorizontalListItem from "../../Common/ListElements/HorizontalListItem";
 import SkillCategoryFormMode from "../../../data-layer/enums/SkillCategoryFormMode";
+import Popup from "../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -97,7 +98,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }
 
         put(url, props.gameForm, rs => {
-            props.growl.show({severity: "info", summary: "Игра обновлена"})
+            Popup.info("Игра обновлена")
             props.setGames(props.games.filter(it => it.id !== rs.id).concat(rs))
             props.updateGameForm(DefaultFormValues.gameForm)
             props.setActiveGame(rs)

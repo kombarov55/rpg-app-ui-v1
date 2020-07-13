@@ -18,6 +18,8 @@ import ExpandableListItemWithBullets from "../Common/ListElements/ExpandableList
 import nonNullList from "../../util/nonNullList";
 import priceListToString from "../../util/priceCombinationListToString";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
+import {Growl} from "primereact/growl";
+import Popup from "../../util/Popup";
 
 const formStyle = {
     width: "90%",
@@ -47,11 +49,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         post(saveSkillCategoryUrl(props.activeGame.id), props.skillCategoryForm, rs => {
             props.updateActiveGame({skillCategories: props.activeGame.skillCategories.concat(props.skillCategoryForm)})
             props.updateSkillCategoryForm(DefaultFormValues.skillCategoryForm)
-            props.growl.show({severity: "info", summary: "Категория создана."})
-        }, () => props.growl.show({
-            severity: "info",
-            summary: "Ошибка при создании категории навыка. Обратитесь к администратору."
-        }))
+            Popup.info("Категория создана.")
+        }, () => Popup.error("Ошибка при создании категории навыка. Обратитесь к администратору."))
 
         props.changeView(gameView)
     }

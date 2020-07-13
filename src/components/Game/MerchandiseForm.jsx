@@ -8,13 +8,25 @@ import PriceInput from "../Common/Input/PriceInput";
 import List from "../Common/Lists/List";
 import ListItem from "../Common/ListElements/ListItem";
 import priceCombinationToString from "../../util/priceCombinationToString";
+import SkillInfluenceForm from "./SkillInfluenceForm";
+import FormMode from "../../data-layer/enums/FormMode";
+import {connect} from "react-redux"
+import {currenciesByGameIdUrl, skillsByGameIdUrl} from "../../util/Parameters";
+import {get} from "../../util/Http"
 
-export default class MerchandiseForm extends React.Component {
+export default connect(
+    state => ({
+        gameId: state.activeGame.id
+    }), null
+)(class MerchandiseForm extends React.Component {
 
     constructor(props) {
         super(props)
 
         this.state = props.initialState != null ? props.initialState : this.initialState
+
+        get(skillsByGameIdUrl(this.props.gameId), rs => this.setState({skills: rs}))
+        get(currenciesByGameIdUrl(this.props.gameId), rs => this.setState({currencies: rs}))
     }
 
     initialState = {
@@ -24,7 +36,14 @@ export default class MerchandiseForm extends React.Component {
         type: "",
         slots: 0,
         prices: [],
-        skillInfluences: []
+        skillInfluences: [],
+
+        skills: [],
+        currencies: [],
+
+        skillInfluenceFormVisible: false,
+        skillInfluenceFormMode: FormMode.CREATE,
+        skillInfluenceObjToUpdate: null
     }
 
     render() {
@@ -70,11 +89,30 @@ export default class MerchandiseForm extends React.Component {
                           />
                       )}
                 />
-                <PriceInput currencies={["Золото", "Серебро", "Опыт"]}
+                <PriceInput currencies={this.state.currencies.map(it => it.name)}
                             onSubmit={priceList => this.setState(state => ({prices: state.prices.concat([priceList])}))}
                 />
 
                 <InputLabel text={"Влияние на навыки:"}/>
+                <List noItemsText={"Пусто"}
+                      isAddButtonVisible={!this.state.skillInfluenceFormVisible}
+                      onAddClicked={() => this.onAddInfluenceClicked()}
+                />
+                {
+                    this.state.skillInfluenceFormVisible && (
+                        this.state.skillInfluenceFormMode === FormMode.CREATE ?
+                            <SkillInfluenceForm
+                                skills={this.state.skills}
+                                onSubmit={form => this.saveSkillInfluence(form)}
+                            /> :
+                            <SkillInfluenceForm
+                                skills={this.state.skills}
+                                initialState={this.state.skillInfluenceObjToUpdate}
+                                onSubmit={form => this.saveSkillInfluence(form)}
+                            />
+                    )
+                }
+
 
                 <SubmitButton text={"Сохранить"}
                               onClick={() => this.onSubmitClicked()}
@@ -89,8 +127,21 @@ export default class MerchandiseForm extends React.Component {
         }))
     }
 
+    onAddInfluenceClicked() {
+        this.setState({
+            skillInfluenceFormVisible: true,
+            skillInfluenceFormMode: FormMode.CREATE
+        })
+    }
+
+    saveSkillInfluence(form) {
+        this.setState(state => ({
+            skillInfluences: state.skillInfluences.concat(form)
+        }))
+    }
+
     onSubmitClicked() {
         this.props.onSubmit(this.state)
         this.setState(this.initialState)
     }
-}
+})

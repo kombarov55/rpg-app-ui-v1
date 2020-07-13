@@ -18,6 +18,7 @@ import UpgradeView from "../LvlUpgradeView";
 import SubmitButton from "../../Common/Buttons/FormSubmitButton";
 import {skillCategoryFormView} from "../../../Views";
 import DefaultFormValues from "../../../data-layer/DefaultFormValues";
+import Popup from "../../../util/Popup";
 
 function mapStateToProps(state) {
     return {
@@ -62,7 +63,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateSkillCategoryForm({skills: props.skillCategoryForm.skills.concat(props.skillForm)})
         props.updateSkillForm(DefaultFormValues.skillForm)
         props.changeView(skillCategoryFormView)
-        props.growl.show({severity: "info", summary: "Навык создан"})
+        Popup.info("Навык создан")
     }
 
     function onBackClicked() {
@@ -135,7 +136,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         onSubmit={data => onUpgradeFormSubmit(data)}/>
                 </>
             }
-            <SubmitButton text={"Сохранить"} />
+            <SubmitButton text={"Сохранить"}/>
             <Btn text={"Назад"} onClick={() => onBackClicked()}/>
         </form>
     )

@@ -10,6 +10,7 @@ import {patch, post} from "../../../util/Http";
 import {saveCurrencyUrl, updateCurrencyUrl} from "../../../util/Parameters";
 import FormType from "../../../data-layer/enums/FormMode";
 import Btn from "../../Common/Buttons/Btn";
+import Popup from "../../../util/Popup";
 
 function mapStateToProps(state) {
     return {
@@ -76,11 +77,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(class CurrencyFormVi
         if (!IsNumeric(this.state.priceInActivityPoints)) return
 
         post(saveCurrencyUrl(this.props.activeGame.id), this.state, rs => {
-            this.props.growl.show({severity: "info", summary: "Валюта добавлена"})
+            Popup.info("Валюта добавлена")
             this.props.updateActiveGame({
                 currencies: this.props.activeGame.currencies.concat(rs)
             })
-        }, () => this.props.growl.show({severity: "error", summary: "Валюта добавлена"}))
+        }, () => Popup.error("Валюта добавлена"))
 
         this.setState(this.initialState)
         this.props.toPrevView()
@@ -90,14 +91,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(class CurrencyFormVi
         if (!IsNumeric(this.state.priceInActivityPoints)) return
 
         patch(updateCurrencyUrl(this.props.activeGame.id, this.state.id), this.state, rs => {
-            this.props.growl.show({severity: "info", summary: "Валюта обновлена"})
+            Popup.info("Валюта обновлена")
             this.props.updateActiveGame({
                 currencies: this.props.activeGame.currencies.filter(it => it.id !== rs.id).concat(rs)
             })
-        }, () => this.props.growl.show({
-            severity: "error",
-            summary: "Ошибка при добавлении валюты. Обратитесь к администратору"
-        }))
+        }, Popup.error("Ошибка при добавлении валюты. Обратитесь к администратору"))
 
         this.setState(this.initialState)
         this.props.toPrevView()

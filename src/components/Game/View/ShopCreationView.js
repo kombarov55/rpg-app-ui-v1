@@ -11,6 +11,7 @@ import {MultiSelect} from "primereact/multiselect";
 import {SelectButton} from "primereact/selectbutton";
 import SubmitButton from "../../Common/Buttons/SubmitButton";
 import {post} from "../../../util/Http";
+import Popup from "../../../util/Popup";
 
 function mapStateToProps(state) {
     return {
@@ -76,12 +77,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(class ShopCreationVi
         post(saveShopUrl(this.props.activeGame.id), this.state, rs => {
             updateActiveGame({shops: this.props.activeGame.shops.concat(rs)})
             this.setState(this.initialState)
-            this.props.growl.show({severity: "info", summary: "Магазин создан."})
+            Popup.info("Магазин создан.")
 
-        }, () => this.props.growl.show({
-            severity: "error",
-            summary: "Ошибка при создании магазина. Обратитесь к администратору."
-        }))
+        }, Popup.error("Ошибка при создании магазина. Обратитесь к администратору."))
 
         this.props.toPrevView()
     }

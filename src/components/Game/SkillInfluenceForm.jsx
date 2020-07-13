@@ -14,8 +14,8 @@ export default class SkillInfluenceForm extends React.Component {
     }
 
     initialState = {
-        skill: {},
-        modifier: "",
+        skill: null,
+        modifier: null,
         amount: 0
     }
 
@@ -50,7 +50,8 @@ export default class SkillInfluenceForm extends React.Component {
     }
 
     onSubmitClicked() {
-        if (this.state.name === "") return
+        console.log(this.state)
+        if (this.state.skill == null || this.state.modifier == null || this.state.amount == null) return
 
         this.props.onSubmit(this.state)
         this.setState(this.initialState)

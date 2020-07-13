@@ -95,7 +95,12 @@ export default connect(
 
                 <InputLabel text={"Влияние на навыки:"}/>
                 <List noItemsText={"Пусто"}
-                      values={this.state.skillInfluences.map(skillInfluence => <ListItem text={skillInfluence.skill.name + " " + skillInfluence.modifier.name + " " + skillInfluence.amount}/>)}
+                      values={this.state.skillInfluences.map(skillInfluence =>
+                          <ListItem
+                              text={skillInfluence.skill.name + " " + skillInfluence.modifier.name + " " + skillInfluence.amount}
+                              onDelete={() => this.onSkillInfluenceDeleted(skillInfluence)}
+                          />
+                      )}
                       isAddButtonVisible={!this.state.skillInfluenceFormVisible}
                       onAddClicked={() => this.onAddInfluenceClicked()}
                 />
@@ -138,6 +143,13 @@ export default connect(
     saveSkillInfluence(form) {
         this.setState(state => ({
             skillInfluences: state.skillInfluences.concat(form)
+        }))
+    }
+
+    onSkillInfluenceDeleted(skillInfluence) {
+        console.log(skillInfluence)
+        this.setState(state => ({
+            skillInfluences: state.skillInfluences.filter(it => it.skill !== skillInfluence.skill)
         }))
     }
 

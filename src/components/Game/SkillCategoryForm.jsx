@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import InputLabel from "../Common/Labels/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
@@ -7,18 +7,14 @@ import {changeView, updateActiveGame, updateGameForm, updateSkillCategoryForm} f
 import {post, upload} from "../../util/Http";
 import {saveSkillCategoryUrl, uploadServerUrl, uploadUrl} from "../../util/Parameters";
 import {useForm} from "react-hook-form";
-import {gameCreationView, gameEditView, gameView, skillCreationView, spellSchoolCreationView} from "../../Views";
-import Globals from "../../util/Globals";
-import SkillCategoryFormMode from "../../data-layer/enums/SkillCategoryFormMode";
+import {gameView, skillCreationView, spellSchoolCreationView} from "../../Views";
 import NoItemsLabel from "../Common/Labels/NoItemsLabel";
-import SkillItem from "../QuestionnaireTemplateCreation/SkillItem";
 import AddItemButton from "../Common/Buttons/AddItemButton";
 import List from "../Common/Lists/List";
 import ExpandableListItemWithBullets from "../Common/ListElements/ExpandableListItemWithBullets";
 import nonNullList from "../../util/nonNullList";
 import priceListToString from "../../util/priceCombinationListToString";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
-import {Growl} from "primereact/growl";
 import Popup from "../../util/Popup";
 
 const formStyle = {
@@ -29,8 +25,7 @@ const formStyle = {
 function mapStateToProps(state) {
     return {
         skillCategoryForm: state.skillCategoryForm,
-        activeGame: state.activeGame,
-        growl: state.growl
+        activeGame: state.activeGame
     }
 }
 
@@ -47,7 +42,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSaveClicked() {
         post(saveSkillCategoryUrl(props.activeGame.id), props.skillCategoryForm, rs => {
-            props.updateActiveGame({skillCategories: props.activeGame.skillCategories.concat(props.skillCategoryForm)})
+            props.updateActiveGame({skillCategories: props.activeGame.skillCategories.concat(rs)})
             props.updateSkillCategoryForm(DefaultFormValues.skillCategoryForm)
             Popup.info("Категория создана.")
         }, () => Popup.error("Ошибка при создании категории навыка. Обратитесь к администратору."))

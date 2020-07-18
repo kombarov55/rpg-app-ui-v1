@@ -40,7 +40,7 @@ export default connect(
         img: "",
         category: "",
         type: "",
-        slots: 0,
+        slots: 1,
         prices: [],
         skillInfluences: [],
 

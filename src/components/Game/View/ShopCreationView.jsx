@@ -52,9 +52,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(class ShopCreationVi
                 <InputLabel text={"Картинка:"}/>
                 <input type={"file"}
                        onChange={e => upload(
-                           uploadUrl,
                            e.target.files[0],
-                           filename => this.setState({img: filename}))}
+                           filename => this.setState({img: filename})
+                       )}
                 />
                 <InputLabel text={"Для кого магазин?"}/>
                 <SelectButton

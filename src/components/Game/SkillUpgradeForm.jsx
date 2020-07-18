@@ -84,6 +84,8 @@ export default class SkillUpgradeForm extends React.Component {
     }
 
     onSubmit() {
+        if (this.state.prices.length === 0) return
+
         const data = Object.assign({}, this.state, {lvlNum: this.props.lvlNum})
         this.props.onSubmit(data)
         this.setState(this.initialState)

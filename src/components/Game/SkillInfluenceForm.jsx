@@ -4,7 +4,7 @@ import InputLabel from "../Common/Labels/InputLabel";
 import SubmitButton from "../Common/Buttons/SubmitButton";
 import {SelectButton} from "primereact/selectbutton";
 import {FormLabel} from "uikit-react";
-import ArithmeticModifiers from "../../data-layer/enums/AriphmeticModifiers";
+import ArithmeticModifiers from "../../data-layer/enums/ArithmeticModifiers";
 
 export default class SkillInfluenceForm extends React.Component {
     constructor(props) {

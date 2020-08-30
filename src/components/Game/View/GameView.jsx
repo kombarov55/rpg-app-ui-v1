@@ -145,7 +145,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                                  onEditClicked={() => onEditCurrencyClicked(currency)}
                           />
                       )}
-                      addButtonVisible={props.activeGame.currencies.length < 3}
+                      isAddButtonVisible={props.activeGame.currencies.length < props.activeGame.maxCurrenciesCount}
                       onAddClicked={() => onAddCurrencyClicked()}
                 />
 

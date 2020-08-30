@@ -162,6 +162,7 @@ export default connect(
 
     onSubmitClicked() {
         this.props.onSubmit({
+            id: this.state.id,
             name: this.state.name,
             img: this.state.img,
             category: this.state.category,

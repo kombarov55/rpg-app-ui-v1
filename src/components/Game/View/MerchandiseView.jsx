@@ -13,11 +13,11 @@ import MerchandiseForm from "../MerchandiseForm";
 import {get, httpDelete, post, put} from "../../../util/Http";
 import Popup from "../../../util/Popup";
 import {
-    currenciesByGameIdUrl,
+    currenciesByGameIdUrl, merchandiseByIdUrl,
     merchandiseCategoryByIdUrl,
     merchandiseCategoryUrl,
     merchandiseTypeByIdUrl,
-    merchandiseTypeUrl, shortSkillsByGameIdUrl
+    merchandiseTypeUrl, merchandiseUrl, shortSkillsByGameIdUrl
 } from "../../../util/Parameters";
 
 export default connect(
@@ -45,6 +45,8 @@ export default connect(
     initialState = {
         merchandiseCategories: [],
         merchandiseTypes: [],
+        merchandiseList: [],
+
         skills: [],
         currencies: [],
 
@@ -248,11 +250,23 @@ export default connect(
     }
 
     addMerchandise(form) {
-        console.log(form)
+        post(merchandiseUrl(this.gameId), form, rs => {
+            this.setState(state => ({
+                merchandiseList: state.merchandiseList.concat(rs),
+                merchandiseFormVisible: false
+            }))
+            Popup.info("Товар был создан.")
+        }, () => Popup.error("Ошибка при сохранении товара. Обратитесь к администратору."))
     }
 
     updateMerchandise(form) {
-        console.log(form)
+        put(merchandiseByIdUrl(this.gameId, form.id), form, rs => {
+            this.setState(state => ({
+                merchandiseList: state.merchandiseList.filter(it => it.id !== rs.id).concat(rs),
+                merchandiseFormVisible: false
+            }))
+            Popup.info("Товар был обновлён")
+        })
     }
 
     onBackClicked() {

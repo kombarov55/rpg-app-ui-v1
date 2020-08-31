@@ -15,7 +15,7 @@ import {
     networkView,
     questionnaireRulesView,
     shopCreationView,
-    shopView,
+    shopView, skillCategoryEditView,
     skillCategoryFormView,
     subnetworkView
 } from "../../../Views";
@@ -128,6 +128,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onSkillCategoryDetailsClicked() {
+        props.changeView(skillCategoryEditView)
+    }
+
     return (
         <div className={"game-view"}>
             <div className={"game-info"}>
@@ -156,6 +160,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               img={skillCategory.img}
                               name={skillCategory.name}
                               description={skillCategory.description}
+                              onDetailsClicked={() => onSkillCategoryDetailsClicked()}
                           />
                       )}
                       onAddClicked={() => onAddSkillCategoryClicked()}

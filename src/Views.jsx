@@ -36,6 +36,7 @@ import CurrencyCreationView from "./components/Game/View/CurrencyFormView";
 import ShopCreationView from "./components/Game/View/ShopCreationView";
 import ShopView from "./components/Game/View/ShopView";
 import MerchandiseView from "./components/Game/View/MerchandiseView";
+import SkillCategoryEditForm from "./components/Game/View/SkillCategoryEditForm";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -67,6 +68,7 @@ export const gameCreationView = {component: <GameCreationView/>, label: "Соз�
 export const gameEditView = {component: <GameEditView/>, label: "Редактирование игры"}
 
 export const skillCategoryFormView = {component: <SkillCategoryForm/>, label: "Создание категории навыка"}
+export const skillCategoryEditView = {component: <SkillCategoryEditForm/>, label: "Редактироание категории навыка"}
 
 export const questionnaireRulesView = {component: <QuestionnaireRulesView/>, label: "Правила игры"}
 export const questionnaireTemplateCreationView = {component: <QuestionnaireTemplateCreationView/>, label: "Создание анкеты"}

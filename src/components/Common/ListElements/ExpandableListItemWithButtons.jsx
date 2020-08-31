@@ -13,8 +13,8 @@ export default class ExpandableListItemWithButtons extends React.Component {
                 img={this.props.img}
                 name={this.props.name}
                 upperButtons={[
-                    <Icon className={"pi pi-pencil"} onClick={() => alert("clicked")}/>,
-                    <Icon className={"pi pi-times"} onClick={() => alert("clicked")}/>
+                    this.props.onEditClicked && <Icon className={"pi pi-pencil"} onClick={() => this.props.onEditClicked()}/>,
+                    this.props.onDeleteClicked && <Icon className={"pi pi-times"} onClick={() => this.props.onDeleteClicked()}/>
                 ]}
                 expandableElements={[
                     <div style={descriptionStyle}>{this.props.description}</div>,

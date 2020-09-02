@@ -7,12 +7,16 @@ import {findSkillCategoryUrl, uploadServerUrl, uploadUrl} from "../../../util/Pa
 import {InputTextarea} from "primereact/inputtextarea";
 import Btn from "../../Common/Buttons/Btn";
 import {get} from "../../../util/Http";
+import {changeView} from "../../../data-layer/ActionCreators";
+import {gameView} from "../../../Views";
 
 export default connect(
     state => ({
         skillCategoryId: state.changeViewParams.id
     }),
-    dispatch => ({})
+    dispatch => ({
+        back: () => dispatch(changeView(gameView))
+    })
 )(class SkillCategoryEditForm extends React.Component {
 
     constructor(props) {
@@ -48,6 +52,7 @@ export default connect(
                 />
 
                 <Btn text={"Сохранить"} onClick={() => console.log(this.state)}/>
+                <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
     }

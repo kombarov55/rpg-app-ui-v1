@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import Label from "../../Common/Labels/Label";
 import NetworkItem from "../NetworkItem";
 import {gameCreationView, gameView, networkCreationView, networkView} from "../../../Views";
-import Btn from "../../Common/Buttons/Btn";
 import {
     changeView,
     setActiveGame,
@@ -11,8 +10,6 @@ import {
     setGames,
     setSubnetworks, updateGameForm
 } from "../../../data-layer/ActionCreators";
-import {get} from "../../../util/Http";
-import {gameByNetworkId, subnetworkUrl} from "../../../util/Parameters";
 import GameItem from "../GameItem";
 import Globals from "../../../util/Globals";
 import GameCreationMode from "../../../data-layer/enums/GameCreationMode";

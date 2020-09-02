@@ -128,8 +128,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
-    function onSkillCategoryDetailsClicked() {
-        props.changeView(skillCategoryEditView)
+    function onSkillCategoryDetailsClicked(skillCategory) {
+        props.changeView(skillCategoryEditView, {
+            id: skillCategory.id
+        })
     }
 
     return (
@@ -160,7 +162,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               img={skillCategory.img}
                               name={skillCategory.name}
                               description={skillCategory.description}
-                              onDetailsClicked={() => onSkillCategoryDetailsClicked()}
+                              onDetailsClicked={() => onSkillCategoryDetailsClicked(skillCategory)}
                           />
                       )}
                       onAddClicked={() => onAddSkillCategoryClicked()}

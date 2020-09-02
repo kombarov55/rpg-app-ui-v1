@@ -16,6 +16,7 @@ import nonNullList from "../../util/nonNullList";
 import priceListToString from "../../util/priceCombinationListToString";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
 import Popup from "../../util/Popup";
+import FormViewStyle from "../../styles/FormViewStyle";
 
 const formStyle = {
     width: "90%",
@@ -61,7 +62,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     const {register, errors, handleSubmit} = useForm()
 
     return (
-        <form style={formStyle}
+        <form style={FormViewStyle}
               onSubmit={handleSubmit(onSaveClicked)}>
             <InputLabel text={"Название категории"}/>
             <input

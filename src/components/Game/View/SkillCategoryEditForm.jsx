@@ -3,10 +3,10 @@ import {connect} from "react-redux"
 import FormViewStyle from "../../../styles/FormViewStyle";
 import InputLabel from "../../Common/Labels/InputLabel";
 import {upload} from "../../../util/HttpRequests";
-import {findSkillCategoryUrl, uploadServerUrl, uploadUrl} from "../../../util/Parameters";
+import {skillCategoryUrl, uploadServerUrl, uploadUrl} from "../../../util/Parameters";
 import {InputTextarea} from "primereact/inputtextarea";
 import Btn from "../../Common/Buttons/Btn";
-import {get} from "../../../util/Http";
+import {get, put} from "../../../util/Http";
 import {changeView} from "../../../data-layer/ActionCreators";
 import {gameView} from "../../../Views";
 
@@ -22,7 +22,7 @@ export default connect(
     constructor(props) {
         super(props);
 
-        get(findSkillCategoryUrl(this.props.skillCategoryId), rs => this.setState(rs))
+        get(skillCategoryUrl(this.props.skillCategoryId), rs => this.setState(rs))
 
         this.state = {}
     }
@@ -51,10 +51,16 @@ export default connect(
                                onChange={e => this.setState({description: e.target.value})}
                 />
 
-                <Btn text={"Сохранить"} onClick={() => console.log(this.state)}/>
+                <Btn text={"Сохранить"} onClick={() => this.onSaveClicked()}/>
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
+    }
+
+    onSaveClicked() {
+        put(skillCategoryUrl(this.props.skillCategoryId), this.state, rs => {
+            console.log(rs)
+        })
     }
 
 })

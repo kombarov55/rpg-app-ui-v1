@@ -17,6 +17,7 @@ import priceListToString from "../../util/priceCombinationListToString";
 import DefaultFormValues from "../../data-layer/DefaultFormValues";
 import Popup from "../../util/Popup";
 import FormViewStyle from "../../styles/FormViewStyle";
+import Btn from "../Common/Buttons/Btn";
 
 const formStyle = {
     width: "90%",
@@ -35,7 +36,8 @@ function mapDispatchToProps(dispatch) {
         updateSkillCategoryForm: fieldNameToValue => dispatch(updateSkillCategoryForm(fieldNameToValue)),
         updateGameForm: fieldNameToValue => dispatch(updateGameForm(fieldNameToValue)),
         changeView: view => dispatch(changeView(view)),
-        updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue))
+        updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue)),
+        back: () => dispatch(changeView(gameView))
     }
 }
 
@@ -141,6 +143,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                    className={"network-creation-save-button"}
                    value={"Сохранить"}
             />
+            <Btn text={"Назад"} onClick={() => props.back()}/>
         </form>
     )
 })

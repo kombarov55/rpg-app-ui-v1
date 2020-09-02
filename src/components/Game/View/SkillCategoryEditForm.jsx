@@ -7,15 +7,18 @@ import {skillCategoryUrl, uploadServerUrl, uploadUrl} from "../../../util/Parame
 import {InputTextarea} from "primereact/inputtextarea";
 import Btn from "../../Common/Buttons/Btn";
 import {get, put} from "../../../util/Http";
-import {changeView} from "../../../data-layer/ActionCreators";
+import {changeView, updateActiveGame} from "../../../data-layer/ActionCreators";
 import {gameView} from "../../../Views";
+import Popup from "../../../util/Popup";
 
 export default connect(
     state => ({
-        skillCategoryId: state.changeViewParams.id
+        skillCategoryId: state.changeViewParams.id,
+        activeGame: state.activeGame
     }),
     dispatch => ({
-        back: () => dispatch(changeView(gameView))
+        back: () => dispatch(changeView(gameView)),
+        updateActiveGame: (fieldNameToValue) => dispatch(updateActiveGame(fieldNameToValue))
     })
 )(class SkillCategoryEditForm extends React.Component {
 
@@ -59,7 +62,11 @@ export default connect(
 
     onSaveClicked() {
         put(skillCategoryUrl(this.props.skillCategoryId), this.state, rs => {
-            console.log(rs)
+            this.props.updateActiveGame({
+                skillCategories: this.props.activeGame.skillCategories.filter(it => it.id !== rs.id).concat(rs)
+            })
+            this.props.back()
+            Popup.info("Категория навыков обновлена.")
         })
     }
 

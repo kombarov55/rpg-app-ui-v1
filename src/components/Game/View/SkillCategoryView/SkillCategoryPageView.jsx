@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {changeView} from "../../../../data-layer/ActionCreators";
-import {gameView, skillCategoryEditView} from "../../../../Views";
+import {gameView, skillCategoryEditView, skillCreationView, skillFormView} from "../../../../Views";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import BasicSkillCategoryView from "./BasicSkillCategoryView";
 import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
@@ -27,7 +27,8 @@ export default connect(
                 return dispatch(changeView(skillCategoryEditView, {
                     skillCategory: stateProps.skillCategory
                 }))
-            }
+            },
+            toSkillCreationView: () => dispatch(changeView(skillFormView))
         }
     }
 )
@@ -56,6 +57,7 @@ export default connect(
                     /> :
                     <BasicSkillCategoryView
                         skills={this.state.skills}
+                        onAddSkillClicked={() => this.props.toSkillCreationView()}
                     />
 
                 }

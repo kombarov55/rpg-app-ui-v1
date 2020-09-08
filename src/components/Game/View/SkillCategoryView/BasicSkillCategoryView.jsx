@@ -30,6 +30,8 @@ export default class BasicSkillCategoryView extends React.Component {
                               ]}
                           />
                       )}
+                      isAddButtonVisible={true}
+                      onAddClicked={() => this.props.onAddSkillClicked()}
                 />
             </div>
         )

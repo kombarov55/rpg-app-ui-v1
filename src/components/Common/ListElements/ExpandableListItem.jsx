@@ -25,7 +25,7 @@ export default class ExpandableListItem extends React.Component {
                     <div style={upperButtonsStyle}>{this.props.upperButtons}</div>
                 </div>
                 {
-                    this.state.expand && this.props.expandableElements &&
+                    (this.props.alwaysExpand || this.state.expand) &&
                     this.props.expandableElements
                 }
             </div>

@@ -16,7 +16,7 @@ import {
     questionnaireRulesView,
     shopCreationView,
     shopView, skillCategoryEditView,
-    skillCategoryFormView,
+    skillCategoryFormView, skillCategoryView,
     subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
@@ -128,8 +128,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
-    function onSkillCategoryDetailsClicked(skillCategory) {
+    function onEditSkillCategoryClicked(skillCategory) {
         props.changeView(skillCategoryEditView, {
+            id: skillCategory.id
+        })
+    }
+
+    function onSkillCategoryDetailsClicked(skillCategory) {
+        props.changeView(skillCategoryView, {
             id: skillCategory.id
         })
     }
@@ -162,6 +168,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               img={skillCategory.img}
                               name={skillCategory.name}
                               description={skillCategory.description}
+                              onEditClicked={() => onEditSkillCategoryClicked(skillCategory)}
                               onDetailsClicked={() => onSkillCategoryDetailsClicked(skillCategory)}
                           />
                       )}

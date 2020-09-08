@@ -10,31 +10,29 @@ import {put} from "../../../../util/Http";
 import {changeView, updateActiveGame} from "../../../../data-layer/ActionCreators";
 import {skillCategoryView} from "../../../../Views";
 import Popup from "../../../../util/Popup";
-import Stubs from "../../../../stubs/Stubs";
 
 export default connect(
     state => ({
-        changeViewParams: state.changeViewParams,
-        id: state.changeViewParams.id,
+        skillCategory: state.changeViewParams.skillCategory,
         activeGame: state.activeGame
     }),
-    dispatch => ({
-        updateActiveGame: (fieldNameToValue) => dispatch(updateActiveGame(fieldNameToValue)),
-        back: id => dispatch(changeView(skillCategoryView, {
-            id: id
+    null,
+    (stateProps, {dispatch}, ownProps) => ({
+        ...stateProps,
+        ...ownProps,
+        updateActiveGame: (fieldNameToValue) => dispatch(updateActiveGame(fieldNameToValue, {
+            skillCategory: stateProps.skillCategory
+        })),
+        back: (skillCategory = stateProps.skillCategory) => dispatch(changeView(skillCategoryView, {
+            skillCategory: skillCategory
         }))
     })
 )(class SkillCategoryEditForm extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props.changeViewParams)
-        this.state = Stubs.basicSkillCategory
-        // get(skillCategoryUrl(this.props.id), rs => this.setState(rs))
-    }
-
-    onBackClicked() {
-        this.props.back(this.props.id)
+        console.log(this.props.skillCategory)
+        this.state = this.props.skillCategory
     }
 
     render() {
@@ -62,17 +60,17 @@ export default connect(
                 />
 
                 <Btn text={"Сохранить"} onClick={() => this.onSaveClicked()}/>
-                <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
+                <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
     }
 
     onSaveClicked() {
-        put(skillCategoryUrl(this.props.id), this.state, rs => {
+        put(skillCategoryUrl(this.props.skillCategory.id), this.state, rs => {
             this.props.updateActiveGame({
                 skillCategories: this.props.activeGame.skillCategories.filter(it => it.id !== rs.id).concat(rs)
             })
-            this.props.back()
+            this.props.back(rs)
             Popup.info("Категория навыков обновлена.")
         })
     }

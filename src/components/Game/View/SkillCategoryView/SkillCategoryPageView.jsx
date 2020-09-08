@@ -5,32 +5,41 @@ import Btn from "../../../Common/Buttons/Btn";
 import {changeView} from "../../../../data-layer/ActionCreators";
 import {gameView, skillCategoryEditView} from "../../../../Views";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
-import Stubs from "../../../../stubs/Stubs";
 import BasicSkillCategoryView from "./BasicSkillCategoryView";
 import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
+import Stubs from "../../../../stubs/Stubs";
 
 export default connect(
     state => ({
-        changeViewParams: state.changeViewParams,
-        id: state.changeViewParams.id
+        skillCategory: state.changeViewParams.skillCategory
     }),
-    dispatch => ({
-        back: () => dispatch(changeView(gameView)),
-        toEditView: (skillCategoryId) => dispatch(changeView(skillCategoryEditView, {
-            id: skillCategoryId
-        }))
-    })
-)(class SkillCategoryView extends React.Component {
+    null,
+    (stateProps, dispatchProps, ownProps) => {
+        const {dispatch} = dispatchProps
+
+        return {
+            ...stateProps,
+            ...ownProps,
+            back: () => dispatch(changeView(gameView)),
+            toEditView: () => {
+                console.log("skillCategoryPageView#mergeProps dispatching toEditView:")
+                console.log(stateProps.skillCategory)
+                return dispatch(changeView(skillCategoryEditView, {
+                    skillCategory: stateProps.skillCategory
+                }))
+            }
+        }
+    }
+)
+(class SkillCategoryView extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props.id)
-        this.state = Stubs.basicSkillCategory
-        // get(skillCategoryUrl(this.props.id), rs => this.setState(rs))
+        this.state = this.props.skillCategory
     }
 
     toEditView() {
-        this.props.toEditView(this.props.id)
+        this.props.toEditView(this.props.skillCategory)
     }
 
     render() {

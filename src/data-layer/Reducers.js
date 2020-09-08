@@ -47,6 +47,8 @@ import MergeLists from "../util/MergeLists";
 import ChangeUrl from "../util/ChangeUrl";
 
 export function rootReducer(state = initialState, action) {
+    console.log(action)
+
     switch (action.type) {
         case ADD_USER_ACCOUNT:
             return Object.assign({}, state, {
@@ -55,7 +57,6 @@ export function rootReducer(state = initialState, action) {
 
         case CHANGE_VIEW:
             ChangeUrl(action.payload.nextView.label)
-
             return Object.assign({}, state, {
                 currentView: action.payload.nextView,
                 changeViewParams: action.payload.params

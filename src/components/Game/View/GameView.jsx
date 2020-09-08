@@ -136,7 +136,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     function onSkillCategoryDetailsClicked(skillCategory) {
         props.changeView(skillCategoryView, {
-            id: skillCategory.id
+            skillCategory: skillCategory
         })
     }
 

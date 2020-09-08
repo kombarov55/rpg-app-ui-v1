@@ -7,7 +7,7 @@ export const initialState = {
     sidebarVisible: false,
     growl: null,
 
-    currentView: skillCategoryView,
+    currentView: announcementView,
     changeViewParams: {},
 
     userAccount: {

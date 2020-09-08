@@ -1,23 +1,23 @@
 import React from "react";
 import {connect} from "react-redux";
-import InputLabel from "../Common/Labels/InputLabel";
+import InputLabel from "../../../Common/Labels/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
 import {SelectButton} from "primereact/selectbutton";
-import {changeView, updateActiveGame, updateGameForm, updateSkillCategoryForm} from "../../data-layer/ActionCreators";
-import {post, upload} from "../../util/Http";
-import {saveSkillCategoryUrl, uploadServerUrl, uploadUrl} from "../../util/Parameters";
+import {changeView, updateActiveGame, updateGameForm, updateSkillCategoryForm} from "../../../../data-layer/ActionCreators";
+import {post, upload} from "../../../../util/Http";
+import {saveSkillCategoryUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
 import {useForm} from "react-hook-form";
-import {gameView, skillCreationView, spellSchoolCreationView} from "../../Views";
-import NoItemsLabel from "../Common/Labels/NoItemsLabel";
-import AddItemButton from "../Common/Buttons/AddItemButton";
-import List from "../Common/Lists/List";
-import ExpandableListItemWithBullets from "../Common/ListElements/ExpandableListItemWithBullets";
-import nonNullList from "../../util/nonNullList";
-import priceListToString from "../../util/priceCombinationListToString";
-import DefaultFormValues from "../../data-layer/DefaultFormValues";
-import Popup from "../../util/Popup";
-import FormViewStyle from "../../styles/FormViewStyle";
-import Btn from "../Common/Buttons/Btn";
+import {gameView, skillCreationView, spellSchoolCreationView} from "../../../../Views";
+import NoItemsLabel from "../../../Common/Labels/NoItemsLabel";
+import AddItemButton from "../../../Common/Buttons/AddItemButton";
+import List from "../../../Common/Lists/List";
+import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import nonNullList from "../../../../util/nonNullList";
+import priceListToString from "../../../../util/priceCombinationListToString";
+import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
+import Popup from "../../../../util/Popup";
+import FormViewStyle from "../../../../styles/FormViewStyle";
+import Btn from "../../../Common/Buttons/Btn";
 
 const formStyle = {
     width: "90%",

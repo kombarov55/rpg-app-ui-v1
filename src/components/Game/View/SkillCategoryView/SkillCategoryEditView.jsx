@@ -1,33 +1,40 @@
 import React from "react";
 import {connect} from "react-redux"
-import FormViewStyle from "../../../styles/FormViewStyle";
-import InputLabel from "../../Common/Labels/InputLabel";
-import {upload} from "../../../util/HttpRequests";
-import {skillCategoryUrl, uploadServerUrl, uploadUrl} from "../../../util/Parameters";
+import FormViewStyle from "../../../../styles/FormViewStyle";
+import InputLabel from "../../../Common/Labels/InputLabel";
+import {upload} from "../../../../util/HttpRequests";
+import {skillCategoryUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
 import {InputTextarea} from "primereact/inputtextarea";
-import Btn from "../../Common/Buttons/Btn";
-import {get, put} from "../../../util/Http";
-import {changeView, updateActiveGame} from "../../../data-layer/ActionCreators";
-import {gameView} from "../../../Views";
-import Popup from "../../../util/Popup";
+import Btn from "../../../Common/Buttons/Btn";
+import {put} from "../../../../util/Http";
+import {changeView, updateActiveGame} from "../../../../data-layer/ActionCreators";
+import {skillCategoryView} from "../../../../Views";
+import Popup from "../../../../util/Popup";
+import Stubs from "../../../../stubs/Stubs";
 
 export default connect(
     state => ({
-        skillCategoryId: state.changeViewParams.id,
+        changeViewParams: state.changeViewParams,
+        id: state.changeViewParams.id,
         activeGame: state.activeGame
     }),
     dispatch => ({
-        back: () => dispatch(changeView(gameView)),
-        updateActiveGame: (fieldNameToValue) => dispatch(updateActiveGame(fieldNameToValue))
+        updateActiveGame: (fieldNameToValue) => dispatch(updateActiveGame(fieldNameToValue)),
+        back: id => dispatch(changeView(skillCategoryView, {
+            id: id
+        }))
     })
 )(class SkillCategoryEditForm extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(this.props.changeViewParams)
+        this.state = Stubs.basicSkillCategory
+        // get(skillCategoryUrl(this.props.id), rs => this.setState(rs))
+    }
 
-        get(skillCategoryUrl(this.props.skillCategoryId), rs => this.setState(rs))
-
-        this.state = {}
+    onBackClicked() {
+        this.props.back(this.props.id)
     }
 
     render() {
@@ -55,13 +62,13 @@ export default connect(
                 />
 
                 <Btn text={"Сохранить"} onClick={() => this.onSaveClicked()}/>
-                <Btn text={"Назад"} onClick={() => this.props.back()}/>
+                <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
             </div>
         )
     }
 
     onSaveClicked() {
-        put(skillCategoryUrl(this.props.skillCategoryId), this.state, rs => {
+        put(skillCategoryUrl(this.props.id), this.state, rs => {
             this.props.updateActiveGame({
                 skillCategories: this.props.activeGame.skillCategories.filter(it => it.id !== rs.id).concat(rs)
             })

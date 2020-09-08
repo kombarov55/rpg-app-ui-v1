@@ -3,34 +3,34 @@ import {connect} from "react-redux"
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {changeView} from "../../../../data-layer/ActionCreators";
-import {gameView} from "../../../../Views";
+import {gameView, skillCategoryEditView} from "../../../../Views";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
-import InputLabel from "../../../Common/Labels/InputLabel";
-import List from "../../../Common/Lists/List";
-import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
-import priceCombinationListToString from "../../../../util/priceCombinationListToString";
-import LvlUpgradeView from "../../LvlUpgradeView";
-import Label from "../../../Common/Labels/Label";
 import Stubs from "../../../../stubs/Stubs";
-import HorizontalListItem from "../../../Common/ListElements/HorizontalListItem";
-import ComplexSkillCategoryStub from "../../../../stubs/game/ComplexSkillCategoryStub";
 import BasicSkillCategoryView from "./BasicSkillCategoryView";
 import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
 
 export default connect(
     state => ({
-        skillCategoryId: state.changeViewParams.id
+        changeViewParams: state.changeViewParams,
+        id: state.changeViewParams.id
     }),
     dispatch => ({
         back: () => dispatch(changeView(gameView)),
+        toEditView: (skillCategoryId) => dispatch(changeView(skillCategoryEditView, {
+            id: skillCategoryId
+        }))
     })
 )(class SkillCategoryView extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(this.props.id)
+        this.state = Stubs.basicSkillCategory
+        // get(skillCategoryUrl(this.props.id), rs => this.setState(rs))
+    }
 
-        this.state = Stubs.complexSkillCategory
-        // get(skillCategoryUrl(this.props.skillCategoryId), rs => this.setState(rs))
+    toEditView() {
+        this.props.toEditView(this.props.id)
     }
 
     render() {
@@ -51,6 +51,7 @@ export default connect(
 
                 }
 
+                <Btn text={"Редактировать"} onClick={() => this.toEditView()}/>
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )

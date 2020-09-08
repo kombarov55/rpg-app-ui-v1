@@ -29,14 +29,14 @@ import AdminPageView from "./components/Admin/View/AdminPageView";
 import QuestionnaireTemplateEditView
     from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateEditView";
 import ConversionView from "./components/Game/View/ConversionView";
-import SkillCategoryForm from "./components/Game/SkillCategoryForm";
+import SkillCategoryForm from "./components/Game/View/SkillCategoryView/SkillCategoryForm";
 import SpellSchoolCreationView from "./components/Game/SpellSchoolCreationView";
 import SpellCreationView from "./components/Game/View/SpellCreationView";
 import CurrencyCreationView from "./components/Game/View/CurrencyFormView";
 import ShopCreationView from "./components/Game/View/ShopCreationView";
 import ShopView from "./components/Game/View/ShopView";
 import MerchandiseView from "./components/Game/View/MerchandiseView";
-import SkillCategoryEditForm from "./components/Game/View/SkillCategoryEditForm";
+import SkillCategoryEditView from "./components/Game/View/SkillCategoryView/SkillCategoryEditView";
 import SkillCategoryView from "./components/Game/View/SkillCategoryView/SkillCategoryPageView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
@@ -69,7 +69,7 @@ export const gameCreationView = {component: <GameCreationView/>, label: "Соз�
 export const gameEditView = {component: <GameEditView/>, label: "Редактирование игры"}
 
 export const skillCategoryFormView = {component: <SkillCategoryForm/>, label: "Создание категории навыка"}
-export const skillCategoryEditView = {component: <SkillCategoryEditForm/>, label: "Редактироание категории навыка"}
+export const skillCategoryEditView = {component: <SkillCategoryEditView/>, label: "Редактироание категории навыка"}
 export const skillCategoryView = {component: <SkillCategoryView/>, label: "Категория навыка"}
 
 export const questionnaireRulesView = {component: <QuestionnaireRulesView/>, label: "Правила игры"}

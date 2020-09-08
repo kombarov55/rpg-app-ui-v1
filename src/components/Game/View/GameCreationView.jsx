@@ -20,7 +20,7 @@ import InputLabel from "../../Common/Labels/InputLabel";
 import ListItemSmall from "../../Common/ListElements/SmallListItem";
 import NoItemsLabel from "../../Common/Labels/NoItemsLabel";
 import {useForm} from "react-hook-form";
-import SkillCategoryForm from "../SkillCategoryForm";
+import SkillCategoryForm from "./SkillCategoryView/SkillCategoryForm";
 import SkillCategoryFormMode from "../../../data-layer/enums/SkillCategoryFormMode";
 import Popup from "../../../util/Popup";
 

@@ -168,7 +168,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               img={skillCategory.img}
                               name={skillCategory.name}
                               description={skillCategory.description}
-                              onEditClicked={() => onEditSkillCategoryClicked(skillCategory)}
                               onDetailsClicked={() => onSkillCategoryDetailsClicked(skillCategory)}
                           />
                       )}

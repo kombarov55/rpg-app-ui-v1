@@ -7,13 +7,16 @@ import priceCombinationListToString from "../../../../util/priceCombinationListT
 import LvlUpgradeView from "../../LvlUpgradeView";
 import SkillForm from "../../SkillForm";
 import Icon from "../../../Common/Input/Icon";
+import FormMode from "../../../../data-layer/enums/FormMode";
 
 export default class BasicSkillCategoryView extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            skillFormVisible: false
+            skillFormVisible: false,
+            skillFormMode: FormMode.CREATE,
+            skillForm: {}
         }
     }
 
@@ -28,7 +31,7 @@ export default class BasicSkillCategoryView extends React.Component {
                               img={skill.img}
                               name={skill.name}
                               upperButtons={[
-                                  this.props.onSkillEdited && <Icon className={"pi pi-pencil"} onClick={() => this.props.onSkillEdited(skill)}/>,
+                                  this.props.onSkillEdited && <Icon className={"pi pi-pencil"} onClick={() => this.onEditSkillClicked(skill)}/>,
                                   this.props.onSkillDeleted && <Icon className={"pi pi-times"} onClick={() => this.props.onSkillDeleted(skill)}/>
                               ]}
                               alwaysExpand={true}
@@ -48,13 +51,45 @@ export default class BasicSkillCategoryView extends React.Component {
                 />
                 {this.state.skillFormVisible &&
                 <SkillForm currencies={this.props.currencies}
-                           onSubmit={(form) => {
-                               this.toggleSkillForm()
-                               this.props.onSkillAdded(form)
-                           }}/>
+                           initialState={this.state.skillForm}
+                           onSubmit={form => this.onSkillSubmitted(form)}/>
                 }
             </div>
         )
+    }
+
+    onAddSkillClicked() {
+        this.toggleSkillForm()
+        this.setState({
+            skillFormMode: FormMode.CREATE,
+            skillForm: {}
+        })
+    }
+
+    onEditSkillClicked(skill) {
+        this.toggleSkillForm()
+        this.setState({
+            skillFormMode: FormMode.EDIT,
+            skillForm: skill
+        })
+    }
+
+    onSkillSubmitted(form) {
+        this.toggleSkillForm()
+        console.log("basicSkillCategory#onSkillSubmitted: ")
+        console.log({
+            skillFormMode: this.state.skillFormMode,
+            form: form
+        })
+
+        switch (this.state.skillFormMode) {
+            case FormMode.CREATE:
+                this.props.onSkillAdded(form)
+                break;
+            case FormMode.EDIT:
+                this.props.onSkillEdited(form)
+                break;
+        }
     }
 
     toggleSkillForm() {

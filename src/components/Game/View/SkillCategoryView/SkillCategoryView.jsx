@@ -7,7 +7,7 @@ import {gameView, skillCategoryEditView} from "../../../../Views";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import BasicSkillCategoryView from "./BasicSkillCategoryView";
 import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
-import {httpDelete, post} from "../../../../util/Http";
+import {httpDelete, post, put} from "../../../../util/Http";
 import {saveSkillUrl, skillByIdUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 
@@ -75,9 +75,13 @@ export default connect(
         })
     }
 
+
     onSkillEdited(skill) {
-        console.log("edited skill")
-        console.log(skill)
+        put(skillByIdUrl(skill.id), skill, rs => {
+            this.setState(state => ({
+                skills: state.skills.filter(v => v.id !== skill.id).concat(skill)
+            }))
+        })
     }
 
     onSkillDeleted(skill) {

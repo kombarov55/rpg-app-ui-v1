@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {useForm} from "react-hook-form";
-import Popup from "../../util/Popup";
 import InputLabel from "../Common/Labels/InputLabel";
 import {uploadServerUrl, uploadUrl} from "../../util/Parameters";
 import {upload} from "../../util/HttpRequests";
@@ -15,6 +14,7 @@ import SkillUpgradeForm from "./SkillUpgradeForm";
 import FormSubmitButton from "../Common/Buttons/FormSubmitButton";
 import _ from "lodash"
 import FormTitleLabel from "../Common/Labels/FormTitleLabel";
+import getOrDefault from "../../util/getOrDefault";
 
 /**
  * @param props {onSubmit, currencies}
@@ -23,12 +23,12 @@ import FormTitleLabel from "../Common/Labels/FormTitleLabel";
 export default function (props) {
 
     const {register, errors, handleSubmit} = useForm()
-    const [name, setName] = useState()
-    const [img, setImg] = useState()
-    const [description, setDescription] = useState()
-    const [prices, setPrices] = useState([])
-    const [upgradable, setUpgradable] = useState()
-    const [upgrades, setUpgrades] = useState([])
+    const [name, setName] = useState(props.initialState.name)
+    const [img, setImg] = useState(props.initialState.img)
+    const [description, setDescription] = useState(props.initialState.description)
+    const [prices, setPrices] = useState(getOrDefault(props.initialState.prices, []))
+    const [upgradable, setUpgradable] = useState(props.initialState.upgradable)
+    const [upgrades, setUpgrades] = useState(props.initialState.upgrades)
 
     function onPriceAdded(list) {
         setPrices(prices.concat([list]))
@@ -46,6 +46,7 @@ export default function (props) {
 
     function onSaveClicked() {
         const form = {
+            id: props.initialState.id,
             name: name,
             img: img,
             description: description,
@@ -127,7 +128,6 @@ export default function (props) {
                 </>
             }
             <FormSubmitButton text={"Сохранить"}/>
-            {/*<Btn text={"Назад"} onClick={() => props.onBackClicked()}/>*/}
         </form>
     )
 }

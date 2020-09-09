@@ -11,7 +11,6 @@ export default class BasicSkillCategoryView extends React.Component {
 
     constructor(props) {
         super(props)
-
         this.state = {
             skillFormVisible: false
         }
@@ -43,10 +42,11 @@ export default class BasicSkillCategoryView extends React.Component {
                       onAddClicked={() => this.toggleSkillForm()}
                 />
                 {this.state.skillFormVisible &&
-                <SkillForm onSubmit={(form) => {
-                    this.toggleSkillForm()
-                    this.props.onSkillAdded(form)
-                }}/>
+                <SkillForm currencies={this.props.currencies}
+                           onSubmit={(form) => {
+                               this.toggleSkillForm()
+                               this.props.onSkillAdded(form)
+                           }}/>
                 }
             </div>
         )

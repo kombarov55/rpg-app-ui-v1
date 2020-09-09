@@ -3,14 +3,18 @@ import {connect} from "react-redux"
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {changeView} from "../../../../data-layer/ActionCreators";
-import {gameView, skillCategoryEditView, skillCategoryView, skillFormView} from "../../../../Views";
+import {gameView, skillCategoryEditView} from "../../../../Views";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import BasicSkillCategoryView from "./BasicSkillCategoryView";
 import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
+import {post} from "../../../../util/Http";
+import {saveSkillUrl} from "../../../../util/Parameters";
+import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
-        skillCategory: state.changeViewParams.skillCategory
+        skillCategory: state.changeViewParams.skillCategory,
+        currencies: state.activeGame.currencies
     }),
     null,
     (stateProps, dispatchProps, ownProps) => {
@@ -50,6 +54,7 @@ export default connect(
                     /> :
                     <BasicSkillCategoryView
                         skills={this.state.skills}
+                        currencies={this.props.currencies}
                         onSkillAdded={(skill) => this.onSkillAdded(skill)}
                         onSkillEdited={(skill) => this.onSkillEdited(skill)}
                     />
@@ -61,11 +66,12 @@ export default connect(
     }
 
     onSkillAdded(skill) {
-        console.log("added skill")
-        console.log(skill)
-        this.setState(state => ({
-            skills: state.skills.concat(skill)
-        }))
+        post(saveSkillUrl(this.state.id), skill, rs => {
+            this.setState(state => ({
+                skills: state.skills.concat(rs)
+            }))
+            Popup.info("Навык добавлен")
+        })
     }
 
     onSkillEdited(skill) {

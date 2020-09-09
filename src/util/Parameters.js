@@ -48,8 +48,6 @@ export const questionnaireTemplateRestoreUrl = questionnaireId => questionnaireT
 
 export const skillsByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/skill"
 export const shortSkillsByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/skill/short"
-export const skillUrl = rootUrl + "/skill"
-export const updateSkillUrl = skillId => skillUrl + "/" + skillId
 
 export const currenciesByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/currency"
 
@@ -60,6 +58,9 @@ export const updateCurrencyUrl = (gameId, currencyId) => rootUrl + "/game/" + ga
 
 export const saveSkillCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/skillCategory"
 export const skillCategoryUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId
+
+export const saveSkillUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/skill"
+export const skillByIdUrl = id => rootUrl + "/skill/" + id
 
 export const saveShopUrl = gameId => rootUrl + "/game/" + gameId + "/shop"
 

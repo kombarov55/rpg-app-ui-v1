@@ -2,11 +2,11 @@ import React from "react";
 import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {Checkbox} from "primereact/checkbox";
-import {changeView, updateQuestionnaireTemplateForm, updateSkillForm} from "../../../data-layer/ActionCreators";
+import {changeView, updateSkillForm} from "../../../data-layer/ActionCreators";
 import Btn from "../../Common/Buttons/Btn";
 import {InputTextarea} from "primereact/inputtextarea";
 import {put} from "../../../util/Http";
-import {updateSkillUrl} from "../../../util/Parameters";
+import {skillByIdUrl} from "../../../util/Parameters";
 import {skillsView} from "../../../Views";
 import Popup from "../../../util/Popup";
 
@@ -230,7 +230,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             gameId: props.activeGame.id
         })
 
-        put(updateSkillUrl(props.skillForm.id), body, rs => {
+        put(skillByIdUrl(props.skillForm.id), body, rs => {
             props.changeView(skillsView)
             Popup.info("Навык обновлен")
         })

@@ -17,7 +17,8 @@ import _ from "lodash"
 import FormTitleLabel from "../Common/Labels/FormTitleLabel";
 
 /**
- * @param props {onSubmit, onBackClicked}
+ * @param props {onSubmit, currencies}
+ * props.currencies: [{name, amount}]
  */
 export default function (props) {
 
@@ -52,10 +53,6 @@ export default function (props) {
         }
         Popup.info("Навык создан")
         props.onSubmit(form)
-    }
-
-    function onBackClicked() {
-        // props.onBackClicked()
     }
 
     return (
@@ -100,8 +97,7 @@ export default function (props) {
                   )}
             />
 
-            {/*TODO: валюты захардкожены*/}
-            <PriceInput currencies={["Золото", "Серебро", "Опыт"]} onSubmit={list => onPriceAdded(list)}/>
+            <PriceInput currencies={props.currencies.map(it => it.name)} onSubmit={list => onPriceAdded(list)}/>
 
             <InputLabel text={"Прокачиваемый?"}/>
             <InputSwitch checked={upgradable}
@@ -121,8 +117,7 @@ export default function (props) {
                     />
                     <SkillUpgradeForm
                         lvlNum={upgrades.length + 1}
-                        // TODO: валюты захардкожены
-                        currencies={["Золото", "Опыт", "Серебро"]}
+                        currencies={props.currencies.map(it => it.name)}
                         onSubmit={data => onUpgradeFormSubmit(data)}/>
                 </>
             }

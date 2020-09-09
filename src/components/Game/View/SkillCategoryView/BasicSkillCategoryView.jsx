@@ -5,8 +5,17 @@ import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem"
 import InputLabel from "../../../Common/Labels/InputLabel";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import LvlUpgradeView from "../../LvlUpgradeView";
+import SkillForm from "../../SkillForm";
 
 export default class BasicSkillCategoryView extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            skillFormVisible: false
+        }
+    }
 
     render() {
         return (
@@ -30,11 +39,23 @@ export default class BasicSkillCategoryView extends React.Component {
                               ]}
                           />
                       )}
-                      isAddButtonVisible={true}
-                      onAddClicked={() => this.props.onAddSkillClicked()}
+                      isAddButtonVisible={!this.state.skillFormVisible}
+                      onAddClicked={() => this.toggleSkillForm()}
                 />
+                {this.state.skillFormVisible &&
+                <SkillForm onSubmit={(form) => {
+                    this.toggleSkillForm()
+                    this.props.onSkillAdded(form)
+                }}/>
+                }
             </div>
         )
+    }
+
+    toggleSkillForm() {
+        this.setState(state => ({
+            skillFormVisible: !state.skillFormVisible
+        }))
     }
 
 

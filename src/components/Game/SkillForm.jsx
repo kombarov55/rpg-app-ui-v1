@@ -13,8 +13,8 @@ import {InputSwitch} from "primereact/inputswitch";
 import LvlUpgradeView from "./LvlUpgradeView";
 import SkillUpgradeForm from "./SkillUpgradeForm";
 import FormSubmitButton from "../Common/Buttons/FormSubmitButton";
-import Btn from "../Common/Buttons/Btn";
 import _ from "lodash"
+import FormTitleLabel from "../Common/Labels/FormTitleLabel";
 
 /**
  * @param props {onSubmit, onBackClicked}
@@ -27,7 +27,7 @@ export default function (props) {
     const [description, setDescription] = useState()
     const [prices, setPrices] = useState([])
     const [upgradable, setUpgradable] = useState()
-    const [skillUpgrades, setSkillUpgrades] = useState([])
+    const [upgrades, setUpgrades] = useState([])
 
     function onPriceAdded(list) {
         setPrices(prices.concat([list]))
@@ -38,7 +38,7 @@ export default function (props) {
     }
 
     function onUpgradeFormSubmit(data) {
-        setSkillUpgrades(skillUpgrades.concat(data))
+        setUpgrades(upgrades.concat(data))
     }
 
     function onSaveClicked() {
@@ -48,19 +48,19 @@ export default function (props) {
             description: description,
             prices: prices,
             upgradable: upgradable,
-            skillUpgrades: skillUpgrades
+            upgrades: upgrades
         }
-        console.log("skill form submitted: ")
-        console.log(form)
         Popup.info("Навык создан")
+        props.onSubmit(form)
     }
 
     function onBackClicked() {
-        props.onBackClicked()
+        // props.onBackClicked()
     }
 
     return (
         <form style={formStyle} onSubmit={handleSubmit(onSaveClicked)}>
+            <FormTitleLabel text={"Создание навыка:"}/>
             <InputLabel text={"Название:"}/>
             <input name={"name"}
                    ref={register({required: true})}
@@ -113,21 +113,21 @@ export default function (props) {
                 <>
                     <InputLabel text={"Уровни навыка:"}/>
                     <List noItemsText={"Нет уровней"}
-                          values={skillUpgrades.map(upgrade =>
+                          values={upgrades.map(upgrade =>
                               <LvlUpgradeView lvlNum={upgrade.lvlNum}
                                            description={upgrade.description}
                                            prices={upgrade.prices}
                               />)}
                     />
                     <SkillUpgradeForm
-                        lvlNum={skillUpgrades.length + 1}
+                        lvlNum={upgrades.length + 1}
                         // TODO: валюты захардкожены
                         currencies={["Золото", "Опыт", "Серебро"]}
                         onSubmit={data => onUpgradeFormSubmit(data)}/>
                 </>
             }
             <FormSubmitButton text={"Сохранить"}/>
-            <Btn text={"Назад"} onClick={() => onBackClicked()}/>
+            {/*<Btn text={"Назад"} onClick={() => props.onBackClicked()}/>*/}
         </form>
     )
 }

@@ -3,11 +3,10 @@ import {connect} from "react-redux"
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {changeView} from "../../../../data-layer/ActionCreators";
-import {gameView, skillCategoryEditView, skillCreationView, skillFormView} from "../../../../Views";
+import {gameView, skillCategoryEditView, skillCategoryView, skillFormView} from "../../../../Views";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import BasicSkillCategoryView from "./BasicSkillCategoryView";
 import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
-import Stubs from "../../../../stubs/Stubs";
 
 export default connect(
     state => ({
@@ -21,14 +20,9 @@ export default connect(
             ...stateProps,
             ...ownProps,
             back: () => dispatch(changeView(gameView)),
-            toEditView: () => {
-                console.log("skillCategoryPageView#mergeProps dispatching toEditView:")
-                console.log(stateProps.skillCategory)
-                return dispatch(changeView(skillCategoryEditView, {
-                    skillCategory: stateProps.skillCategory
-                }))
-            },
-            toSkillCreationView: () => dispatch(changeView(skillFormView))
+            toEditView: () => dispatch(changeView(skillCategoryEditView, {
+                skillCategory: stateProps.skillCategory
+            }))
         }
     }
 )
@@ -37,10 +31,9 @@ export default connect(
     constructor(props) {
         super(props);
         this.state = this.props.skillCategory
-    }
-
-    toEditView() {
-        this.props.toEditView(this.props.skillCategory)
+        this.setState({
+            skillFormVisible: false
+        })
     }
 
     render() {
@@ -57,14 +50,26 @@ export default connect(
                     /> :
                     <BasicSkillCategoryView
                         skills={this.state.skills}
-                        onAddSkillClicked={() => this.props.toSkillCreationView()}
+                        onSkillAdded={(skill) => this.onSkillAdded(skill)}
+                        onSkillEdited={(skill) => this.onSkillEdited(skill)}
                     />
-
                 }
-
-                <Btn text={"Редактировать"} onClick={() => this.toEditView()}/>
+                <Btn text={"Редактировать"} onClick={() => this.props.toEditView()}/>
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
+    }
+
+    onSkillAdded(skill) {
+        console.log("added skill")
+        console.log(skill)
+        this.setState(state => ({
+            skills: state.skills.concat(skill)
+        }))
+    }
+
+    onSkillEdited(skill) {
+        console.log("edited skill")
+        console.log(skill)
     }
 })

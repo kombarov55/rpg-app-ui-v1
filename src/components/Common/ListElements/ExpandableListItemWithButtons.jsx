@@ -1,7 +1,5 @@
 import React from "react";
-import BulletList from "../Lists/BulletList";
 import ExpandableListItem from "./ExpandableListItem";
-import Btn from "../Buttons/Btn";
 import GreyButton from "../Buttons/GreyButton";
 import Icon from "../Input/Icon";
 

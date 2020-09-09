@@ -7,8 +7,8 @@ import {gameView, skillCategoryEditView} from "../../../../Views";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import BasicSkillCategoryView from "./BasicSkillCategoryView";
 import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
-import {post} from "../../../../util/Http";
-import {saveSkillUrl} from "../../../../util/Parameters";
+import {httpDelete, post} from "../../../../util/Http";
+import {saveSkillUrl, skillByIdUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 
 export default connect(
@@ -55,8 +55,9 @@ export default connect(
                     <BasicSkillCategoryView
                         skills={this.state.skills}
                         currencies={this.props.currencies}
-                        onSkillAdded={(skill) => this.onSkillAdded(skill)}
-                        onSkillEdited={(skill) => this.onSkillEdited(skill)}
+                        onSkillAdded={skill => this.onSkillAdded(skill)}
+                        onSkillEdited={skill => this.onSkillEdited(skill)}
+                        onSkillDeleted={skill => this.onSkillDeleted(skill)}
                     />
                 }
                 <Btn text={"Редактировать"} onClick={() => this.props.toEditView()}/>
@@ -77,5 +78,14 @@ export default connect(
     onSkillEdited(skill) {
         console.log("edited skill")
         console.log(skill)
+    }
+
+    onSkillDeleted(skill) {
+        httpDelete(skillByIdUrl(skill.id), rs => {
+            this.setState(state => ({
+                skills: state.skills.filter(it => it.id !== skill.id)
+            }))
+            Popup.info("Навык удалён")
+        })
     }
 })

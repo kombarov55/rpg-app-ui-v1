@@ -6,6 +6,7 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import LvlUpgradeView from "../../LvlUpgradeView";
 import SkillForm from "../../SkillForm";
+import Icon from "../../../Common/Input/Icon";
 
 export default class BasicSkillCategoryView extends React.Component {
 
@@ -26,6 +27,10 @@ export default class BasicSkillCategoryView extends React.Component {
                           <ExpandableListItem
                               img={skill.img}
                               name={skill.name}
+                              upperButtons={[
+                                  this.props.onSkillEdited && <Icon className={"pi pi-pencil"} onClick={() => this.props.onSkillEdited(skill)}/>,
+                                  this.props.onSkillDeleted && <Icon className={"pi pi-times"} onClick={() => this.props.onSkillDeleted(skill)}/>
+                              ]}
                               alwaysExpand={true}
                               expandableElements={[
                                   <div>{skill.description}</div>,

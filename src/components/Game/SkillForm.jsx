@@ -39,6 +39,8 @@ export default function (props) {
     }
 
     function onUpgradeFormSubmit(data) {
+        console.log("upgrades submitted:")
+        console.log(data)
         setUpgrades(upgrades.concat(data))
     }
 
@@ -51,7 +53,10 @@ export default function (props) {
             upgradable: upgradable,
             upgrades: upgrades
         }
-        Popup.info("Навык создан")
+
+        console.log("skillForm:submit")
+        console.log(form)
+
         props.onSubmit(form)
     }
 

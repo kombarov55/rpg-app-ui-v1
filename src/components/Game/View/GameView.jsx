@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    changeView,
+    changeView, setActiveGame,
     setGames,
     updateActiveGame,
     updateGameForm,
@@ -20,7 +20,7 @@ import {
     subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
-import {deleteGameUrl} from "../../../util/Parameters";
+import {deleteGameUrl, skillCategoryUrl} from "../../../util/Parameters";
 import Btn from "../../Common/Buttons/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
@@ -47,7 +47,8 @@ function mapDispatchToProps(dispatch) {
         setGames: games => dispatch(setGames(games)),
         updateGameForm: game => dispatch(updateGameForm(game)),
         updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue)),
-        updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue))
+        updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue)),
+        setActiveGame: game => dispatch(setActiveGame(game))
     }
 }
 
@@ -134,6 +135,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onDeleteSkillCategoryClicked(skillCategory) {
+        httpDelete(skillCategoryUrl(skillCategory.id), rs => {
+            Popup.info("Категория навыка удалена")
+            props.setActiveGame(Object.assign({}, props.activeGame, {
+                skillCategories: props.activeGame.skillCategories.filter(v => v.id !== rs.id)
+            }))
+        })
+    }
+
     function onSkillCategoryDetailsClicked(skillCategory) {
         props.changeView(skillCategoryView, {
             skillCategory: skillCategory
@@ -168,6 +178,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               img={skillCategory.img}
                               name={skillCategory.name}
                               description={skillCategory.description}
+                              onDeleteClicked={() => onDeleteSkillCategoryClicked(skillCategory)}
                               onDetailsClicked={() => onSkillCategoryDetailsClicked(skillCategory)}
                           />
                       )}

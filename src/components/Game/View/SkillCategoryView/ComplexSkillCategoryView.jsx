@@ -7,6 +7,11 @@ import HorizontalListItem from "../../../Common/ListElements/HorizontalListItem"
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 
 export default class ComplexSkillCategoryView extends React.Component {
+    componentDidMount() {
+        console.log("ComplexSkillCategoryView: spell schools:")
+        console.log(this.props.spellSchools)
+    }
+
     render() {
         return (
             <div>
@@ -29,8 +34,14 @@ export default class ComplexSkillCategoryView extends React.Component {
                                                 name={"Уровень: " + schoolLvl.lvl}
                                                 alwaysExpand={true}
                                                 expandableElements={[
-                                                    <InputLabel
-                                                        text={"Цена перехода на следующий уровень: " + priceCombinationListToString(schoolLvl.upgradePriceCombinations)}/>,
+                                                    <List title={"Цены заклинаний:"}
+                                                          noItemsText={"Бесплатно!"}
+                                                          values={schoolLvl.upgradePriceCombinations.map(v =>
+                                                              <div>{v.spellCount} заклинаний изучено: {priceCombinationListToString(v.priceCombinations)}</div>
+                                                          )}
+                                                          />,
+                                                    // <InputLabel
+                                                    //     text={"Цена перехода на следующий уровень: " + priceCombinationListToString(schoolLvl.upgradePriceCombinations.priceCombinations)}/>,
                                                     <List title={"Заклинания:"}
                                                           noItemsText={"Нет заклинаний"}
                                                           values={schoolLvl.spells.map(spell =>

@@ -35,7 +35,7 @@ import SpellCreationView from "./components/Game/View/SpellCreationView";
 import CurrencyCreationView from "./components/Game/View/CurrencyFormView";
 import ShopCreationView from "./components/Game/View/ShopCreationView";
 import ShopView from "./components/Game/View/ShopView";
-import MerchandiseView from "./components/Game/View/MerchandiseView";
+import MerchandiseView from "./components/Game/View/Merchandise/MerchandiseView";
 import SkillCategoryEditView from "./components/Game/View/SkillCategoryView/SkillCategoryEditView";
 import SkillCategoryView from "./components/Game/View/SkillCategoryView/SkillCategoryView";
 import SkillFormView from "./components/Game/View/SkillCategoryView/SkillFormView";

@@ -1,24 +1,29 @@
 import React from "react";
 import {connect} from "react-redux"
-import {changeView} from "../../../data-layer/ActionCreators";
-import {gameView} from "../../../Views";
-import Btn from "../../Common/Buttons/Btn";
-import FormMode from "../../../data-layer/enums/FormMode";
-import FormViewStyle from "../../../styles/FormViewStyle";
-import List from "../../Common/Lists/List";
-import ListItem from "../../Common/ListElements/ListItem";
-import MerchandiseCategoryForm from "../MerchandiseCategoryForm";
-import MerchandiseTypeForm from "../MerchandiseTypeForm";
-import MerchandiseForm from "../MerchandiseForm";
-import {get, httpDelete, post, put} from "../../../util/Http";
-import Popup from "../../../util/Popup";
+import {changeView} from "../../../../data-layer/ActionCreators";
+import {gameView} from "../../../../Views";
+import Btn from "../../../Common/Buttons/Btn";
+import FormMode from "../../../../data-layer/enums/FormMode";
+import FormViewStyle from "../../../../styles/FormViewStyle";
+import List from "../../../Common/Lists/List";
+import ListItem from "../../../Common/ListElements/ListItem";
+import MerchandiseCategoryForm from "../../MerchandiseCategoryForm";
+import MerchandiseTypeForm from "../../MerchandiseTypeForm";
+import MerchandiseForm from "../../MerchandiseForm";
+import {get, httpDelete, post, put} from "../../../../util/Http";
+import Popup from "../../../../util/Popup";
 import {
-    currenciesByGameIdUrl, merchandiseByIdUrl,
+    currenciesByGameIdUrl,
+    merchandiseByIdUrl,
     merchandiseCategoryByIdUrl,
     merchandiseCategoryUrl,
     merchandiseTypeByIdUrl,
-    merchandiseTypeUrl, merchandiseUrl, shortSkillsByGameIdUrl
-} from "../../../util/Parameters";
+    merchandiseTypeUrl,
+    merchandiseUrl,
+    shortSkillsByGameIdUrl
+} from "../../../../util/Parameters";
+import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 
 export default connect(
     state => ({
@@ -40,6 +45,7 @@ export default connect(
         get(merchandiseTypeUrl(this.gameId), rs => this.setState({merchandiseTypes: rs}))
         get(shortSkillsByGameIdUrl(this.gameId), rs => this.setState({skills: rs}))
         get(currenciesByGameIdUrl(this.gameId), rs => this.setState({currencies: rs}))
+        get(merchandiseUrl(this.gameId), rs => this.setState({merchandiseList: rs}))
     }
 
     initialState = {
@@ -122,6 +128,18 @@ export default connect(
                     isAddButtonVisible={!this.state.merchandiseFormVisible}
                     noItemsText={"Нет товаров"}
                     onAddClicked={() => this.onAddMerchandiseClicked()}
+                    values={this.state.merchandiseList.map(merchandise =>
+                    <ExpandableListItemWithBullets
+                        img={merchandise.img}
+                        name={merchandise.name}
+                        bullets={[
+                            "Категория: " + merchandise.categoryName,
+                            "Тип: " + merchandise.typeName,
+                            merchandise.slots + " слот(ов)",
+                            "Цена: " + priceCombinationListToString(merchandise.prices)
+                        ]}
+                    />
+                    )}
                 />
 
                 {

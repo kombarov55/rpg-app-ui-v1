@@ -101,6 +101,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(conversionView)
     }
 
+    function onMerchandiseButtonClicked() {
+        props.changeView()
+    }
+
     function onAddCurrencyClicked() {
         props.changeView(currencyFormView, {
             formType: FormType.CREATE
@@ -196,13 +200,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                           />
                       )}
                       onAddClicked={() => onAddShopClicked()}
-                />
+                /> 
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Товары"} onClick={() => onMerchandiseClicked()}/>
                     <Btn text={"Присоединиться к игре"}/>
                     <Btn text={"Создать шаблон анкеты"} onClick={() => onAddQuestionnaireTemplateClicked()}/>
                     <Btn text={"Настройки обмена валют"} onClick={() => onConversionClicked()}/>
+                    <Btn text={"Товары"} onClick={() => onMerchandiseButtonClicked()}/>
                     <Btn text={"Редактировать"} onClick={() => onEditClicked()}/>
                     <Btn text={"Удалить"} onClick={() => onDeleteClicked()}/>
                     <Btn text={"Назад"} onClick={() => onBackClicked()}/>

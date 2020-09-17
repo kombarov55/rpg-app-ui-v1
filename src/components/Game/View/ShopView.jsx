@@ -63,6 +63,7 @@ export default connect(
                     description={"Магазин для игроков"}
                 />
 
+                {/*
                 <List
                     title={"Категории товаров:"}
                     noItemsText={"Нет категорий"}
@@ -76,7 +77,7 @@ export default connect(
                     onAddClicked={() => this.onAddMerchandiseCategoryClicked()}
                 />
                 {
-                    this.state.merchandiseCategoryFormVisible && (
+                     this.state.merchandiseCategoryFormVisible && (
                         this.state.merchandiseCategoryFormMode === FormMode.CREATE ?
                             <MerchandiseCategoryForm
                                 onSubmit={form => this.saveMerchandiseCategory(form)}
@@ -140,6 +141,8 @@ export default connect(
                     )
                 }
 
+                */}e
+
                 <List
                     title={"Заполнить магазин:"}
                     isAddButtonVisible={!this.state.merchandiseAmountFormVisible}
@@ -157,14 +160,6 @@ export default connect(
         this.setState({
             merchandiseCategoryFormVisible: true,
             merchandiseCategoryFormMode: FormMode.CREATE
-        })
-    }
-
-    onEditMerchandiseCategoryClicked(category) {
-        this.setState({
-            merchandiseCategoryFormVisible: true,
-            merchandiseCategoryFormMode: FormMode.EDIT,
-            merchandiseCategoryObjToUpdate: category
         })
     }
 
@@ -235,15 +230,7 @@ export default connect(
         }, () => Popup.error("Ошибка при обновлении типа товара."))
     }
 
-    onMerchandiseCategoryItemDelete(category) {
-        httpDelete(
-            merchandiseCategoryByIdUrl(this.props.gameId, category.id), () => {
-                this.setState(state => ({
-                    merchandiseCategories: state.merchandiseCategories.filter(it => it !== category)
-                }))
-                Popup.info("Категория удалена")
-            }, () => Popup.error("Ошибка при удалении категории"))
-    }
+
 
     onAddMerchandiseClicked() {
         this.setState({merchandiseFormVisible: true})

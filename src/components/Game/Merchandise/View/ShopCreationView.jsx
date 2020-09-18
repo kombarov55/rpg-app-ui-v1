@@ -1,17 +1,17 @@
 import React from "react";
 import {connect} from "react-redux"
-import {changeView, updateActiveGame} from "../../../data-layer/ActionCreators";
-import {gameView} from "../../../Views";
-import FormViewStyle from "../../../styles/FormViewStyle";
-import InputLabel from "../../Common/Labels/InputLabel";
-import Btn from "../../Common/Buttons/Btn";
-import {upload} from "../../../util/HttpRequests";
-import {saveShopUrl, uploadUrl} from "../../../util/Parameters";
+import {changeView, updateActiveGame} from "../../../../data-layer/ActionCreators";
+import {gameView} from "../../../../Views";
+import FormViewStyle from "../../../../styles/FormViewStyle";
+import InputLabel from "../../../Common/Labels/InputLabel";
+import Btn from "../../../Common/Buttons/Btn";
+import {upload} from "../../../../util/HttpRequests";
+import {saveShopUrl, uploadUrl} from "../../../../util/Parameters";
 import {MultiSelect} from "primereact/multiselect";
 import {SelectButton} from "primereact/selectbutton";
-import SubmitButton from "../../Common/Buttons/SubmitButton";
-import {post} from "../../../util/Http";
-import Popup from "../../../util/Popup";
+import SubmitButton from "../../../Common/Buttons/SubmitButton";
+import {post} from "../../../../util/Http";
+import Popup from "../../../../util/Popup";
 
 function mapStateToProps(state) {
     return {

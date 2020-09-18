@@ -2,13 +2,13 @@ import React from "react";
 import {connect} from "react-redux";
 import {SelectButton} from "primereact/selectbutton";
 import {Checkbox} from "primereact/checkbox";
-import {changeView, updateSkillForm} from "../../../data-layer/ActionCreators";
-import Btn from "../../Common/Buttons/Btn";
+import {changeView, updateSkillForm} from "../../../../data-layer/ActionCreators";
+import Btn from "../../../Common/Buttons/Btn";
 import {InputTextarea} from "primereact/inputtextarea";
-import {put} from "../../../util/Http";
-import {skillByIdUrl} from "../../../util/Parameters";
-import {skillsView} from "../../../Views";
-import Popup from "../../../util/Popup";
+import {put} from "../../../../util/Http";
+import {skillByIdUrl} from "../../../../util/Parameters";
+import {skillsView} from "../../../../Views";
+import Popup from "../../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {

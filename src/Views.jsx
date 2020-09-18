@@ -21,9 +21,9 @@ import GameCreationView from "./components/Game/View/GameCreationView";
 import NetworkEditView from "./components/Admin/Network/View/NetworkEditView";
 import SubnetworkEditView from "./components/Admin/Subnetwork/View/SubnetworkEditView";
 import GameEditView from "./components/Game/View/GameEditView";
-import SkillView from "./components/Game/View/SkillListView";
-import SkillItemForm from "./components/Game/View/SkillCreationView";
-import SkillEditView from "./components/Game/View/SkillEditView";
+import SkillView from "./components/Game/View/SkillCategoryView/SkillListView";
+import SkillItemForm from "./components/Game/View/SkillCategoryView/SkillCreationView";
+import SkillEditView from "./components/Game/View/SkillCategoryView/SkillEditView";
 import SkillSelectionView from "./components/QuestionnaireTemplateCreation/View/SkillSelectionView";
 import AdminPageView from "./components/Admin/View/AdminPageView";
 import QuestionnaireTemplateEditView
@@ -31,11 +31,11 @@ import QuestionnaireTemplateEditView
 import ConversionView from "./components/Game/View/ConversionView";
 import SkillCategoryForm from "./components/Game/View/SkillCategoryView/SkillCategoryForm";
 import SpellSchoolCreationView from "./components/Game/SpellSchoolCreationView";
-import SpellCreationView from "./components/Game/View/SpellCreationView";
+import SpellCreationView from "./components/Game/View/SkillCategoryView/SpellCreationView";
 import CurrencyCreationView from "./components/Game/View/CurrencyFormView";
-import ShopCreationView from "./components/Game/View/ShopCreationView";
-import ShopView from "./components/Game/View/ShopView";
-import MerchandiseView from "./components/Game/View/Merchandise/MerchandiseView";
+import ShopCreationView from "./components/Game/Merchandise/View/ShopCreationView";
+import ShopView from "./components/Game/Merchandise/View/ShopView";
+import MerchandiseView from "./components/Game/Merchandise/View/MerchandiseView";
 import SkillCategoryEditView from "./components/Game/View/SkillCategoryView/SkillCategoryEditView";
 import SkillCategoryView from "./components/Game/View/SkillCategoryView/SkillCategoryView";
 import SkillFormView from "./components/Game/View/SkillCategoryView/SkillFormView";

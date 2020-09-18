@@ -1,10 +1,10 @@
 import React from "react";
-import InputLabel from "../../Common/Labels/InputLabel";
+import InputLabel from "../../../Common/Labels/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
-import Btn from "../../Common/Buttons/Btn";
-import {spellSchoolCreationView} from "../../../Views";
-import {upload} from "../../../util/HttpRequests";
-import FormTitleLabel from "../../Common/Labels/FormTitleLabel";
+import Btn from "../../../Common/Buttons/Btn";
+import {spellSchoolCreationView} from "../../../../Views";
+import {upload} from "../../../../util/HttpRequests";
+import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 
 export default class SpellCreationView extends React.Component {
 

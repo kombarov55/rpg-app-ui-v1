@@ -6,7 +6,7 @@ import ExpandableListItemWithBullets from "../Common/ListElements/ExpandableList
 import SpellSchoolLvlUpgradePriceForm from "./SpellSchoolLvlUpgradePriceForm";
 import InnerFormStyle from "../../styles/InnerFormStyle";
 import AddItemButton from "../Common/Buttons/AddItemButton";
-import SpellCreationView from "./View/SpellCreationView";
+import SpellCreationView from "./View/SkillCategoryView/SpellCreationView";
 import priceCombinationListToString from "../../util/priceCombinationListToString";
 import SmallDeletableListItem from "../Common/ListElements/SmallDeletableListItem";
 import Btn from "../Common/Buttons/Btn";

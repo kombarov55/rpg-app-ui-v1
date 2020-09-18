@@ -7,9 +7,9 @@ import FormMode from "../../../../data-layer/enums/FormMode";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
 import ListItem from "../../../Common/ListElements/ListItem";
-import MerchandiseCategoryForm from "../../MerchandiseCategoryForm";
-import MerchandiseTypeForm from "../../MerchandiseTypeForm";
-import MerchandiseForm from "../../MerchandiseForm";
+import MerchandiseCategoryForm from "../Form/MerchandiseCategoryForm";
+import MerchandiseTypeForm from "../Form/MerchandiseTypeForm";
+import MerchandiseForm from "../Form/MerchandiseForm";
 import {get, httpDelete, post, put} from "../../../../util/Http";
 import Popup from "../../../../util/Popup";
 import {

@@ -142,12 +142,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         }, () => Popup.error("Ошибка при удалении магазина. Обратитесь к Администратору."))
     }
 
-    function onEditSkillCategoryClicked(skillCategory) {
-        props.changeView(skillCategoryEditView, {
-            id: skillCategory.id
-        })
-    }
-
     function onDeleteSkillCategoryClicked(skillCategory) {
         httpDelete(skillCategoryUrl(skillCategory.id), rs => {
             Popup.info("Категория навыка удалена")
@@ -198,7 +192,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                       onAddClicked={() => onAddSkillCategoryClicked()}
                 />
 
-
                 <List title={"Магазины:"}
                       noItemsText={"Нет магазинов"}
                       values={props.activeGame.shops.map(shop =>
@@ -210,7 +203,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                           />
                       )}
                       onAddClicked={() => onAddShopClicked()}
-                /> 
+                />
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Товары"} onClick={() => onMerchandiseClicked()}/>

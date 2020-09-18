@@ -6,18 +6,10 @@ import List from "../../Common/Lists/List";
 import Btn from "../../Common/Buttons/Btn";
 import {gameView} from "../../../Views";
 import {changeView} from "../../../data-layer/ActionCreators";
-import MerchandiseCategoryForm from "../MerchandiseCategoryForm";
 import {httpDelete, post, put} from "../../../util/Http";
-import {
-    merchandiseCategoryByIdUrl,
-    merchandiseTypeByIdUrl, merchandiseTypeUrl,
-    merchandiseCategoryUrl
-} from "../../../util/Parameters";
-import ListItem from "../../Common/ListElements/ListItem";
+import {merchandiseCategoryUrl, merchandiseTypeByIdUrl, merchandiseTypeUrl} from "../../../util/Parameters";
 import Popup from "../../../util/Popup";
 import FormMode from "../../../data-layer/enums/FormMode";
-import MerchandiseTypeForm from "../MerchandiseTypeForm";
-import MerchandiseForm from "../MerchandiseForm";
 
 export default connect(
     state => ({
@@ -63,86 +55,6 @@ export default connect(
                     description={"Магазин для игроков"}
                 />
 
-                {/*
-                <List
-                    title={"Категории товаров:"}
-                    noItemsText={"Нет категорий"}
-                    values={this.state.merchandiseCategories.map(category =>
-                        <ListItem text={category.name}
-                                  onDelete={() => this.onMerchandiseCategoryItemDelete(category)}
-                                  onEdit={() => this.onEditMerchandiseCategoryClicked(category)}
-                        />
-                    )}
-                    isAddButtonVisible={!this.state.merchandiseCategoryFormVisible}
-                    onAddClicked={() => this.onAddMerchandiseCategoryClicked()}
-                />
-                {
-                     this.state.merchandiseCategoryFormVisible && (
-                        this.state.merchandiseCategoryFormMode === FormMode.CREATE ?
-                            <MerchandiseCategoryForm
-                                onSubmit={form => this.saveMerchandiseCategory(form)}
-                            /> :
-                            <MerchandiseCategoryForm
-                                initialState={this.state.merchandiseCategoryObjToUpdate}
-                                onSubmit={form => this.updateMerchandiseCategory(form)}
-                            />
-                    )
-                }
-
-                <List
-                    title={"Типы товаров:"}
-                    isAddButtonVisible={!this.state.merchandiseTypeFormVisible}
-                    noItemsText={"Нет типов"}
-                    values={this.state.merchandiseTypes.map(merchandiseType =>
-                        <ListItem text={merchandiseType.name}
-                                  onDelete={() => this.onDeleteMerchandiseTypeClicked(merchandiseType)}
-                                  onEdit={() => this.onEditMerchandiseTypeClicked(merchandiseType)}
-                        />
-                    )}
-                    onAddClicked={() => this.onAddMerchandiseTypeClicked()}
-                />
-
-                {
-                    this.state.merchandiseTypeFormVisible && (
-                        this.state.merchandiseTypeFormMode === FormMode.CREATE ?
-                            <MerchandiseTypeForm
-                                onSubmit={form => this.saveMerchandiseType(form)}
-                            /> :
-                            <MerchandiseTypeForm
-                                initialState={this.state.merchandiseTypeObjToUpdate}
-                                onSubmit={form => this.updateMerchandiseType(form)}
-                            />
-                    )
-                }
-
-                <List
-                    title={"Товары:"}
-                    isAddButtonVisible={!this.state.merchandiseFormVisible}
-                    noItemsText={"Нет товаров"}
-                    onAddClicked={() => this.onAddMerchandiseClicked()}
-                />
-
-                {
-                    this.state.merchandiseFormVisible && (
-                        this.state.merchandiseFormMode === FormMode.CREATE ?
-                            <MerchandiseForm
-                                merchandiseCategories={this.state.merchandiseCategories}
-                                merchandiseTypes={this.state.merchandiseTypes}
-
-                                onSubmit={form => this.addMerchandise(form)}
-                            /> :
-                            <MerchandiseForm
-                                merchandiseCategories={this.state.merchandiseCategories}
-                                merchandiseTypes={this.state.merchandiseTypes}
-
-                                initialState={this.state.merchandiseObjToUpdate}
-                                onSubmit={form => this.updateMerchandise(form)}
-                            />
-                    )
-                }
-
-                */}e
-
                 <List
                     title={"Заполнить магазин:"}
                     isAddButtonVisible={!this.state.merchandiseAmountFormVisible}
@@ -150,7 +62,6 @@ export default connect(
                     onAddClicked={() => this.onAddMerchandiseAmountClicked()}
                 />
 
-                <Btn text={"DEBUG"} onClick={() => console.log(this.state)}/>
                 <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
             </div>
         )

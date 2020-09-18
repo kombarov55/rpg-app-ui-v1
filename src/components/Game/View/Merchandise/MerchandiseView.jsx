@@ -132,6 +132,7 @@ export default connect(
                           <ExpandableListItemWithBullets
                               img={merchandise.img}
                               name={merchandise.name}
+                              description={merchandise.description == null ? "[Нет описания]" : merchandise.description}
                               onEditClicked={() => this.onMerchandiseEditClicked(merchandise)}
                               onDeleteClicked={() => this.onMerchandiseDeleteClicked(merchandise)}
                               bullets={[

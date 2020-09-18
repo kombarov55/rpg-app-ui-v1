@@ -11,6 +11,7 @@ import priceCombinationToString from "../../util/priceCombinationToString";
 import SkillInfluenceForm from "./SkillInfluenceForm";
 import FormMode from "../../data-layer/enums/FormMode";
 import {connect} from "react-redux"
+import {InputTextarea} from "primereact/inputtextarea";
 
 export default connect(
     state => ({
@@ -45,6 +46,7 @@ export default connect(
     initialState = {
         name: "",
         img: "",
+        description: "",
         category: "",
         type: "",
         slots: 1,
@@ -63,6 +65,12 @@ export default connect(
                 <InputLabel text={"Картинка:"}/>
                 <input type={"file"}
                        onChange={e => upload(e.target.files[0], filename => this.setState({img: filename}))}
+                />
+
+                <InputLabel text={"Описание:"}/>
+                <InputTextarea autoResize={true}
+                               value={this.state.description}
+                               onChange={e => this.setState({description: e.target.value})}
                 />
 
                 <InputLabel text={"Категория:"}/>
@@ -165,6 +173,7 @@ export default connect(
             id: this.state.id,
             name: this.state.name,
             img: this.state.img,
+            description: this.state.description,
             category: this.state.category,
             type: this.state.type,
             slots: this.state.slots,

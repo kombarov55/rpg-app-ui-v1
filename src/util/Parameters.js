@@ -63,6 +63,7 @@ export const saveSkillUrl = skillCategoryId => rootUrl + "/skillCategory/" + ski
 export const skillByIdUrl = id => rootUrl + "/skill/" + id
 
 export const saveShopUrl = gameId => rootUrl + "/game/" + gameId + "/shop"
+export const shopByIdUrl = shopId => rootUrl + "/shop/" + shopId
 
 export const merchandiseCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/merchandiseCategory"
 export const merchandiseCategoryByIdUrl = (gameId, merchandiseCategoryId) => rootUrl + "/game/" + gameId + "/merchandiseCategory/" + merchandiseCategoryId

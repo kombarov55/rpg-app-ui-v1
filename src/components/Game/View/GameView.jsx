@@ -20,7 +20,7 @@ import {
     subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
-import {deleteGameUrl, skillCategoryUrl} from "../../../util/Parameters";
+import {deleteGameUrl, shopByIdUrl, skillCategoryUrl} from "../../../util/Parameters";
 import Btn from "../../Common/Buttons/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
@@ -133,6 +133,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onShopDeleted(shop) {
+        httpDelete(shopByIdUrl(shop.id), rs => {
+            props.setActiveGame(Object.assign({}, props.activeGame, {
+                shops: props.activeGame.shops.filter(v => v.id !== rs.id)
+            }))
+            Popup.info("Магазин удалён")
+        }, () => Popup.error("Ошибка при удалении магазина. Обратитесь к Администратору."))
+    }
+
     function onEditSkillCategoryClicked(skillCategory) {
         props.changeView(skillCategoryEditView, {
             id: skillCategory.id
@@ -197,6 +206,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               img={shop.img}
                               name={shop.name}
                               onDetailsClicked={() => onShopClicked(shop)}
+                              onDeleteClicked={() => onShopDeleted(shop)}
                           />
                       )}
                       onAddClicked={() => onAddShopClicked()}

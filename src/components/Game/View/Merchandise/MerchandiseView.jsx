@@ -129,16 +129,18 @@ export default connect(
                     noItemsText={"Нет товаров"}
                     onAddClicked={() => this.onAddMerchandiseClicked()}
                     values={this.state.merchandiseList.map(merchandise =>
-                    <ExpandableListItemWithBullets
-                        img={merchandise.img}
-                        name={merchandise.name}
-                        bullets={[
-                            "Категория: " + merchandise.categoryName,
-                            "Тип: " + merchandise.typeName,
-                            merchandise.slots + " слот(ов)",
-                            "Цена: " + priceCombinationListToString(merchandise.prices)
-                        ]}
-                    />
+                        <ExpandableListItemWithBullets
+                            img={merchandise.img}
+                            name={merchandise.name}
+                            onEditClicked={() => this.onMerchandiseEditClicked(merchandise)}
+                            onDeleteClicked={() => this.onMerchandiseDeleteClicked(merchandise)}
+                            bullets={[
+                                "Категория: " + merchandise.categoryName,
+                                "Тип: " + merchandise.typeName,
+                                merchandise.slots + " слот(ов)",
+                                "Цена: " + priceCombinationListToString(merchandise.prices)
+                            ]}
+                        />
                     )}
                 />
 
@@ -285,6 +287,26 @@ export default connect(
             }))
             Popup.info("Товар был обновлён")
         })
+    }
+
+    onMerchandiseEditClicked(merchandise) {
+        this.setState({
+            merchandiseFormMode: FormMode.EDIT,
+            merchandiseObjToUpdate: merchandise,
+            merchandiseFormVisible: true
+        })
+    }
+
+    onMerchandiseDeleteClicked(merchandise) {
+        httpDelete(merchandiseByIdUrl(this.gameId, merchandise.id), ignored => {
+                this.setState(state => ({
+                    merchandiseList: state.merchandiseList.filter(it => it.id !== merchandise.id)
+                }))
+            Popup.info("Товар удалён")
+            }, () => Popup.error("Ошибка при удалении товара. Обратитесь к администратору.")
+        )
+
+
     }
 
     onBackClicked() {

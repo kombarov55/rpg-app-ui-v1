@@ -29,7 +29,14 @@ export default connect(
     constructor(props) {
         super(props)
 
-        this.state = props.initialState != null ? props.initialState : this.initialState
+        this.state = Object.assign({
+            skillInfluenceFormVisible: false,
+            skillInfluenceFormMode: FormMode.CREATE,
+            skillInfluenceObjToUpdate: null
+        }, props.initialState != null ? props.initialState : this.initialState)
+
+        console.log("merchandiseForm:initialized")
+        console.log(this.state)
 
         // get(shortSkillsByGameIdUrl(this.props.gameId), rs => this.setState({skills: rs}))
         // get(currenciesByGameIdUrl(this.props.gameId), rs => this.setState({currencies: rs}))
@@ -43,13 +50,6 @@ export default connect(
         slots: 1,
         prices: [],
         skillInfluences: [],
-
-        // skills: [],
-        // currencies: [],
-
-        skillInfluenceFormVisible: false,
-        skillInfluenceFormMode: FormMode.CREATE,
-        skillInfluenceObjToUpdate: null
     }
 
     render() {
@@ -103,7 +103,7 @@ export default connect(
                 <List noItemsText={"Пусто"}
                       values={this.state.skillInfluences.map(skillInfluence =>
                           <ListItem
-                              text={skillInfluence.skill.name + " " + skillInfluence.modifier.name + " " + skillInfluence.amount}
+                              text={skillInfluence.skillName + " " + skillInfluence.modifier.name + " " + skillInfluence.amount}
                               onDelete={() => this.onSkillInfluenceDeleted(skillInfluence)}
                           />
                       )}
@@ -156,7 +156,7 @@ export default connect(
     onSkillInfluenceDeleted(skillInfluence) {
         console.log(skillInfluence)
         this.setState(state => ({
-            skillInfluences: state.skillInfluences.filter(it => it.skill !== skillInfluence.skill)
+            skillInfluences: state.skillInfluences.filter(it => it.skillName !== skillInfluence.skillName)
         }))
     }
 

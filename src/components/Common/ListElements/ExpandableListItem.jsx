@@ -13,9 +13,9 @@ export default class ExpandableListItem extends React.Component {
 
     render() {
         return (
-            <div style={containerStyle} onClick={() => this.onClick()}>
+            <div style={containerStyle}>
                 <div style={innerHorizontalStyle}>
-                    <div style={imgAndName}>
+                    <div style={imgAndName} onClick={() => this.onClick()}>
                         {
                             this.props.img &&
                             <img style={imgStyle} src={this.props.img}/>

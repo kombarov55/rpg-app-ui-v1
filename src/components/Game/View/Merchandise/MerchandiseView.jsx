@@ -24,6 +24,7 @@ import {
 } from "../../../../util/Parameters";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
+import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 
 export default connect(
     state => ({
@@ -123,25 +124,25 @@ export default connect(
                     )
                 }
 
-                <List
-                    title={"Товары:"}
-                    isAddButtonVisible={!this.state.merchandiseFormVisible}
-                    noItemsText={"Нет товаров"}
-                    onAddClicked={() => this.onAddMerchandiseClicked()}
-                    values={this.state.merchandiseList.map(merchandise =>
-                        <ExpandableListItemWithBullets
-                            img={merchandise.img}
-                            name={merchandise.name}
-                            onEditClicked={() => this.onMerchandiseEditClicked(merchandise)}
-                            onDeleteClicked={() => this.onMerchandiseDeleteClicked(merchandise)}
-                            bullets={[
-                                "Категория: " + merchandise.category.name,
-                                "Тип: " + merchandise.type.name,
-                                merchandise.slots + " слот(ов)",
-                                "Цена: " + priceCombinationListToString(merchandise.prices)
-                            ]}
-                        />
-                    )}
+                <List title={"Товары:"}
+                      isAddButtonVisible={!this.state.merchandiseFormVisible}
+                      noItemsText={"Нет товаров"}
+                      onAddClicked={() => this.onAddMerchandiseClicked()}
+                      values={this.state.merchandiseList.map(merchandise =>
+                          <ExpandableListItemWithBullets
+                              img={merchandise.img}
+                              name={merchandise.name}
+                              onEditClicked={() => this.onMerchandiseEditClicked(merchandise)}
+                              onDeleteClicked={() => this.onMerchandiseDeleteClicked(merchandise)}
+                              bullets={[
+                                  "Категория: " + merchandise.category.name,
+                                  "Тип: " + merchandise.type.name,
+                                  merchandise.slots + " слот(ов)",
+                                  "Цена: " + priceCombinationListToString(merchandise.prices),
+                                  merchandise.skillInfluences.map(it => SkillInfluenceToString(it)).join(", ")
+                              ]}
+                          />
+                      )}
                 />
 
                 {
@@ -167,7 +168,6 @@ export default connect(
                     )
                 }
 
-                <Btn text={"DEBUG"} onClick={() => console.log(this.state)}/>
                 <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
             </div>
         )
@@ -302,7 +302,7 @@ export default connect(
                 this.setState(state => ({
                     merchandiseList: state.merchandiseList.filter(it => it.id !== merchandise.id)
                 }))
-            Popup.info("Товар удалён")
+                Popup.info("Товар удалён")
             }, () => Popup.error("Ошибка при удалении товара. Обратитесь к администратору.")
         )
 

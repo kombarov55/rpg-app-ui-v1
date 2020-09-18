@@ -103,7 +103,7 @@ export default connect(
                 <List noItemsText={"Пусто"}
                       values={this.state.skillInfluences.map(skillInfluence =>
                           <ListItem
-                              text={skillInfluence.skillName + " " + skillInfluence.modifier.name + " " + skillInfluence.amount}
+                              text={skillInfluence.skill.name + " " + skillInfluence.modifier.name + " " + skillInfluence.amount}
                               onDelete={() => this.onSkillInfluenceDeleted(skillInfluence)}
                           />
                       )}
@@ -156,7 +156,7 @@ export default connect(
     onSkillInfluenceDeleted(skillInfluence) {
         console.log(skillInfluence)
         this.setState(state => ({
-            skillInfluences: state.skillInfluences.filter(it => it.skillName !== skillInfluence.skillName)
+            skillInfluences: state.skillInfluences.filter(it => it.skill.name !== skillInfluence.skill.name)
         }))
     }
 

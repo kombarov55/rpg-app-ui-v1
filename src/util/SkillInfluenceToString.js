@@ -10,5 +10,5 @@
  * }
  */
 export default function (skillInfluence) {
-    return skillInfluence.skillName + " " + skillInfluence.modifier.name + " " + skillInfluence.amount
+    return skillInfluence.skill.name + " " + skillInfluence.modifier.name + " " + skillInfluence.amount
 }

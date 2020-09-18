@@ -135,8 +135,8 @@ export default connect(
                             onEditClicked={() => this.onMerchandiseEditClicked(merchandise)}
                             onDeleteClicked={() => this.onMerchandiseDeleteClicked(merchandise)}
                             bullets={[
-                                "Категория: " + merchandise.categoryName,
-                                "Тип: " + merchandise.typeName,
+                                "Категория: " + merchandise.category.name,
+                                "Тип: " + merchandise.type.name,
                                 merchandise.slots + " слот(ов)",
                                 "Цена: " + priceCombinationListToString(merchandise.prices)
                             ]}
@@ -286,7 +286,7 @@ export default connect(
                 merchandiseFormVisible: false
             }))
             Popup.info("Товар был обновлён")
-        })
+        }, () => Popup.error("Ошибка при обновлении товара. Обратитесь к администратору."))
     }
 
     onMerchandiseEditClicked(merchandise) {

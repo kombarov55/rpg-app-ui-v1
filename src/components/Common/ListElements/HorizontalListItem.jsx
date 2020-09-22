@@ -11,10 +11,13 @@ export default function (props) {
     return (
         <div className={"horizontal-list-item"}>
             <div className={"horizontal-list-item-head"}>
-                <img className={"horizontal-list-img"}
-                     src={imgSrc}
-                     onClick={() => onClick()}
-                />
+                {
+                    imgSrc &&
+                    <img className={"horizontal-list-img"}
+                         src={imgSrc}
+                         onClick={() => onClick()}
+                    />
+                }
                 <div className={"horizontal-list-item-text-group"}>
                     <div className={"horizontal-list-item-text-group-vertical"}
                          onClick={() => onClick()}>

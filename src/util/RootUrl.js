@@ -1,1 +1,1 @@
-export const rootUrl = "http://localhost:8080"
+export const rootUrl = "https://arcane-reef-09390.herokuapp.com"

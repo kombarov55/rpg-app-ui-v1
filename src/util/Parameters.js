@@ -78,3 +78,6 @@ export const merchandiseByIdUrl = (gameId, merchandiseId) => rootUrl + "/game/" 
 export const saveWarehouseEntryUrl = shopId => rootUrl + "/shop/" + shopId + "/warehouseEntry"
 export const updateWarehouseEntryUrl = (shopId, warehouseEntryId) => rootUrl + "/shop/" + shopId + "/warehouseEntry/" + warehouseEntryId
 export const deleteWarehouseEntryUrl = warehouseEntryId => rootUrl + "/warehouseEntry/" + warehouseEntryId
+
+export const organizationByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/organization"
+export const organizationUrl = id => rootUrl + "/organization/" + id

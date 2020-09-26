@@ -48,6 +48,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onGameClick(game) {
+        Preload.gameView(game.id)
         props.setActiveGame(game)
         Globals.gameCreationMode = GameCreationMode.OPEN
         props.changeView(gameView)

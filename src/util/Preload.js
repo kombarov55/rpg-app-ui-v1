@@ -6,14 +6,14 @@ import {
     gameBySubnetworkId,
     gamesUrl,
     gameUrl,
-    networkUrl, questionnaireTemplateByIdUrl,
+    networkUrl, organizationByGameIdUrl, questionnaireTemplateByIdUrl,
     skillsByGameIdUrl,
     subnetworkUrl
 } from "./Parameters";
 import {
     setActiveGame, setConversions, setCurrencies,
     setGames,
-    setNetworks,
+    setNetworks, setOrganizations,
     setSubnetworks,
     updateQuestionnaireTemplateForm
 } from "../data-layer/ActionCreators";
@@ -36,6 +36,7 @@ export default {
 
     gameView: (gameId) => {
         get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
+        get(organizationByGameIdUrl(gameId), rs => window.store.dispatch(setOrganizations(rs)))
     },
 
     questionnaireTemplateEditView: questionnaireId => {

@@ -24,7 +24,7 @@ import {
     subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
-import {deleteGameUrl, shopByIdUrl, skillCategoryUrl} from "../../../util/Parameters";
+import {deleteGameUrl, organizationUrl, shopByIdUrl, skillCategoryUrl} from "../../../util/Parameters";
 import Btn from "../../Common/Buttons/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
@@ -38,7 +38,6 @@ import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableL
 import Popup from "../../../util/Popup";
 import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
 import OrganizationForm from "../Organization/Form/OrganizationForm";
-import priceCombinationToString from "../../../util/priceCombinationToString";
 
 function mapStateToProps(state, props) {
     return {
@@ -146,10 +145,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onSaveOrganizationClicked(form) {
-        console.log(form)
         setOrganizationFormVisible(false)
         Popup.info("Организация создана. Для дальнейшей настройки организации нажмите 'Подробнее'")
         props.setOrganizations(props.organizations.concat(form))
+    }
+
+    function onDeleteOrganizationClicked(organization) {
+        httpDelete(organizationUrl(organization.id), rs => {
+            props.setOrganizations(props.organizations.filter(v => v.id !== rs.id))
+
+            Popup.info("Организация удалена")
+        })
     }
 
     function onShopDeleted(shop) {
@@ -237,6 +243,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                   "Начальный бюджет: " + organization.initialBudget.map(v => v.name + ": " + v.amount).join(", "),
                                   "Главы: " + organization.heads.map(v => v.fullName).join(", ")
                               ]}
+                              onDeleteClicked={() => onDeleteOrganizationClicked(organization)}
                               onDetailsClicked={() => console.log("OK")}
 
                               alwaysExpand={true}

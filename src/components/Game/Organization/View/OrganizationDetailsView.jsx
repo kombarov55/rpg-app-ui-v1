@@ -10,7 +10,7 @@ import BulletList from "../../../Common/Lists/BulletList";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithButtons from "../../../Common/ListElements/ExpandableListItemWithButtons";
 import {httpDelete, post, put} from "../../../../util/Http";
-import {addCountryShopUrl, organizationHeadUrl, removeCountryShopUrl} from "../../../../util/Parameters";
+import {addOrganizationShopUrl, organizationHeadUrl, removeOrganizationShopUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import SmallerExpandableListItem from "../../../Common/ListElements/SmallerExpandableListItem";
 import CountryDetailsComponent from "../Components/CountryDetailsComponent";
@@ -93,9 +93,18 @@ export default connect(
 
                     <List title={"Магазины:"}
                           noItemsText={"Отсутствуют"}
-                          isAddButtonVisible={this.state.addShopVisible}
+                          isAddButtonVisible={!this.state.addShopVisible}
+                          onAddClicked={() => this.setState({
+                              shopFormMode: FormMode.CREATE,
+                              addShopVisible: true,
+                          })}
                           values={this.props.organization.shops.map(shop =>
                               <ListItem text={shop.name}
+                                        onEdit={() => this.setState({
+                                            shopFormMode: FormMode.EDIT,
+                                            shopForm: shop,
+                                            addShopVisible: true,
+                                        })}
                                         onDelete={() => this.onDeleteShopClicked(shop)}
                               />
                           )}
@@ -107,8 +116,8 @@ export default connect(
                                     onSubmit={form => this.onAddShopClicked(form)}
                                 /> :
                                 <ShopForm
-                                    initialState={this.store.shopForm}
-                                    onSubmit={form => this.onAddShopClicked(form)}
+                                    initialState={this.state.shopForm}
+                                    onSubmit={form => this.onEditShopClicked(form)}
                                 />
                         )
                     }
@@ -133,31 +142,31 @@ export default connect(
             })
         }
 
-    onAddShopClicked(form) {
-        post(addCountryShopUrl(this.props.organization.url), form, rs => {
-            this.props.setOrganization(rs)
-            Popup.info("Магазин добавлен")
-            this.setState({
-                addShopVisible: false
+        onAddShopClicked(form) {
+            post(addOrganizationShopUrl(this.props.organization.id), form, rs => {
+                this.props.setOrganization(rs)
+                Popup.info("Магазин добавлен")
+                this.setState({
+                    addShopVisible: false
+                })
             })
-        })
-    }
+        }
 
-    onEditShopClicked(form) {
-        put(addCountryShopUrl(this.props.organization.url), form, rs => {
-            this.props.setOrganization(rs)
-            Popup.info("Магазин добавлен")
-            this.setState({
-                addShopVisible: false
+        onEditShopClicked(form) {
+            put(removeOrganizationShopUrl(this.props.organization.id, form.id), form, rs => {
+                this.props.setOrganization(rs)
+                Popup.info("Магазин добавлен")
+                this.setState({
+                    addShopVisible: false
+                })
             })
-        })
-    }
+        }
 
-    onDeleteShopClicked(shop) {
-        httpDelete(removeCountryShopUrl(this.props.organization.id, shop.id), rs => {
-            this.props.setOrganization(rs)
-            Popup.info("Магазин удалён")
-        })
-    }
+        onDeleteShopClicked(shop) {
+            httpDelete(removeOrganizationShopUrl(this.props.organization.id, shop.id), rs => {
+                this.props.setOrganization(rs)
+                Popup.info("Магазин удалён")
+            })
+        }
     }
 )

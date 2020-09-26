@@ -122,6 +122,10 @@ export default class OrganizationForm extends React.Component {
 
 
                 <SubmitButton text={"Сохранить"} onClick={() => {
+                    console.log(this.state)
+
+                    if (this.state.name == "" || this.state.heads.length == 0 || this.state.type == null) return
+
                     this.props.onSubmit(this.state)
                     this.setState(this.initialState)
                 }}/>

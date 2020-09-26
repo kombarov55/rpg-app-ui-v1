@@ -9,11 +9,14 @@ import Label from "../../../Common/Labels/Label";
 import BulletList from "../../../Common/Lists/BulletList";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithButtons from "../../../Common/ListElements/ExpandableListItemWithButtons";
-import {httpDelete, post} from "../../../../util/Http";
-import {organizationHeadUrl} from "../../../../util/Parameters";
+import {httpDelete, post, put} from "../../../../util/Http";
+import {addCountryShopUrl, organizationHeadUrl, removeCountryShopUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import SmallerExpandableListItem from "../../../Common/ListElements/SmallerExpandableListItem";
 import CountryDetailsComponent from "../Components/CountryDetailsComponent";
+import FormMode from "../../../../data-layer/enums/FormMode";
+import ShopForm from "../Form/ShopForm";
+import ListItem from "../../../Common/ListElements/ListItem";
 
 export default connect(
     store => ({
@@ -32,7 +35,11 @@ export default connect(
 
 
         formInitialState = {
-            addHeadVisible: false
+            addHeadVisible: false,
+
+            addShopVisible: false,
+            shopForm: null,
+            shopFormMode: FormMode.CREATE
         }
 
 
@@ -84,6 +91,28 @@ export default connect(
                                              setOrganization={organization => this.props.setOrganization(organization)}
                     />
 
+                    <List title={"Магазины:"}
+                          noItemsText={"Отсутствуют"}
+                          isAddButtonVisible={this.state.addShopVisible}
+                          values={this.props.organization.shops.map(shop =>
+                              <ListItem text={shop.name}
+                                        onDelete={() => this.onDeleteShopClicked(shop)}
+                              />
+                          )}
+                    />
+                    {
+                        this.state.addShopVisible &&
+                        (this.state.shopFormMode === FormMode.CREATE ?
+                                <ShopForm
+                                    onSubmit={form => this.onAddShopClicked(form)}
+                                /> :
+                                <ShopForm
+                                    initialState={this.store.shopForm}
+                                    onSubmit={form => this.onAddShopClicked(form)}
+                                />
+                        )
+                    }
+
                     <Btn text={"Назад"} onClick={() => this.props.back()}/>
                 </div>
             )
@@ -103,5 +132,32 @@ export default connect(
                 Popup.info(userAccount.fullName + " исключен из правления организацией.")
             })
         }
+
+    onAddShopClicked(form) {
+        post(addCountryShopUrl(this.props.organization.url), form, rs => {
+            this.props.setOrganization(rs)
+            Popup.info("Магазин добавлен")
+            this.setState({
+                addShopVisible: false
+            })
+        })
+    }
+
+    onEditShopClicked(form) {
+        put(addCountryShopUrl(this.props.organization.url), form, rs => {
+            this.props.setOrganization(rs)
+            Popup.info("Магазин добавлен")
+            this.setState({
+                addShopVisible: false
+            })
+        })
+    }
+
+    onDeleteShopClicked(shop) {
+        httpDelete(removeCountryShopUrl(this.props.organization.id, shop.id), rs => {
+            this.props.setOrganization(rs)
+            Popup.info("Магазин удалён")
+        })
+    }
     }
 )

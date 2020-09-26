@@ -84,5 +84,5 @@ export const organizationUrl = id => rootUrl + "/organization/" + id
 export const organizationByGameIdAndIdUrl = (gameId, id) => rootUrl + "/game/" + gameId + "/organization/" + id
 export const organizationHeadUrl = (organizationId, headId) => rootUrl + "/organization/" + organizationId + "/head/" + headId
 
-export const addCountryShopUrl = organizationUrl => rootUrl + "/organization/" + organizationUrl + "/shop"
-export const removeCountryShopUrl = (organizationUrl, shopId) => rootUrl + "/organization/" + organizationUrl + "/shop/" + shopId
+export const addOrganizationShopUrl = organizationUrl => rootUrl + "/organization/" + organizationUrl + "/shop"
+export const removeOrganizationShopUrl = (organizationUrl, shopId) => rootUrl + "/organization/" + organizationUrl + "/shop/" + shopId

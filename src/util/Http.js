@@ -36,6 +36,24 @@ export function post(url, body, onSuccess, onFailure) {
     }
 }
 
+export function postWithoutAuth(url, body, onSuccess, onFailure) {
+    const onSuccessCallback = onSuccess == null ? () => {} : onSuccess
+    const onFailureCallback = onFailure == null ? () => {} : onFailure
+
+    const xhr = new XMLHttpRequest()
+    xhr.open("POST", url, true)
+    xhr.setRequestHeader("Content-Type", "application/json")
+    xhr.send(JSON.stringify(body))
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            onSuccessCallback(parseResponse(xhr.responseText))
+        } else {
+            onFailureCallback()
+        }
+    }
+}
+
 export function httpDelete(url, onSuccess = () => {}, onFailure = () => {}) {
     const xhr = new XMLHttpRequest()
     xhr.open("DELETE", url, true)

@@ -1,7 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    changeView, setActiveGame,
+    changeView,
+    setActiveGame,
     setGames,
     updateActiveGame,
     updateGameForm,
@@ -11,12 +12,14 @@ import {
     adminPageView,
     conversionView,
     currencyFormView,
-    gameEditView, merchandiseView,
+    gameEditView,
+    merchandiseView,
     networkView,
     questionnaireRulesView,
     shopCreationView,
-    shopView, skillCategoryEditView,
-    skillCategoryFormView, skillCategoryView,
+    shopView,
+    skillCategoryFormView,
+    skillCategoryView,
     subnetworkView
 } from "../../../Views";
 import {httpDelete} from "../../../util/Http";
@@ -32,12 +35,14 @@ import SmallEditableListItem from "../../Common/ListElements/SmallEditableListIt
 import FormType from "../../../data-layer/enums/FormMode";
 import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableListItemWithButtons";
 import Popup from "../../../util/Popup";
+import Stubs from "../../../stubs/Stubs";
+import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
 
 function mapStateToProps(state, props) {
     return {
         activeGame: state.activeGame,
         games: state.games,
-        growl: state.growl
+        organizations: Stubs.organizations
     }
 }
 
@@ -203,6 +208,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                           />
                       )}
                       onAddClicked={() => onAddShopClicked()}
+                />
+
+                <List title={"Организации"}
+                      noItemsText={"Нет организаций"}
+                      values={props.organizations.map(organization =>
+                          <ExpandableListItemWithBullets
+                              name={organization.name}
+                              description={organization.description}
+                              bullets={[
+                                  "Тип: " + organization.type,
+                                  "Начальный бюджет: "  
+                              ]}
+                          />
+                      )}
                 />
 
                 <div className={"game-view-button-group"}>

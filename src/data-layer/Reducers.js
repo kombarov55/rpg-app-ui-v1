@@ -45,7 +45,7 @@ import {
     APPEND_ELEMENT,
     UPDATE_SPELL_SCHOOL_FORM,
     SET_USER_ACCOUNTS,
-    SET_ORGANIZATIONS
+    SET_ORGANIZATIONS, SET_ACTIVE_ORGANIZATION
 } from "./ActionTypes";
 import {initialState} from "./Store";
 import MergeLists from "../util/MergeLists";
@@ -308,6 +308,11 @@ export function rootReducer(state = initialState, action) {
         case SET_ORGANIZATIONS:
             return Object.assign({}, state, {
                 organizations: action.payload.organizations
+            })
+
+        case SET_ACTIVE_ORGANIZATION:
+            return Object.assign({}, state, {
+                activeOrganization: action.payload.organization
             })
 
 

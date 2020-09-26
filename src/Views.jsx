@@ -39,6 +39,7 @@ import MerchandiseView from "./components/Game/Merchandise/View/MerchandiseView"
 import SkillCategoryEditView from "./components/Game/View/SkillCategoryView/SkillCategoryEditView";
 import SkillCategoryView from "./components/Game/View/SkillCategoryView/SkillCategoryView";
 import SkillFormView from "./components/Game/View/SkillCategoryView/SkillFormView";
+import OrganizationDetailsView from "./components/Game/Organization/View/OrganizationDetailsView";
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}
@@ -94,3 +95,5 @@ export const shopCreationView = {component: <ShopCreationView/>, label: "Соз�
 export const shopView = {component: <ShopView/>, label: "Магазин"}
 
 export const merchandiseView = {component: <MerchandiseView/>, label: "Товары"}
+
+export const organizationDetailsView = {component: <OrganizationDetailsView/>, label: "Организация"}

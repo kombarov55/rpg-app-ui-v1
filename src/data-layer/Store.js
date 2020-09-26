@@ -24,6 +24,7 @@ export const initialState = {
     activeNetwork: null,
     activeSubnetwork: null,
     activeGame: null,
+    activeOrganization: null,
     msgs: [],
     networks: [],
     subnetworks: [],

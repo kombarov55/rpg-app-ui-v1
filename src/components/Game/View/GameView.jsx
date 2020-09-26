@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {connect} from "react-redux";
 import {
     changeView,
-    setActiveGame,
+    setActiveGame, setActiveOrganization,
     setGames,
     setOrganizations,
     updateActiveGame,
@@ -15,7 +15,7 @@ import {
     currencyFormView,
     gameEditView,
     merchandiseView,
-    networkView,
+    networkView, organizationDetailsView,
     questionnaireRulesView,
     shopCreationView,
     shopView,
@@ -64,7 +64,8 @@ function mapDispatchToProps(dispatch) {
         updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue)),
         updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue)),
         setActiveGame: game => dispatch(setActiveGame(game)),
-        setOrganizations: organizations => dispatch(setOrganizations(organizations))
+        setOrganizations: organizations => dispatch(setOrganizations(organizations)),
+        setActiveOrganization: organization => dispatch(setActiveOrganization(organization))
     }
 }
 
@@ -177,6 +178,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onOrganizationDetailsClicked(organization) {
+        props.setActiveOrganization(organization)
+        props.changeView(organizationDetailsView)
+    }
+
     function onShopDeleted(shop) {
         httpDelete(shopByIdUrl(shop.id), rs => {
             props.setActiveGame(Object.assign({}, props.activeGame, {
@@ -272,7 +278,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                               }}
                               onDeleteClicked={() => onDeleteOrganizationClicked(organization)}
-                              onDetailsClicked={() => console.log("OK")}
+                              onDetailsClicked={() => onOrganizationDetailsClicked(organization)}
 
                               alwaysExpand={true}
                               key={organization.id}

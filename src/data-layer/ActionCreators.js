@@ -46,7 +46,7 @@ import {
     FILTER_LIST,
     APPEND_ELEMENT,
     UPDATE_SPELL_SCHOOL_FORM,
-    SET_USER_ACCOUNTS, SET_ORGANIZATIONS
+    SET_USER_ACCOUNTS, SET_ORGANIZATIONS, SET_ACTIVE_ORGANIZATION
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -502,6 +502,15 @@ export function setOrganizations(organizations) {
         type: SET_ORGANIZATIONS,
         payload: {
             organizations: organizations
+        }
+    }
+}
+
+export function setActiveOrganization(organization) {
+    return {
+        type: SET_ACTIVE_ORGANIZATION,
+        payload: {
+            organization: organization
         }
     }
 }

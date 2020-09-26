@@ -40,7 +40,12 @@ import {
     UPDATE_CONVERSION_FORM,
     SET_CURRENCIES,
     SET_CONVERSIONS,
-    UPDATE_SKILL_CATEGORY_FORM, FILTER_LIST, APPEND_ELEMENT, UPDATE_SPELL_SCHOOL_FORM, SET_USER_ACCOUNTS
+    UPDATE_SKILL_CATEGORY_FORM,
+    FILTER_LIST,
+    APPEND_ELEMENT,
+    UPDATE_SPELL_SCHOOL_FORM,
+    SET_USER_ACCOUNTS,
+    SET_ORGANIZATIONS
 } from "./ActionTypes";
 import {initialState} from "./Store";
 import MergeLists from "../util/MergeLists";
@@ -299,6 +304,11 @@ export function rootReducer(state = initialState, action) {
 
         case APPEND_ELEMENT:
             return appendElement(state, action.payload)
+
+        case SET_ORGANIZATIONS:
+            return Object.assign({}, state, {
+                organizations: action.payload.organizations
+            })
 
 
         default:

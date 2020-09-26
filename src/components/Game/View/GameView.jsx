@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import {
     changeView,
     setActiveGame,
     setGames,
+    setOrganizations,
     updateActiveGame,
     updateGameForm,
     updateQuestionnaireTemplateForm
@@ -35,7 +36,6 @@ import SmallEditableListItem from "../../Common/ListElements/SmallEditableListIt
 import FormType from "../../../data-layer/enums/FormMode";
 import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableListItemWithButtons";
 import Popup from "../../../util/Popup";
-import Stubs from "../../../stubs/Stubs";
 import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
 import OrganizationForm from "../Organization/Form/OrganizationForm";
 
@@ -43,7 +43,7 @@ function mapStateToProps(state, props) {
     return {
         activeGame: state.activeGame,
         games: state.games,
-        organizations: Stubs.organizations,
+        organizations: state.organizations,
         userAccounts: state.userAccounts,
         currencies: state.activeGame.currencies.map(v => v.name)
     }
@@ -57,11 +57,14 @@ function mapDispatchToProps(dispatch) {
         updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue)),
         updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue)),
         setActiveGame: game => dispatch(setActiveGame(game)),
+        setOrganizations: organizations => dispatch(setOrganizations(organizations))
     }
 }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+
+    const [organizationFormVisible, setOrganizationFormVisible] = useState(false)
 
     function onEditClicked() {
         props.updateGameForm(props.activeGame)
@@ -141,6 +144,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onSaveOrganizationClicked(form) {
+        console.log(form)
+        setOrganizationFormVisible(false)
+        Popup.info("Организация создана. Для дальнейшей настройки организации нажмите 'Подробнее'")
+        props.setOrganizations(props.organizations.concat(form))
+    }
+
     function onShopDeleted(shop) {
         httpDelete(shopByIdUrl(shop.id), rs => {
             props.setActiveGame(Object.assign({}, props.activeGame, {
@@ -215,22 +225,29 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <List title={"Организации"}
                       noItemsText={"Нет организаций"}
+                      isAddButtonVisible={!organizationFormVisible}
+                      onAddClicked={() => setOrganizationFormVisible(true)}
                       values={props.organizations.map(organization =>
                           <ExpandableListItemWithBullets
                               name={organization.name}
                               description={organization.description}
                               bullets={[
                                   "Тип: " + organization.type,
-                                  "Начальный бюджет: "  
+                                  "Начальный бюджет: "
                               ]}
+                              onDetailsClicked={() => console.log("OK")}
                           />
                       )}
                 />
+                {
+                    organizationFormVisible &&
+                    <OrganizationForm
+                        userAccounts={props.userAccounts}
+                        currencies={props.currencies}
+                        onSubmit={form => onSaveOrganizationClicked(form)}
+                    />
+                }
 
-                <OrganizationForm
-                    userAccounts={props.userAccounts}
-                    currencies={props.currencies}
-                />
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Товары"} onClick={() => onMerchandiseClicked()}/>

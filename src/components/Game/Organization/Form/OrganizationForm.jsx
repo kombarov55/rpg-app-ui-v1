@@ -20,6 +20,8 @@ export default class OrganizationForm extends React.Component {
         this.state = this.props.initialState != null ?
             this.props.initialState :
             this.initialState
+
+        this.setState(this.formState)
     }
 
     initialState = {
@@ -27,8 +29,10 @@ export default class OrganizationForm extends React.Component {
         description: "",
         type: null,
         heads: [],
-        initialBudget: [],
+        initialBudget: []
+    }
 
+    formState = {
         addHeadInput: null,
         filteredUserAccountList: [],
 
@@ -117,7 +121,10 @@ export default class OrganizationForm extends React.Component {
                 }
 
 
-                <SubmitButton text={"Сохранить"} onClick={() => console.log(this.state)}/>
+                <SubmitButton text={"Сохранить"} onClick={() => {
+                    this.props.onSubmit(this.state)
+                    this.setState(this.initialState)
+                }}/>
 
 
             </div>

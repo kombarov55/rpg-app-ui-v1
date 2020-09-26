@@ -29,6 +29,7 @@ export const initialState = {
     games: [],
     currencies: [],
     conversions: [],
+    organizations: [],
 
     announcementForm: DefaultFormValues.announcement,
 

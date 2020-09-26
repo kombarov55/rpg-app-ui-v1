@@ -15,7 +15,7 @@ export default class ExpandableListItem extends React.Component {
         return (
             <div style={containerStyle}>
                 <div style={innerHorizontalStyle}>
-                    <div style={imgAndName} onClick={() => this.onClick()}>
+                    <div style={imgAndName} onClick={() => this.expand()}>
                         {
                             this.props.img &&
                             <img style={imgStyle} src={this.props.img}/>
@@ -30,10 +30,6 @@ export default class ExpandableListItem extends React.Component {
                 }
             </div>
         )
-    }
-
-    onClick() {
-        (this.props.onClick != null ? this.props.onClick : this.expand)()
     }
 
     expand() {

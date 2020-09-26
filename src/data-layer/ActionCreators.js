@@ -46,7 +46,7 @@ import {
     FILTER_LIST,
     APPEND_ELEMENT,
     UPDATE_SPELL_SCHOOL_FORM,
-    SET_USER_ACCOUNTS
+    SET_USER_ACCOUNTS, SET_ORGANIZATIONS
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -493,6 +493,15 @@ export function setUserAccounts(userAccounts) {
         type: SET_USER_ACCOUNTS,
         payload: {
             userAccounts: userAccounts
+        }
+    }
+}
+
+export function setOrganizations(organizations) {
+    return {
+        type: SET_ORGANIZATIONS,
+        payload: {
+            organizations: organizations
         }
     }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class ExpandableListItem extends React.Component {
+export default class SmallerExpandableListItem extends React.Component {
 
     constructor(props) {
         super(props);
@@ -24,10 +24,7 @@ export default class ExpandableListItem extends React.Component {
                     </div>
                     <div style={upperButtonsStyle}>{this.props.upperButtons}</div>
                 </div>
-                {
-                    (this.props.alwaysExpand || this.state.expand) &&
-                    this.props.expandableElements
-                }
+                <div style={descriptionStyle}>{this.props.description}</div>
             </div>
         )
     }
@@ -46,10 +43,10 @@ const containerStyle = {
     flexDirection: "column",
 
     width: "100%",
-    padding: "1vmax",
+    padding: "0.25vmax 0.5vmax",
     margin: "0 0 0.5vmax 0",
 
-    background: "#212121",
+    background: "#002651",
     borderRadius: "5px"
 }
 
@@ -67,13 +64,13 @@ const imgAndName = {
 const upperButtonsStyle = {}
 
 const imgStyle = {
-    width: "40px",
-    height: "40px",
-    margin: "0 2vmin 0 0"
+    width: "30px",
+    height: "30px",
+    margin: "1vmin 2vmin 0 0"
 }
 
 const nameStyle = {
-    fontSize: "3vmax",
+    fontSize: "2vmax",
     margin: " 0.5vmax 0 1vmax 0"
 }
 

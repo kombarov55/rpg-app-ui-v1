@@ -35,12 +35,6 @@ export default connect(
             skillInfluenceFormMode: FormMode.CREATE,
             skillInfluenceObjToUpdate: null
         }, props.initialState != null ? props.initialState : this.initialState)
-
-        console.log("merchandiseForm:initialized")
-        console.log(this.state)
-
-        // get(shortSkillsByGameIdUrl(this.props.gameId), rs => this.setState({skills: rs}))
-        // get(currenciesByGameIdUrl(this.props.gameId), rs => this.setState({currencies: rs}))
     }
 
     initialState = {

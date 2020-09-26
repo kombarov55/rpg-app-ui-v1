@@ -1,6 +1,6 @@
-import {announcementUrl, loginUrl, userAccountUrl} from "./Parameters";
+import {allUsersShortUrl, announcementUrl, loginUrl, userAccountUrl} from "./Parameters";
 import {store} from "../data-layer/Store";
-import {addAnnouncement, addUserAccount} from "../data-layer/ActionCreators";
+import {addAnnouncement, addUserAccount, setUserAccounts} from "../data-layer/ActionCreators";
 import {get, postWithoutAuth} from "./Http";
 import Globals from "./Globals";
 
@@ -20,5 +20,7 @@ export function onStartup() {
             store.dispatch(addUserAccount(rs))
             loadAnnouncements()
         })
+
+        get(allUsersShortUrl, rs => store.dispatch(setUserAccounts(rs)))
     })
 }

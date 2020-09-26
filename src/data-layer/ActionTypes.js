@@ -1,4 +1,5 @@
 export const ADD_USER_ACCOUNT = "ADD_USER_ACCOUNT"
+export const SET_USER_ACCOUNTS = "SET_USER_ACCOUNTS"
 export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR"
 export const SET_GROWL = "SET_GROWL"
 export const CHANGE_VIEW = "CHANGE_VIEW"

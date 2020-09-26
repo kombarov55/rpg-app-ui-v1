@@ -40,7 +40,7 @@ import {
     UPDATE_CONVERSION_FORM,
     SET_CURRENCIES,
     SET_CONVERSIONS,
-    UPDATE_SKILL_CATEGORY_FORM, FILTER_LIST, APPEND_ELEMENT, UPDATE_SPELL_SCHOOL_FORM
+    UPDATE_SKILL_CATEGORY_FORM, FILTER_LIST, APPEND_ELEMENT, UPDATE_SPELL_SCHOOL_FORM, SET_USER_ACCOUNTS
 } from "./ActionTypes";
 import {initialState} from "./Store";
 import MergeLists from "../util/MergeLists";
@@ -53,6 +53,11 @@ export function rootReducer(state = initialState, action) {
         case ADD_USER_ACCOUNT:
             return Object.assign({}, state, {
                 userAccount: action.payload.userAccount
+            })
+
+        case SET_USER_ACCOUNTS:
+            return Object.assign({}, state, {
+                userAccounts: action.payload.userAccounts
             })
 
         case CHANGE_VIEW:

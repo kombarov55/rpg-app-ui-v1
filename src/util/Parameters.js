@@ -3,6 +3,7 @@ import {rootUrl} from "./RootUrl";
 export const loginUrl = rootUrl + "/login"
 
 export const userAccountUrl = (userId) => rootUrl + "/user/" + userId
+export const allUsersShortUrl = rootUrl + "/user/short"
 export const toggleFavAnnouncementUrl = (userId) => userAccountUrl(userId) + "/toggleFavAnnouncement"
 export const toggleRespondAnnouncementUrl = (userId) => userAccountUrl(userId) + "/toggleRespAnnouncement"
 

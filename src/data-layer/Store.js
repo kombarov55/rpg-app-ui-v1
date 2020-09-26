@@ -13,6 +13,8 @@ export const initialState = {
     userAccount: {
 
     },
+
+    userAccounts: [],
     announcements: [],
     comments: [],
     conversations: [],

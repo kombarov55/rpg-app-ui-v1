@@ -41,7 +41,12 @@ import {
     UPDATE_CURRENCY_FORM,
     UPDATE_CONVERSION_FORM,
     SET_CURRENCIES,
-    SET_CONVERSIONS, UPDATE_SKILL_CATEGORY_FORM, FILTER_LIST, APPEND_ELEMENT, UPDATE_SPELL_SCHOOL_FORM
+    SET_CONVERSIONS,
+    UPDATE_SKILL_CATEGORY_FORM,
+    FILTER_LIST,
+    APPEND_ELEMENT,
+    UPDATE_SPELL_SCHOOL_FORM,
+    SET_USER_ACCOUNTS
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -479,6 +484,15 @@ export function updateSpellSchoolForm(fieldNameToValue) {
         type: UPDATE_SPELL_SCHOOL_FORM,
         payload: {
             fieldNameToValue: fieldNameToValue
+        }
+    }
+}
+
+export function setUserAccounts(userAccounts) {
+    return {
+        type: SET_USER_ACCOUNTS,
+        payload: {
+            userAccounts: userAccounts
         }
     }
 }

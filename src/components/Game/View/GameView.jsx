@@ -37,12 +37,15 @@ import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableL
 import Popup from "../../../util/Popup";
 import Stubs from "../../../stubs/Stubs";
 import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
+import OrganizationForm from "../Organization/Form/OrganizationForm";
 
 function mapStateToProps(state, props) {
     return {
         activeGame: state.activeGame,
         games: state.games,
-        organizations: Stubs.organizations
+        organizations: Stubs.organizations,
+        userAccounts: state.userAccounts,
+        currencies: state.activeGame.currencies.map(v => v.name)
     }
 }
 
@@ -53,7 +56,7 @@ function mapDispatchToProps(dispatch) {
         updateGameForm: game => dispatch(updateGameForm(game)),
         updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue)),
         updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue)),
-        setActiveGame: game => dispatch(setActiveGame(game))
+        setActiveGame: game => dispatch(setActiveGame(game)),
     }
 }
 
@@ -222,6 +225,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               ]}
                           />
                       )}
+                />
+
+                <OrganizationForm
+                    userAccounts={props.userAccounts}
+                    currencies={props.currencies}
                 />
 
                 <div className={"game-view-button-group"}>

@@ -61,7 +61,6 @@ export default connect(
                               />
                           )}
                     />
-
                     {
                         this.state.addHeadVisible &&
                         <List title={"Выбор игрока:"}
@@ -79,6 +78,10 @@ export default connect(
                               )}
                         />
                     }
+
+                    <List title={"Магазины организаций:"}
+                          noItemsText={"Отсутствуют"}
+                    />
 
                     <Btn text={"Назад"} onClick={() => this.props.back()}/>
                 </div>

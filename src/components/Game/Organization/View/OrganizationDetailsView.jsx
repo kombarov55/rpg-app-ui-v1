@@ -13,6 +13,7 @@ import {httpDelete, post} from "../../../../util/Http";
 import {organizationHeadUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import SmallerExpandableListItem from "../../../Common/ListElements/SmallerExpandableListItem";
+import CountryDetailsComponent from "../Components/CountryDetailsComponent";
 
 export default connect(
     store => ({
@@ -79,8 +80,8 @@ export default connect(
                         />
                     }
 
-                    <List title={"Магазины организаций:"}
-                          noItemsText={"Отсутствуют"}
+                    <CountryDetailsComponent organization={this.props.organization}
+                                             setOrganization={organization => this.props.setOrganization(organization)}
                     />
 
                     <Btn text={"Назад"} onClick={() => this.props.back()}/>

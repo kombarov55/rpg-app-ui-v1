@@ -80,7 +80,7 @@ export default class OrganizationForm extends React.Component {
                     this.state.addHeadVisible &&
                         <List title={"Выбор игрока:"}
                               noItemsText={"Все доступные игроки уже выбраны!"}
-                              values={this.props.userAccounts.filter(v => !this.state.heads.includes(v)).map(userAccount =>
+                              values={this.props.userAccounts.filter(v => !this.state.heads.some(head => head.id === v.id)).map(userAccount =>
                               <SmallerExpandableListItem
                                   img={userAccount.img}
                                   name={userAccount.fullName}

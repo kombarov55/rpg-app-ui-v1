@@ -81,3 +81,4 @@ export const deleteWarehouseEntryUrl = warehouseEntryId => rootUrl + "/warehouse
 
 export const organizationByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/organization"
 export const organizationUrl = id => rootUrl + "/organization/" + id
+export const organizationByGameIdAndIdUrl = (gameId, id) => rootUrl + "/game/" + gameId + "/organization/" + id

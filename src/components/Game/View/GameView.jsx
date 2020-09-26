@@ -23,8 +23,14 @@ import {
     skillCategoryView,
     subnetworkView
 } from "../../../Views";
-import {httpDelete} from "../../../util/Http";
-import {deleteGameUrl, organizationUrl, shopByIdUrl, skillCategoryUrl} from "../../../util/Parameters";
+import {httpDelete, post, put} from "../../../util/Http";
+import {
+    deleteGameUrl, organizationByGameIdAndIdUrl,
+    organizationByGameIdUrl,
+    organizationUrl,
+    shopByIdUrl,
+    skillCategoryUrl
+} from "../../../util/Parameters";
 import Btn from "../../Common/Buttons/Btn";
 import Preload from "../../../util/Preload";
 import Globals from "../../../util/Globals";
@@ -38,6 +44,7 @@ import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableL
 import Popup from "../../../util/Popup";
 import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
 import OrganizationForm from "../Organization/Form/OrganizationForm";
+import FormMode from "../../../data-layer/enums/FormMode";
 
 function mapStateToProps(state, props) {
     return {
@@ -65,6 +72,8 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     const [organizationFormVisible, setOrganizationFormVisible] = useState(false)
+    const [organizationForm, setOrganizationForm] = useState()
+    const [organizationFormMode, setOrganizationFormMode] = useState(FormMode.CREATE)
 
     function onEditClicked() {
         props.updateGameForm(props.activeGame)
@@ -145,9 +154,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onSaveOrganizationClicked(form) {
-        setOrganizationFormVisible(false)
-        Popup.info("Организация создана. Для дальнейшей настройки организации нажмите 'Подробнее'")
-        props.setOrganizations(props.organizations.concat(form))
+        post(organizationByGameIdUrl(props.activeGame.id), form, rs => {
+            setOrganizationFormVisible(false)
+            Popup.info("Организация создана. Для дальнейшей настройки организации нажмите 'Подробнее'")
+            props.setOrganizations(props.organizations.concat(rs))
+        })
+    }
+
+    function onUpdateOrganizationClicked(form) {
+        put(organizationByGameIdAndIdUrl(props.activeGame.id, form.id), form, rs => {
+            setOrganizationFormVisible(false)
+            Popup.info("Организация обновлена.")
+            props.setOrganizations(props.organizations.filter(v => v.id !== rs.id).concat(rs))
+        })
     }
 
     function onDeleteOrganizationClicked(organization) {
@@ -233,7 +252,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <List title={"Организации"}
                       noItemsText={"Нет организаций"}
                       isAddButtonVisible={!organizationFormVisible}
-                      onAddClicked={() => setOrganizationFormVisible(true)}
+                      onAddClicked={() => {
+                          setOrganizationFormMode(FormMode.CREATE)
+                          setOrganizationFormVisible(true)
+                      }}
                       values={props.organizations.map(organization =>
                           <ExpandableListItemWithBullets
                               name={organization.name}
@@ -243,6 +265,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                   "Начальный бюджет: " + organization.initialBudget.map(v => v.name + ": " + v.amount).join(", "),
                                   "Главы: " + organization.heads.map(v => v.fullName).join(", ")
                               ]}
+                              onEditClicked={() => {
+                                  setOrganizationFormMode(FormMode.EDIT)
+                                  setOrganizationForm(organization)
+                                  setOrganizationFormVisible(true)
+
+                              }}
                               onDeleteClicked={() => onDeleteOrganizationClicked(organization)}
                               onDetailsClicked={() => console.log("OK")}
 
@@ -253,11 +281,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
                 {
                     organizationFormVisible &&
-                    <OrganizationForm
-                        userAccounts={props.userAccounts}
-                        currencies={props.currencies}
-                        onSubmit={form => onSaveOrganizationClicked(form)}
-                    />
+                    (organizationFormMode === FormMode.CREATE ?
+                        <OrganizationForm
+                            userAccounts={props.userAccounts}
+                            currencies={props.currencies}
+                            onSubmit={form => onSaveOrganizationClicked(form)}
+                        /> :
+                        <OrganizationForm
+                            initialState={organizationForm}
+                            userAccounts={props.userAccounts}
+                            currencies={props.currencies}
+                            onSubmit={form => onUpdateOrganizationClicked(form)}
+                        />)
                 }
 
 

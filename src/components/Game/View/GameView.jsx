@@ -38,6 +38,7 @@ import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableL
 import Popup from "../../../util/Popup";
 import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
 import OrganizationForm from "../Organization/Form/OrganizationForm";
+import priceCombinationToString from "../../../util/priceCombinationToString";
 
 function mapStateToProps(state, props) {
     return {
@@ -232,10 +233,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               name={organization.name}
                               description={organization.description}
                               bullets={[
-                                  "Тип: " + organization.type,
-                                  "Начальный бюджет: "
+                                  "Тип: " + organization.type.value,
+                                  "Начальный бюджет: " + organization.initialBudget.map(v => v.name + ": " + v.amount).join(", "),
+                                  "Главы: " + organization.heads.map(v => v.fullName).join(", ")
                               ]}
                               onDetailsClicked={() => console.log("OK")}
+
+                              alwaysExpand={true}
+                              key={organization.id}
                           />
                       )}
                 />

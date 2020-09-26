@@ -2,6 +2,7 @@ import {createStore} from "redux";
 import {rootReducer} from "./Reducers";
 import {announcementView, skillCategoryView} from "../Views";
 import DefaultFormValues from "./DefaultFormValues";
+import Stubs from "../stubs/Stubs";
 
 export const initialState = {
     sidebarVisible: false,
@@ -29,7 +30,7 @@ export const initialState = {
     games: [],
     currencies: [],
     conversions: [],
-    organizations: [],
+    organizations: Stubs.organizations,
 
     announcementForm: DefaultFormValues.announcement,
 

@@ -20,8 +20,10 @@ import ListItem from "../../../Common/ListElements/ListItem";
 
 export default connect(
     store => ({
+        gameId: store.activeGame.id,
         organization: store.activeOrganization,
-        userAccounts: store.userAccounts
+        userAccounts: store.userAccounts,
+        currencies: store.activeGame.currencies
     }), dispatch => ({
         setOrganization: organization => dispatch(setActiveOrganization(organization)),
         back: () => dispatch(changeView(gameView))
@@ -87,10 +89,6 @@ export default connect(
                         />
                     }
 
-                    <CountryDetailsComponent organization={this.props.organization}
-                                             setOrganization={organization => this.props.setOrganization(organization)}
-                    />
-
                     <List title={"Магазины:"}
                           noItemsText={"Отсутствуют"}
                           isAddButtonVisible={!this.state.addShopVisible}
@@ -121,6 +119,12 @@ export default connect(
                                 />
                         )
                     }
+
+                    <CountryDetailsComponent gameId={this.props.gameId}
+                                             organization={this.props.organization}
+                                             currencies={this.props.currencies}
+                                             setOrganization={organization => this.props.setOrganization(organization)}
+                    />
 
                     <Btn text={"Назад"} onClick={() => this.props.back()}/>
                 </div>

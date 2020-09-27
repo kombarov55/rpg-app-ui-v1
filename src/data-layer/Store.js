@@ -33,6 +33,8 @@ export const initialState = {
     conversions: [],
     organizations: Stubs.organizations,
 
+    availableMerchandise: [],
+
     announcementForm: DefaultFormValues.announcement,
 
     commentForm: DefaultFormValues.comment,

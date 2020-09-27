@@ -46,7 +46,7 @@ import {
     FILTER_LIST,
     APPEND_ELEMENT,
     UPDATE_SPELL_SCHOOL_FORM,
-    SET_USER_ACCOUNTS, SET_ORGANIZATIONS, SET_ACTIVE_ORGANIZATION
+    SET_USER_ACCOUNTS, SET_ORGANIZATIONS, SET_ACTIVE_ORGANIZATION, SET_AVAILABLE_MERCHANDISE
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -511,6 +511,15 @@ export function setActiveOrganization(organization) {
         type: SET_ACTIVE_ORGANIZATION,
         payload: {
             organization: organization
+        }
+    }
+}
+
+export function setAvailableMerchandise(merchandiseList) {
+    return {
+        type: SET_AVAILABLE_MERCHANDISE,
+        payload: {
+            merchandiseList: merchandiseList
         }
     }
 }

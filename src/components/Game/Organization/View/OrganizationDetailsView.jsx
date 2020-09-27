@@ -2,15 +2,15 @@ import React from "react";
 import {connect} from "react-redux"
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import Btn from "../../../Common/Buttons/Btn";
-import {changeView, setActiveOrganization} from "../../../../data-layer/ActionCreators";
+import {changeView, setActiveOrganization, setAvailableMerchandise} from "../../../../data-layer/ActionCreators";
 import {gameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithButtons from "../../../Common/ListElements/ExpandableListItemWithButtons";
-import {httpDelete, post, put} from "../../../../util/Http";
+import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
     addBalanceUrl,
-    addOrganizationShopUrl,
+    addOrganizationShopUrl, merchandiseByGameIdAndDestination,
     organizationHeadUrl,
     removeOrganizationShopUrl
 } from "../../../../util/Parameters";
@@ -22,15 +22,20 @@ import ShopForm from "../Form/ShopForm";
 import ListItem from "../../../Common/ListElements/ListItem";
 import PriceInput from "../../../Common/Input/PriceInput";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
+import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import OrganizationPurchaseMerchandiseForm from "../Form/OrganizationPurchaseMerchandiseForm";
+import Destination from "../../../../data-layer/enums/Destination";
 
 export default connect(
     store => ({
         gameId: store.activeGame.id,
         organization: store.activeOrganization,
         userAccounts: store.userAccounts,
-        currencies: store.activeGame.currencies
+        currencies: store.activeGame.currencies,
+        availableMerchandise: store.availableMerchandise
     }), dispatch => ({
         setOrganization: organization => dispatch(setActiveOrganization(organization)),
+        setAvailableMerchandise: merchandiseList => dispatch(setAvailableMerchandise(merchandiseList)),
         back: () => dispatch(changeView(gameView))
     }))
 (class OrganizationDetailsView extends React.Component {
@@ -48,7 +53,9 @@ export default connect(
             shopForm: null,
             shopFormMode: FormMode.CREATE,
 
-            addBalanceVisible: false
+            addBalanceVisible: false,
+
+            purchaseMerchandiseVisible: false
         }
 
 
@@ -139,9 +146,28 @@ export default connect(
                         )
                     }
 
-                    <List title={"Товары для организации"}
+                    <List title={"Товары для организации:"}
                           noItemsText={"Пусто.."}
+                          isAddButtonVisible={!this.state.purchaseMerchandiseVisible}
+                          onAddClicked={() => this.onAddOwnMerchandiseClicked()}
+                          values={this.props.organization.ownedMerchandise.map(warehouseEntry =>
+                              <ExpandableListItemWithBullets
+                                  img={warehouseEntry.merchandise.img}
+                                  name={warehouseEntry.merchandise.name}
+                                  description={warehouseEntry.merchandise.description}
+
+                                  alwaysExpand={true}
+                                  key={warehouseEntry.id}
+                              />
+                          )}
                     />
+
+                    {
+                        this.state.purchaseMerchandiseVisible &&
+                            <OrganizationPurchaseMerchandiseForm
+
+                            />
+                    }
 
                     {this.detailsComponent()}
 
@@ -212,6 +238,11 @@ export default connect(
                 this.setState({addBalanceVisible: false})
                 Popup.info("Баланс пополнен.")
             })
+        }
+
+        onAddOwnMerchandiseClicked() {
+            this.setState({purchaseMerchandiseVisible: true})
+            get(merchandiseByGameIdAndDestination(this.props.gameId, Destination.COUNTRY), rs => this.props.setAvailableMerchandise(rs))
         }
     }
 )

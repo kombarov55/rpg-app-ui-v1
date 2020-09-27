@@ -1,4 +1,5 @@
 import QuestionnaireTemplateItemType from "./enums/QuestionnaireTemplateItemType";
+import Destination from "./enums/Destination";
 
 export default {
     announcement: {
@@ -74,6 +75,7 @@ export default {
         name: "",
         img: "",
         description: "",
+        destination: Destination.PLAYER,
         complex: false,
         skills: [],
         spellSchools: []

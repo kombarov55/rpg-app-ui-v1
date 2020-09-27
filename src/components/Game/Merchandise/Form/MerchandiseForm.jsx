@@ -12,7 +12,7 @@ import SkillInfluenceForm from "./SkillInfluenceForm";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import {connect} from "react-redux"
 import {InputTextarea} from "primereact/inputtextarea";
-import MerchandiseDestination from "../../../../data-layer/enums/MerchandiseDestination";
+import Destination from "../../../../data-layer/enums/Destination";
 
 export default connect(
     state => ({
@@ -70,7 +70,7 @@ export default connect(
                 />
 
                 <InputLabel text={"Для кого товар?"}/>
-                <SelectButton options={MerchandiseDestination.values.map(v => ({label: v.value, value: v.name}))}
+                <SelectButton options={Destination.values.map(v => ({label: v.value, value: v.name}))}
                               value={this.state.destination}
                               onChange={e => this.setState({destination: e.target.value})}
                 />

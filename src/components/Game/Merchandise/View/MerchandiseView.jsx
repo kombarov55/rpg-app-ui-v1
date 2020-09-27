@@ -142,6 +142,9 @@ export default connect(
                                   "Цена: " + priceCombinationListToString(merchandise.prices),
                                   merchandise.skillInfluences.map(it => SkillInfluenceToString(it)).join(", ")
                               ]}
+
+                              alwaysExpand={true}
+                              key={merchandise.id}
                           />
                       )}
                 />

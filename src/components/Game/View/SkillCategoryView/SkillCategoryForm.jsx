@@ -18,6 +18,7 @@ import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 import Popup from "../../../../util/Popup";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
+import Destination from "../../../../data-layer/enums/Destination";
 
 const formStyle = {
     width: "90%",
@@ -92,6 +93,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            value={props.skillCategoryForm.description}
                            onChange={e => props.updateSkillCategoryForm({description: e.target.value})}
             />
+
+            <InputLabel text={"Для кого навык?"}/>
+            <SelectButton options={Destination.values.map(v => ({label: v.value, value: v.name}))}
+                          value={props.skillCategoryForm.destination}
+                          onChange={e => props.updateSkillCategoryForm(({destination: e.target.value}))}
+                          name={"destination"}
+                          ref={register({required: true})}
+            />
+            <div className={"error-label"}>{errors.destination && "Выберите для кого эта категория"}</div>
 
             <InputLabel text={"Тип:"}/>
             <SelectButton

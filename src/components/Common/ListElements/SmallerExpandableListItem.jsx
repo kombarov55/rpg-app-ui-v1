@@ -13,7 +13,7 @@ export default class SmallerExpandableListItem extends React.Component {
 
     render() {
         return (
-            <div style={containerStyle}>
+            <div style={this.props.selected ? selectedContainerStyle : defaultContainerStyle}>
                 <div style={innerHorizontalStyle}>
                     <div style={imgAndName} onClick={() => this.onClick()}>
                         {
@@ -38,7 +38,7 @@ export default class SmallerExpandableListItem extends React.Component {
     }
 }
 
-const containerStyle = {
+const defaultContainerStyle = {
     display: "flex",
     flexDirection: "column",
 
@@ -47,6 +47,18 @@ const containerStyle = {
     margin: "0 0 0.5vmax 0",
 
     background: "#002651",
+    borderRadius: "5px"
+}
+
+const selectedContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+
+    width: "100%",
+    padding: "0.25vmax 0.5vmax",
+    margin: "0 0 0.5vmax 0",
+
+    background: "#592e83",
     borderRadius: "5px"
 }
 

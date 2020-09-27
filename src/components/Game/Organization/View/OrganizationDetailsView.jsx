@@ -10,7 +10,7 @@ import ExpandableListItemWithButtons from "../../../Common/ListElements/Expandab
 import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
     addBalanceUrl,
-    addOrganizationShopUrl, merchandiseByGameIdAndDestination,
+    addOrganizationShopUrl, addOwnedMerchandiseUrl, merchandiseByGameIdAndDestination,
     organizationHeadUrl,
     removeOrganizationShopUrl
 } from "../../../../util/Parameters";
@@ -165,7 +165,8 @@ export default connect(
                     {
                         this.state.purchaseMerchandiseVisible &&
                             <OrganizationPurchaseMerchandiseForm
-
+                                merchandiseList={this.props.availableMerchandise}
+                                onSubmit={form => this.onAddOwnedMerchandiseSubmit(form)}
                             />
                     }
 
@@ -243,6 +244,15 @@ export default connect(
         onAddOwnMerchandiseClicked() {
             this.setState({purchaseMerchandiseVisible: true})
             get(merchandiseByGameIdAndDestination(this.props.gameId, Destination.COUNTRY), rs => this.props.setAvailableMerchandise(rs))
+        }
+
+        onAddOwnedMerchandiseSubmit(form) {
+            console.log(form)
+            // post(addOwnedMerchandiseUrl(this.props.organization.id, form.merchandise.id, form.amount), {}, rs => {
+            //     this.props.setOrganization(rs)
+            //     this.setState({purchaseMerchandiseVisible: false})
+            //     Popup.info("Товар '" + form.merchandise.name + "' в размере " + form.amount + " куплен!")
+            // })
         }
     }
 )

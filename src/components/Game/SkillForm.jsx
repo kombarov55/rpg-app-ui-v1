@@ -28,7 +28,7 @@ export default function (props) {
     const [description, setDescription] = useState(props.initialState.description)
     const [prices, setPrices] = useState(getOrDefault(props.initialState.prices, []))
     const [upgradable, setUpgradable] = useState(props.initialState.upgradable)
-    const [upgrades, setUpgrades] = useState(props.initialState.upgrades)
+    const [upgrades, setUpgrades] = useState(getOrDefault(props.initialState.upgrades, []))
 
     function onPriceAdded(list) {
         setPrices(prices.concat([list]))

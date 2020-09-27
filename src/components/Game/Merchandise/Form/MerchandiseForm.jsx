@@ -12,6 +12,7 @@ import SkillInfluenceForm from "./SkillInfluenceForm";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import {connect} from "react-redux"
 import {InputTextarea} from "primereact/inputtextarea";
+import MerchandiseDestination from "../../../../data-layer/enums/MerchandiseDestination";
 
 export default connect(
     state => ({
@@ -46,6 +47,7 @@ export default connect(
         slots: 1,
         prices: [],
         skillInfluences: [],
+        destination: null,
     }
 
     render() {
@@ -65,6 +67,12 @@ export default connect(
                 <InputTextarea autoResize={true}
                                value={this.state.description}
                                onChange={e => this.setState({description: e.target.value})}
+                />
+
+                <InputLabel text={"Для кого товар?"}/>
+                <SelectButton options={MerchandiseDestination.values.map(v => ({label: v.value, value: v.name}))}
+                              value={this.state.destination}
+                              onChange={e => this.setState({destination: e.target.value})}
                 />
 
                 <InputLabel text={"Категория:"}/>
@@ -172,7 +180,8 @@ export default connect(
             type: this.state.type,
             slots: this.state.slots,
             prices: this.state.prices,
-            skillInfluences: this.state.skillInfluences
+            skillInfluences: this.state.skillInfluences,
+            destination: this.state.destination
         })
         this.setState(this.initialState)
     }

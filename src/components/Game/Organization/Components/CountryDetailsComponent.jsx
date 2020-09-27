@@ -9,6 +9,7 @@ import Popup from "../../../../util/Popup";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import CreditOfferForm from "../Form/CreditOfferForm";
+import Label from "../../../Common/Labels/Label";
 
 export default class CountryDetailsComponent extends React.Component {
 
@@ -31,6 +32,7 @@ export default class CountryDetailsComponent extends React.Component {
     render() {
         return (
             <div>
+                <Label text={"Налоги:"}/>
                 <InputLabel text={"Налог на вход/выход из игры:"}/>
                 {
                     this.props.organization.entranceTax.length != 0 ?
@@ -51,7 +53,7 @@ export default class CountryDetailsComponent extends React.Component {
                         />
                 }
 
-                <List title={"Кредитные предложения"}
+                <List title={"Кредитные предложения:"}
                       noItemsText={"Пока нет.."}
                       isAddButtonVisible={!this.state.creditOfferVisible}
                       onAddClicked={() => this.setState({creditOfferVisible: true})}

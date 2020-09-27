@@ -21,6 +21,7 @@ import FormMode from "../../../../data-layer/enums/FormMode";
 import ShopForm from "../Form/ShopForm";
 import ListItem from "../../../Common/ListElements/ListItem";
 import PriceInput from "../../../Common/Input/PriceInput";
+import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 
 export default connect(
     store => ({
@@ -108,7 +109,7 @@ export default connect(
                     }
 
                     <List title={"Магазины:"}
-                          noItemsText={"Отсутствуют"}
+                          noItemsText={"Отсутствуют.."}
                           isAddButtonVisible={!this.state.addShopVisible}
                           onAddClicked={() => this.setState({
                               shopFormMode: FormMode.CREATE,
@@ -138,15 +139,29 @@ export default connect(
                         )
                     }
 
-                    <CountryDetailsComponent gameId={this.props.gameId}
-                                             organization={this.props.organization}
-                                             currencies={this.props.currencies}
-                                             setOrganization={organization => this.props.setOrganization(organization)}
+                    <List title={"Товары для организации"}
+                          noItemsText={"Пусто.."}
                     />
+
+                    {this.detailsComponent()}
 
                     <Btn text={"Назад"} onClick={() => this.props.back()}/>
                 </div>
             )
+        }
+
+        detailsComponent() {
+            switch (this.props.organization.type.name) {
+                case OrganizationType.COUNTRY:
+                    return (
+                        <CountryDetailsComponent gameId={this.props.gameId}
+                                                 organization={this.props.organization}
+                                                 currencies={this.props.currencies}
+                                                 setOrganization={organization => this.props.setOrganization(organization)}
+                        />
+                    )
+                default: return <div/>
+            }
         }
 
         onAddHeadClicked(userAccount) {

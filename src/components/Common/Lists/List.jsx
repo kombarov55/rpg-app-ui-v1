@@ -38,5 +38,6 @@ const listTitleStyle = {
 
     margin: "0 0 0.5vmax 5vmin",
 
-    fontSize: "2.5vmax"
+    fontSize: "2.5vmax",
+    textDecoration: "underline"
 }

@@ -25,6 +25,7 @@ import {
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
+import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByName";
 
 export default connect(
     state => ({
@@ -136,6 +137,7 @@ export default connect(
                               onEditClicked={() => this.onMerchandiseEditClicked(merchandise)}
                               onDeleteClicked={() => this.onMerchandiseDeleteClicked(merchandise)}
                               bullets={[
+                                  GetDestinationByName(merchandise.destination),
                                   "Категория: " + merchandise.category.name,
                                   "Тип: " + merchandise.type.name,
                                   merchandise.slots + " слот(ов)",

@@ -29,7 +29,7 @@ export default class OrganizationForm extends React.Component {
         description: "",
         type: null,
         heads: [],
-        initialBudget: []
+        balance: []
     }
 
     formState = {
@@ -37,7 +37,7 @@ export default class OrganizationForm extends React.Component {
         filteredUserAccountList: [],
 
         addHeadVisible: false,
-        addInitialBudgetVisible: false
+        addBalanceVisible: false
     }
 
 
@@ -100,22 +100,22 @@ export default class OrganizationForm extends React.Component {
                 <InputLabel text={"Начальный бюджет:"}/>
                 <List title={"Начальный бюджет:"}
                       noItemsText={"Не указан"}
-                      isAddButtonVisible={!this.state.addInitialBudgetVisible}
-                      onAddClicked={() => this.setState({addInitialBudgetVisible: true})}
-                      values={this.state.initialBudget.map(amount =>
+                      isAddButtonVisible={!this.state.addBalanceVisible}
+                      onAddClicked={() => this.setState({addBalanceVisible: true})}
+                      values={this.state.balance.map(amount =>
                           <ListItem text={amount.name + ": " + amount.amount}
                                     onDelete={() => this.setState(state => ({
-                                        initialBudget: state.initialBudget.filter(v => v.name !== amount.name)
+                                        balance: state.balance.filter(v => v.name !== amount.name)
                                     }))}
                           />)}
                 />
                 {
-                    this.state.addInitialBudgetVisible &&
+                    this.state.addBalanceVisible &&
                     <PriceInput
                         currencies={this.props.currencies}
                         onSubmit={form => this.setState(state => ({
-                            initialBudget: state.initialBudget.filter(v => v.name !== form[0].name).concat(form[0]),
-                            addInitialBudgetVisible: false
+                            balance: state.balance.filter(v => v.name !== form[0].name).concat(form[0]),
+                            addBalanceVisible: false
                         }))}
                     />
                 }

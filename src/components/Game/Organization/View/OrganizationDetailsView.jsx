@@ -52,7 +52,7 @@ export default connect(
                     <Label text={this.props.organization.description}/>
                     <BulletList values={[
                         "Тип: " + this.props.organization.type.value,
-                        "Начальный бюджет: " + this.props.organization.initialBudget.map(v => v.name + ": " + v.amount).join(", ")
+                        "Начальный бюджет: " + this.props.organization.balance.map(v => v.name + ": " + v.amount).join(", ")
                     ]}/>
 
                     <List title={"Главы организации:"}

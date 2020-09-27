@@ -33,24 +33,20 @@ export default class CountryDetailsComponent extends React.Component {
             <div>
                 <InputLabel text={"Налог на вход/выход из игры:"}/>
                 {
-                    this.props.organization.entranceTax != null ?
+                    this.props.organization.entranceTax.length != 0 ?
                         this.props.organization.entranceTax.map(v => v.name + ": " + v.amount).join(" + ") :
                         "Не указан"
                 }
 
                 <InputLabel text={"Подоходный налог граждан:"}/>
-                {
-                    this.props.organization.incomeTax != null ?
-                        this.props.organization.incomeTax + "%" :
-                        "Не указан"
-                }
+                {this.props.organization.incomeTax + "%"}
 
                 {
                     this.state.taxFormVisible ?
                         <CountryTaxForm currencies={this.props.currencies.map(v => v.name)}
                                         onSubmit={form => this.onCountryTaxFormSubmit(form)}
                         /> :
-                        <Btn text={"Редактировать"}
+                        <Btn text={"Редактировать информацию о налогах"}
                              onClick={() => this.setState({taxFormVisible: true})}
                         />
                 }

@@ -89,3 +89,5 @@ export const removeOrganizationShopUrl = (organizationUrl, shopId) => rootUrl + 
 
 export const addCreditOfferUrl = organizationId => rootUrl + "/organization/" + organizationId + "/credit-offer"
 export const removeCreditOfferUrl = (organizationId, creditOfferId) => rootUrl + "/organization/" + organizationId + "/credit-offer/" + creditOfferId
+
+export const addBalanceUrl = organizationId => rootUrl + "/organization/" + organizationId + "/balance"

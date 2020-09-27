@@ -5,18 +5,22 @@ import Btn from "../../../Common/Buttons/Btn";
 import {changeView, setActiveOrganization} from "../../../../data-layer/ActionCreators";
 import {gameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
-import Label from "../../../Common/Labels/Label";
-import BulletList from "../../../Common/Lists/BulletList";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithButtons from "../../../Common/ListElements/ExpandableListItemWithButtons";
 import {httpDelete, post, put} from "../../../../util/Http";
-import {addOrganizationShopUrl, organizationHeadUrl, removeOrganizationShopUrl} from "../../../../util/Parameters";
+import {
+    addBalanceUrl,
+    addOrganizationShopUrl,
+    organizationHeadUrl,
+    removeOrganizationShopUrl
+} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import SmallerExpandableListItem from "../../../Common/ListElements/SmallerExpandableListItem";
 import CountryDetailsComponent from "../Components/CountryDetailsComponent";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import ShopForm from "../Form/ShopForm";
 import ListItem from "../../../Common/ListElements/ListItem";
+import PriceInput from "../../../Common/Input/PriceInput";
 
 export default connect(
     store => ({
@@ -41,7 +45,9 @@ export default connect(
 
             addShopVisible: false,
             shopForm: null,
-            shopFormMode: FormMode.CREATE
+            shopFormMode: FormMode.CREATE,
+
+            addBalanceVisible: false
         }
 
 
@@ -49,11 +55,8 @@ export default connect(
             return (
                 <div style={FormViewStyle}>
                     <FormTitleLabel text={this.props.organization.name}/>
-                    <Label text={this.props.organization.description}/>
-                    <BulletList values={[
-                        "Тип: " + this.props.organization.type.value,
-                        "Начальный бюджет: " + this.props.organization.balance.map(v => v.name + ": " + v.amount).join(", ")
-                    ]}/>
+                    <div>{this.props.organization.type.value}</div>
+                    <div>{this.props.organization.description}</div>
 
                     <List title={"Главы организации:"}
                           noItemsText={"Нет глав"}
@@ -87,6 +90,21 @@ export default connect(
                                   />
                               )}
                         />
+                    }
+
+                    <List title={"Бюджет: "}
+                          values={this.props.organization.balance.map(v =>
+                              <ListItem text={v.name + ": " + v.amount}/>
+                          )}
+                    />
+                    {
+                        this.state.addBalanceVisible ?
+                            <PriceInput currencies={this.props.currencies.map(v => v.name)}
+                                        onSubmit={amountList => this.onAddBalanceSubmit(amountList)}
+                            /> :
+                            <Btn text={"Пополнить бюджет со своего счёта"}
+                                 onClick={() => this.setState({addBalanceVisible: true})}
+                            />
                     }
 
                     <List title={"Магазины:"}
@@ -170,6 +188,14 @@ export default connect(
             httpDelete(removeOrganizationShopUrl(this.props.organization.id, shop.id), rs => {
                 this.props.setOrganization(rs)
                 Popup.info("Магазин удалён")
+            })
+        }
+
+        onAddBalanceSubmit(amountList) {
+            post(addBalanceUrl(this.props.organization.id), amountList, rs => {
+                this.props.setOrganization(rs)
+                this.setState({addBalanceVisible: false})
+                Popup.info("Баланс пополнен.")
             })
         }
     }

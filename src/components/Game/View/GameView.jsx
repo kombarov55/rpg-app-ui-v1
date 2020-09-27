@@ -268,7 +268,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               description={organization.description}
                               bullets={[
                                   "Тип: " + organization.type.value,
-                                  "Начальный бюджет: " + organization.balance.map(v => v.name + ": " + v.amount).join(", "),
+                                  "Бюджет: " + organization.balance.map(v => v.name + ": " + v.amount).join(", "),
                                   "Главы: " + organization.heads.map(v => v.fullName).join(", ")
                               ]}
                               onEditClicked={() => {

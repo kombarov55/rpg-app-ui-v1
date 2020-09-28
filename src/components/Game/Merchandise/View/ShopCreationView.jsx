@@ -6,8 +6,7 @@ import FormViewStyle from "../../../../styles/FormViewStyle";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import Btn from "../../../Common/Buttons/Btn";
 import {upload} from "../../../../util/HttpRequests";
-import {saveShopUrl, uploadUrl} from "../../../../util/Parameters";
-import {MultiSelect} from "primereact/multiselect";
+import {saveShopUrl} from "../../../../util/Parameters";
 import {SelectButton} from "primereact/selectbutton";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import {post} from "../../../../util/Http";
@@ -79,7 +78,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class ShopCreationVi
             this.setState(this.initialState)
             Popup.info("Магазин создан.")
 
-        }, Popup.error("Ошибка при создании магазина. Обратитесь к администратору."))
+        }, () => Popup.error("Ошибка при создании магазина. Обратитесь к администратору."))
 
         this.props.toPrevView()
     }

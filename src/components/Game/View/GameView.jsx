@@ -25,7 +25,7 @@ import {
 } from "../../../Views";
 import {httpDelete, post, put} from "../../../util/Http";
 import {
-    deleteGameUrl, organizationByGameIdAndIdUrl,
+    deleteGameUrl, deleteShopUrl, organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
     organizationUrl,
     shopByIdUrl,
@@ -184,7 +184,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onShopDeleted(shop) {
-        httpDelete(shopByIdUrl(shop.id), rs => {
+        httpDelete(deleteShopUrl(props.activeGame.id, shop.id), rs => {
             props.setActiveGame(Object.assign({}, props.activeGame, {
                 shops: props.activeGame.shops.filter(v => v.id !== rs.id)
             }))

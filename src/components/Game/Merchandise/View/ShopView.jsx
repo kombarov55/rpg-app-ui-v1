@@ -5,25 +5,30 @@ import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import List from "../../../Common/Lists/List";
 import Btn from "../../../Common/Buttons/Btn";
 import {gameView} from "../../../../Views";
-import {changeView} from "../../../../data-layer/ActionCreators";
+import {changeView, setAvailableMerchandise} from "../../../../data-layer/ActionCreators";
 import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
-    deleteWarehouseEntryUrl,
-    merchandiseUrl,
-    saveWarehouseEntryUrl,
-    updateWarehouseEntryUrl
+    deleteItemForSaleUrl,
+    merchandiseByGameIdAndDestination,
+    saveItemForSaleUrl,
+    updateItemForSaleUrl
 } from "../../../../util/Parameters";
 import FormMode from "../../../../data-layer/enums/FormMode";
-import WarehouseEntryForm from "../Form/WarehouseEntryForm";
 import Popup from "../../../../util/Popup";
 import ListItem from "../../../Common/ListElements/ListItem";
+import ItemForSaleForm from "../Form/ItemForSaleForm";
+import ShopType from "../../../../data-layer/enums/ShopType";
+import Destination from "../../../../data-layer/enums/Destination";
 
 export default connect(
     state => ({
         gameId: state.activeGame.id,
-        changeViewParams: state.changeViewParams
+        changeViewParams: state.changeViewParams,
+        currencies: state.activeGame.currencies,
+        availableMerchandise: state.availableMerchandise
     }),
     dispatch => ({
+        setAvailableMerchandise: merchandiseList => dispatch(setAvailableMerchandise(merchandiseList)),
         toPrevView: () => dispatch(changeView(gameView))
     })
 )(class ShopView extends React.Component {
@@ -34,15 +39,24 @@ export default connect(
         const {shop} = this.props.changeViewParams
 
         this.state = Object.assign({}, shop, this.initialState)
-        get(merchandiseUrl(this.props.gameId), rs => this.setState({merchandiseList: rs}))
+
+        get(merchandiseByGameIdAndDestination(
+            this.props.gameId,
+            this.state.type == ShopType.PLAYERS ?
+                Destination.PLAYER :
+                [
+                    Destination.COUNTRY, Destination.INSTITUTION, Destination.HOUSE,
+                    Destination.SHIP, Destination.MARKETPLACE
+                ].join(",")
+        ), rs => this.props.setAvailableMerchandise(rs))
     }
 
     initialState = {
         merchandiseList: [],
 
-        warehouseEntryFormMode: FormMode.CREATE,
-        warehouseEntryObjToUpdate: null,
-        warehouseEntryFormVisible: false
+        itemForSaleFormMode: FormMode.CREATE,
+        itemForSaleObjToUpdate: null,
+        itemForSaleFormVisible: false
     }
 
     render() {
@@ -54,28 +68,30 @@ export default connect(
                 />
 
                 <List
-                    title={"Заполнить магазин:"}
-                    isAddButtonVisible={!this.state.warehouseEntryFormVisible}
+                    title={"Товары на продажу:"}
+                    isAddButtonVisible={!this.state.itemForSaleFormVisible}
                     noItemsText={"Магазин пуст"}
-                    onAddClicked={() => this.onAddWarehouseEntryClicked()}
-                    values={this.state.warehouseEntries.map(warehouseEntry =>
-                        <ListItem text={warehouseEntry.merchandise.name + ": " + warehouseEntry.amount + " шт."}
-                                  onEdit={() => this.onEditWarehouseEntryClicked(warehouseEntry)}
-                                  onDelete={() => this.deleteWarehouseEntry(warehouseEntry)}
+                    onAddClicked={() => this.onAddItemForSaleClicked()}
+                    values={this.state.itemsForSale.map(itemForSale =>
+                        <ListItem text={itemForSale.merchandise.name + ": " + itemForSale.amount + " шт."}
+                                  onEdit={() => this.onEditItemForSaleClicked(itemForSale)}
+                                  onDelete={() => this.deleteItemForSale(itemForSale)}
                         />
                     )}
                 />
                 {
-                    this.state.warehouseEntryFormVisible &&
-                    (this.state.warehouseEntryFormMode === FormMode.CREATE ?
-                            <WarehouseEntryForm
-                                merchandiseList={this.state.merchandiseList}
-                                onSubmit={form => this.saveWarehouseEntry(form)}
+                    this.state.itemForSaleFormVisible &&
+                    (this.state.itemForSaleFormMode === FormMode.CREATE ?
+                            <ItemForSaleForm
+                                currencies={this.props.currencies}
+                                merchandiseList={this.props.availableMerchandise}
+                                onSubmit={form => this.saveItemForSale(form)}
                             /> :
-                            <WarehouseEntryForm
-                                merchandiseList={this.state.merchandiseList}
-                                initialState={this.state.warehouseEntryObjToUpdate}
-                                onSubmit={form => this.updateWarehouseEntry(form)}
+                            <ItemForSaleForm
+                                initialState={this.state.itemForSaleObjToUpdate}
+                                currencies={this.props.currencies}
+                                merchandiseList={this.props.availableMerchandise}
+                                onSubmit={form => this.saveItemForSale(form)}
                             />
                     )
                 }
@@ -85,47 +101,47 @@ export default connect(
         )
     }
 
-    onAddWarehouseEntryClicked() {
+    onAddItemForSaleClicked() {
         this.setState({
-            warehouseEntryFormVisible: true,
-            warehouseEntryFormMode: FormMode.CREATE,
-            warehouseEntryObjToUpdate: null
+            itemForSaleFormVisible: true,
+            itemForSaleFormMode: FormMode.CREATE,
+            itemForSaleObjToUpdate: null
         })
 
     }
 
-    onEditWarehouseEntryClicked(warehouseEntry) {
+    onEditItemForSaleClicked(itemForSale) {
         this.setState({
-            warehouseEntryFormVisible: true,
-            warehouseEntryFormMode: FormMode.EDIT,
-            warehouseEntryObjToUpdate: warehouseEntry
+            itemForSaleFormVisible: true,
+            itemForSaleFormMode: FormMode.EDIT,
+            itemForSaleObjToUpdate: itemForSale
         })
     }
 
-    saveWarehouseEntry(warehouseEntry) {
-        post(saveWarehouseEntryUrl(this.state.id), warehouseEntry, rs => {
-            this.setState(state => ({
-                warehouseEntries: state.warehouseEntries.concat(rs)
-            }))
+    saveItemForSale(itemForSale) {
+        post(saveItemForSaleUrl(this.state.id), itemForSale, rs => {
+            this.setState({
+                itemsForSale: rs.itemsForSale
+            })
 
             Popup.info("Товар добавлен в магазин")
         }, () => Popup.error("Ошибка при добавлении товара. Обратитесь к администратору."))
     }
 
-    updateWarehouseEntry(warehouseEntry) {
-        put(updateWarehouseEntryUrl(this.state.id, warehouseEntry.id), warehouseEntry, rs => {
+    updateItemForSale(itemForSale) {
+        put(updateItemForSaleUrl(this.state.id, itemForSale.id), itemForSale, rs => {
             this.setState(state => ({
-                warehouseEntries: state.warehouseEntries.filter(v => v.id !== rs.id).concat(rs)
+                itemsForSale: state.itemsForSale.filter(v => v.id !== rs.id).concat(rs)
             }))
 
             Popup.info("Товар обновлен")
         }, () => Popup.error("Ошибка при обновлении товара. Обратитесь к администратору."))
     }
 
-    deleteWarehouseEntry(warehouseEntry) {
-        httpDelete(deleteWarehouseEntryUrl(warehouseEntry.id), rs => {
+    deleteItemForSale(itemForSale) {
+        httpDelete(deleteItemForSaleUrl(itemForSale.id), rs => {
             this.setState(state => ({
-                warehouseEntries: state.warehouseEntries.filter(v => v.id !== rs.id)
+                itemsForSale: state.itemsForSale.filter(v => v.id !== rs.id)
             }))
             Popup.info("Товар удалён из магазина")
         }, () => Popup.error("Ошибка удаления товара из магазина. Обратитесь к администратору."))

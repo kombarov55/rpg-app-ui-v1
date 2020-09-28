@@ -65,6 +65,7 @@ export const skillByIdUrl = id => rootUrl + "/skill/" + id
 
 export const saveShopUrl = gameId => rootUrl + "/game/" + gameId + "/shop"
 export const shopByIdUrl = shopId => rootUrl + "/shop/" + shopId
+export const deleteShopUrl = (gameId, shopId) => rootUrl + "/game/" + gameId + "/shop/" + shopId
 
 export const merchandiseCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/merchandiseCategory"
 export const merchandiseCategoryByIdUrl = (gameId, merchandiseCategoryId) => rootUrl + "/game/" + gameId + "/merchandiseCategory/" + merchandiseCategoryId
@@ -74,11 +75,11 @@ export const merchandiseTypeByIdUrl = (gameId, merchandiseTypeId) => rootUrl + "
 
 export const merchandiseUrl = gameId => rootUrl + "/game/" + gameId + "/merchandise"
 export const merchandiseByIdUrl = (gameId, merchandiseId) => rootUrl + "/game/" + gameId + "/merchandise/" + merchandiseId
-export const merchandiseByGameIdAndDestination = (gameId, destination) => rootUrl + "/game/" + gameId + "/merchandise?destination=" + destination
+export const merchandiseByGameIdAndDestination = (gameId, destination) => rootUrl + "/game/" + gameId + "/merchandise/filter?destination=" + destination
 
-export const saveWarehouseEntryUrl = shopId => rootUrl + "/shop/" + shopId + "/warehouseEntry"
-export const updateWarehouseEntryUrl = (shopId, warehouseEntryId) => rootUrl + "/shop/" + shopId + "/warehouseEntry/" + warehouseEntryId
-export const deleteWarehouseEntryUrl = warehouseEntryId => rootUrl + "/warehouseEntry/" + warehouseEntryId
+export const saveItemForSaleUrl = shopId => rootUrl + "/shop/" + shopId + "/itemForSale"
+export const updateItemForSaleUrl = (shopId, warehouseEntryId) => rootUrl + "/shop/" + shopId + "/itemForSale/" + warehouseEntryId
+export const deleteItemForSaleUrl = warehouseEntryId => rootUrl + "/itemForSale/" + warehouseEntryId
 
 export const organizationByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/organization"
 export const organizationUrl = id => rootUrl + "/organization/" + id

@@ -5,7 +5,7 @@ import List from "../../../Common/Lists/List";
 import SmallerExpandableListItem from "../../../Common/ListElements/SmallerExpandableListItem";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 
-export default class OrganizationPurchaseMerchandiseForm extends React.Component {
+export default class ItemForSaleForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -21,7 +21,7 @@ export default class OrganizationPurchaseMerchandiseForm extends React.Component
     render() {
         return (
             <div>
-                <FormTitleLabel text={"Покупка товаров для организации:"}/>
+                <FormTitleLabel text={"Покупка товара:"}/>
                 <List title={"Выберите товар:"}
                       noItemsText={"Товар либо не прогрузился, либо нет доступного."}
                       values={this.props.merchandiseList.map(merchandise =>

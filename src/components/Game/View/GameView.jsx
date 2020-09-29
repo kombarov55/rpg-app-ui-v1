@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {
     changeView,
     setActiveGame,
-    setActiveOrganization,
+    setActiveOrganization, setAvailableMerchandise,
     setGames,
     setOrganizations,
     updateActiveGame,
@@ -23,9 +23,10 @@ import {
     skillCategoryView,
     subnetworkView
 } from "../../../Views";
-import {httpDelete, post, put} from "../../../util/Http";
+import {httpDelete, post, put, get} from "../../../util/Http";
 import {
-    deleteGameUrl,
+    addItemForSaleForGameUrl,
+    deleteGameUrl, merchandiseUrl,
     organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
     organizationUrl,
@@ -46,6 +47,7 @@ import Popup from "../../../util/Popup";
 import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
 import OrganizationForm from "../Organization/Form/OrganizationForm";
 import priceCombinationListToString from "../../../util/priceCombinationListToString";
+import ItemForSaleForm from "../Merchandise/Form/ItemForSaleForm";
 
 function mapStateToProps(state, props) {
     return {
@@ -53,7 +55,8 @@ function mapStateToProps(state, props) {
         games: state.games,
         organizations: state.organizations,
         userAccounts: state.userAccounts,
-        currencies: state.activeGame.currencies.map(v => v.name)
+        currencies: state.activeGame.currencies.map(v => v.name),
+        availableMerchandise: state.availableMerchandise
     }
 }
 
@@ -66,7 +69,8 @@ function mapDispatchToProps(dispatch) {
         updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue)),
         setActiveGame: game => dispatch(setActiveGame(game)),
         setOrganizations: organizations => dispatch(setOrganizations(organizations)),
-        setActiveOrganization: organization => dispatch(setActiveOrganization(organization))
+        setActiveOrganization: organization => dispatch(setActiveOrganization(organization)),
+        setAvailableMerchandise: xs => dispatch(setAvailableMerchandise(xs))
     }
 }
 
@@ -75,6 +79,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     const [organizationFormVisible, setOrganizationFormVisible] = useState(false)
     const [organizationForm, setOrganizationForm] = useState()
     const [organizationFormMode, setOrganizationFormMode] = useState(FormMode.CREATE)
+
+    const [itemForSaleFormVisible, setItemForSaleFormVisible] = useState(false)
 
     function onEditClicked() {
         props.updateGameForm(props.activeGame)
@@ -187,6 +193,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onAddItemForSaleClicked() {
+        get(merchandiseUrl(props.activeGame.id), rs => {
+            props.setAvailableMerchandise(rs)
+            setItemForSaleFormVisible(true)
+        })
+    }
+
+    function onItemForSaleSubmit(form) {
+        post(addItemForSaleForGameUrl(props.activeGame.id), form, rs => {
+            props.setActiveGame(rs)
+            setItemForSaleFormVisible(false)
+            Popup.info("Товар добавлен.")
+        })
+    }
+
     return (
         <div className={"game-view"}>
             <div className={"game-info"}>
@@ -224,6 +245,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <List title={"База"}
                       noItemsText={"Нет товаров.."}
+                      isAddButtonVisible={!itemForSaleFormVisible}
+                      onAddClicked={() => onAddItemForSaleClicked()}
                       values={props.activeGame.itemsForSale.map(itemForSale =>
                           <ExpandableListItemWithBullets
                               name={itemForSale.merchandise.name}
@@ -231,13 +254,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               description={itemForSale.merchandise.description}
                               bullets={[
                                   "Количество слотов: " + itemForSale.merchandise.slots,
-                                  "Цена: " + priceCombinationListToString(itemForSale.merchandise.price)
+                                  "Цена: " + itemForSale.price.map(v => v.name + ": " + v.amount).join(" или ")
                               ]}
 
                               key={itemForSale.id}
                           />
                       )}
                 />
+                {
+                    itemForSaleFormVisible &&
+                        <ItemForSaleForm
+                            merchandiseList={props.availableMerchandise}
+                            currencies={props.activeGame.currencies}
+                            onSubmit={form => onItemForSaleSubmit(form)}
+                        />
+                }
 
                 <List title={"Организации"}
                       noItemsText={"Нет организаций"}

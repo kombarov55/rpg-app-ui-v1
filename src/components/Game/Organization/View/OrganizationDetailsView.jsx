@@ -23,7 +23,7 @@ import ListItem from "../../../Common/ListElements/ListItem";
 import PriceInput from "../../../Common/Input/PriceInput";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import OrganizationPurchaseMerchandiseForm from "../Form/OrganizationPurchaseMerchandiseForm";
+import ItemForSaleForm from "../Form/ItemForSaleForm";
 import Destination from "../../../../data-layer/enums/Destination";
 
 export default connect(
@@ -164,7 +164,7 @@ export default connect(
 
                     {
                         this.state.purchaseMerchandiseVisible &&
-                            <OrganizationPurchaseMerchandiseForm
+                            <ItemForSaleForm
                                 merchandiseList={this.props.availableMerchandise}
                                 onSubmit={form => this.onAddOwnedMerchandiseSubmit(form)}
                             />

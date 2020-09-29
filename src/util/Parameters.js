@@ -90,3 +90,5 @@ export const removeCreditOfferUrl = (organizationId, creditOfferId) => rootUrl +
 export const addBalanceUrl = organizationId => rootUrl + "/organization/" + organizationId + "/balance"
 
 export const addOwnedMerchandiseUrl = (organizationId, merchandiseId, amount) => rootUrl + "/organization/" + organizationId + "/ownedMerchandise/" + merchandiseId + "?amount=" + amount
+
+export const addItemForSaleForGameUrl = gameId => rootUrl + "/game/" + gameId + "/itemForSale"

@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import {connect} from "react-redux";
 import {
     changeView,
-    setActiveGame, setActiveOrganization,
+    setActiveGame,
+    setActiveOrganization,
     setGames,
     setOrganizations,
     updateActiveGame,
@@ -15,20 +16,19 @@ import {
     currencyFormView,
     gameEditView,
     merchandiseView,
-    networkView, organizationDetailsView,
+    networkView,
+    organizationDetailsView,
     questionnaireRulesView,
-    shopCreationView,
-    shopView,
     skillCategoryFormView,
     skillCategoryView,
     subnetworkView
 } from "../../../Views";
 import {httpDelete, post, put} from "../../../util/Http";
 import {
-    deleteGameUrl, deleteShopUrl, organizationByGameIdAndIdUrl,
+    deleteGameUrl,
+    organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
     organizationUrl,
-    shopByIdUrl,
     skillCategoryUrl
 } from "../../../util/Parameters";
 import Btn from "../../Common/Buttons/Btn";
@@ -40,11 +40,12 @@ import QuestionnaireTemplateFormMode from "../../../data-layer/enums/Questionnai
 import List from "../../Common/Lists/List";
 import SmallEditableListItem from "../../Common/ListElements/SmallEditableListItem";
 import FormType from "../../../data-layer/enums/FormMode";
+import FormMode from "../../../data-layer/enums/FormMode";
 import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableListItemWithButtons";
 import Popup from "../../../util/Popup";
 import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
 import OrganizationForm from "../Organization/Form/OrganizationForm";
-import FormMode from "../../../data-layer/enums/FormMode";
+import priceCombinationListToString from "../../../util/priceCombinationListToString";
 
 function mapStateToProps(state, props) {
     return {
@@ -68,7 +69,6 @@ function mapDispatchToProps(dispatch) {
         setActiveOrganization: organization => dispatch(setActiveOrganization(organization))
     }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
@@ -143,17 +143,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(skillCategoryFormView)
     }
 
-    function onAddShopClicked() {
-        props.changeView(shopCreationView)
-    }
-
-    function onShopClicked(shop) {
-        console.log(shop)
-        props.changeView(shopView, {
-            shop: shop
-        })
-    }
-
     function onSaveOrganizationClicked(form) {
         post(organizationByGameIdUrl(props.activeGame.id), form, rs => {
             setOrganizationFormVisible(false)
@@ -181,15 +170,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onOrganizationDetailsClicked(organization) {
         props.setActiveOrganization(organization)
         props.changeView(organizationDetailsView)
-    }
-
-    function onShopDeleted(shop) {
-        httpDelete(deleteShopUrl(props.activeGame.id, shop.id), rs => {
-            props.setActiveGame(Object.assign({}, props.activeGame, {
-                shops: props.activeGame.shops.filter(v => v.id !== rs.id)
-            }))
-            Popup.info("Магазин удалён")
-        }, () => Popup.error("Ошибка при удалении магазина. Обратитесь к Администратору."))
     }
 
     function onDeleteSkillCategoryClicked(skillCategory) {
@@ -242,17 +222,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                       onAddClicked={() => onAddSkillCategoryClicked()}
                 />
 
-                <List title={"Магазины:"}
-                      noItemsText={"Нет магазинов"}
-                      values={props.activeGame.shops.map(shop =>
-                          <ExpandableListItemWithButtons
-                              img={shop.img}
-                              name={shop.name}
-                              onDetailsClicked={() => onShopClicked(shop)}
-                              onDeleteClicked={() => onShopDeleted(shop)}
+                <List title={"База"}
+                      noItemsText={"Нет товаров.."}
+                      values={props.activeGame.itemsForSale.map(itemForSale =>
+                          <ExpandableListItemWithBullets
+                              name={itemForSale.merchandise.name}
+                              img={itemForSale.merchandise.img}
+                              description={itemForSale.merchandise.description}
+                              bullets={[
+                                  "Количество слотов: " + itemForSale.merchandise.slots,
+                                  "Цена: " + priceCombinationListToString(itemForSale.merchandise.price)
+                              ]}
+
+                              key={itemForSale.id}
                           />
                       )}
-                      onAddClicked={() => onAddShopClicked()}
                 />
 
                 <List title={"Организации"}

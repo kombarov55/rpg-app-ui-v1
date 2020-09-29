@@ -33,7 +33,6 @@ import SkillCategoryForm from "./components/Game/View/SkillCategoryView/SkillCat
 import SpellSchoolCreationView from "./components/Game/SpellSchoolCreationView";
 import SpellCreationView from "./components/Game/View/SkillCategoryView/SpellCreationView";
 import CurrencyCreationView from "./components/Game/View/CurrencyFormView";
-import ShopCreationView from "./components/Game/Merchandise/View/ShopCreationView";
 import ShopView from "./components/Game/Merchandise/View/ShopView";
 import MerchandiseView from "./components/Game/Merchandise/View/MerchandiseView";
 import SkillCategoryEditView from "./components/Game/View/SkillCategoryView/SkillCategoryEditView";
@@ -91,7 +90,6 @@ export const spellCreationView = {component: <SpellCreationView/>, label: "Со�
 
 export const currencyFormView = {component: <CurrencyCreationView/>, label: "Валюта"}
 
-export const shopCreationView = {component: <ShopCreationView/>, label: "Создание магазина"}
 export const shopView = {component: <ShopView/>, label: "Магазин"}
 
 export const merchandiseView = {component: <MerchandiseView/>, label: "Товары"}

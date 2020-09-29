@@ -171,6 +171,14 @@ export default connect(
     }
 
     onSubmitClicked() {
+        if (
+            this.props.name == "" ||
+            this.props.description == "" ||
+            this.props.category == "" ||
+            this.props.type == "" ||
+            this.props.destination == null
+        ) return
+
         this.props.onSubmit({
             id: this.state.id,
             name: this.state.name,

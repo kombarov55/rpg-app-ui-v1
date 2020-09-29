@@ -48,6 +48,8 @@ import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableL
 import OrganizationForm from "../Organization/Form/OrganizationForm";
 import priceCombinationListToString from "../../../util/priceCombinationListToString";
 import ItemForSaleForm from "../Merchandise/Form/ItemForSaleForm";
+import FormatDate from "../../../util/FormatDate";
+import SkillInfluenceToString from "../../../util/SkillInfluenceToString";
 
 function mapStateToProps(state, props) {
     return {
@@ -243,7 +245,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                       onAddClicked={() => onAddSkillCategoryClicked()}
                 />
 
-                <List title={"База"}
+                <List title={"База:"}
                       noItemsText={"Нет товаров.."}
                       isAddButtonVisible={!itemForSaleFormVisible}
                       onAddClicked={() => onAddItemForSaleClicked()}
@@ -254,9 +256,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               description={itemForSale.merchandise.description}
                               bullets={[
                                   "Количество слотов: " + itemForSale.merchandise.slots,
-                                  "Цена: " + itemForSale.price.map(v => v.name + ": " + v.amount).join(" или ")
+                                  "Цена: " + itemForSale.price.map(v => v.name + ": " + v.amount).join(" или "),
+                                  "Влияние на навыки: " + itemForSale.merchandise.skillInfluences.map(v => SkillInfluenceToString(v)),
+                                  "Дата выставления на продажу: " + FormatDate(new Date(itemForSale.creationDate))
                               ]}
 
+                              alwaysExpand={true}
                               key={itemForSale.id}
                           />
                       )}

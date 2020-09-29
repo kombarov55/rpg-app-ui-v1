@@ -141,7 +141,6 @@ export default connect(
                                   "Категория: " + merchandise.category.name,
                                   "Тип: " + merchandise.type.name,
                                   merchandise.slots + " слот(ов)",
-                                  "Цена: " + priceCombinationListToString(merchandise.prices),
                                   merchandise.skillInfluences.map(it => SkillInfluenceToString(it)).join(", ")
                               ]}
 

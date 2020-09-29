@@ -19,6 +19,7 @@ import ListItem from "../../../Common/ListElements/ListItem";
 import ItemForSaleForm from "../Form/ItemForSaleForm";
 import ShopType from "../../../../data-layer/enums/ShopType";
 import Destination from "../../../../data-layer/enums/Destination";
+import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 
 export default connect(
     state => ({
@@ -73,9 +74,21 @@ export default connect(
                     noItemsText={"Магазин пуст"}
                     onAddClicked={() => this.onAddItemForSaleClicked()}
                     values={this.state.itemsForSale.map(itemForSale =>
-                        <ListItem text={itemForSale.merchandise.name + ": " + itemForSale.amount + " шт."}
-                                  onEdit={() => this.onEditItemForSaleClicked(itemForSale)}
-                                  onDelete={() => this.deleteItemForSale(itemForSale)}
+                        <ExpandableListItemWithBullets
+                            img={itemForSale.merchandise.img}
+                            name={itemForSale.merchandise.name + ": " + itemForSale.amount + " шт."}
+                            description={itemForSale.merchandise.description}
+                            bullets={[
+                                itemForSale.merchandise.destination.value,
+                                "Категория: " + itemForSale.merchandise.category.name,
+                                "Тип: " + itemForSale.merchandise.type.name,
+                                "Варианты покупки: " + itemForSale.price.map(amount => amount.name + ": " + amount.amount).join(" или ")
+                            ]}
+                            onEdit={() => this.onEditItemForSaleClicked(itemForSale)}
+                            onDelete={() => this.deleteItemForSale(itemForSale)}
+                            alwaysExpand={true}
+
+                            key={itemForSale.id}
                         />
                     )}
                 />

@@ -146,7 +146,7 @@ export default connect(
                         )
                     }
 
-                    <List title={"Товары для организации:"}
+                    <List title={"Склад:"}
                           noItemsText={"Пусто.."}
                           isAddButtonVisible={!this.state.purchaseMerchandiseVisible}
                           onAddClicked={() => this.onAddOwnMerchandiseClicked()}

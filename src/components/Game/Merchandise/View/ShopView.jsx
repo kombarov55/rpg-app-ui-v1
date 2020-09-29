@@ -119,9 +119,10 @@ export default connect(
     }
 
     saveItemForSale(itemForSale) {
-        post(saveItemForSaleUrl(this.state.id), itemForSale, rs => {
+        post(saveItemForSaleUrl(this.props.gameId, this.state.id), itemForSale, rs => {
             this.setState({
-                itemsForSale: rs.itemsForSale
+                itemsForSale: rs.itemsForSale,
+                itemForSaleVisible: false
             })
 
             Popup.info("Товар добавлен в магазин")
@@ -129,9 +130,10 @@ export default connect(
     }
 
     updateItemForSale(itemForSale) {
-        put(updateItemForSaleUrl(this.state.id, itemForSale.id), itemForSale, rs => {
+        put(updateItemForSaleUrl(this.props.gameId, this.state.id, itemForSale.id), itemForSale, rs => {
             this.setState(state => ({
-                itemsForSale: state.itemsForSale.filter(v => v.id !== rs.id).concat(rs)
+                itemsForSale: state.itemsForSale.filter(v => v.id !== rs.id).concat(rs),
+                itemForSaleVisible: false
             }))
 
             Popup.info("Товар обновлен")
@@ -139,12 +141,12 @@ export default connect(
     }
 
     deleteItemForSale(itemForSale) {
-        httpDelete(deleteItemForSaleUrl(itemForSale.id), rs => {
+        httpDelete(deleteItemForSaleUrl(this.props.gameId, this.state.id, itemForSale.id), rs => {
             this.setState(state => ({
                 itemsForSale: state.itemsForSale.filter(v => v.id !== rs.id)
             }))
-            Popup.info("Товар удалён из магазина")
-        }, () => Popup.error("Ошибка удаления товара из магазина. Обратитесь к администратору."))
+            Popup.info("Товар снят с продажи")
+        }, () => Popup.error("Ошибка при снятии товара с продажи. Обратитесь к администратору."))
     }
 
     onBackClicked() {

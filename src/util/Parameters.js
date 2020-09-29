@@ -77,9 +77,9 @@ export const merchandiseUrl = gameId => rootUrl + "/game/" + gameId + "/merchand
 export const merchandiseByIdUrl = (gameId, merchandiseId) => rootUrl + "/game/" + gameId + "/merchandise/" + merchandiseId
 export const merchandiseByGameIdAndDestination = (gameId, destination) => rootUrl + "/game/" + gameId + "/merchandise/filter?destination=" + destination
 
-export const saveItemForSaleUrl = shopId => rootUrl + "/shop/" + shopId + "/itemForSale"
-export const updateItemForSaleUrl = (shopId, warehouseEntryId) => rootUrl + "/shop/" + shopId + "/itemForSale/" + warehouseEntryId
-export const deleteItemForSaleUrl = warehouseEntryId => rootUrl + "/itemForSale/" + warehouseEntryId
+export const saveItemForSaleUrl = (gameId, shopId) => rootUrl + "/game/" + gameId + "/shop/" + shopId + "/itemForSale"
+export const updateItemForSaleUrl = (gameId, shopId, id) => rootUrl + "/game/" + gameId + "/shop/" + shopId + "/itemForSale/" + id
+export const deleteItemForSaleUrl = (gameId, shopId, id) => rootUrl + "/game/" + gameId + "/shop/" + shopId + "/itemForSale/" + id
 
 export const organizationByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/organization"
 export const organizationUrl = id => rootUrl + "/organization/" + id

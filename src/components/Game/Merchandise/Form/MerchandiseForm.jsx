@@ -4,10 +4,8 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import {upload} from "../../../../util/HttpRequests";
 import {SelectButton} from "primereact/selectbutton";
-import PriceInput from "../../../Common/Input/PriceInput";
 import List from "../../../Common/Lists/List";
 import ListItem from "../../../Common/ListElements/ListItem";
-import priceCombinationToString from "../../../../util/priceCombinationToString";
 import SkillInfluenceForm from "./SkillInfluenceForm";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import {connect} from "react-redux"
@@ -45,7 +43,6 @@ export default connect(
         category: "",
         type: "",
         slots: 1,
-        prices: [],
         skillInfluences: [],
         destination: null,
     }
@@ -97,18 +94,6 @@ export default connect(
                        onChange={e => this.setState({slots: e.target.value})}
                 />
 
-                <InputLabel text={"Стоимость:"}/>
-                <List noItemsText={"Нет вариантов покупки"}
-                      values={this.state.prices.map(priceCombination =>
-                          <ListItem text={priceCombinationToString(priceCombination)}
-                                    onDelete={() => this.onPriceCombinationDeleted(priceCombination)}
-                          />
-                      )}
-                />
-                <PriceInput currencies={this.props.currencies.map(it => it.name)}
-                            onSubmit={priceList => this.setState(state => ({prices: state.prices.concat([priceList])}))}
-                />
-
                 <InputLabel text={"Влияние на навыки:"}/>
                 <List noItemsText={"Пусто"}
                       values={this.state.skillInfluences.map(skillInfluence =>
@@ -143,12 +128,6 @@ export default connect(
         )
     }
 
-    onPriceCombinationDeleted(priceCombination) {
-        this.setState(state => ({
-            prices: state.prices.filter(it => it !== priceCombination)
-        }))
-    }
-
     onAddInfluenceClicked() {
         this.setState({
             skillInfluenceFormVisible: true,
@@ -172,12 +151,16 @@ export default connect(
 
     onSubmitClicked() {
         if (
-            this.props.name == "" ||
-            this.props.description == "" ||
-            this.props.category == "" ||
-            this.props.type == "" ||
-            this.props.destination == null
-        ) return
+            this.state.name == "" ||
+            this.state.description == "" ||
+            this.state.category == "" ||
+            this.state.type == "" ||
+            this.state.destination == null
+        ) {
+            console.log("invalid form: ")
+            console.log(this.state)
+            return
+        }
 
         this.props.onSubmit({
             id: this.state.id,
@@ -187,7 +170,6 @@ export default connect(
             category: this.state.category,
             type: this.state.type,
             slots: this.state.slots,
-            prices: this.state.prices,
             skillInfluences: this.state.skillInfluences,
             destination: this.state.destination
         })

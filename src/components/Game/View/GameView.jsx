@@ -29,7 +29,7 @@ import {
     deleteGameUrl, merchandiseUrl,
     organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
-    organizationUrl,
+    organizationUrl, removeItemForSaleForGameUrl,
     skillCategoryUrl
 } from "../../../util/Parameters";
 import Btn from "../../Common/Buttons/Btn";
@@ -210,6 +210,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onItemForSaleDeleteClicked(itemForSale) {
+        httpDelete(removeItemForSaleForGameUrl(props.activeGame.id, itemForSale.id), rs => {
+            props.setActiveGame(rs)
+            Popup.info("Товар снят с продажи")
+        })
+    }
+
     return (
         <div className={"game-view"}>
             <div className={"game-info"}>
@@ -254,10 +261,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               name={itemForSale.merchandise.name}
                               img={itemForSale.merchandise.img}
                               description={itemForSale.merchandise.description}
+                              onDeleteClicked={() => onItemForSaleDeleteClicked(itemForSale)}
                               bullets={[
-                                  "Количество слотов: " + itemForSale.merchandise.slots,
                                   "Цена: " + itemForSale.price.map(v => v.name + ": " + v.amount).join(" или "),
-                                  "Влияние на навыки: " + itemForSale.merchandise.skillInfluences.map(v => SkillInfluenceToString(v)),
+                                  "Количество: " + itemForSale.amount,
                                   "Дата выставления на продажу: " + FormatDate(new Date(itemForSale.creationDate))
                               ]}
 

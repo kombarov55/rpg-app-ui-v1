@@ -46,7 +46,11 @@ import {
     FILTER_LIST,
     APPEND_ELEMENT,
     UPDATE_SPELL_SCHOOL_FORM,
-    SET_USER_ACCOUNTS, SET_ORGANIZATIONS, SET_ACTIVE_ORGANIZATION, SET_AVAILABLE_MERCHANDISE
+    SET_USER_ACCOUNTS,
+    SET_ORGANIZATIONS,
+    SET_ACTIVE_ORGANIZATION,
+    SET_AVAILABLE_MERCHANDISE,
+    SET_AVAILABLE_ITEMS_FOR_SALE
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -520,6 +524,15 @@ export function setAvailableMerchandise(merchandiseList) {
         type: SET_AVAILABLE_MERCHANDISE,
         payload: {
             merchandiseList: merchandiseList
+        }
+    }
+}
+
+export function setAvailableItemsForSale(xs) {
+    return {
+        type: SET_AVAILABLE_ITEMS_FOR_SALE,
+        payload: {
+            itemsForSale: xs
         }
     }
 }

@@ -34,6 +34,7 @@ export const initialState = {
     organizations: Stubs.organizations,
 
     availableMerchandise: [],
+    availableItemsForSale: [],
 
     announcementForm: DefaultFormValues.announcement,
 

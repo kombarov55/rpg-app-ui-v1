@@ -242,8 +242,9 @@ export default connect(
         }
 
         onAddOwnMerchandiseClicked() {
+            get()
             this.setState({purchaseMerchandiseVisible: true})
-            get(merchandiseByGameIdAndDestination(this.props.gameId, Destination.COUNTRY), rs => this.props.setAvailableMerchandise(rs))
+
         }
 
         onAddOwnedMerchandiseSubmit(form) {

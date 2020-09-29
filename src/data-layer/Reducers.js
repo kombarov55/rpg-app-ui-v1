@@ -45,7 +45,7 @@ import {
     APPEND_ELEMENT,
     UPDATE_SPELL_SCHOOL_FORM,
     SET_USER_ACCOUNTS,
-    SET_ORGANIZATIONS, SET_ACTIVE_ORGANIZATION, SET_AVAILABLE_MERCHANDISE
+    SET_ORGANIZATIONS, SET_ACTIVE_ORGANIZATION, SET_AVAILABLE_MERCHANDISE, SET_AVAILABLE_ITEMS_FOR_SALE
 } from "./ActionTypes";
 import {initialState} from "./Store";
 import MergeLists from "../util/MergeLists";
@@ -320,6 +320,10 @@ export function rootReducer(state = initialState, action) {
                 availableMerchandise: action.payload.merchandiseList
             })
 
+        case SET_AVAILABLE_ITEMS_FOR_SALE:
+            return Object.assign({}, state, {
+                availableItemsForSale: action.payload.itemsForSale
+            })
 
         default:
             return state;

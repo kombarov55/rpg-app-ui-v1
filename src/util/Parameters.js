@@ -95,3 +95,4 @@ export const addItemForSaleForGameUrl = gameId => rootUrl + "/game/" + gameId + 
 export const removeItemForSaleForGameUrl = (gameId, itemForSaleId) => rootUrl + "/game/" + gameId + "/itemForSale/" + itemForSaleId
 
 export const updateSkillUpgradeUrl = (gameId, skillId, skillUpgradeId) => rootUrl + "/game/" + gameId + "/skill/" + skillId + "/upgrade/" + skillUpgradeId
+export const deleteSkillUpgradeUrl = (skillId, id) => rootUrl + "/skill/" + skillId + "/upgrade/" + id

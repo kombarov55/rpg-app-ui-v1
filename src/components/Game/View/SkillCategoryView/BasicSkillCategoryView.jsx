@@ -11,8 +11,8 @@ import FormMode from "../../../../data-layer/enums/FormMode";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import SkillUpgradeForm from "../../SkillUpgradeForm";
 import SkillUpgradeEditForm from "../../Skill/Form/SkillUpgradeEditForm";
-import {post, put} from "../../../../util/Http";
-import {updateSkillUpgradeUrl} from "../../../../util/Parameters";
+import {httpDelete, post, put} from "../../../../util/Http";
+import {deleteSkillUpgradeUrl, updateSkillUpgradeUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 
 export default class BasicSkillCategoryView extends React.Component {
@@ -60,7 +60,7 @@ export default class BasicSkillCategoryView extends React.Component {
                                                         skillUpgradeForm: skillUpgrade,
                                                         skillId: skill.id
                                                     })}
-                                                    onDeleteClicked={() => console.log(skillUpgrade)}
+                                                    onDeleteClicked={() => this.onSkillUpgradeDeleted(skill.id, skillUpgrade.id)}
                                                     isDeleteVisible={this.isLastElement(skillUpgrade, skill.upgrades)}
                                                     bullets={skillUpgrade.prices.map(listOfAmount =>
                                                         listOfAmount.map(amount => amount.name + ": " + amount.amount).join(" + ")
@@ -133,6 +133,13 @@ export default class BasicSkillCategoryView extends React.Component {
         this.setState(state => ({
             skillFormVisible: !state.skillFormVisible
         }))
+    }
+
+    onSkillUpgradeDeleted(skillId, skillUpgradeId) {
+        httpDelete(deleteSkillUpgradeUrl(skillId, skillUpgradeId), rs => {
+            this.props.updateSkill(rs)
+            Popup.info("Повышение навыка удалено.")
+        })
     }
 
     onEditSkillUpgradeSubmit(form) {

@@ -25,6 +25,8 @@ import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import ItemForSaleForm from "../Form/ItemForSaleForm";
 import Destination from "../../../../data-layer/enums/Destination";
+import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
+import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByName";
 
 export default connect(
     store => ({
@@ -151,6 +153,14 @@ export default connect(
                                   img={warehouseEntry.merchandise.img}
                                   name={warehouseEntry.merchandise.name}
                                   description={warehouseEntry.merchandise.description}
+
+                                  bullets={[
+                                      GetDestinationByName(warehouseEntry.merchandise.destination),
+                                      "Категория: " + warehouseEntry.merchandise.category.name,
+                                      "Тип: " + warehouseEntry.merchandise.type.name,
+                                      warehouseEntry.merchandise.slots + " слот(ов)",
+                                      warehouseEntry.merchandise.skillInfluences.map(it => SkillInfluenceToString(it)).join(", ")
+                                  ]}
 
                                   alwaysExpand={true}
                                   key={warehouseEntry.id}

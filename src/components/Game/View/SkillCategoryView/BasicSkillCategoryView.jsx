@@ -9,6 +9,11 @@ import SkillForm from "../../SkillForm";
 import Icon from "../../../Common/Input/Icon";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import SkillUpgradeForm from "../../SkillUpgradeForm";
+import SkillUpgradeEditForm from "../../Skill/Form/SkillUpgradeEditForm";
+import {post, put} from "../../../../util/Http";
+import {updateSkillUpgradeUrl} from "../../../../util/Parameters";
+import Popup from "../../../../util/Popup";
 
 export default class BasicSkillCategoryView extends React.Component {
 
@@ -17,7 +22,11 @@ export default class BasicSkillCategoryView extends React.Component {
         this.state = {
             skillFormVisible: false,
             skillFormMode: FormMode.CREATE,
-            skillForm: {}
+            skillForm: {},
+
+            skillId: null,
+            skillUpgradeFormVisible: false,
+            skillUpgradeForm: null
         }
     }
 
@@ -46,7 +55,11 @@ export default class BasicSkillCategoryView extends React.Component {
                                                 <ExpandableListItemWithBullets
                                                     name={"Уровень: " + skillUpgrade.lvlNum}
                                                     description={skillUpgrade.description}
-                                                    onEditClicked={() => console.log(skillUpgrade)}
+                                                    onEditClicked={() => this.setState({
+                                                        skillUpgradeFormVisible: true,
+                                                        skillUpgradeForm: skillUpgrade,
+                                                        skillId: skill.id
+                                                    })}
                                                     onDeleteClicked={() => console.log(skillUpgrade)}
                                                     isDeleteVisible={this.isLastElement(skillUpgrade, skill.upgrades)}
                                                     bullets={skillUpgrade.prices.map(listOfAmount =>
@@ -58,19 +71,21 @@ export default class BasicSkillCategoryView extends React.Component {
                                                 />
                                             )}
                                       />
-
-                                  /*
-                                  skill.upgrades.map(it => <LvlUpgradeView
-                                      lvlNum={it.lvlNum}
-                                      description={it.description}
-                                      prices={it.prices}/>)
-                                  */
                               ]}
                           />
                       )}
                       isAddButtonVisible={!this.state.skillFormVisible}
                       onAddClicked={() => this.toggleSkillForm()}
                 />
+                {
+                    this.state.skillUpgradeFormVisible &&
+                        <SkillUpgradeEditForm
+                            currencyNames={this.props.currencies.map(v => v.name)}
+                            initialState={this.state.skillUpgradeForm}
+                            onSubmit={form => this.onEditSkillUpgradeSubmit(form)}
+                        />
+                }
+
                 {this.state.skillFormVisible &&
                 <SkillForm currencies={this.props.currencies}
                            initialState={this.state.skillForm}
@@ -118,6 +133,17 @@ export default class BasicSkillCategoryView extends React.Component {
         this.setState(state => ({
             skillFormVisible: !state.skillFormVisible
         }))
+    }
+
+    onEditSkillUpgradeSubmit(form) {
+        put(updateSkillUpgradeUrl(this.props.gameId, this.state.skillId, form.id), form, rs => {
+            this.props.updateSkill(rs)
+            Popup.info("Информация о повышении уровня изменена.")
+            this.setState({
+                skillUpgradeFormVisible: false
+            })
+        })
+
     }
 
     isLastElement(item, arr, predicate = (x1, x2) => x1.id === x2.id) {

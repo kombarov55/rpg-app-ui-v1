@@ -13,6 +13,7 @@ import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
+        gameId: state.activeGame.id,
         skillCategory: state.changeViewParams.skillCategory,
         currencies: state.activeGame.currencies
     }),
@@ -53,11 +54,13 @@ export default connect(
                         spellSchools={this.state.spellSchools}
                     /> :
                     <BasicSkillCategoryView
+                        gameId={this.props.gameId}
                         skills={this.state.skills}
                         currencies={this.props.currencies}
                         onSkillAdded={skill => this.onSkillAdded(skill)}
                         onSkillEdited={skill => this.onSkillEdited(skill)}
                         onSkillDeleted={skill => this.onSkillDeleted(skill)}
+                        updateSkill={skill => this.updateSkill(skill)}
                     />
                 }
                 <Btn text={"Редактировать"} onClick={() => this.props.toEditView()}/>
@@ -91,5 +94,11 @@ export default connect(
             }))
             Popup.info("Навык удалён")
         })
+    }
+
+    updateSkill(skill) {
+        this.setState(state => ({
+            skills: state.skills.filter(v => v.id !== skill.id).concat(skill)
+        }))
     }
 })

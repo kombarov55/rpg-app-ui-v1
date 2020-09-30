@@ -62,7 +62,7 @@ export default function (props) {
     }
 
     return (
-        <form style={formStyle} onSubmit={handleSubmit(onSaveClicked)}>
+        <form onSubmit={handleSubmit(onSaveClicked)}>
             <FormTitleLabel text={"Создание навыка:"}/>
             <InputLabel text={"Название:"}/>
             <input name={"name"}

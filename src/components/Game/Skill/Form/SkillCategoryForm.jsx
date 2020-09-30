@@ -2,7 +2,7 @@ import React from "react";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import {InputTextarea} from "primereact/inputtextarea";
 import {upload} from "../../../../util/HttpRequests";
-import {uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
+import {uploadUrl} from "../../../../util/Parameters";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import {InputSwitch} from "primereact/inputswitch";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
@@ -52,10 +52,16 @@ export default class SkillCategoryForm extends React.Component {
                                autoResize={true}
                 />
 
-                <InputLabel text={"Сложный?"}/>
-                <InputSwitch checked={this.state.complex}
-                             onChange={e => this.setState({complex: e.value})}
-                />
+                {
+                    this.state.id == null &&
+                    <>
+                        <InputLabel text={"Сложный?"}/>
+                        <InputSwitch checked={this.state.complex}
+                                     onChange={e => this.setState({complex: e.value})}
+                        />
+                    </>
+                }
+
                 <SubmitButton text={"Сохранить"}
                               onClick={() => {
                                   console.log("submit: ")

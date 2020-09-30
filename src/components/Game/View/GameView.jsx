@@ -32,7 +32,7 @@ import {
     organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
     organizationUrl,
-    removeItemForSaleForGameUrl,
+    removeItemForSaleForGameUrl, saveSkillCategoryUrl,
     skillCategoryUrl
 } from "../../../util/Parameters";
 import Btn from "../../Common/Buttons/Btn";
@@ -153,10 +153,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
-    function onAddSkillCategoryClicked() {
-        props.changeView(skillCategoryFormView)
-    }
-
     function onSaveOrganizationClicked(form) {
         post(organizationByGameIdUrl(props.activeGame.id), form, rs => {
             setOrganizationFormVisible(false)
@@ -224,17 +220,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onAddSkillCategorySubmit(form) {
-        console.log("add skill category:")
-        console.log(form)
-        setSkillCategoryVisible(false)
-        Popup.info("Категория навыка добавлена")
+        post(saveSkillCategoryUrl(props.activeGame.id), form, rs => {
+            setSkillCategoryVisible(false)
+            props.setActiveGame(Object.assign({}, props.activeGame, {
+                skillCategories: props.activeGame.skillCategories.concat(rs)
+            }))
+            Popup.info("Категория навыка добавлена.")
+        })
     }
 
     function onEditSkillCategorySubmit(form) {
-        console.log("edit skill category:")
-        console.log(form)
-        setSkillCategoryVisible(false)
-        Popup.info("Категория навыка обновлена")
+        put(skillCategoryUrl(form.id), form, rs => {
+            setSkillCategoryVisible(false)
+            props.setActiveGame(Object.assign({}, props.activeGame, {
+                skillCategories: props.activeGame.skillCategories.filter(v => v.id !== rs.id).concat(rs)
+            }))
+            Popup.info("Категория навыка обновлена.")
+        })
     }
 
     return (
@@ -261,13 +263,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <List title={"Категории навыков:"}
                       noItemsText={"Нет категорий навыков"}
                       isAddButtonVisible={!skillCategoryVisible}
-                      onAddClicked={() => setSkillCategoryVisible(true)}
+                      onAddClicked={() => {
+                          setSkillCategoryFormMode(FormMode.CREATE)
+                          setSkillCategoryVisible(true)
+                      }}
                       values={props.activeGame.skillCategories.map(skillCategory =>
                           <ExpandableListItemWithButtons
                               img={skillCategory.img}
                               name={skillCategory.name}
                               description={skillCategory.description}
                               onDeleteClicked={() => onDeleteSkillCategoryClicked(skillCategory)}
+                              onEditClicked={() => {
+                                  setSkillCategoryForm(skillCategory)
+                                  setSkillCategoryFormMode(FormMode.EDIT)
+                                  setSkillCategoryVisible(true)
+                              }}
                               onDetailsClicked={() => onSkillCategoryDetailsClicked(skillCategory)}
                           />
                       )}

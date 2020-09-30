@@ -20,7 +20,6 @@ import {
     networkView,
     organizationDetailsView,
     questionnaireRulesView,
-    skillCategoryFormView,
     skillCategoryView,
     subnetworkView
 } from "../../../Views";
@@ -32,7 +31,8 @@ import {
     organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
     organizationUrl,
-    removeItemForSaleForGameUrl, saveSkillCategoryUrl,
+    removeItemForSaleForGameUrl,
+    saveSkillCategoryUrl,
     skillCategoryUrl
 } from "../../../util/Parameters";
 import Btn from "../../Common/Buttons/Btn";
@@ -52,6 +52,8 @@ import OrganizationForm from "../Organization/Form/OrganizationForm";
 import ItemForSaleForm from "../Merchandise/Form/ItemForSaleForm";
 import FormatDate from "../../../util/FormatDate";
 import SkillCategoryForm from "../Skill/Form/SkillCategoryForm";
+import IconSelect from "../../Common/Input/IconSelect";
+import MoneyIcons from "../../../data-layer/enums/MoneyIcons";
 
 function mapStateToProps(state, props) {
     return {

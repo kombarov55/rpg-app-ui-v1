@@ -39,6 +39,9 @@ import SkillCategoryEditView from "./components/Game/View/SkillCategoryView/Skil
 import SkillCategoryView from "./components/Game/View/SkillCategoryView/SkillCategoryView";
 import SkillFormView from "./components/Game/View/SkillCategoryView/SkillFormView";
 import OrganizationDetailsView from "./components/Game/Organization/View/OrganizationDetailsView";
+import TestView from "./components/TestView";
+
+export const testView = {component: <TestView/>, label: "Тест"}
 
 export const announcementView = {component: <AnnouncementView/>, label: "Доска объявлений"}
 export const myAnnouncementView = {component: <MyAnnouncementView/>, label: "Мои объявления"}

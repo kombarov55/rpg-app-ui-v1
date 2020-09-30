@@ -1,6 +1,6 @@
 import {createStore} from "redux";
 import {rootReducer} from "./Reducers";
-import {announcementView, skillCategoryView} from "../Views";
+import {announcementView} from "../Views";
 import DefaultFormValues from "./DefaultFormValues";
 import Stubs from "../stubs/Stubs";
 

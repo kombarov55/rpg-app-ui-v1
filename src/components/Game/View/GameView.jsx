@@ -3,7 +3,8 @@ import {connect} from "react-redux";
 import {
     changeView,
     setActiveGame,
-    setActiveOrganization, setAvailableMerchandise,
+    setActiveOrganization,
+    setAvailableMerchandise,
     setGames,
     setOrganizations,
     updateActiveGame,
@@ -23,13 +24,15 @@ import {
     skillCategoryView,
     subnetworkView
 } from "../../../Views";
-import {httpDelete, post, put, get} from "../../../util/Http";
+import {get, httpDelete, post, put} from "../../../util/Http";
 import {
     addItemForSaleForGameUrl,
-    deleteGameUrl, merchandiseUrl,
+    deleteGameUrl,
+    merchandiseUrl,
     organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
-    organizationUrl, removeItemForSaleForGameUrl,
+    organizationUrl,
+    removeItemForSaleForGameUrl,
     skillCategoryUrl
 } from "../../../util/Parameters";
 import Btn from "../../Common/Buttons/Btn";
@@ -46,10 +49,9 @@ import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableL
 import Popup from "../../../util/Popup";
 import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
 import OrganizationForm from "../Organization/Form/OrganizationForm";
-import priceCombinationListToString from "../../../util/priceCombinationListToString";
 import ItemForSaleForm from "../Merchandise/Form/ItemForSaleForm";
 import FormatDate from "../../../util/FormatDate";
-import SkillInfluenceToString from "../../../util/SkillInfluenceToString";
+import SkillCategoryForm from "../Skill/Form/SkillCategoryForm";
 
 function mapStateToProps(state, props) {
     return {
@@ -77,6 +79,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
+
+    const [skillCategoryVisible, setSkillCategoryVisible] = useState(false)
+    const [skillCategoryForm, setSkillCategoryForm] = useState(null)
+    const [skillCategoryFormMode, setSkillCategoryFormMode] = useState(FormMode.CREATE)
 
     const [organizationFormVisible, setOrganizationFormVisible] = useState(false)
     const [organizationForm, setOrganizationForm] = useState()
@@ -217,6 +223,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         })
     }
 
+    function onAddSkillCategorySubmit(form) {
+        console.log("add skill category:")
+        console.log(form)
+        setSkillCategoryVisible(false)
+        Popup.info("Категория навыка добавлена")
+    }
+
+    function onEditSkillCategorySubmit(form) {
+        console.log("edit skill category:")
+        console.log(form)
+        setSkillCategoryVisible(false)
+        Popup.info("Категория навыка обновлена")
+    }
+
     return (
         <div className={"game-view"}>
             <div className={"game-info"}>
@@ -240,6 +260,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <List title={"Категории навыков:"}
                       noItemsText={"Нет категорий навыков"}
+                      isAddButtonVisible={!skillCategoryVisible}
+                      onAddClicked={() => setSkillCategoryVisible(true)}
                       values={props.activeGame.skillCategories.map(skillCategory =>
                           <ExpandableListItemWithButtons
                               img={skillCategory.img}
@@ -249,8 +271,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               onDetailsClicked={() => onSkillCategoryDetailsClicked(skillCategory)}
                           />
                       )}
-                      onAddClicked={() => onAddSkillCategoryClicked()}
                 />
+                {
+                    skillCategoryVisible && (
+                        skillCategoryFormMode === FormMode.CREATE ?
+                            <SkillCategoryForm
+                                onSubmit={form => onAddSkillCategorySubmit(form)}
+                            /> :
+                            <SkillCategoryForm
+                                initialState={skillCategoryForm}
+                                onSubmit={form => onEditSkillCategorySubmit(form)}
+                            />
+                    )
+                }
 
                 <List title={"База:"}
                       noItemsText={"Нет товаров.."}
@@ -275,11 +308,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
                 {
                     itemForSaleFormVisible &&
-                        <ItemForSaleForm
-                            merchandiseList={props.availableMerchandise}
-                            currencies={props.activeGame.currencies}
-                            onSubmit={form => onItemForSaleSubmit(form)}
-                        />
+                    <ItemForSaleForm
+                        merchandiseList={props.availableMerchandise}
+                        currencies={props.activeGame.currencies}
+                        onSubmit={form => onItemForSaleSubmit(form)}
+                    />
                 }
 
                 <List title={"Организации"}

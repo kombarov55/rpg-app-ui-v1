@@ -53,9 +53,7 @@ export default connect(
             shopForm: null,
             shopFormMode: FormMode.CREATE,
 
-            addBalanceVisible: false,
-
-            purchaseMerchandiseVisible: false
+            addBalanceVisible: false
         }
 
 
@@ -148,8 +146,6 @@ export default connect(
 
                     <List title={"Склад:"}
                           noItemsText={"Пусто.."}
-                          isAddButtonVisible={!this.state.purchaseMerchandiseVisible}
-                          onAddClicked={() => this.onAddOwnMerchandiseClicked()}
                           values={this.props.organization.ownedMerchandise.map(warehouseEntry =>
                               <ExpandableListItemWithBullets
                                   img={warehouseEntry.merchandise.img}
@@ -161,14 +157,6 @@ export default connect(
                               />
                           )}
                     />
-
-                    {
-                        this.state.purchaseMerchandiseVisible &&
-                            <ItemForSaleForm
-                                merchandiseList={this.props.availableMerchandise}
-                                onSubmit={form => this.onAddOwnedMerchandiseSubmit(form)}
-                            />
-                    }
 
                     {this.detailsComponent()}
 
@@ -239,21 +227,6 @@ export default connect(
                 this.setState({addBalanceVisible: false})
                 Popup.info("Баланс пополнен.")
             })
-        }
-
-        onAddOwnMerchandiseClicked() {
-            get()
-            this.setState({purchaseMerchandiseVisible: true})
-
-        }
-
-        onAddOwnedMerchandiseSubmit(form) {
-            console.log(form)
-            // post(addOwnedMerchandiseUrl(this.props.organization.id, form.merchandise.id, form.amount), {}, rs => {
-            //     this.props.setOrganization(rs)
-            //     this.setState({purchaseMerchandiseVisible: false})
-            //     Popup.info("Товар '" + form.merchandise.name + "' в размере " + form.amount + " куплен!")
-            // })
         }
     }
 )

@@ -8,6 +8,7 @@ import LvlUpgradeView from "../../LvlUpgradeView";
 import SkillForm from "../../SkillForm";
 import Icon from "../../../Common/Input/Icon";
 import FormMode from "../../../../data-layer/enums/FormMode";
+import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 
 export default class BasicSkillCategoryView extends React.Component {
 
@@ -39,10 +40,31 @@ export default class BasicSkillCategoryView extends React.Component {
                                   <div>{skill.description}</div>,
                                   skill.prices &&
                                   <InputLabel text={"Цена: " + priceCombinationListToString(skill.prices)}/>,
-                                  skill.upgradable && skill.upgrades.map(it => <LvlUpgradeView
+                                  skill.upgradable &&
+                                      <List title={"Повышения:"}
+                                            values={skill.upgrades.map(skillUpgrade =>
+                                                <ExpandableListItemWithBullets
+                                                    name={"Уровень: " + skillUpgrade.lvlNum}
+                                                    description={skillUpgrade.description}
+                                                    onEditClicked={() => console.log(skillUpgrade)}
+                                                    onDeleteClicked={() => console.log(skillUpgrade)}
+                                                    isDeleteVisible={this.isLastElement(skillUpgrade, skill.upgrades)}
+                                                    bullets={skillUpgrade.prices.map(listOfAmount =>
+                                                        listOfAmount.map(amount => amount.name + ": " + amount.amount).join(" + ")
+                                                    )}
+
+                                                    alwaysExpand={true}
+                                                    key={skillUpgrade.id}
+                                                />
+                                            )}
+                                      />
+
+                                  /*
+                                  skill.upgrades.map(it => <LvlUpgradeView
                                       lvlNum={it.lvlNum}
                                       description={it.description}
                                       prices={it.prices}/>)
+                                  */
                               ]}
                           />
                       )}
@@ -96,6 +118,10 @@ export default class BasicSkillCategoryView extends React.Component {
         this.setState(state => ({
             skillFormVisible: !state.skillFormVisible
         }))
+    }
+
+    isLastElement(item, arr, predicate = (x1, x2) => x1.id === x2.id) {
+        return predicate(item, arr[arr.length - 1])
     }
 
 

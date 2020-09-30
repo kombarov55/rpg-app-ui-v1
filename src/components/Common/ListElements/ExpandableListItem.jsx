@@ -69,7 +69,7 @@ const imgStyle = {
 }
 
 const nameStyle = {
-    fontSize: "3vmax",
+    fontSize: "2.5vmax",
     margin: " 0.5vmax 0 1vmax 0"
 }
 

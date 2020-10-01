@@ -5,8 +5,23 @@ import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem"
 import InputLabel from "../../../Common/Labels/InputLabel";
 import HorizontalListItem from "../../../Common/ListElements/HorizontalListItem";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
+import FormMode from "../../../../data-layer/enums/FormMode";
+import SpellSchoolForm from "../../Skill/Form/SpellSchoolForm";
 
 export default class ComplexSkillCategoryView extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = this.formInitialState
+    }
+
+    formInitialState = {
+        spellSchoolFormVisible: false,
+        spellSchoolForm: null,
+        spellSchoolFormMode: FormMode.CREATE
+    }
+
     componentDidMount() {
         console.log("ComplexSkillCategoryView: spell schools:")
         console.log(this.props.spellSchools)
@@ -18,6 +33,11 @@ export default class ComplexSkillCategoryView extends React.Component {
                 <Label text={"Сложный тип"}/>
                 <List title={"Школы навыков:"}
                       noItemsText={"Нет школ навыков"}
+                      isAddButtonVisible={!this.state.spellSchoolFormVisible}
+                      onAddClicked={() => this.setState({
+                          spellSchoolFormVisible: true,
+                          spellSchoolFormMode: FormMode.CREATE
+                      })}
                       values={this.props.spellSchools.map(spellSchool =>
                           <ExpandableListItem
                               img={spellSchool.img}
@@ -37,9 +57,10 @@ export default class ComplexSkillCategoryView extends React.Component {
                                                     <List title={"Цены заклинаний:"}
                                                           noItemsText={"Бесплатно!"}
                                                           values={schoolLvl.upgradePriceCombinations.map(v =>
-                                                              <div>{v.spellCount} заклинаний изучено: {priceCombinationListToString(v.priceCombinations)}</div>
+                                                              <div>{v.spellCount} заклинаний
+                                                                  изучено: {priceCombinationListToString(v.priceCombinations)}</div>
                                                           )}
-                                                          />,
+                                                    />,
                                                     // <InputLabel
                                                     //     text={"Цена перехода на следующий уровень: " + priceCombinationListToString(schoolLvl.upgradePriceCombinations.priceCombinations)}/>,
                                                     <List title={"Заклинания:"}
@@ -60,7 +81,35 @@ export default class ComplexSkillCategoryView extends React.Component {
                           />
                       )}
                 />
+                {
+                    this.state.spellSchoolFormVisible &&
+                    (
+                        this.state.spellSchoolFormMode == FormMode.CREATE ?
+                            <SpellSchoolForm currencyNames={this.props.currencies.map(v => v.name)}
+                                             onSubmit={form => this.onAddSpellSchoolSubmit(form)}
+                            /> :
+                            <SpellSchoolForm initialState={this.state.spellSchoolForm}
+                                             currencyNames={this.props.currencies.map(v => v.name)}
+                                             onSubmit={form => this.onEditSpellSchoolSubmit(form)}
+                            />
+                    )
+                }
             </div>
         )
     }
+
+    onAddSpellSchoolSubmit(form) {
+        console.log(form)
+        this.setState({
+            spellSchoolFormVisible: false
+        })
+    }
+
+    onEditSpellSchoolSubmit(form) {
+        console.log(form)
+        this.setState({
+            spellSchoolFormVisible: false
+        })
+    }
+
 }

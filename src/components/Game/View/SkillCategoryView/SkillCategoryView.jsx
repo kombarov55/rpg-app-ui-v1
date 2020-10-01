@@ -36,9 +36,6 @@ export default connect(
     constructor(props) {
         super(props);
         this.state = this.props.skillCategory
-        this.setState({
-            skillFormVisible: false
-        })
     }
 
     render() {
@@ -51,6 +48,7 @@ export default connect(
                 />
                 {this.state.complex ?
                     <ComplexSkillCategoryView
+                        currencies={this.props.currencies}
                         spellSchools={this.state.spellSchools}
                     /> :
                     <BasicSkillCategoryView

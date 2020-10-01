@@ -1,8 +1,8 @@
 import React from "react";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import {connect} from "react-redux"
-import {changeView} from "../../../../data-layer/ActionCreators";
-import {skillCategoryView} from "../../../../Views";
+import {changeView, setActiveSchoolLvl} from "../../../../data-layer/ActionCreators";
+import {schoolLvlView, skillCategoryView} from "../../../../Views";
 import Btn from "../../../Common/Buttons/Btn";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import InputLabel from "../../../Common/Labels/InputLabel";
@@ -23,6 +23,10 @@ export default connect(
             ...stateProps,
             ...ownProps,
 
+            toSchoolLvlView: schoolLvl => {
+                dispatch(setActiveSchoolLvl(schoolLvl))
+                dispatch(changeView(schoolLvlView))
+            },
             back: () => dispatch(changeView(skillCategoryView))
         }
     }
@@ -59,11 +63,11 @@ export default connect(
                               bullets={[
                                   ...schoolLvl.upgradePriceCombinations.map(spellSchoolUpgradePriceCombination =>
                                       spellSchoolUpgradePriceCombination.spellCount + " навыков изучено: " + priceCombinationListToString(spellSchoolUpgradePriceCombination.priceCombinations)),
-                                      "--------------",
-                                      schoolLvl.spells.length + " навык(а)(ов)"
-                                  ]}
+                                  "--------------",
+                                  schoolLvl.spells.length + " навык(а)(ов)"
+                              ]}
 
-                              onDetailsClicked={() => alert("go!")}
+                              onDetailsClicked={() => this.props.toSchoolLvlView(schoolLvl)}
 
 
                               alwaysExpand={true}

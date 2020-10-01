@@ -50,7 +50,7 @@ import {
     SET_ORGANIZATIONS,
     SET_ACTIVE_ORGANIZATION,
     SET_AVAILABLE_MERCHANDISE,
-    SET_AVAILABLE_ITEMS_FOR_SALE, SET_ACTIVE_SKILL_CATEGORY, SET_ACTIVE_SPELL_SCHOOL
+    SET_AVAILABLE_ITEMS_FOR_SALE, SET_ACTIVE_SKILL_CATEGORY, SET_ACTIVE_SPELL_SCHOOL, SET_ACTIVE_SCHOOL_LVL
 } from "./ActionTypes";
 import {announcementView} from "../Views";
 
@@ -551,6 +551,15 @@ export function setActiveSpellSchool(x) {
         type: SET_ACTIVE_SPELL_SCHOOL,
         payload: {
             spellSchool: x
+        }
+    }
+}
+
+export function setActiveSchoolLvl(x) {
+    return {
+        type: SET_ACTIVE_SCHOOL_LVL,
+        payload: {
+            schoolLvl: x
         }
     }
 }

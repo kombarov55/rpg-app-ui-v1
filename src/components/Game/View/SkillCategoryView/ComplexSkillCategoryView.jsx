@@ -1,15 +1,13 @@
 import React from "react";
 import Label from "../../../Common/Labels/Label";
 import List from "../../../Common/Lists/List";
-import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
-import InputLabel from "../../../Common/Labels/InputLabel";
-import HorizontalListItem from "../../../Common/ListElements/HorizontalListItem";
-import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import SpellSchoolForm from "../../Skill/Form/SpellSchoolForm";
-import {post} from "../../../../util/Http";
-import {addSpellSchoolUrl} from "../../../../util/Parameters";
+import {post, put} from "../../../../util/Http";
+import {addSpellSchoolUrl, editSpellSchoolUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
+import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 
 export default class ComplexSkillCategoryView extends React.Component {
 
@@ -40,6 +38,28 @@ export default class ComplexSkillCategoryView extends React.Component {
                           spellSchoolFormMode: FormMode.CREATE
                       })}
                       values={this.state.spellSchools.map(spellSchool =>
+
+                              <ExpandableListItemWithBullets
+                                  img={spellSchool.img}
+                                  name={spellSchool.name}
+                                  description={spellSchool.description}
+                                  bullets={[
+                                      "Мин. количество выученных заклинаний для перехода на сл. уровень: " + spellSchool.minSpellCountToUpgrade,
+                                      "Цена покупки: " + priceCombinationListToString(spellSchool.purchasePriceCombinations)
+                                  ]}
+
+                                  onEditClicked={() => this.setState({
+                                      spellSchoolForm: spellSchool,
+                                      spellSchoolFormMode: FormMode.EDIT,
+                                      spellSchoolFormVisible: true
+                                  })}
+                                  onDetailsClicked={() => alert("go!")}
+
+                                  alwaysExpand={true}
+                                  key={spellSchool.id}
+                              />
+                          /*
+
                           <ExpandableListItem
                               img={spellSchool.img}
                               name={spellSchool.name}
@@ -51,6 +71,7 @@ export default class ComplexSkillCategoryView extends React.Component {
                                   <List title={"Круги заклинаний:"}
                                         noItemsText={"Нет кругов заклинаний"}
                                         values={spellSchool.schoolLvls.map(schoolLvl =>
+
                                             <ExpandableListItem
                                                 name={"Уровень: " + schoolLvl.lvl}
                                                 alwaysExpand={true}
@@ -80,6 +101,8 @@ export default class ComplexSkillCategoryView extends React.Component {
                                   />
                               ]}
                           />
+
+                           */
                       )}
                 />
                 {
@@ -110,10 +133,12 @@ export default class ComplexSkillCategoryView extends React.Component {
     }
 
     onEditSpellSchoolSubmit(form) {
-        console.log(form)
-        this.setState({
-            spellSchoolFormVisible: false
+        put(editSpellSchoolUrl(form.id), form, rs => {
+            this.setState(state => ({
+                spellSchoolFormVisible: false,
+                spellSchools: state.spellSchools.filter(v => v.id !== rs.id).concat(rs)
+            }))
+            Popup.info("Школа навыков обновлена.")
         })
     }
-
 }

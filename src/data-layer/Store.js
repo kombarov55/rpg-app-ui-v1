@@ -25,6 +25,9 @@ export const initialState = {
     activeSubnetwork: null,
     activeGame: null,
     activeOrganization: null,
+    activeSkillCategory: null,
+    activeSpellSchool: null,
+
     msgs: [],
     networks: [],
     subnetworks: [],

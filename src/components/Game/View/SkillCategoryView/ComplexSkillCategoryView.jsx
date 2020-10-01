@@ -8,6 +8,7 @@ import {addSpellSchoolUrl, editSpellSchoolUrl} from "../../../../util/Parameters
 import Popup from "../../../../util/Popup";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
+import {spellSchoolView} from "../../../../Views";
 
 export default class ComplexSkillCategoryView extends React.Component {
 
@@ -53,7 +54,10 @@ export default class ComplexSkillCategoryView extends React.Component {
                                       spellSchoolFormMode: FormMode.EDIT,
                                       spellSchoolFormVisible: true
                                   })}
-                                  onDetailsClicked={() => alert("go!")}
+                                  onDetailsClicked={() => {
+                                      this.props.changeView(spellSchoolView)
+
+                                  }}
 
                                   alwaysExpand={true}
                                   key={spellSchool.id}

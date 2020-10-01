@@ -39,6 +39,7 @@ import SkillCategoryView from "./components/Game/View/SkillCategoryView/SkillCat
 import SkillFormView from "./components/Game/View/SkillCategoryView/SkillFormView";
 import OrganizationDetailsView from "./components/Game/Organization/View/OrganizationDetailsView";
 import TestView from "./components/TestView";
+import SpellSchoolView from "./components/Game/Skill/View/SpellSchoolView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -73,6 +74,7 @@ export const gameEditView = {component: <GameEditView/>, label: "Редакти�
 
 export const skillCategoryFormView = {component: <SkillCategoryForm/>, label: "Создание категории навыка"}
 export const skillCategoryView = {component: <SkillCategoryView/>, label: "Категория навыка"}
+export const spellSchoolView = {component: <SpellSchoolView/>, label: "Школа навыков"}
 
 export const questionnaireRulesView = {component: <QuestionnaireRulesView/>, label: "Правила игры"}
 export const questionnaireTemplateCreationView = {component: <QuestionnaireTemplateCreationView/>, label: "Создание анкеты"}

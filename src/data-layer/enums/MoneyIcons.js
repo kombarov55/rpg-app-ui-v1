@@ -12,7 +12,7 @@ export default {
         "copper.jpg",
         "dollar.png",
         "dual-dollar.png",
-        "gold.png",``
+        "gold.png",
         "silver.jpeg"
     ].map(v => "MoneyIcons/" + v)
 }

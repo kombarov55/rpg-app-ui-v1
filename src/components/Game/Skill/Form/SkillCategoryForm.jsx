@@ -7,6 +7,8 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import {InputSwitch} from "primereact/inputswitch";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import Popup from "../../../../util/Popup";
+import IconSelect from "../../../Common/Input/IconSelect";
+import SkillIcons from "../../../../data-layer/enums/SkillIcons";
 
 export default class SkillCategoryForm extends React.Component {
 
@@ -36,6 +38,11 @@ export default class SkillCategoryForm extends React.Component {
                 />
 
                 <InputLabel text={"Картинка:"}/>
+                <IconSelect  imgList={SkillIcons.values()}
+                             onSelected={img => this.setState({img: img})}
+                />
+
+                <InputLabel text={"Или загрузите:"}/>
                 <input type={"file"}
                        name={"img"}
                        onChange={e => upload(

@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import getOrDefault from "../../../util/getOrDefault";
 
 export default class IconSelect extends Component {
 

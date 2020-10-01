@@ -1,6 +1,6 @@
 import {createStore} from "redux";
 import {rootReducer} from "./Reducers";
-import {announcementView, testView} from "../Views";
+import {announcementView} from "../Views";
 import DefaultFormValues from "./DefaultFormValues";
 import Stubs from "../stubs/Stubs";
 
@@ -8,7 +8,7 @@ export const initialState = {
     sidebarVisible: false,
     growl: null,
 
-    currentView: testView,
+    currentView: announcementView,
     changeViewParams: {},
 
     userAccount: {

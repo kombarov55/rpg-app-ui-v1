@@ -35,7 +35,6 @@ import SpellCreationView from "./components/Game/View/SkillCategoryView/SpellCre
 import CurrencyCreationView from "./components/Game/View/CurrencyFormView";
 import ShopView from "./components/Game/Merchandise/View/ShopView";
 import MerchandiseView from "./components/Game/Merchandise/View/MerchandiseView";
-import SkillCategoryEditView from "./components/Game/View/SkillCategoryView/SkillCategoryEditView";
 import SkillCategoryView from "./components/Game/View/SkillCategoryView/SkillCategoryView";
 import SkillFormView from "./components/Game/View/SkillCategoryView/SkillFormView";
 import OrganizationDetailsView from "./components/Game/Organization/View/OrganizationDetailsView";
@@ -73,7 +72,6 @@ export const gameCreationView = {component: <GameCreationView/>, label: "Соз�
 export const gameEditView = {component: <GameEditView/>, label: "Редактирование игры"}
 
 export const skillCategoryFormView = {component: <SkillCategoryForm/>, label: "Создание категории навыка"}
-export const skillCategoryEditView = {component: <SkillCategoryEditView/>, label: "Редактироание категории навыка"}
 export const skillCategoryView = {component: <SkillCategoryView/>, label: "Категория навыка"}
 
 export const questionnaireRulesView = {component: <QuestionnaireRulesView/>, label: "Правила игры"}

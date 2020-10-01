@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {changeView} from "../../../../data-layer/ActionCreators";
-import {gameView, skillCategoryEditView} from "../../../../Views";
+import {gameView} from "../../../../Views";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import BasicSkillCategoryView from "./BasicSkillCategoryView";
 import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
@@ -24,10 +24,7 @@ export default connect(
         return {
             ...stateProps,
             ...ownProps,
-            back: () => dispatch(changeView(gameView)),
-            toEditView: () => dispatch(changeView(skillCategoryEditView, {
-                skillCategory: stateProps.skillCategory
-            }))
+            back: () => dispatch(changeView(gameView))
         }
     }
 )
@@ -62,7 +59,6 @@ export default connect(
                         updateSkill={skill => this.updateSkill(skill)}
                     />
                 }
-                <Btn text={"Редактировать"} onClick={() => this.props.toEditView()}/>
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )

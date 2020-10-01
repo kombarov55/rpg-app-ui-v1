@@ -7,6 +7,9 @@ import HorizontalListItem from "../../../Common/ListElements/HorizontalListItem"
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import SpellSchoolForm from "../../Skill/Form/SpellSchoolForm";
+import {post} from "../../../../util/Http";
+import {addSpellSchoolUrl} from "../../../../util/Parameters";
+import Popup from "../../../../util/Popup";
 
 export default class ComplexSkillCategoryView extends React.Component {
 
@@ -97,10 +100,13 @@ export default class ComplexSkillCategoryView extends React.Component {
     }
 
     onAddSpellSchoolSubmit(form) {
-        console.log(form)
-        this.setState({
-            spellSchoolFormVisible: false
+        post(addSpellSchoolUrl(this.props.skillCategoryId), form, rs => {
+            this.setState(state => ({
+                spellSchoolFormVisible: false,
+                spellSchools: state.spellSchools.concat(rs)
+            }))
         })
+        Popup.info("Школа навыков добавлена.")
     }
 
     onEditSpellSchoolSubmit(form) {

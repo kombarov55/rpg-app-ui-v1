@@ -48,6 +48,7 @@ export default connect(
                 />
                 {this.state.complex ?
                     <ComplexSkillCategoryView
+                        skillCategoryId={this.state.id}
                         currencies={this.props.currencies}
                         spellSchools={this.state.spellSchools}
                     /> :

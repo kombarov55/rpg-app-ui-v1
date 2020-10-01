@@ -97,16 +97,16 @@ export default connect(
                           spellPurchaseFormVisible: true,
                           spellPurchaseFormMode: FormMode.CREATE
                       })}
-                      values={this.state.upgradePriceCombinations.map(upgradePriceCombination =>
+                      values={this.state.spellPurchaseOptions.map(spellPurchaseOption =>
                           <ListItem
-                              text={upgradePriceCombination.spellCount + " заклинаний изучено: " + priceCombinationListToString(upgradePriceCombination.priceCombinations)}
+                              text={spellPurchaseOption.spellCount + " заклинаний изучено: " + priceCombinationListToString(spellPurchaseOption.priceCombinations)}
                               onEdit={() => this.setState({
                                   spellPurchaseFormVisible: true,
                                   spellPurchaseFormMode: FormMode.EDIT,
-                                  spellPurchaseForm: upgradePriceCombination
+                                  spellPurchaseForm: spellPurchaseOption
                               })}
 
-                              key={upgradePriceCombination.id}
+                              key={spellPurchaseOption.id}
                           />
                       )}
                 />
@@ -116,7 +116,7 @@ export default connect(
                     (
                         this.state.spellPurchaseFormMode == FormMode.CREATE ?
                             <SpellPurchaseForm
-                                spellCount={this.state.upgradePriceCombinations.length + 1}
+                                spellCount={this.state.spellPurchaseOptions.length + 1}
                                 currencyNames={this.props.currencyNames}
                                 onSubmit={form => this.onAddSpellPurchaseSubmit(form)}
                             /> :
@@ -159,7 +159,7 @@ export default connect(
         console.log(form)
         this.setState(state => ({
             spellPurchaseFormVisible: false,
-            upgradePriceCombinations: state.upgradePriceCombinations.concat(form)
+            spellPurchaseOptions: state.spellPurchaseOptions.concat(form)
         }))
         Popup.info("Стоимость заклинания добавлена.")
     }
@@ -168,7 +168,7 @@ export default connect(
         console.log(form)
         this.setState(state => ({
             spellPurchaseFormVisible: false,
-            upgradePriceCombinations: state.upgradePriceCombinations.filter(v => v.id !== form.id).concat(form)
+            spellPurchaseOptions: state.spellPurchaseOptions.filter(v => v.id !== form.id).concat(form)
         }))
         Popup.info("Стоимость заклинания обновлена.")
     }

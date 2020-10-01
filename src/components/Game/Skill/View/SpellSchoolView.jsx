@@ -65,7 +65,7 @@ export default connect(
                               description={"Стоимость покупки заклинаний:"}
 
                               bullets={[
-                                  ...schoolLvl.upgradePriceCombinations.map(spellSchoolUpgradePriceCombination =>
+                                  ...schoolLvl.spellPurchaseOptions.map(spellSchoolUpgradePriceCombination =>
                                       spellSchoolUpgradePriceCombination.spellCount + " навыков изучено: " + priceCombinationListToString(spellSchoolUpgradePriceCombination.priceCombinations)),
                                   "--------------",
                                   schoolLvl.spells.length + " навык(а)(ов)"

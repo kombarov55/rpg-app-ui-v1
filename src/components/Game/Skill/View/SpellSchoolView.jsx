@@ -9,7 +9,9 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import Stubs from "../../../../stubs/Stubs";
+import {post} from "../../../../util/Http";
+import {addSchoolLvlToSpellSchoolUrl} from "../../../../util/Parameters";
+import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
@@ -35,7 +37,7 @@ export default connect(
     constructor(props) {
         super(props);
 
-        this.state = Object.assign({}, props.spellSchool, {})
+        this.state = props.spellSchool
     }
 
     render() {
@@ -55,7 +57,9 @@ export default connect(
 
                 <List title={"Круги:"}
                       noItemsText={"Пусто.."}
-                      values={Stubs.schoolLvlList.map(schoolLvl =>
+                      isAddButtonVisible={true}
+                      onAddClicked={() => this.onAddSchoolLvlClicked()}
+                      values={this.state.schoolLvls.map(schoolLvl =>
                           <ExpandableListItemWithBullets
                               name={schoolLvl.lvl + " Уровень:"}
                               description={"Стоимость покупки заклинаний:"}
@@ -82,5 +86,12 @@ export default connect(
 
             </div>
         )
+    }
+
+    onAddSchoolLvlClicked() {
+        post(addSchoolLvlToSpellSchoolUrl(this.state.id), {}, rs => {
+            this.setState(state => ({schoolLvls: state.schoolLvls.concat(rs)}))
+            Popup.info("Круг заклинаний добавлен.")
+        })
     }
 })

@@ -99,3 +99,5 @@ export const deleteSkillUpgradeUrl = (skillId, id) => rootUrl + "/skill/" + skil
 
 export const addSpellSchoolUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/spellSchool"
 export const editSpellSchoolUrl = id => rootUrl + "/spellSchool/" + id
+
+export const addSchoolLvlToSpellSchoolUrl = spellSchoolId => rootUrl + "/spellSchool/" + spellSchoolId + "/schoolLvl"

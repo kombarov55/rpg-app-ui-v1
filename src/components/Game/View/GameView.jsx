@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {
     changeView,
     setActiveGame,
-    setActiveOrganization,
+    setActiveOrganization, setActiveSkillCategory,
     setAvailableMerchandise,
     setGames,
     setOrganizations,
@@ -52,8 +52,6 @@ import OrganizationForm from "../Organization/Form/OrganizationForm";
 import ItemForSaleForm from "../Merchandise/Form/ItemForSaleForm";
 import FormatDate from "../../../util/FormatDate";
 import SkillCategoryForm from "../Skill/Form/SkillCategoryForm";
-import IconSelect from "../../Common/Input/IconSelect";
-import MoneyIcons from "../../../data-layer/enums/MoneyIcons";
 
 function mapStateToProps(state, props) {
     return {
@@ -76,7 +74,8 @@ function mapDispatchToProps(dispatch) {
         setActiveGame: game => dispatch(setActiveGame(game)),
         setOrganizations: organizations => dispatch(setOrganizations(organizations)),
         setActiveOrganization: organization => dispatch(setActiveOrganization(organization)),
-        setAvailableMerchandise: xs => dispatch(setAvailableMerchandise(xs))
+        setAvailableMerchandise: xs => dispatch(setAvailableMerchandise(xs)),
+        setActiveSkillCategory: x => dispatch(setActiveSkillCategory(x))
     }
 }
 
@@ -194,9 +193,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onSkillCategoryDetailsClicked(skillCategory) {
-        props.changeView(skillCategoryView, {
-            skillCategory: skillCategory
-        })
+        props.setActiveSkillCategory(skillCategory)
+        props.changeView(skillCategoryView)
     }
 
     function onAddItemForSaleClicked() {

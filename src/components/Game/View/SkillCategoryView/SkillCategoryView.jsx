@@ -2,8 +2,8 @@ import React from "react";
 import {connect} from "react-redux"
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
-import {changeView} from "../../../../data-layer/ActionCreators";
-import {gameView} from "../../../../Views";
+import {changeView, setActiveSpellSchool} from "../../../../data-layer/ActionCreators";
+import {gameView, spellSchoolView} from "../../../../Views";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import BasicSkillCategoryView from "./BasicSkillCategoryView";
 import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
@@ -13,8 +13,8 @@ import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
+        skillCategory: state.activeSkillCategory,
         gameId: state.activeGame.id,
-        skillCategory: state.changeViewParams.skillCategory,
         currencies: state.activeGame.currencies
     }),
     null,
@@ -24,6 +24,11 @@ export default connect(
         return {
             ...stateProps,
             ...ownProps,
+
+            toSpellSchoolView: (spellSchool) => {
+                dispatch(setActiveSpellSchool(spellSchool))
+                dispatch(changeView(spellSchoolView))
+            },
             back: () => dispatch(changeView(gameView))
         }
     }
@@ -48,6 +53,7 @@ export default connect(
                         skillCategoryId={this.state.id}
                         currencies={this.props.currencies}
                         spellSchools={this.state.spellSchools}
+                        toSpellSchoolView={spellSchool => this.props.toSpellSchoolView(spellSchool)}
                     /> :
                     <BasicSkillCategoryView
                         gameId={this.props.gameId}

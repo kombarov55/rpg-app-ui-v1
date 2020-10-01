@@ -45,7 +45,11 @@ import {
     APPEND_ELEMENT,
     UPDATE_SPELL_SCHOOL_FORM,
     SET_USER_ACCOUNTS,
-    SET_ORGANIZATIONS, SET_ACTIVE_ORGANIZATION, SET_AVAILABLE_MERCHANDISE, SET_AVAILABLE_ITEMS_FOR_SALE
+    SET_ORGANIZATIONS,
+    SET_ACTIVE_ORGANIZATION,
+    SET_AVAILABLE_MERCHANDISE,
+    SET_AVAILABLE_ITEMS_FOR_SALE,
+    SET_ACTIVE_SKILL_CATEGORY, SET_ACTIVE_SPELL_SCHOOL
 } from "./ActionTypes";
 import {initialState} from "./Store";
 import MergeLists from "../util/MergeLists";
@@ -323,6 +327,16 @@ export function rootReducer(state = initialState, action) {
         case SET_AVAILABLE_ITEMS_FOR_SALE:
             return Object.assign({}, state, {
                 availableItemsForSale: action.payload.itemsForSale
+            })
+
+        case SET_ACTIVE_SKILL_CATEGORY:
+            return Object.assign({}, state, {
+                activeSkillCategory: action.payload.skillCategory
+            })
+
+        case SET_ACTIVE_SPELL_SCHOOL:
+            return Object.assign({}, state, {
+                activeSpellSchool: action.payload.spellSchool
             })
 
         default:

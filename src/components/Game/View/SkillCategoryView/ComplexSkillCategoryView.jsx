@@ -21,7 +21,6 @@ export default class ComplexSkillCategoryView extends React.Component {
     }
 
     formInitialState = {
-
         spellSchoolFormVisible: false,
         spellSchoolForm: null,
         spellSchoolFormMode: FormMode.CREATE
@@ -55,8 +54,7 @@ export default class ComplexSkillCategoryView extends React.Component {
                                       spellSchoolFormVisible: true
                                   })}
                                   onDetailsClicked={() => {
-                                      this.props.changeView(spellSchoolView)
-
+                                      this.props.toSpellSchoolView(spellSchool)
                                   }}
 
                                   alwaysExpand={true}

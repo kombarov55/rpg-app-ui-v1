@@ -13,6 +13,8 @@ import priceCombinationListToString from "../../../../util/priceCombinationListT
 import FormMode from "../../../../data-layer/enums/FormMode";
 import SpellForm from "../Form/SpellForm";
 import Popup from "../../../../util/Popup";
+import {post, put} from "../../../../util/Http";
+import {addSpellUrl, editSpellUrl} from "../../../../util/Parameters";
 
 export default connect(
     state => ({
@@ -57,7 +59,7 @@ export default connect(
                           spellFormVisible: true,
                           spellFormMode: FormMode.CREATE
                       })}
-                      values={Stubs.schoolLvlList[0].spells.map(spell =>
+                      values={this.state.spells.map(spell =>
                           <ExpandableListItemWithBullets
                               img={spell.img}
                               name={spell.name}
@@ -104,18 +106,23 @@ export default connect(
     }
 
     onAddSpellFormSubmit(form) {
-        console.log(form)
-        this.setState({
-            spellFormVisible: false
+        post(addSpellUrl(this.state.id), form, rs => {
+            this.setState(state => ({
+                spellFormVisible: false,
+                spells: state.spells.concat(rs)
+            }))
+            Popup.info("Заклинание сохранено.")
         })
-        Popup.info("Заклинание сохранено.")
+
     }
 
     onEditSpellFormSubmit(form) {
-        console.log(form)
-        this.setState({
-            spellFormVisible: false
+        put(editSpellUrl(form.id), form, rs => {
+            this.setState(state => ({
+                spellFormVisible: false,
+                spells: state.spells.filter(v => v.id !== rs.id).concat(rs)
+            }))
+            Popup.info("Заклинание обновлено.")
         })
-        Popup.info("Заклинание обновлено.")
     }
 })

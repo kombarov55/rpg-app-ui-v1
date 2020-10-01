@@ -101,3 +101,6 @@ export const addSpellSchoolUrl = skillCategoryId => rootUrl + "/skillCategory/" 
 export const editSpellSchoolUrl = id => rootUrl + "/spellSchool/" + id
 
 export const addSchoolLvlToSpellSchoolUrl = spellSchoolId => rootUrl + "/spellSchool/" + spellSchoolId + "/schoolLvl"
+
+export const addSpellUrl = schoolLvlId => rootUrl + "/schoolLvl/" + schoolLvlId + "/spell"
+export const editSpellUrl = spellId => rootUrl + "/spell/" + spellId

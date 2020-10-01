@@ -13,18 +13,16 @@ export default class ComplexSkillCategoryView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = this.formInitialState
+        this.state = Object.assign({}, this.formInitialState, {
+            spellSchools: props.spellSchools
+        })
     }
 
     formInitialState = {
+
         spellSchoolFormVisible: false,
         spellSchoolForm: null,
         spellSchoolFormMode: FormMode.CREATE
-    }
-
-    componentDidMount() {
-        console.log("ComplexSkillCategoryView: spell schools:")
-        console.log(this.props.spellSchools)
     }
 
     render() {
@@ -38,7 +36,7 @@ export default class ComplexSkillCategoryView extends React.Component {
                           spellSchoolFormVisible: true,
                           spellSchoolFormMode: FormMode.CREATE
                       })}
-                      values={this.props.spellSchools.map(spellSchool =>
+                      values={this.state.spellSchools.map(spellSchool =>
                           <ExpandableListItem
                               img={spellSchool.img}
                               name={spellSchool.name}

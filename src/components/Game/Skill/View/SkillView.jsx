@@ -8,8 +8,8 @@ import ExpandableListItemWithBullets from "../../../Common/ListElements/Expandab
 import {changeView} from "../../../../data-layer/ActionCreators";
 import {skillCategoryView} from "../../../../Views";
 import Btn from "../../../Common/Buttons/Btn";
-import {httpDelete} from "../../../../util/Http";
-import {deleteSkillUpgrade} from "../../../../util/Parameters";
+import {httpDelete, post, put} from "../../../../util/Http";
+import {addSkillUpgradeUrl, deleteSkillUpgrade, editSkillUpgradeUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import IsLastElement from "../../../../util/IsLastElement";
 import FormMode from "../../../../data-layer/enums/FormMode";
@@ -119,22 +119,22 @@ export default connect(
     }
 
     onAddSkillUpgradeSubmit(form) {
-        console.log(form)
-
-        this.setState({
-            upgradeFormVisible: false,
-            upgrades: this.state.upgrades.concat(form)
+        post(addSkillUpgradeUrl(this.state.id), form, rs => {
+            this.setState({
+                upgradeFormVisible: false,
+                upgrades: this.state.upgrades.concat(rs)
+            })
+            Popup.info("Прокачка навыка создана.")
         })
-        Popup.info("Прокачка навыка создана.")
     }
 
     onEditSkillUpgradeSubmit(form) {
-        console.log(form)
-
-        this.setState({
-            upgradeFormVisible: false,
-            upgrades: this.state.upgrades.filter(v => v.id !== form.id).concat(form)
+        put(editSkillUpgradeUrl(form.id), form, rs => {
+            this.setState({
+                upgradeFormVisible: false,
+                upgrades: this.state.upgrades.filter(v => v.id !== rs.id).concat(rs)
+            })
+            Popup.info("Прокачка навыка изменена.")
         })
-        Popup.info("Прокачка навыка удалена .")
     }
 })

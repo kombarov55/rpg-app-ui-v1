@@ -94,8 +94,6 @@ export const addOwnedMerchandiseUrl = (organizationId, merchandiseId, amount) =>
 export const addItemForSaleForGameUrl = gameId => rootUrl + "/game/" + gameId + "/itemForSale"
 export const removeItemForSaleForGameUrl = (gameId, itemForSaleId) => rootUrl + "/game/" + gameId + "/itemForSale/" + itemForSaleId
 
-export const deleteSkillUpgrade = id => rootUrl + "/skillUpgrade/" + id
-
 export const addSpellSchoolUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/spellSchool"
 export const editSpellSchoolUrl = id => rootUrl + "/spellSchool/" + id
 
@@ -103,6 +101,11 @@ export const addSchoolLvlToSpellSchoolUrl = spellSchoolId => rootUrl + "/spellSc
 
 export const addSpellUrl = schoolLvlId => rootUrl + "/schoolLvl/" + schoolLvlId + "/spell"
 export const editSpellUrl = spellId => rootUrl + "/spell/" + spellId
+
 export const addSpellPurchaseOptionUrl = schoolLvl => rootUrl + "/schoolLvl/" + schoolLvl + "/spellPurchaseOption"
 export const editSpellPurchaseOption = spellPurchaseOptionId => rootUrl + "/spellPurchaseOption/" + spellPurchaseOptionId
 export const deleteSpellPurchaseOption = spellPurchaseOptionId => rootUrl + "/spellPurchaseOption/" + spellPurchaseOptionId
+
+export const addSkillUpgradeUrl = skillId => rootUrl + "/skill/" + skillId + "/skillUpgrade"
+export const editSkillUpgradeUrl = skillUpgradeId => rootUrl + "/skillUpgrade/" + skillUpgradeId
+export const deleteSkillUpgrade = skillUpgradeId => rootUrl + "/skillUpgrade/" + skillUpgradeId

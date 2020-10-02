@@ -1,17 +1,10 @@
 import React from "react";
 import List from "../../../Common/Lists/List";
-import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
-import InputLabel from "../../../Common/Labels/InputLabel";
-import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import SkillForm from "../Form/SkillForm";
-import Icon from "../../../Common/Input/Icon";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import SkillUpgradeEditForm from "../Form/SkillUpgradeEditForm";
-import {httpDelete, put} from "../../../../util/Http";
-import {deleteSkillUpgradeUrl, updateSkillUpgradeUrl} from "../../../../util/Parameters";
+import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import Popup from "../../../../util/Popup";
-import IsLastElement from "../../../../util/IsLastElement";
 
 export default class BasicSkillCategoryComponent extends React.Component {
 
@@ -20,11 +13,8 @@ export default class BasicSkillCategoryComponent extends React.Component {
         this.state = {
             skillFormVisible: false,
             skillFormMode: FormMode.CREATE,
-            skillForm: {},
-
-            skillId: null,
-            skillUpgradeFormVisible: false,
-            skillUpgradeForm: null
+            skillForm: null,
+            skills: props.skills
         }
     }
 
@@ -33,120 +23,69 @@ export default class BasicSkillCategoryComponent extends React.Component {
             <div>
                 <List title={"Навыки:"}
                       noItemsText={"Нет навыков"}
-                      values={this.props.skills.map(skill =>
-                          <ExpandableListItem
+                      isAddButtonVisible={!this.state.skillFormVisible}
+                      onAddClicked={() => this.setState({
+                          skillFormVisible: true,
+                          skillFormMode: FormMode.CREATE
+                      })}
+                      values={this.state.skills.map(skill =>
+                          <ExpandableListItemWithBullets
                               img={skill.img}
                               name={skill.name}
-                              upperButtons={[
-                                  this.props.onSkillEdited && <Icon className={"pi pi-pencil"} onClick={() => this.onEditSkillClicked(skill)}/>,
-                                  this.props.onSkillDeleted && <Icon className={"pi pi-times"} onClick={() => this.props.onSkillDeleted(skill)}/>
+                              description={skill.description}
+                              bullets={[
+                                  "Стоимость: " + priceCombinationListToString(skill.prices)
                               ]}
-                              alwaysExpand={true}
-                              expandableElements={[
-                                  <div>{skill.description}</div>,
-                                  skill.prices &&
-                                  <InputLabel text={"Цена: " + priceCombinationListToString(skill.prices)}/>,
-                                  skill.upgradable &&
-                                      <List title={"Повышения:"}
-                                            values={skill.upgrades.map(skillUpgrade =>
-                                                <ExpandableListItemWithBullets
-                                                    name={"Уровень: " + skillUpgrade.lvlNum}
-                                                    description={skillUpgrade.description}
-                                                    onEditClicked={() => this.setState({
-                                                        skillUpgradeFormVisible: true,
-                                                        skillUpgradeForm: skillUpgrade,
-                                                        skillId: skill.id
-                                                    })}
-                                                    onDeleteClicked={() => this.onSkillUpgradeDeleted(skill.id, skillUpgrade.id)}
-                                                    isDeleteVisible={IsLastElement(skillUpgrade, skill.upgrades)}
-                                                    bullets={skillUpgrade.prices.map(listOfAmount =>
-                                                        listOfAmount.map(amount => amount.name + ": " + amount.amount).join(" + ")
-                                                    )}
 
-                                                    alwaysExpand={true}
-                                                    key={skillUpgrade.id}
-                                                />
-                                            )}
-                                      />
-                              ]}
+                              onEditClicked={() => this.setState({
+                                  skillFormVisible: true,
+                                  skillForm: skill,
+                                  skillFormMode: FormMode.EDIT
+                              })}
+
+                              alwaysExpand={true}
+                              key={skill.id}
                           />
                       )}
-                      isAddButtonVisible={!this.state.skillFormVisible}
-                      onAddClicked={() => this.toggleSkillForm()}
                 />
-                {
-                    this.state.skillUpgradeFormVisible &&
-                        <SkillUpgradeEditForm
-                            currencyNames={this.props.currencies.map(v => v.name)}
-                            initialState={this.state.skillUpgradeForm}
-                            onSubmit={form => this.onEditSkillUpgradeSubmit(form)}
-                        />
-                }
 
-                {this.state.skillFormVisible &&
-                <SkillForm currencies={this.props.currencies}
-                           initialState={this.state.skillForm}
-                           onSubmit={form => this.onSkillSubmitted(form)}/>
+                {
+                    this.state.skillFormVisible && (
+                        this.state.skillFormMode == FormMode.CREATE ?
+                            <SkillForm formMode={FormMode.CREATE}
+                                       currencyNames={this.props.currencies.map(v => v.name)}
+                                       onSubmit={form => this.onAddSkillSubmit(form)}
+                            /> :
+                            <SkillForm formMode={FormMode.EDIT}
+                                       initialState={this.state.skillForm}
+                                       currencyNames={this.props.currencies.map(v => v.name)}
+                                       onSubmit={form => this.onEditSkillSubmit(form)}
+                            />
+                    )
+
                 }
             </div>
         )
     }
 
-    onAddSkillClicked() {
-        this.toggleSkillForm()
+    onAddSkillSubmit(form) {
+        console.log(form)
+
         this.setState({
-            skillFormMode: FormMode.CREATE,
-            skillForm: {}
+            skillFormVisible: false,
+            skills: this.state.skills.concat(form)
         })
+        Popup.info("Навык сохранён")
     }
 
-    onEditSkillClicked(skill) {
-        this.toggleSkillForm()
+
+    onEditSkillSubmit(form) {
+        console.log(form)
+
         this.setState({
-            skillFormMode: FormMode.EDIT,
-            skillForm: skill
+            skillFormVisible: false,
+            skills: this.state.skills.filter(v => v.id !== form.id).concat(form)
         })
-    }
-
-    onSkillSubmitted(form) {
-        this.toggleSkillForm()
-        console.log("basicSkillCategory#onSkillSubmitted: ")
-        console.log({
-            skillFormMode: this.state.skillFormMode,
-            form: form
-        })
-
-        switch (this.state.skillFormMode) {
-            case FormMode.CREATE:
-                this.props.onSkillAdded(form)
-                break;
-            case FormMode.EDIT:
-                this.props.onSkillEdited(form)
-                break;
-        }
-    }
-
-    toggleSkillForm() {
-        this.setState(state => ({
-            skillFormVisible: !state.skillFormVisible
-        }))
-    }
-
-    onSkillUpgradeDeleted(skillId, skillUpgradeId) {
-        httpDelete(deleteSkillUpgradeUrl(skillId, skillUpgradeId), rs => {
-            this.props.updateSkill(rs)
-            Popup.info("Повышение навыка удалено.")
-        })
-    }
-
-    onEditSkillUpgradeSubmit(form) {
-        put(updateSkillUpgradeUrl(this.props.gameId, this.state.skillId, form.id), form, rs => {
-            this.props.updateSkill(rs)
-            Popup.info("Информация о повышении уровня изменена.")
-            this.setState({
-                skillUpgradeFormVisible: false
-            })
-        })
-
+        Popup.info("Навык обновлен")
     }
 }

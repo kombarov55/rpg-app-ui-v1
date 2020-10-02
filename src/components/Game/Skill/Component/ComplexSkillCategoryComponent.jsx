@@ -13,15 +13,12 @@ export default class ComplexSkillCategoryComponent extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = Object.assign({}, this.formInitialState, {
+        this.state = {
+            spellSchoolFormVisible: false,
+            spellSchoolForm: null,
+            spellSchoolFormMode: FormMode.CREATE,
             spellSchools: props.spellSchools
-        })
-    }
-
-    formInitialState = {
-        spellSchoolFormVisible: false,
-        spellSchoolForm: null,
-        spellSchoolFormMode: FormMode.CREATE
+        }
     }
 
     render() {
@@ -57,51 +54,6 @@ export default class ComplexSkillCategoryComponent extends React.Component {
                                   alwaysExpand={true}
                                   key={spellSchool.id}
                               />
-                          /*
-
-                          <ExpandableListItem
-                              img={spellSchool.img}
-                              name={spellSchool.name}
-                              alwaysExpand={true}
-                              expandableElements={[
-                                  <div>{spellSchool.description}</div>,
-                                  <InputLabel
-                                      text={"Минимальное количество заклинаний для перехода на следующий уровень: " + spellSchool.minSpellCountToUpgrade}/>,
-                                  <List title={"Круги заклинаний:"}
-                                        noItemsText={"Нет кругов заклинаний"}
-                                        values={spellSchool.schoolLvls.map(schoolLvl =>
-
-                                            <ExpandableListItem
-                                                name={"Уровень: " + schoolLvl.lvl}
-                                                alwaysExpand={true}
-                                                expandableElements={[
-                                                    <List title={"Цены заклинаний:"}
-                                                          noItemsText={"Бесплатно!"}
-                                                          values={schoolLvl.upgradePriceCombinations.map(v =>
-                                                              <div>{v.spellCount} заклинаний
-                                                                  изучено: {priceCombinationListToString(v.priceCombinations)}</div>
-                                                          )}
-                                                    />,
-                                                    // <InputLabel
-                                                    //     text={"Цена перехода на следующий уровень: " + priceCombinationListToString(schoolLvl.upgradePriceCombinations.priceCombinations)}/>,
-                                                    <List title={"Заклинания:"}
-                                                          noItemsText={"Нет заклинаний"}
-                                                          values={schoolLvl.spells.map(spell =>
-                                                              <HorizontalListItem
-                                                                  name={spell.name}
-                                                                  imgSrc={spell.imgSrc}
-                                                                  description={spell.description}
-                                                              />
-                                                          )}
-                                                    />
-                                                ]}
-                                            />
-                                        )}
-                                  />
-                              ]}
-                          />
-
-                           */
                       )}
                 />
                 {

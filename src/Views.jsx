@@ -26,12 +26,10 @@ import AdminPageView from "./components/Admin/View/AdminPageView";
 import QuestionnaireTemplateEditView
     from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateEditView";
 import ConversionView from "./components/Game/Self/View/ConversionView";
-import SpellCreationView from "./components/Game/SkillCategory/SpellCreationView";
 import CurrencyCreationView from "./components/Game/Self/View/CurrencyFormView";
 import ShopView from "./components/Game/Merchandise/View/ShopView";
 import MerchandiseView from "./components/Game/Merchandise/View/MerchandiseView";
-import SkillCategoryView from "./components/Game/SkillCategory/SkillCategoryView";
-import SkillFormView from "./components/Game/SkillCategory/SkillFormView";
+import SkillCategoryView from "./components/Game/Skill/View/SkillCategoryView";
 import OrganizationDetailsView from "./components/Game/Organization/View/OrganizationDetailsView";
 import TestView from "./components/TestView";
 import SpellSchoolView from "./components/Game/Skill/View/SpellSchoolView";
@@ -77,11 +75,7 @@ export const questionnaireTemplateCreationView = {component: <QuestionnaireTempl
 export const questionnaireTemplateEditView = {component: <QuestionnaireTemplateEditView/>, label: "Редактирование шаблона анкеты"}
 export const skillSelectionView = {component: <SkillSelectionView/>, label: "Выбор навыка"}
 
-export const skillFormView = {component: <SkillFormView/>, label: "Навык"}
-
 export const conversionView = {component: <ConversionView/>, label: "Обмен валют"}
-
-export const spellCreationView = {component: <SpellCreationView/>, label: "Создание заклинания"}
 
 export const currencyFormView = {component: <CurrencyCreationView/>, label: "Валюта"}
 

@@ -1,14 +1,14 @@
 import React from "react";
-import List from "../../Common/Lists/List";
-import FormMode from "../../../data-layer/enums/FormMode";
-import SpellSchoolForm from "../Skill/Form/SpellSchoolForm";
-import {post, put} from "../../../util/Http";
-import {addSpellSchoolUrl, editSpellSchoolUrl} from "../../../util/Parameters";
-import Popup from "../../../util/Popup";
-import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
-import priceCombinationListToString from "../../../util/priceCombinationListToString";
+import List from "../../../Common/Lists/List";
+import FormMode from "../../../../data-layer/enums/FormMode";
+import SpellSchoolForm from "../Form/SpellSchoolForm";
+import {post, put} from "../../../../util/Http";
+import {addSpellSchoolUrl, editSpellSchoolUrl} from "../../../../util/Parameters";
+import Popup from "../../../../util/Popup";
+import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 
-export default class ComplexSkillCategoryView extends React.Component {
+export default class ComplexSkillCategoryComponent extends React.Component {
 
     constructor(props) {
         super(props);

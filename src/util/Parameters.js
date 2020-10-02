@@ -94,8 +94,7 @@ export const addOwnedMerchandiseUrl = (organizationId, merchandiseId, amount) =>
 export const addItemForSaleForGameUrl = gameId => rootUrl + "/game/" + gameId + "/itemForSale"
 export const removeItemForSaleForGameUrl = (gameId, itemForSaleId) => rootUrl + "/game/" + gameId + "/itemForSale/" + itemForSaleId
 
-export const updateSkillUpgradeUrl = (gameId, skillId, skillUpgradeId) => rootUrl + "/game/" + gameId + "/skill/" + skillId + "/upgrade/" + skillUpgradeId
-export const deleteSkillUpgradeUrl = (skillId, id) => rootUrl + "/skill/" + skillId + "/upgrade/" + id
+export const deleteSkillUpgrade = id => rootUrl + "/skillUpgrade/" + id
 
 export const addSpellSchoolUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/spellSchool"
 export const editSpellSchoolUrl = id => rootUrl + "/spellSchool/" + id

@@ -28,6 +28,7 @@ export const initialState = {
     activeSkillCategory: null,
     activeSpellSchool: null,
     activeSchoolLvl: null,
+    activeSkill: null,
 
     msgs: [],
     networks: [],

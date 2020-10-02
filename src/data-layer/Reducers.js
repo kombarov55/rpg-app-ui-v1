@@ -49,7 +49,7 @@ import {
     SET_ACTIVE_ORGANIZATION,
     SET_AVAILABLE_MERCHANDISE,
     SET_AVAILABLE_ITEMS_FOR_SALE,
-    SET_ACTIVE_SKILL_CATEGORY, SET_ACTIVE_SPELL_SCHOOL, SET_ACTIVE_SCHOOL_LVL
+    SET_ACTIVE_SKILL_CATEGORY, SET_ACTIVE_SPELL_SCHOOL, SET_ACTIVE_SCHOOL_LVL, SET_ACTIVE_SKILL
 } from "./ActionTypes";
 import {initialState} from "./Store";
 import MergeLists from "../util/MergeLists";
@@ -342,6 +342,11 @@ export function rootReducer(state = initialState, action) {
         case SET_ACTIVE_SCHOOL_LVL:
             return Object.assign({}, state, {
                 activeSchoolLvl: action.payload.schoolLvl
+            })
+
+        case SET_ACTIVE_SKILL:
+            return Object.assign({}, state, {
+                activeSkill: action.payload.skill
             })
 
         default:

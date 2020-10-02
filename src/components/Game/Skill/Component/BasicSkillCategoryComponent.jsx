@@ -44,6 +44,7 @@ export default class BasicSkillCategoryComponent extends React.Component {
                                   skillForm: skill,
                                   skillFormMode: FormMode.EDIT
                               })}
+                              onDetailsClicked={() => this.props.toSkillView(skill)}
 
                               alwaysExpand={true}
                               key={skill.id}

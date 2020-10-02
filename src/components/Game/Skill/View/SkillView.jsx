@@ -12,10 +12,14 @@ import {httpDelete} from "../../../../util/Http";
 import {deleteSkillUpgrade} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import IsLastElement from "../../../../util/IsLastElement";
+import FormMode from "../../../../data-layer/enums/FormMode";
+import SkillUpgradeForm from "../Form/SkillUpgradeForm";
 
 export default connect(
     state => ({
-        activeSkill: state.activeSkill
+        activeSkill: state.activeSkill,
+
+        currencyNames: state.activeGame.currencies.map(v => v.name)
     }),
     null,
     (stateProps, dispatchProps, ownProps) => {
@@ -32,7 +36,11 @@ export default connect(
 
     constructor(props) {
         super(props);
-        this.state = Object.assign({}, props.activeSkill, {})
+        this.state = Object.assign({}, props.activeSkill, {
+            upgradeFormVisible: false,
+            upgradeForm: null,
+            upgradeFormMode: FormMode.CREATE
+        })
     }
 
     render() {
@@ -50,26 +58,51 @@ export default connect(
                 <List title={"Стоимость покупки: "}
                       noItemsText={"Бесплатно!"}
                       values={this.state.prices.map(amounts =>
-                          <ListItem text={amounts.map(amount => amount.name + ": " + amount.amount)}/>
+                          <ListItem text={amounts.map(amount => amount.name + ": " + amount.amount).join(" + ")}/>
                       )}
                 />
 
                 <List title={"Прокачка:"}
                       noItemsText={"Отсутствует.."}
+                      isAddButtonVisible={!this.state.upgradeFormVisible}
+                      onAddClicked={() => this.setState({
+                          upgradeFormVisible: true,
+                          upgradeFormMode: FormMode.CREATE
+                      })}
                       values={this.state.upgrades.map(skillUpgrade =>
                           <ExpandableListItemWithBullets
                               name={skillUpgrade.lvlNum + " Уровень:"}
                               description={skillUpgrade.description}
-                              bullets={skillUpgrade.prices.map(amounts => amounts.map(amount => amount.name + ": " + amount.amount))}
+                              bullets={skillUpgrade.prices.map(amounts => amounts.map(amount => amount.name + ": " + amount.amount).join(" + "))}
 
                               isDeleteVisible={IsLastElement(skillUpgrade, this.state.upgrades)}
                               onDeleteClicked={() => this.deleteUpgrade(skillUpgrade)}
+                              onEditClicked={() => this.setState({
+                                  upgradeFormVisible: true,
+                                  upgradeFormMode: FormMode.EDIT,
+                                  upgradeForm: skillUpgrade
+                              })}
 
                               alwaysExpand={true}
                               key={skillUpgrade.id}
                           />
                       )}
                 />
+                {
+                    this.state.upgradeFormVisible && (
+                        this.state.upgradeFormMode == FormMode.CREATE ?
+                            <SkillUpgradeForm
+                                lvlNum={Math.max(...this.state.upgrades.map(v => v.lvlNum)) + 1}
+                                currencyNames={this.props.currencyNames}
+                                onSubmit={form => this.onAddSkillUpgradeSubmit(form)}
+                            /> :
+                            <SkillUpgradeForm
+                                initialState={this.state.upgradeForm}
+                                currencyNames={this.props.currencyNames}
+                                onSubmit={form => this.onEditSkillUpgradeSubmit(form)}
+                            />
+                    )
+                }
 
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
@@ -83,5 +116,25 @@ export default connect(
             }))
             Popup.info("Повышение навыка удалено.")
         })
+    }
+
+    onAddSkillUpgradeSubmit(form) {
+        console.log(form)
+
+        this.setState({
+            upgradeFormVisible: false,
+            upgrades: this.state.upgrades.concat(form)
+        })
+        Popup.info("Прокачка навыка создана.")
+    }
+
+    onEditSkillUpgradeSubmit(form) {
+        console.log(form)
+
+        this.setState({
+            upgradeFormVisible: false,
+            upgrades: this.state.upgrades.filter(v => v.id !== form.id).concat(form)
+        })
+        Popup.info("Прокачка навыка удалена .")
     }
 })

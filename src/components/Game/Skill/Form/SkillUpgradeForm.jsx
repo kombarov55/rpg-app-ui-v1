@@ -1,19 +1,22 @@
-import React, {useState} from "react";
+import React from "react";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import {InputTextarea} from "primereact/inputtextarea";
-import AddItemButton from "../../../Common/Buttons/AddItemButton";
 import List from "../../../Common/Lists/List";
-import ListItemSmall from "../../../Common/ListElements/SmallListItem";
-import Icon from "../../../Common/Input/Icon";
 import _ from "lodash"
 import IsNumeric from "../../../../util/IsNumeric";
 import PriceInput from "../../../Common/Input/PriceInput";
+import ListItem from "../../../Common/ListElements/ListItem";
+import Popup from "../../../../util/Popup";
+import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
+import SubmitButton from "../../../Common/Buttons/SubmitButton";
 
 export default class SkillUpgradeForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = this.initialState
+        this.state = props.initialState == null ?
+            Object.assign({}, this.initialState, {lvlNum: props.lvlNum}) :
+            props.initialState
     }
 
     initialState = {
@@ -25,39 +28,31 @@ export default class SkillUpgradeForm extends React.Component {
         return (
             <div style={style}>
                 <div>
+                    <FormTitleLabel text={"Прокачка навыка:"}/>
+
                     <InputLabel text={this.props.lvlNum + " Уровень:"}/>
+
                     <InputLabel text={"Описание:"}/>
                     <InputTextarea value={this.state.description}
                                    onChange={e => this.setState({description: e.target.value})}
                     />
-                    <InputLabel text={"Варианты повышения:"}/>
-                    <div>
-                        <List noItemsText={"Нет вариантов покупки"}
-                              values={
-                                  this.state.prices.map(listOfCurrencyNameToAmount =>
-                                      <ListItemSmall
-                                          left={listOfCurrencyNameToAmount
-                                              .map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount)
-                                              .join(" + ")
-                                          }
-                                          right={
-                                              <Icon
-                                                  className={"pi pi-times"}
-                                                  onClick={() => this.optionDeleted(listOfCurrencyNameToAmount)}
-                                              />
-                                          }
-                                      />
-                                  )
-                              }
-                        />
 
-                        <PriceInput
-                            currencies={this.props.currencies}
-                            onSubmit={list => this.optionAdded(list)}
-                        />
+                    <List title={"Варианты повышения:"}
+                          noItemsText={"Нет вариантов покупки"}
+                          values={this.state.prices.map(amounts =>
+                              <ListItem text={amounts.map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount).join(" + ")}
+                                        onDelete={() => this.setState(state => ({prices: state.prices.filter(savedAmounts => !_.isEqual(amounts, savedAmounts))}))}
+                              />
+                          )}
+                    />
 
-                    </div>
-                    <AddItemButton text={"Добавить"} onClick={() => this.onSubmit()}/>
+                    <PriceInput
+                        currencies={this.props.currencyNames}
+                        onSubmit={list => this.optionAdded(list)}
+                    />
+
+                    <SubmitButton text={"Сохранить"} onClick={() => this.onSubmit()}/>
+
                 </div>
             </div>
         )
@@ -77,18 +72,13 @@ export default class SkillUpgradeForm extends React.Component {
         }
     }
 
-    optionDeleted(paramList) {
-        this.setState(state => ({
-            prices: state.prices.filter(savedEntries => !_.isEqual(paramList, savedEntries))
-        }))
-    }
-
     onSubmit() {
-        if (this.state.prices.length === 0) return
+        if (this.state.description == "") {
+            Popup.info("Пожалуйста, введите описание.")
+            return
+        }
 
-        const data = Object.assign({}, this.state, {lvlNum: this.props.lvlNum})
-        this.props.onSubmit(data)
-        this.setState(this.initialState)
+        this.props.onSubmit(this.state)
     }
 }
 

@@ -9,6 +9,8 @@ import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import Popup from "../../../../util/Popup";
 import IconSelect from "../../../Common/Input/IconSelect";
 import SkillIcons from "../../../../data-layer/enums/SkillIcons";
+import Destination from "../../../../data-layer/enums/Destination";
+import {SelectButton} from "primereact/selectbutton";
 
 export default class SkillCategoryForm extends React.Component {
 
@@ -24,6 +26,7 @@ export default class SkillCategoryForm extends React.Component {
         img: "",
         description: "",
         complex: false,
+        destination: Destination.PLAYER,
     }
 
     render() {
@@ -66,6 +69,12 @@ export default class SkillCategoryForm extends React.Component {
                         <InputSwitch checked={this.state.complex}
                                      onChange={e => this.setState({complex: e.value})}
                         />
+
+                        <InputLabel text={"Для кого?"}/>
+                        <SelectButton options={Destination.values.map(v => ({label: v.value, value: v.name}))}
+                                      value={this.state.destination}
+                                      onChange={e => this.setState({destination: e.target.value})}
+                        />
                     </>
                 }
 
@@ -75,9 +84,10 @@ export default class SkillCategoryForm extends React.Component {
                                   console.log(this.state)
                                   if (
                                       this.state.name == "" ||
-                                      this.state.description == ""
+                                      this.state.description == "" ||
+                                      this.state.img == ""
                                   ) {
-                                      Popup.error("Заполните все поля: Название, Картинка, Описание.")
+                                      Popup.error("Заполните все поля: [Название, Картинка, Описание].")
                                       return
                                   }
 

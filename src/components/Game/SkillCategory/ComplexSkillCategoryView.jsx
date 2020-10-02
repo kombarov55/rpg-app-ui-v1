@@ -1,5 +1,4 @@
 import React from "react";
-import Label from "../../Common/Labels/Label";
 import List from "../../Common/Lists/List";
 import FormMode from "../../../data-layer/enums/FormMode";
 import SpellSchoolForm from "../Skill/Form/SpellSchoolForm";
@@ -28,7 +27,6 @@ export default class ComplexSkillCategoryView extends React.Component {
     render() {
         return (
             <div>
-                <Label text={"Сложный тип"}/>
                 <List title={"Школы навыков:"}
                       noItemsText={"Нет школ навыков"}
                       isAddButtonVisible={!this.state.spellSchoolFormVisible}

@@ -10,6 +10,9 @@ import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
 import {httpDelete, post, put} from "../../../util/Http";
 import {saveSkillUrl, skillByIdUrl} from "../../../util/Parameters";
 import Popup from "../../../util/Popup";
+import InputLabel from "../../Common/Labels/InputLabel";
+import GetDestinationByName from "../../../data-layer/enums/GetDestinationByName";
+import Chip from "../../Common/Labels/Chip";
 
 export default connect(
     state => ({
@@ -47,6 +50,9 @@ export default connect(
                     img={this.state.img}
                     name={this.state.name}
                     description={this.state.description}
+                    chips={[
+                        GetDestinationByName(this.state.destination)
+                    ]}
                 />
                 {this.state.complex ?
                     <ComplexSkillCategoryView
@@ -78,7 +84,6 @@ export default connect(
             Popup.info("Навык добавлен")
         })
     }
-
 
     onSkillEdited(skill) {
         put(skillByIdUrl(skill.id), skill, rs => {

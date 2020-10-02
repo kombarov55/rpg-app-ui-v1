@@ -1,6 +1,5 @@
 import React from "react";
 import List from "../../Common/Lists/List";
-import Label from "../../Common/Labels/Label";
 import ExpandableListItem from "../../Common/ListElements/ExpandableListItem";
 import InputLabel from "../../Common/Labels/InputLabel";
 import priceCombinationListToString from "../../../util/priceCombinationListToString";
@@ -32,7 +31,6 @@ export default class BasicSkillCategoryView extends React.Component {
     render() {
         return (
             <div>
-                <Label text={"Простой тип"}/>
                 <List title={"Навыки:"}
                       noItemsText={"Нет навыков"}
                       values={this.props.skills.map(skill =>

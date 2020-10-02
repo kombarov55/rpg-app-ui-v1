@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import {connect} from "react-redux"
 import {changeView} from "../../../../data-layer/ActionCreators";
@@ -12,9 +12,15 @@ import priceCombinationListToString from "../../../../util/priceCombinationListT
 import FormMode from "../../../../data-layer/enums/FormMode";
 import SpellForm from "../Form/SpellForm";
 import Popup from "../../../../util/Popup";
-import {post, put} from "../../../../util/Http";
-import {addSpellUrl, editSpellUrl} from "../../../../util/Parameters";
+import {httpDelete, post, put} from "../../../../util/Http";
+import {
+    addSpellPurchaseOptionUrl,
+    addSpellUrl, deleteSpellPurchaseOption,
+    editSpellPurchaseOption,
+    editSpellUrl
+} from "../../../../util/Parameters";
 import SpellPurchaseForm from "../Form/SpellPurchaseForm";
+ import IsLastElement from "../../../../util/IsLastElement";
 
 export default connect(
     state => ({
@@ -105,6 +111,8 @@ export default connect(
                                   spellPurchaseFormMode: FormMode.EDIT,
                                   spellPurchaseForm: spellPurchaseOption
                               })}
+                              isDeleteVisible={IsLastElement(spellPurchaseOption, this.state.spellPurchaseOptions)}
+                              onDelete={() => this.onDeleteSpellPurchaseOption(spellPurchaseOption)}
 
                               key={spellPurchaseOption.id}
                           />
@@ -116,7 +124,7 @@ export default connect(
                     (
                         this.state.spellPurchaseFormMode == FormMode.CREATE ?
                             <SpellPurchaseForm
-                                spellCount={this.state.spellPurchaseOptions.length + 1}
+                                spellCount={this.state.spellPurchaseOptions.length}
                                 currencyNames={this.props.currencyNames}
                                 onSubmit={form => this.onAddSpellPurchaseSubmit(form)}
                             /> :
@@ -156,20 +164,31 @@ export default connect(
     }
 
     onAddSpellPurchaseSubmit(form) {
-        console.log(form)
-        this.setState(state => ({
-            spellPurchaseFormVisible: false,
-            spellPurchaseOptions: state.spellPurchaseOptions.concat(form)
-        }))
-        Popup.info("Стоимость заклинания добавлена.")
+        post(addSpellPurchaseOptionUrl(this.state.id), form, rs => {
+            this.setState(state => ({
+                spellPurchaseFormVisible: false,
+                spellPurchaseOptions: state.spellPurchaseOptions.concat(rs)
+            }))
+            Popup.info("Стоимость заклинания добавлена.")
+        })
     }
 
     onEditSpellPurchaseSubmit(form) {
-        console.log(form)
-        this.setState(state => ({
-            spellPurchaseFormVisible: false,
-            spellPurchaseOptions: state.spellPurchaseOptions.filter(v => v.id !== form.id).concat(form)
-        }))
-        Popup.info("Стоимость заклинания обновлена.")
+        put(editSpellPurchaseOption(form.id), form, rs => {
+            this.setState(state => ({
+                spellPurchaseFormVisible: false,
+                spellPurchaseOptions: state.spellPurchaseOptions.filter(v => v.id !== rs.id).concat(rs)
+            }))
+            Popup.info("Стоимость заклинания обновлена.")
+        })
+    }
+
+    onDeleteSpellPurchaseOption(form) {
+        httpDelete(deleteSpellPurchaseOption(form.id), rs => {
+            this.setState(state => ({
+                spellPurchaseOptions: state.spellPurchaseOptions.filter(v => v.id !== rs.id)
+            }))
+            Popup.info("Стоимость заклинания удалена.")
+        })
     }
 })

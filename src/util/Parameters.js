@@ -104,3 +104,6 @@ export const addSchoolLvlToSpellSchoolUrl = spellSchoolId => rootUrl + "/spellSc
 
 export const addSpellUrl = schoolLvlId => rootUrl + "/schoolLvl/" + schoolLvlId + "/spell"
 export const editSpellUrl = spellId => rootUrl + "/spell/" + spellId
+export const addSpellPurchaseOptionUrl = schoolLvl => rootUrl + "/schoolLvl/" + schoolLvl + "/spellPurchaseOption"
+export const editSpellPurchaseOption = spellPurchaseOptionId => rootUrl + "/spellPurchaseOption/" + spellPurchaseOptionId
+export const deleteSpellPurchaseOption = spellPurchaseOptionId => rootUrl + "/spellPurchaseOption/" + spellPurchaseOptionId

@@ -47,7 +47,7 @@ export default function (props) {
                     props.onEdit && <Icon className={"pi pi-pencil"} onClick={(() => props.onEdit())}/>
                 }
                 {
-                    props.onDelete != null && <Icon className={"pi pi-times"} onClick={(() => props.onDelete())}/>
+                    (getOrDefault(props.isDeleteVisible, true) && props.onDelete != null) && <Icon className={"pi pi-times"} onClick={(() => props.onDelete())}/>
                 }
             </div>
         </div>

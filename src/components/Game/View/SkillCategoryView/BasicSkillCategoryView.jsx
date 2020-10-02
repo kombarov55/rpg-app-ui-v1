@@ -14,6 +14,7 @@ import SkillUpgradeEditForm from "../../Skill/Form/SkillUpgradeEditForm";
 import {httpDelete, post, put} from "../../../../util/Http";
 import {deleteSkillUpgradeUrl, updateSkillUpgradeUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
+import IsLastElement from "../../../../util/IsLastElement";
 
 export default class BasicSkillCategoryView extends React.Component {
 
@@ -61,7 +62,7 @@ export default class BasicSkillCategoryView extends React.Component {
                                                         skillId: skill.id
                                                     })}
                                                     onDeleteClicked={() => this.onSkillUpgradeDeleted(skill.id, skillUpgrade.id)}
-                                                    isDeleteVisible={this.isLastElement(skillUpgrade, skill.upgrades)}
+                                                    isDeleteVisible={IsLastElement(skillUpgrade, skill.upgrades)}
                                                     bullets={skillUpgrade.prices.map(listOfAmount =>
                                                         listOfAmount.map(amount => amount.name + ": " + amount.amount).join(" + ")
                                                     )}
@@ -152,10 +153,4 @@ export default class BasicSkillCategoryView extends React.Component {
         })
 
     }
-
-    isLastElement(item, arr, predicate = (x1, x2) => x1.id === x2.id) {
-        return predicate(item, arr[arr.length - 1])
-    }
-
-
 }

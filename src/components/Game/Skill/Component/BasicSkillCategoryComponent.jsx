@@ -5,6 +5,8 @@ import FormMode from "../../../../data-layer/enums/FormMode";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import Popup from "../../../../util/Popup";
+import {saveSkillUrl, skillByIdUrl} from "../../../../util/Parameters";
+import {post, put} from "../../../../util/Http";
 
 export default class BasicSkillCategoryComponent extends React.Component {
 
@@ -69,23 +71,23 @@ export default class BasicSkillCategoryComponent extends React.Component {
     }
 
     onAddSkillSubmit(form) {
-        console.log(form)
-
-        this.setState({
-            skillFormVisible: false,
-            skills: this.state.skills.concat(form)
+        post(saveSkillUrl(this.state.id), form, rs => {
+            this.setState({
+                skillFormVisible: false,
+                skills: this.state.skills.concat(rs)
+            })
+            Popup.info("Навык сохранён.")
         })
-        Popup.info("Навык сохранён")
     }
 
 
     onEditSkillSubmit(form) {
-        console.log(form)
-
-        this.setState({
-            skillFormVisible: false,
-            skills: this.state.skills.filter(v => v.id !== form.id).concat(form)
+        put(skillByIdUrl(form.id), form, rs => {
+            this.setState({
+                skillFormVisible: false,
+                skills: this.state.skills.filter(v => v.id !== rs.id).concat(rs)
+            })
+            Popup.info("Навык обновлен.")
         })
-        Popup.info("Навык обновлен")
     }
 }

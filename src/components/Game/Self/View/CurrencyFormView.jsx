@@ -1,16 +1,16 @@
 import React from "react";
-import FormViewStyle from "../../../styles/FormViewStyle";
-import InputLabel from "../../Common/Labels/InputLabel";
+import FormViewStyle from "../../../../styles/FormViewStyle";
+import InputLabel from "../../../Common/Labels/InputLabel";
 import {connect} from "react-redux";
-import {changeView, updateActiveGame} from "../../../data-layer/ActionCreators";
-import {gameView} from "../../../Views";
-import IsNumeric from "../../../util/IsNumeric";
-import SubmitButton from "../../Common/Buttons/SubmitButton";
-import {patch, post} from "../../../util/Http";
-import {saveCurrencyUrl, updateCurrencyUrl} from "../../../util/Parameters";
-import FormType from "../../../data-layer/enums/FormMode";
-import Btn from "../../Common/Buttons/Btn";
-import Popup from "../../../util/Popup";
+import {changeView, updateActiveGame} from "../../../../data-layer/ActionCreators";
+import {gameView} from "../../../../Views";
+import IsNumeric from "../../../../util/IsNumeric";
+import SubmitButton from "../../../Common/Buttons/SubmitButton";
+import {patch, post} from "../../../../util/Http";
+import {saveCurrencyUrl, updateCurrencyUrl} from "../../../../util/Parameters";
+import FormType from "../../../../data-layer/enums/FormMode";
+import Btn from "../../../Common/Buttons/Btn";
+import Popup from "../../../../util/Popup";
 
 function mapStateToProps(state) {
     return {

@@ -3,26 +3,32 @@ import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import {
     changeView,
+    setActiveGame,
     setGames,
     updateCurrencyForm,
     updateGameForm
-} from "../../../data-layer/ActionCreators";
-import {post, upload} from "../../../util/Http";
-import {gameByNetworkId, gameBySubnetworkId, gamesUrl, uploadServerUrl, uploadUrl} from "../../../util/Parameters";
-import {adminPageView, networkView, skillCategoryFormView, subnetworkView} from "../../../Views";
-import Globals from "../../../util/Globals";
-import ListInput from "../../Common/Input/ListInput";
-import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
-import DefaultFormValues from "../../../data-layer/DefaultFormValues";
-import CurrencyForm from "../CurrencyForm";
-import AddItemButton from "../../Common/Buttons/AddItemButton";
-import InputLabel from "../../Common/Labels/InputLabel";
-import ListItemSmall from "../../Common/ListElements/SmallListItem";
-import NoItemsLabel from "../../Common/Labels/NoItemsLabel";
+} from "../../../../data-layer/ActionCreators";
+import {put, upload} from "../../../../util/Http";
+import {
+    editGameByNetworkId,
+    editGamebySubnetworkId,
+    gameUrl,
+    uploadServerUrl,
+    uploadUrl
+} from "../../../../util/Parameters";
+import {gameView} from "../../../../Views";
+import Globals from "../../../../util/Globals";
+import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
+import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
+import InputLabel from "../../../Common/Labels/InputLabel";
+import NoItemsLabel from "../../../Common/Labels/NoItemsLabel";
+import ListItemSmall from "../../../Common/ListElements/SmallListItem";
+import CurrencyForm from "../Form/CurrencyForm";
+import AddItemButton from "../../../Common/Buttons/AddItemButton";
 import {useForm} from "react-hook-form";
-import SkillCategoryForm from "./SkillCategoryView/SkillCategoryForm";
-import SkillCategoryFormMode from "../../../data-layer/enums/SkillCategoryFormMode";
-import Popup from "../../../util/Popup";
+import HorizontalListItem from "../../../Common/ListElements/HorizontalListItem";
+import SkillCategoryFormMode from "../../../../data-layer/enums/SkillCategoryFormMode";
+import Popup from "../../../../util/Popup";
 
 function mapStateToProps(state, props) {
     return {
@@ -40,6 +46,7 @@ function mapDispatchToProps(dispatch, props) {
         updateGameForm: fieldNameToValue => dispatch(updateGameForm(fieldNameToValue)),
         changeView: view => dispatch(changeView(view)),
         setGames: games => dispatch(setGames(games)),
+        setActiveGame: game => dispatch(setActiveGame(game)),
         updateCurrencyForm: fieldNameToValue => dispatch(updateCurrencyForm(fieldNameToValue))
     }
 }
@@ -48,7 +55,6 @@ function mapDispatchToProps(dispatch, props) {
 export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
     const [currencyFormVisible, setCurrencyFormVisible] = useState(false)
-
 
     function onAddCurrencyClicked() {
         setCurrencyFormVisible(true)
@@ -60,6 +66,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.updateCurrencyForm(DefaultFormValues.currencyForm)
     }
 
+    function onAddSkillCategoryClicked() {
+        Globals.skillCategoryFormMode = SkillCategoryFormMode.EDIT
+    }
+
     function onImgFileChange(e) {
         upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({img: uploadServerUrl + "/" + rs.data.filename}))
     }
@@ -68,42 +78,32 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         upload(uploadUrl, e.target.files[0], rs => props.updateGameForm({background: uploadServerUrl + "/" + rs.data.filename}))
     }
 
-    function onAddSkillCategoryClicked() {
-        Globals.skillCategoryFormMode = SkillCategoryFormMode.CREATE
-        props.changeView(skillCategoryFormView)
-    }
-
     function onSaveClicked() {
         let url
-        let nextView
 
         switch (Globals.gameCreationMode) {
             case GameCreationMode.OPEN:
-                url = gamesUrl
-                nextView = adminPageView
-                break
-
-            case GameCreationMode.BY_NETWORK:
-                url = gameByNetworkId(props.activeNetwork.id)
-                nextView = networkView
-                break
-
-            case GameCreationMode.BY_SUBNETWORK:
-                url = gameBySubnetworkId(props.activeNetwork.id, props.activeSubnetwork.id)
-                nextView = subnetworkView
+                url = gameUrl(props.gameForm.id)
                 break;
+            case GameCreationMode.BY_NETWORK:
+                url = editGameByNetworkId(props.activeNetwork.id, props.gameForm.id)
+                break;
+            case GameCreationMode.BY_SUBNETWORK:
+                url = editGamebySubnetworkId(props.activeNetwork.id, props.activeSubnetwork.id, props.gameForm.id)
+                break;
+
         }
 
-
-        post(url, props.gameForm, rs => {
-            props.setGames(props.games.concat(rs))
+        put(url, props.gameForm, rs => {
+            Popup.info("Игра обновлена")
+            props.setGames(props.games.filter(it => it.id !== rs.id).concat(rs))
             props.updateGameForm(DefaultFormValues.gameForm)
-            props.changeView(nextView)
-            Popup.info("Игра создана")
+            props.setActiveGame(rs)
+            props.changeView(gameView)
         })
     }
 
-    const {register, handleSubmit, errors} = useForm()
+    const {register, errors, handleSubmit} = useForm()
 
     return (
         <form className={"game-creation-view"}
@@ -111,7 +111,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
             <InputLabel text={"Название:"}/>
             <input className={"game-creation-view-input"}
-                   name={"title"}
+                   name={"groupLink"}
                    ref={register({required: true})}
                    value={props.gameForm.title}
                    onChange={e => props.updateGameForm({title: e.target.value})}
@@ -130,16 +130,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <InputLabel text={"Картинка:"}/>
             <input type={"file"}
                    name={"img"}
-                   // ref={register({required: true})}
-                   ref={register()}
+                   ref={register({required: true})}
                    onChange={e => onImgFileChange(e)}/>
             <div className={"error-label"}>{errors.img && "Загрузите картинку"}</div>
 
             <InputLabel text={"Фон:"}/>
             <input type={"file"}
                    name={"background"}
-                   // ref={register({required: true})}
-                   ref={register()}
+                   ref={register({required: true})}
                    onChange={e => onBackgroundFileChange(e)}/>
             <div className={"error-label"}>{errors.background && "Загрузите фон"}</div>
 
@@ -149,6 +147,41 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                            value={props.gameForm.description}
                            onChange={e => props.updateGameForm({description: e.target.value})}
             />
+
+            <InputLabel text={"Валюта: (макс. 3)"}/>
+            <div className={"list"}>
+                {props.gameForm.currencies.length === 0 ?
+                    <NoItemsLabel text={"Нет валют"}/> :
+                    props.gameForm.currencies.map(currency =>
+                        <ListItemSmall left={currency.name} right={currency.priceInActivityPoints}/>
+                    )
+                }
+            </div>
+            {
+                currencyFormVisible &&
+                <CurrencyForm
+                    onSubmit={() => onCurrencyFormSubmit()}
+                />
+            }
+            {
+                !currencyFormVisible && props.gameForm.currencies.length < 3 &&
+                <AddItemButton text={"Добавить валюту"} onClick={() => onAddCurrencyClicked()}/>
+            }
+
+            <InputLabel text={"Категории навыков:"}/>
+            <div className={"list"}>
+                {props.gameForm.skillCategories.length === 0 ?
+                    <NoItemsLabel text={"Нет категорий навыков"}/> :
+                    props.gameForm.skillCategories.map(skillCategory =>
+                        <HorizontalListItem
+                            name={skillCategory.name}
+                            description={skillCategory.description}
+                            imgSrc={skillCategory.img}
+                            onDelete={() => props.updateGameForm({skillCategories: props.gameForm.skillCategories.filter(it => it.name !== skillCategory.name)})}
+                        />)
+                }
+            </div>
+            <AddItemButton text={"Добавить категорию навыка"} onClick={() => onAddSkillCategoryClicked()}/>
 
             <input className={"network-creation-save-button"}
                    type={"submit"}

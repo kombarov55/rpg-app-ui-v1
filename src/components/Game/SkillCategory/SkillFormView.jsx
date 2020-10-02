@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux"
-import SkillForm from "../../SkillForm";
+import SkillForm from "../Skill/Form/SkillForm";
 
 export default connect(
     state => ({

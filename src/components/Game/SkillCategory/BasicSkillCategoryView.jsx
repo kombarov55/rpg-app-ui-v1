@@ -1,20 +1,18 @@
 import React from "react";
-import List from "../../../Common/Lists/List";
-import Label from "../../../Common/Labels/Label";
-import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
-import InputLabel from "../../../Common/Labels/InputLabel";
-import priceCombinationListToString from "../../../../util/priceCombinationListToString";
-import LvlUpgradeView from "../../LvlUpgradeView";
-import SkillForm from "../../SkillForm";
-import Icon from "../../../Common/Input/Icon";
-import FormMode from "../../../../data-layer/enums/FormMode";
-import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import SkillUpgradeForm from "../../SkillUpgradeForm";
-import SkillUpgradeEditForm from "../../Skill/Form/SkillUpgradeEditForm";
-import {httpDelete, post, put} from "../../../../util/Http";
-import {deleteSkillUpgradeUrl, updateSkillUpgradeUrl} from "../../../../util/Parameters";
-import Popup from "../../../../util/Popup";
-import IsLastElement from "../../../../util/IsLastElement";
+import List from "../../Common/Lists/List";
+import Label from "../../Common/Labels/Label";
+import ExpandableListItem from "../../Common/ListElements/ExpandableListItem";
+import InputLabel from "../../Common/Labels/InputLabel";
+import priceCombinationListToString from "../../../util/priceCombinationListToString";
+import SkillForm from "../Skill/Form/SkillForm";
+import Icon from "../../Common/Input/Icon";
+import FormMode from "../../../data-layer/enums/FormMode";
+import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
+import SkillUpgradeEditForm from "../Skill/Form/SkillUpgradeEditForm";
+import {httpDelete, put} from "../../../util/Http";
+import {deleteSkillUpgradeUrl, updateSkillUpgradeUrl} from "../../../util/Parameters";
+import Popup from "../../../util/Popup";
+import IsLastElement from "../../../util/IsLastElement";
 
 export default class BasicSkillCategoryView extends React.Component {
 

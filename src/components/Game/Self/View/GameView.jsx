@@ -10,7 +10,7 @@ import {
     updateActiveGame,
     updateGameForm,
     updateQuestionnaireTemplateForm
-} from "../../../data-layer/ActionCreators";
+} from "../../../../data-layer/ActionCreators";
 import {
     adminPageView,
     conversionView,
@@ -22,8 +22,8 @@ import {
     questionnaireRulesView,
     skillCategoryView,
     subnetworkView
-} from "../../../Views";
-import {get, httpDelete, post, put} from "../../../util/Http";
+} from "../../../../Views";
+import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
     addItemForSaleForGameUrl,
     deleteGameUrl,
@@ -34,24 +34,24 @@ import {
     removeItemForSaleForGameUrl,
     saveSkillCategoryUrl,
     skillCategoryUrl
-} from "../../../util/Parameters";
-import Btn from "../../Common/Buttons/Btn";
-import Preload from "../../../util/Preload";
-import Globals from "../../../util/Globals";
-import GameCreationMode from "../../../data-layer/enums/GameCreationMode";
-import DefaultFormValues from "../../../data-layer/DefaultFormValues";
-import QuestionnaireTemplateFormMode from "../../../data-layer/enums/QuestionnaireTemplateFormMode";
-import List from "../../Common/Lists/List";
-import SmallEditableListItem from "../../Common/ListElements/SmallEditableListItem";
-import FormType from "../../../data-layer/enums/FormMode";
-import FormMode from "../../../data-layer/enums/FormMode";
-import ExpandableListItemWithButtons from "../../Common/ListElements/ExpandableListItemWithButtons";
-import Popup from "../../../util/Popup";
-import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
-import OrganizationForm from "../Organization/Form/OrganizationForm";
-import ItemForSaleForm from "../Merchandise/Form/ItemForSaleForm";
-import FormatDate from "../../../util/FormatDate";
-import SkillCategoryForm from "../Skill/Form/SkillCategoryForm";
+} from "../../../../util/Parameters";
+import Btn from "../../../Common/Buttons/Btn";
+import Preload from "../../../../util/Preload";
+import Globals from "../../../../util/Globals";
+import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
+import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
+import QuestionnaireTemplateFormMode from "../../../../data-layer/enums/QuestionnaireTemplateFormMode";
+import List from "../../../Common/Lists/List";
+import SmallEditableListItem from "../../../Common/ListElements/SmallEditableListItem";
+import FormType from "../../../../data-layer/enums/FormMode";
+import FormMode from "../../../../data-layer/enums/FormMode";
+import ExpandableListItemWithButtons from "../../../Common/ListElements/ExpandableListItemWithButtons";
+import Popup from "../../../../util/Popup";
+import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import OrganizationForm from "../../Organization/Form/OrganizationForm";
+import ItemForSaleForm from "../../Merchandise/Form/ItemForSaleForm";
+import FormatDate from "../../../../util/FormatDate";
+import SkillCategoryForm from "../../Skill/Form/SkillCategoryForm";
 
 function mapStateToProps(state, props) {
     return {

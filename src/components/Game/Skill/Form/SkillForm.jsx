@@ -1,20 +1,20 @@
 import React, {useState} from "react";
 import {useForm} from "react-hook-form";
-import InputLabel from "../Common/Labels/InputLabel";
-import {uploadServerUrl, uploadUrl} from "../../util/Parameters";
-import {upload} from "../../util/HttpRequests";
+import InputLabel from "../../../Common/Labels/InputLabel";
+import {uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
+import {upload} from "../../../../util/HttpRequests";
 import {InputTextarea} from "primereact/inputtextarea";
-import List from "../Common/Lists/List";
-import SmallListItem from "../Common/ListElements/SmallListItem";
-import Icon from "../Common/Input/Icon";
-import PriceInput from "../Common/Input/PriceInput";
+import List from "../../../Common/Lists/List";
+import SmallListItem from "../../../Common/ListElements/SmallListItem";
+import Icon from "../../../Common/Input/Icon";
+import PriceInput from "../../../Common/Input/PriceInput";
 import {InputSwitch} from "primereact/inputswitch";
-import LvlUpgradeView from "./LvlUpgradeView";
+import LvlUpgradeComponent from "../Component/LvlUpgradeComponent";
 import SkillUpgradeForm from "./SkillUpgradeForm";
-import FormSubmitButton from "../Common/Buttons/FormSubmitButton";
+import FormSubmitButton from "../../../Common/Buttons/FormSubmitButton";
 import _ from "lodash"
-import FormTitleLabel from "../Common/Labels/FormTitleLabel";
-import getOrDefault from "../../util/getOrDefault";
+import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
+import getOrDefault from "../../../../util/getOrDefault";
 
 /**
  * @param props {onSubmit, currencies}
@@ -116,9 +116,9 @@ export default function (props) {
                     <InputLabel text={"Уровни навыка:"}/>
                     <List noItemsText={"Нет уровней"}
                           values={upgrades.map(upgrade =>
-                              <LvlUpgradeView lvlNum={upgrade.lvlNum}
-                                           description={upgrade.description}
-                                           prices={upgrade.prices}
+                              <LvlUpgradeComponent lvlNum={upgrade.lvlNum}
+                                                   description={upgrade.description}
+                                                   prices={upgrade.prices}
                               />)}
                     />
                     <SkillUpgradeForm

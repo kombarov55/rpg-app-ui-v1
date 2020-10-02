@@ -1,15 +1,15 @@
 import React from "react";
 import {connect} from "react-redux"
-import FormViewStyle from "../../../../styles/FormViewStyle";
-import Btn from "../../../Common/Buttons/Btn";
-import {changeView, setActiveSpellSchool} from "../../../../data-layer/ActionCreators";
-import {gameView, spellSchoolView} from "../../../../Views";
-import ViewInfo from "../../../Common/Constructions/ViewInfo";
+import FormViewStyle from "../../../styles/FormViewStyle";
+import Btn from "../../Common/Buttons/Btn";
+import {changeView, setActiveSpellSchool} from "../../../data-layer/ActionCreators";
+import {gameView, spellSchoolView} from "../../../Views";
+import ViewInfo from "../../Common/Constructions/ViewInfo";
 import BasicSkillCategoryView from "./BasicSkillCategoryView";
 import ComplexSkillCategoryView from "./ComplexSkillCategoryView";
-import {httpDelete, post, put} from "../../../../util/Http";
-import {saveSkillUrl, skillByIdUrl} from "../../../../util/Parameters";
-import Popup from "../../../../util/Popup";
+import {httpDelete, post, put} from "../../../util/Http";
+import {saveSkillUrl, skillByIdUrl} from "../../../util/Parameters";
+import Popup from "../../../util/Popup";
 
 export default connect(
     state => ({

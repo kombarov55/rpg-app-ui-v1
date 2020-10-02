@@ -1,14 +1,13 @@
 import React from "react";
-import Label from "../../../Common/Labels/Label";
-import List from "../../../Common/Lists/List";
-import FormMode from "../../../../data-layer/enums/FormMode";
-import SpellSchoolForm from "../../Skill/Form/SpellSchoolForm";
-import {post, put} from "../../../../util/Http";
-import {addSpellSchoolUrl, editSpellSchoolUrl} from "../../../../util/Parameters";
-import Popup from "../../../../util/Popup";
-import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import priceCombinationListToString from "../../../../util/priceCombinationListToString";
-import {spellSchoolView} from "../../../../Views";
+import Label from "../../Common/Labels/Label";
+import List from "../../Common/Lists/List";
+import FormMode from "../../../data-layer/enums/FormMode";
+import SpellSchoolForm from "../Skill/Form/SpellSchoolForm";
+import {post, put} from "../../../util/Http";
+import {addSpellSchoolUrl, editSpellSchoolUrl} from "../../../util/Parameters";
+import Popup from "../../../util/Popup";
+import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
+import priceCombinationListToString from "../../../util/priceCombinationListToString";
 
 export default class ComplexSkillCategoryView extends React.Component {
 

@@ -9,7 +9,7 @@ import {
     updateSubnetworkForm
 } from "../../../../data-layer/ActionCreators";
 import {gameCreationView, gameView, networkView, subnetworkEditView} from "../../../../Views";
-import AddGameItem from "../../../Game/AddGameItem";
+import AddGameItem from "../../../Game/Self/Component/AddGameItemComponent";
 import Globals from "../../../../util/Globals";
 import Btn from "../../../Common/Buttons/Btn";
 import {httpDelete} from "../../../../util/Http";

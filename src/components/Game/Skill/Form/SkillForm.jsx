@@ -15,6 +15,9 @@ import FormSubmitButton from "../../../Common/Buttons/FormSubmitButton";
 import _ from "lodash"
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import getOrDefault from "../../../../util/getOrDefault";
+import IconSelect from "../../../Common/Input/IconSelect";
+import SkillIcons from "../../../../data-layer/enums/SkillIcons";
+import FileUpload from "../../../Common/Input/FileUpload";
 
 /**
  * @param props {onSubmit, currencies}
@@ -73,10 +76,12 @@ export default function (props) {
             <div className={"error-label"}>{errors.name && "Введите имя"}</div>
 
             <InputLabel text={"Картинка:"}/>
-            <input type={"file"}
-                   name={"img"}
-                   onChange={e => upload(uploadUrl, e.target.files[0], rs => setImg(uploadServerUrl + "/" + rs.data.filename))}
+            <IconSelect imgList={SkillIcons.values()}
+                        onSelected={img => setImg(img)}
             />
+            <InputLabel text={"Или загрузите:"}/>
+            <FileUpload onChange={img => setImg(img)}/>
+
             <div className={"error-label"}>{errors.img && "Загрузите картинку"}</div>
 
             <InputLabel text={"Описание:"}/>

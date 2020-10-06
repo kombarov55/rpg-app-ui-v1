@@ -1,35 +1,29 @@
 import React from "react";
-import Label from "../../../Common/Labels/Label";
 import List from "../../../Common/Lists/List";
 import FormMode from "../../../../data-layer/enums/FormMode";
-import SpellSchoolForm from "../../Skill/Form/SpellSchoolForm";
+import SpellSchoolForm from "../Form/SpellSchoolForm";
 import {post, put} from "../../../../util/Http";
 import {addSpellSchoolUrl, editSpellSchoolUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
-import {spellSchoolView} from "../../../../Views";
 
-export default class ComplexSkillCategoryView extends React.Component {
+export default class ComplexSkillCategoryComponent extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.state = Object.assign({}, this.formInitialState, {
+        this.state = {
+            spellSchoolFormVisible: false,
+            spellSchoolForm: null,
+            spellSchoolFormMode: FormMode.CREATE,
             spellSchools: props.spellSchools
-        })
-    }
-
-    formInitialState = {
-        spellSchoolFormVisible: false,
-        spellSchoolForm: null,
-        spellSchoolFormMode: FormMode.CREATE
+        }
     }
 
     render() {
         return (
             <div>
-                <Label text={"Сложный тип"}/>
                 <List title={"Школы навыков:"}
                       noItemsText={"Нет школ навыков"}
                       isAddButtonVisible={!this.state.spellSchoolFormVisible}
@@ -60,51 +54,6 @@ export default class ComplexSkillCategoryView extends React.Component {
                                   alwaysExpand={true}
                                   key={spellSchool.id}
                               />
-                          /*
-
-                          <ExpandableListItem
-                              img={spellSchool.img}
-                              name={spellSchool.name}
-                              alwaysExpand={true}
-                              expandableElements={[
-                                  <div>{spellSchool.description}</div>,
-                                  <InputLabel
-                                      text={"Минимальное количество заклинаний для перехода на следующий уровень: " + spellSchool.minSpellCountToUpgrade}/>,
-                                  <List title={"Круги заклинаний:"}
-                                        noItemsText={"Нет кругов заклинаний"}
-                                        values={spellSchool.schoolLvls.map(schoolLvl =>
-
-                                            <ExpandableListItem
-                                                name={"Уровень: " + schoolLvl.lvl}
-                                                alwaysExpand={true}
-                                                expandableElements={[
-                                                    <List title={"Цены заклинаний:"}
-                                                          noItemsText={"Бесплатно!"}
-                                                          values={schoolLvl.upgradePriceCombinations.map(v =>
-                                                              <div>{v.spellCount} заклинаний
-                                                                  изучено: {priceCombinationListToString(v.priceCombinations)}</div>
-                                                          )}
-                                                    />,
-                                                    // <InputLabel
-                                                    //     text={"Цена перехода на следующий уровень: " + priceCombinationListToString(schoolLvl.upgradePriceCombinations.priceCombinations)}/>,
-                                                    <List title={"Заклинания:"}
-                                                          noItemsText={"Нет заклинаний"}
-                                                          values={schoolLvl.spells.map(spell =>
-                                                              <HorizontalListItem
-                                                                  name={spell.name}
-                                                                  imgSrc={spell.imgSrc}
-                                                                  description={spell.description}
-                                                              />
-                                                          )}
-                                                    />
-                                                ]}
-                                            />
-                                        )}
-                                  />
-                              ]}
-                          />
-
-                           */
                       )}
                 />
                 {

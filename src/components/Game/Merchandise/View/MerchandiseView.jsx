@@ -23,7 +23,6 @@ import {
     shortSkillsByGameIdUrl
 } from "../../../../util/Parameters";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByName";
 
@@ -141,7 +140,10 @@ export default connect(
                                   "Категория: " + merchandise.category.name,
                                   "Тип: " + merchandise.type.name,
                                   merchandise.slots + " слот(ов)",
-                                  merchandise.skillInfluences.map(it => SkillInfluenceToString(it)).join(", ")
+                                  merchandise.skillInfluences.map(it => SkillInfluenceToString(it)).join(", "),
+                                  merchandise.canBeEquipped ? "Можно надеть" : "Нельзя надеть",
+                                  merchandise.canBeCrafted ? "Можно скрафтить" : "Нельзя скрафтить",
+                                  merchandise.canBeUsedInCraft ? "Можно использовать в крафте" : "Нельзя использовать в крафте"
                               ]}
 
                               alwaysExpand={true}

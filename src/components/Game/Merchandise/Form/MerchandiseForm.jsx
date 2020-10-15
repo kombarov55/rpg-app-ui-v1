@@ -11,6 +11,8 @@ import FormMode from "../../../../data-layer/enums/FormMode";
 import {connect} from "react-redux"
 import {InputTextarea} from "primereact/inputtextarea";
 import Destination from "../../../../data-layer/enums/Destination";
+import {InputSwitch} from "primereact/inputswitch";
+import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
@@ -45,6 +47,9 @@ export default connect(
         slots: 1,
         skillInfluences: [],
         destination: null,
+        canBeEquipped: false,
+        canBeCrafted: false,
+        canBeUsedInCraft: false
     }
 
     render() {
@@ -105,6 +110,25 @@ export default connect(
                       isAddButtonVisible={!this.state.skillInfluenceFormVisible}
                       onAddClicked={() => this.onAddInfluenceClicked()}
                 />
+
+                <InputLabel text={"Можно ли надеть?"}/>
+                <InputSwitch
+                    checked={this.state.canBeEquipped}
+                    onChange={e => this.setState({canBeEquipped: e.value})}
+                />
+
+                <InputLabel text={"Можно ли скрафтить?"}/>
+                <InputSwitch
+                    checked={this.state.canBeCrafted}
+                    onChange={e => this.setState({canBeCrafted: e.value})}
+                />
+
+                <InputLabel text={"Можно ли использовать в крафте?"}/>
+                <InputSwitch
+                    checked={this.state.canBeUsedInCraft}
+                    onChange={e => this.setState({canBeUsedInCraft: e.value})}
+                />
+
                 {
                     this.state.skillInfluenceFormVisible && (
                         this.state.skillInfluenceFormMode === FormMode.CREATE ?
@@ -157,22 +181,11 @@ export default connect(
             this.state.type == "" ||
             this.state.destination == null
         ) {
-            console.log("invalid form: ")
-            console.log(this.state)
+           Popup.error("Пожалуйста, заполните все обязательные поля: [Название, Описание, Категория, Тип, Для кого товар]")
             return
         }
 
-        this.props.onSubmit({
-            id: this.state.id,
-            name: this.state.name,
-            img: this.state.img,
-            description: this.state.description,
-            category: this.state.category,
-            type: this.state.type,
-            slots: this.state.slots,
-            skillInfluences: this.state.skillInfluences,
-            destination: this.state.destination
-        })
+        this.props.onSubmit(this.state)
         this.setState(this.initialState)
     }
 })

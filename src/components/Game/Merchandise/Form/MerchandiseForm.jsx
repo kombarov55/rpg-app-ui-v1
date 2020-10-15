@@ -192,12 +192,16 @@ export default connect(
                         this.state.upgradeFormMode == FormMode.CREATE ?
                             <MerchandiseUpgradeForm
                                 lvlNum={this.state.upgrades.length + 1}
+                                skills={this.props.skills.filter(v => v.destination === this.state.destination)}
+                                currencyNames={this.props.currencies.map(v => v.name)}
                                 onSubmit={form => {
                                     console.log(form)
                                 }}
                             /> :
                             <MerchandiseUpgradeForm
                                 lvlNum={this.state.upgrades.length + 1}
+                                skills={this.props.skills.filter(v => v.destination === this.state.destination)}
+                                currencyNames={this.props.currencies.map(v => v.name)}
                                 initialState={this.state.upgradeForm}
                                 onSubmit={form => {
                                     console.log(form)

@@ -1,3 +1,5 @@
+import ListOfAmountsStub from "./ListOfAmountsStub";
+
 export default [
     {
         lvlNum: 1,
@@ -15,30 +17,7 @@ export default [
                 amount: 1
             }
         ],
-        prices: [
-            [
-                {
-                    name: "Золото",
-                    amount: 1000
-                },
-                {
-                    name: "Серебро",
-                    amount: 500
-                }
-            ],
-            [
-                {
-                    name: "Золото",
-                    amount: 2000
-                }
-            ],
-            [
-                {
-                    name: "Серебро",
-                    amount: 10000
-                }
-            ]
-        ]
+        prices: ListOfAmountsStub
     },
     {
         lvlNum: 2,
@@ -56,30 +35,7 @@ export default [
                 amount: 2
             }
         ],
-        prices: [
-            [
-                {
-                    name: "Золото",
-                    amount: 1000
-                },
-                {
-                    name: "Серебро",
-                    amount: 500
-                }
-            ],
-            [
-                {
-                    name: "Золото",
-                    amount: 2000
-                }
-            ],
-            [
-                {
-                    name: "Серебро",
-                    amount: 10000
-                }
-            ]
-        ]
+        prices: ListOfAmountsStub,
     },
     {
         lvlNum: 3,
@@ -97,29 +53,6 @@ export default [
                 amount: 3
             }
         ],
-        prices: [
-            [
-                {
-                    name: "Золото",
-                    amount: 1000
-                },
-                {
-                    name: "Серебро",
-                    amount: 500
-                }
-            ],
-            [
-                {
-                    name: "Золото",
-                    amount: 2000
-                }
-            ],
-            [
-                {
-                    name: "Серебро",
-                    amount: 10000
-                }
-            ]
-        ]
+        prices: ListOfAmountsStub
     }
 ]

@@ -61,6 +61,7 @@ export default connect(
                         toSpellSchoolView={spellSchool => this.props.toSpellSchoolView(spellSchool)}
                     /> :
                     <BasicSkillCategoryComponent
+                        skillCategoryId={this.state.id}
                         gameId={this.props.gameId}
                         skills={this.state.skills}
                         currencies={this.props.currencies}

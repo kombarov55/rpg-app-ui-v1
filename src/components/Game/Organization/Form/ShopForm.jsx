@@ -1,9 +1,11 @@
 import React from "react";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import InputLabel from "../../../Common/Labels/InputLabel";
-import {upload} from "../../../../util/HttpRequests";
 import {SelectButton} from "primereact/selectbutton";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
+import IconSelect from "../../../Common/Input/IconSelect";
+import SkillIcons from "../../../../data-layer/enums/SkillIcons";
+import FileUpload from "../../../Common/Input/FileUpload";
 
 export default class ShopForm extends React.Component {
 
@@ -30,12 +32,11 @@ export default class ShopForm extends React.Component {
                 <input value={this.state.name} onChange={e => this.setState({name: e.target.value})}/>
 
                 <InputLabel text={"Картинка:"}/>
-                <input type={"file"}
-                       onChange={e => upload(
-                           e.target.files[0],
-                           filename => this.setState({img: filename})
-                       )}
+                <IconSelect imgList={SkillIcons.values()}
+                            onSelected={img => this.setState({img: img})}
                 />
+                <InputLabel text={"Или загрузите:"}/>
+                <FileUpload onChange={img => this.setState({img: img})} />
 
                 <SelectButton
                     options={[

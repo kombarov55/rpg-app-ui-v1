@@ -72,7 +72,7 @@ export default class BasicSkillCategoryComponent extends React.Component {
     }
 
     onAddSkillSubmit(form) {
-        post(saveSkillUrl(this.state.id), form, rs => {
+        post(saveSkillUrl(this.props.skillCategoryId), form, rs => {
             this.setState({
                 skillFormVisible: false,
                 skills: this.state.skills.concat(rs)

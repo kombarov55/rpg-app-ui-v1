@@ -46,11 +46,11 @@ export default class CreditOfferForm extends React.Component {
                               onChange={e => this.setState({currency: e.target.value})}
                 />
 
-                <InputLabel text={"Мин количество:"}/>
+                <InputLabel text={"Минимальная кредитная сумма:"}/>
                 <input value={this.state.minAmount}
                        onChange={e => this.setState({minAmount: e.target.value})}/>
 
-                <InputLabel text={"Макс. количество:"}/>
+                <InputLabel text={"Максимальная кредитная сумма:"}/>
                 <input value={this.state.maxAmount}
                        onChange={e => this.setState({maxAmount: e.target.value})}/>
 

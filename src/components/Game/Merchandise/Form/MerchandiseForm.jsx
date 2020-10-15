@@ -2,7 +2,6 @@ import React from "react";
 import InnerFormStyle from "../../../../styles/InnerFormStyle";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
-import {upload} from "../../../../util/HttpRequests";
 import {SelectButton} from "primereact/selectbutton";
 import List from "../../../Common/Lists/List";
 import ListItem from "../../../Common/ListElements/ListItem";
@@ -13,6 +12,9 @@ import {InputTextarea} from "primereact/inputtextarea";
 import Destination from "../../../../data-layer/enums/Destination";
 import {InputSwitch} from "primereact/inputswitch";
 import Popup from "../../../../util/Popup";
+import IconSelect from "../../../Common/Input/IconSelect";
+import SkillIcons from "../../../../data-layer/enums/SkillIcons";
+import FileUpload from "../../../Common/Input/FileUpload";
 
 export default connect(
     state => ({
@@ -61,9 +63,11 @@ export default connect(
                 />
 
                 <InputLabel text={"Картинка:"}/>
-                <input type={"file"}
-                       onChange={e => upload(e.target.files[0], filename => this.setState({img: filename}))}
+                <IconSelect imgList={SkillIcons.values()}
+                            onSelected={img => this.setState({img: img})}
                 />
+                <InputLabel text={"Или загрузите:"}/>
+                <FileUpload onChange={img => this.setState({img: img})}/>
 
                 <InputLabel text={"Описание:"}/>
                 <InputTextarea autoResize={true}
@@ -99,18 +103,6 @@ export default connect(
                        onChange={e => this.setState({slots: e.target.value})}
                 />
 
-                <InputLabel text={"Влияние на навыки:"}/>
-                <List noItemsText={"Пусто"}
-                      values={this.state.skillInfluences.map(skillInfluence =>
-                          <ListItem
-                              text={skillInfluence.skill.name + " " + skillInfluence.modifier.name + " " + skillInfluence.amount}
-                              onDelete={() => this.onSkillInfluenceDeleted(skillInfluence)}
-                          />
-                      )}
-                      isAddButtonVisible={!this.state.skillInfluenceFormVisible}
-                      onAddClicked={() => this.onAddInfluenceClicked()}
-                />
-
                 <InputLabel text={"Можно ли надеть?"}/>
                 <InputSwitch
                     checked={this.state.canBeEquipped}
@@ -127,6 +119,18 @@ export default connect(
                 <InputSwitch
                     checked={this.state.canBeUsedInCraft}
                     onChange={e => this.setState({canBeUsedInCraft: e.value})}
+                />
+
+                <InputLabel text={"Влияние на навыки:"}/>
+                <List noItemsText={"Пусто"}
+                      values={this.state.skillInfluences.map(skillInfluence =>
+                          <ListItem
+                              text={skillInfluence.skill.name + " " + skillInfluence.modifier.name + " " + skillInfluence.amount}
+                              onDelete={() => this.onSkillInfluenceDeleted(skillInfluence)}
+                          />
+                      )}
+                      isAddButtonVisible={!this.state.skillInfluenceFormVisible}
+                      onAddClicked={() => this.onAddInfluenceClicked()}
                 />
 
                 {

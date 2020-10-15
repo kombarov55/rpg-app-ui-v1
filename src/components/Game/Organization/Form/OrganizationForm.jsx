@@ -11,6 +11,7 @@ import PriceInput from "../../../Common/Input/PriceInput";
 import ListItem from "../../../Common/ListElements/ListItem";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import SmallerExpandableListItem from "../../../Common/ListElements/SmallerExpandableListItem";
+import Popup from "../../../../util/Popup";
 
 export default class OrganizationForm extends React.Component {
 
@@ -124,7 +125,10 @@ export default class OrganizationForm extends React.Component {
                 <SubmitButton text={"Сохранить"} onClick={() => {
                     console.log(this.state)
 
-                    if (this.state.name == "" || this.state.heads.length == 0 || this.state.type == null) return
+                    if (this.state.name == "" || this.state.heads.length == 0 || this.state.type == null) {
+                        Popup.error("Пожалуйста, заполните все поля: [Название, Главы, Тип]")
+                        return
+                    }
 
                     this.props.onSubmit(this.state)
                     this.setState(this.initialState)

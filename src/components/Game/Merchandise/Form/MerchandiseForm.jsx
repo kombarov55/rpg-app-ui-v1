@@ -15,10 +15,11 @@ import Popup from "../../../../util/Popup";
 import IconSelect from "../../../Common/Input/IconSelect";
 import SkillIcons from "../../../../data-layer/enums/SkillIcons";
 import FileUpload from "../../../Common/Input/FileUpload";
-import Stubs from "../../../../stubs/Stubs";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import AmountsToString from "../../../../util/AmountsToString";
+import MerchandiseUpgradeForm from "./MerchandiseUpgradeForm";
+import Stubs from "../../../../stubs/Stubs";
 
 export default connect(
     state => ({
@@ -37,11 +38,20 @@ export default connect(
     constructor(props) {
         super(props)
 
-        this.state = Object.assign({
-            skillInfluenceFormVisible: false,
-            skillInfluenceFormMode: FormMode.CREATE,
-            skillInfluenceObjToUpdate: null
-        }, props.initialState != null ? props.initialState : this.initialState)
+        this.state = Object.assign(
+            {},
+            props.initialState != null ? props.initialState : this.initialState,
+            {
+                skillInfluenceFormVisible: false,
+                skillInfluenceFormMode: FormMode.CREATE,
+                skillInfluenceObjToUpdate: null,
+
+                upgradeFormVisible: false,
+                upgradeForm: null,
+                upgradeFormMode: FormMode.CREATE,
+
+                upgrades: Stubs.merchandiseUpgrades
+            })
     }
 
     initialState = {
@@ -56,7 +66,8 @@ export default connect(
         canBeEquipped: false,
         canBeCrafted: false,
         canBeUsedInCraft: false,
-        upgradable: false
+        upgradable: false,
+        upgrades: []
     }
 
     render() {
@@ -160,7 +171,9 @@ export default connect(
 
                 <List title={"Уровни предмета:"}
                       noItemsText={"Отсутствуют.."}
-                      values={Stubs.merchandiseUpgrades.map(merchandiseUpgrade =>
+                      isAddButtonVisible={!this.state.upgradeFormVisible}
+                      onAddClicked={() => this.setState({upgradeFormVisible: true})}
+                      values={this.state.upgrades.map(merchandiseUpgrade =>
                           <ExpandableListItemWithBullets
                               name={merchandiseUpgrade.lvlNum + " Уровень"}
                               bullets={[
@@ -174,7 +187,24 @@ export default connect(
                           />
                       )}
                 />
-
+                {
+                    this.state.upgradeFormVisible && (
+                        this.state.upgradeFormMode == FormMode.CREATE ?
+                            <MerchandiseUpgradeForm
+                                lvlNum={this.state.upgrades.length + 1}
+                                onSubmit={form => {
+                                    console.log(form)
+                                }}
+                            /> :
+                            <MerchandiseUpgradeForm
+                                lvlNum={this.state.upgrades.length + 1}
+                                initialState={this.state.upgradeForm}
+                                onSubmit={form => {
+                                    console.log(form)
+                                }}
+                            />
+                    )
+                }
 
 
                 <SubmitButton text={"Сохранить товар"}

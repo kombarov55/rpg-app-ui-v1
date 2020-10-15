@@ -5,7 +5,6 @@ import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import IsNumeric from "../../../../util/IsNumeric";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import Label from "../../../Common/Labels/Label";
-import priceCombinationToString from "../../../../util/priceCombinationToString";
 
 export default class CountryTaxForm extends React.Component {
 

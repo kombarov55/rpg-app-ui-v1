@@ -5,7 +5,7 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import ListItem from "../../../Common/ListElements/ListItem";
 import PriceInput from "../../../Common/Input/PriceInput";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
-import priceCombinationToString from "../../../../util/priceCombinationToString";
+import priceCombinationToString from "../../../../util/AmountsToString";
 import Popup from "../../../../util/Popup";
 
 export default class ItemForSaleForm extends React.Component {

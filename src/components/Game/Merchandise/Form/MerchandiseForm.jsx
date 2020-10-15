@@ -15,6 +15,10 @@ import Popup from "../../../../util/Popup";
 import IconSelect from "../../../Common/Input/IconSelect";
 import SkillIcons from "../../../../data-layer/enums/SkillIcons";
 import FileUpload from "../../../Common/Input/FileUpload";
+import Stubs from "../../../../stubs/Stubs";
+import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
+import AmountsToString from "../../../../util/AmountsToString";
 
 export default connect(
     state => ({
@@ -51,7 +55,8 @@ export default connect(
         destination: null,
         canBeEquipped: false,
         canBeCrafted: false,
-        canBeUsedInCraft: false
+        canBeUsedInCraft: false,
+        upgradable: false
     }
 
     render() {
@@ -148,6 +153,29 @@ export default connect(
                     )
                 }
 
+                <InputLabel text={"Можно ли прокачать?"}/>
+                <InputSwitch checked={this.state.upgradable}
+                             onChange={e => this.setState({upgradable: e.value})}
+                />
+
+                <List title={"Уровни предмета:"}
+                      noItemsText={"Отсутствуют.."}
+                      values={Stubs.merchandiseUpgrades.map(merchandiseUpgrade =>
+                          <ExpandableListItemWithBullets
+                              name={merchandiseUpgrade.lvlNum + " Уровень"}
+                              bullets={[
+                                  "Влияние на навыки:",
+                                  ...merchandiseUpgrade.skillInfluences.map(skillInfluence => SkillInfluenceToString(skillInfluence)),
+                                  "Стоимость:",
+                                  ...merchandiseUpgrade.prices.map(amounts => AmountsToString(amounts))
+                              ]}
+
+                              alwaysExpand={true}
+                          />
+                      )}
+                />
+
+
 
                 <SubmitButton text={"Сохранить товар"}
                               onClick={() => this.onSubmitClicked()}
@@ -185,7 +213,7 @@ export default connect(
             this.state.type == "" ||
             this.state.destination == null
         ) {
-           Popup.error("Пожалуйста, заполните все обязательные поля: [Название, Описание, Категория, Тип, Для кого товар]")
+            Popup.error("Пожалуйста, заполните все обязательные поля: [Название, Описание, Категория, Тип, Для кого товар]")
             return
         }
 

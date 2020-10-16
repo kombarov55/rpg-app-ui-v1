@@ -49,10 +49,7 @@ import {
     UPDATE_GAME_FORM,
     UPDATE_MESSAGE_FORM,
     UPDATE_NETWORK_FORM,
-    UPDATE_QUESTIONNAIRE_TEMPLATE_FORM,
-    UPDATE_QUESTIONNAIRE_TEMPLATE_ITEM_FORM,
     UPDATE_SKILL_CATEGORY_FORM,
-    UPDATE_SKILL_FORM,
     UPDATE_SPELL_SCHOOL_FORM,
     UPDATE_SUBNETWORK_FORM
 } from "./ActionTypes";
@@ -261,21 +258,6 @@ export function rootReducer(state = initialState, action) {
         case UPDATE_ACTIVE_GAME:
             return Object.assign({}, state, {
                 activeGame: Object.assign({}, state.activeGame, action.payload.fieldNameToValue)
-            })
-
-        case UPDATE_QUESTIONNAIRE_TEMPLATE_FORM:
-            return Object.assign({}, state, {
-                questionnaireTemplateForm: Object.assign({}, state.questionnaireTemplateForm, action.payload.fieldNameToValue)
-            })
-
-        case UPDATE_QUESTIONNAIRE_TEMPLATE_ITEM_FORM:
-            return Object.assign({}, state, {
-                questionnaireTemplateItemForm: Object.assign({}, state.questionnaireTemplateItemForm, action.payload.fieldNameToValue)
-            })
-
-        case UPDATE_SKILL_FORM:
-            return Object.assign({}, state, {
-                skillForm: Object.assign({}, state.skillForm, action.payload.fieldNameToValue)
             })
 
         case UPDATE_CURRENCY_FORM:

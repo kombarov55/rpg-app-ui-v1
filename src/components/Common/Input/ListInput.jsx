@@ -28,7 +28,9 @@ export default function (props) {
         <>
             {props.values.length < max &&
             <div className={"list-input-horizontal"}>
-                <input className={"questionnaire-item-list-input"}
+                <input style={{
+                    "width": "90%"
+                }}
                        value={props.value}
                        onChange={e => props.onChange(e)}
                 />

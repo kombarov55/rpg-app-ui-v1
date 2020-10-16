@@ -41,12 +41,6 @@ export const editGameByNetworkId = (networkId, gameId) => gameByNetworkId(networ
 export const editGamebySubnetworkId = (networkId, subnetworkId, gameId) => gameBySubnetworkId(networkId, subnetworkId) + "/" + gameId
 export const deleteGameUrl = gameId => rootUrl + "/game/" + gameId
 
-export const questionnaireTemplateUrl = rootUrl + "/questionnaireTemplate"
-export const questionnaireTemplateFindByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/questionnaire"
-export const questionnaireTemplateByIdUrl = questionnaireId => questionnaireTemplateUrl + "/" + questionnaireId
-export const questionnaireTemplateRestoreUrl = questionnaireId => questionnaireTemplateByIdUrl(questionnaireId) + "/restore"
-
-
 export const skillsByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/skill"
 export const shortSkillsByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/skill/short"
 

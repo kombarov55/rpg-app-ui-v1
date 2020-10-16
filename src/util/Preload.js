@@ -10,7 +10,6 @@ import {
     merchandiseUrl,
     networkUrl,
     organizationByGameIdUrl,
-    questionnaireTemplateByIdUrl,
     shortSkillsByGameIdUrl,
     subnetworkUrl
 } from "./Parameters";
@@ -24,8 +23,7 @@ import {
     setOrganizations,
     setRecipes,
     setSkills,
-    setSubnetworks,
-    updateQuestionnaireTemplateForm
+    setSubnetworks
 } from "../data-layer/ActionCreators";
 
 
@@ -50,10 +48,6 @@ export default {
         get(getRecipesByGameId(gameId), rs => window.store.dispatch(setRecipes(rs)))
         get(merchandiseUrl(gameId), rs => window.store.dispatch(setAvailableMerchandise(rs)))
         get(shortSkillsByGameIdUrl(gameId), rs => window.store.dispatch(setSkills(rs)))
-    },
-
-    questionnaireTemplateEditView: questionnaireId => {
-        get(questionnaireTemplateByIdUrl(questionnaireId), rs => window.store.dispatch(updateQuestionnaireTemplateForm(rs)))
     },
 
     conversionView: gameId => {

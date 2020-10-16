@@ -1,4 +1,3 @@
-import QuestionnaireTemplateItemType from "./enums/QuestionnaireTemplateItemType";
 import Destination from "./enums/Destination";
 
 export default {
@@ -35,22 +34,6 @@ export default {
         currencies: [],
         conversions: [],
         skillCategories: []
-    },
-    questionnaireTemplateForm: {
-        name: "",
-        description: "",
-        gameId: "",
-        itemFormVisible: false,
-        skillFormVisible: false,
-        questionnaireTemplateItems: [],
-        skillPointsDistribution: [],
-        skills: []
-    },
-    questionnaireTemplateItemForm: {
-        name: "",
-        type: QuestionnaireTemplateItemType.STRING.name,
-        listInput: "",
-        listValues: []
     },
     skillForm: {
         name: "",

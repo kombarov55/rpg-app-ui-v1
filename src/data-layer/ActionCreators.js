@@ -51,10 +51,7 @@ import {
     UPDATE_GAME_FORM,
     UPDATE_MESSAGE_FORM,
     UPDATE_NETWORK_FORM,
-    UPDATE_QUESTIONNAIRE_TEMPLATE_FORM,
-    UPDATE_QUESTIONNAIRE_TEMPLATE_ITEM_FORM,
     UPDATE_SKILL_CATEGORY_FORM,
-    UPDATE_SKILL_FORM,
     UPDATE_SPELL_SCHOOL_FORM,
     UPDATE_SUBNETWORK_FORM
 } from "./ActionTypes";
@@ -389,33 +386,6 @@ export function setActiveGame(game) {
 export function updateActiveGame(fieldNameToValue) {
     return {
         type: UPDATE_ACTIVE_GAME,
-        payload: {
-            fieldNameToValue: fieldNameToValue
-        }
-    }
-}
-
-export function updateQuestionnaireTemplateForm(fieldNameToValue) {
-    return {
-        type: UPDATE_QUESTIONNAIRE_TEMPLATE_FORM,
-        payload: {
-            fieldNameToValue: fieldNameToValue
-        }
-    }
-}
-
-export function updateQuestionnaireTemplateItemForm(fieldNameToValue) {
-    return {
-        type: UPDATE_QUESTIONNAIRE_TEMPLATE_ITEM_FORM,
-        payload: {
-            fieldNameToValue: fieldNameToValue
-        }
-    }
-}
-
-export function updateSkillForm(fieldNameToValue) {
-    return {
-        type: UPDATE_SKILL_FORM,
         payload: {
             fieldNameToValue: fieldNameToValue
         }

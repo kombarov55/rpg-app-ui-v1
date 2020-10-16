@@ -11,7 +11,6 @@ import {
     setRecipes,
     updateActiveGame,
     updateGameForm,
-    updateQuestionnaireTemplateForm
 } from "../../../../data-layer/ActionCreators";
 import {
     adminPageView,
@@ -21,7 +20,6 @@ import {
     merchandiseView,
     networkView,
     organizationDetailsView,
-    questionnaireRulesView,
     skillCategoryView,
     subnetworkView
 } from "../../../../Views";
@@ -43,8 +41,6 @@ import Btn from "../../../Common/Buttons/Btn";
 import Preload from "../../../../util/Preload";
 import Globals from "../../../../util/Globals";
 import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
-import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
-import QuestionnaireTemplateFormMode from "../../../../data-layer/enums/QuestionnaireTemplateFormMode";
 import List from "../../../Common/Lists/List";
 import SmallEditableListItem from "../../../Common/ListElements/SmallEditableListItem";
 import FormType from "../../../../data-layer/enums/FormMode";
@@ -77,7 +73,6 @@ function mapDispatchToProps(dispatch) {
         setGames: games => dispatch(setGames(games)),
         updateGameForm: game => dispatch(updateGameForm(game)),
         updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue)),
-        updateQuestionnaireTemplateForm: fieldNameToValue => dispatch(updateQuestionnaireTemplateForm(fieldNameToValue)),
         setActiveGame: game => dispatch(setActiveGame(game)),
         setOrganizations: organizations => dispatch(setOrganizations(organizations)),
         setActiveOrganization: organization => dispatch(setActiveOrganization(organization)),
@@ -134,12 +129,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         props.changeView(merchandiseView, {
             gameId: props.activeGame.id
         })
-    }
-
-    function onAddQuestionnaireTemplateClicked() {
-        Globals.questionnaireTemplateFormMode = QuestionnaireTemplateFormMode.CREATE
-        props.updateQuestionnaireTemplateForm(DefaultFormValues.questionnaireTemplateForm)
-        props.changeView(questionnaireRulesView)
     }
 
     function onConversionClicked() {
@@ -424,7 +413,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Товары"} onClick={() => onMerchandiseClicked()}/>
-                    <Btn text={"Создать шаблон анкеты"} onClick={() => onAddQuestionnaireTemplateClicked()}/>
                     <Btn text={"Настройки обмена валют"} onClick={() => onConversionClicked()}/>
                     {/*<Btn text={"Редактировать"} onClick={() => onEditClicked()}/>*/}
                     {/*<Btn text={"Удалить"} onClick={() => onDeleteClicked()}/>*/}

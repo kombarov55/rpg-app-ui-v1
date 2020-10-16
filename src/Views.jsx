@@ -12,22 +12,15 @@ import NetworkSelectionView from "./components/Admin/Network/View/NetworkSelecti
 import NetworkView from "./components/Admin/Network/View/NetworkView";
 import SubnetworkView from "./components/Admin/Subnetwork/View/SubnetworkView";
 import GameView from "./components/Game/Self/View/GameView";
-import QuestionnaireTemplateCreationView
-    from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateCreationView";
-import QuestionnaireRulesView from "./components/QuestionnaireTemplateCreation/View/QuestionnaireRulesView";
 import NetworkCreationView from "./components/Admin/Network/View/NetworkCreationView";
 import SubnetworkCreationView from "./components/Admin/Subnetwork/View/SubnetworkCreationView";
 import GameCreationView from "./components/Game/Self/View/GameCreationView";
 import NetworkEditView from "./components/Admin/Network/View/NetworkEditView";
 import SubnetworkEditView from "./components/Admin/Subnetwork/View/SubnetworkEditView";
 import GameEditView from "./components/Game/Self/View/GameEditView";
-import SkillSelectionView from "./components/QuestionnaireTemplateCreation/View/SkillSelectionView";
 import AdminPageView from "./components/Admin/View/AdminPageView";
-import QuestionnaireTemplateEditView
-    from "./components/QuestionnaireTemplateCreation/View/QuestionnaireTemplateEditView";
 import ConversionView from "./components/Game/Self/View/ConversionView";
 import CurrencyCreationView from "./components/Game/Self/View/CurrencyFormView";
-import ShopView from "./components/Game/Merchandise/View/ShopView";
 import MerchandiseView from "./components/Game/Merchandise/View/MerchandiseView";
 import SkillCategoryView from "./components/Game/Skill/View/SkillCategoryView";
 import OrganizationDetailsView from "./components/Game/Organization/View/OrganizationDetailsView";
@@ -71,17 +64,11 @@ export const skillCategoryView = {component: <SkillCategoryView/>, label: "Ка�
 export const spellSchoolView = {component: <SpellSchoolView/>, label: "Школа навыков"}
 export const schoolLvlView = {component: <SchoolLvlView/>, label: "Круг школы навыков"}
 
-export const questionnaireRulesView = {component: <QuestionnaireRulesView/>, label: "Правила игры"}
-export const questionnaireTemplateCreationView = {component: <QuestionnaireTemplateCreationView/>, label: "Создание анкеты"}
-export const questionnaireTemplateEditView = {component: <QuestionnaireTemplateEditView/>, label: "Редактирование шаблона анкеты"}
-export const skillSelectionView = {component: <SkillSelectionView/>, label: "Выбор навыка"}
 export const skillView = {component: <SkillView/>, label: "Навык"}
 
 export const conversionView = {component: <ConversionView/>, label: "Обмен валют"}
 
 export const currencyFormView = {component: <CurrencyCreationView/>, label: "Валюта"}
-
-export const shopView = {component: <ShopView/>, label: "Магазин"}
 
 export const merchandiseView = {component: <MerchandiseView/>, label: "Товары"}
 

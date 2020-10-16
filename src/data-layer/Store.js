@@ -51,8 +51,6 @@ export const initialState = {
     networkForm: DefaultFormValues.networkForm,
     subnetworkForm: DefaultFormValues.subnetworkForm,
     gameForm: DefaultFormValues.gameForm,
-    questionnaireTemplateForm: DefaultFormValues.questionnaireTemplateForm,
-    questionnaireTemplateItemForm: DefaultFormValues.questionnaireTemplateItemForm,
     skillForm: DefaultFormValues.skillForm,
     currencyForm: DefaultFormValues.currencyForm,
     conversionForm: DefaultFormValues.conversionForm,

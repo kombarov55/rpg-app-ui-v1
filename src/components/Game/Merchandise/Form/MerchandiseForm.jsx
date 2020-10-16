@@ -151,11 +151,11 @@ export default connect(
                     this.state.skillInfluenceFormVisible && (
                         this.state.skillInfluenceFormMode === FormMode.CREATE ?
                             <SkillInfluenceForm
-                                skills={this.props.skills}
+                                skills={this.props.skills.filter(v => v.destination == this.state.destination)}
                                 onSubmit={form => this.saveSkillInfluence(form)}
                             /> :
                             <SkillInfluenceForm
-                                skills={this.props.skills}
+                                skills={this.props.skills.filter(v => v.destination == this.state.destination)}
                                 initialState={this.state.skillInfluenceObjToUpdate}
                                 onSubmit={form => this.saveSkillInfluence(form)}
                             />

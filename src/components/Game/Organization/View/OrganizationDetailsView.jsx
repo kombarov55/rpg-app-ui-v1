@@ -7,10 +7,10 @@ import {gameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithButtons from "../../../Common/ListElements/ExpandableListItemWithButtons";
-import {get, httpDelete, post, put} from "../../../../util/Http";
+import {httpDelete, post, put} from "../../../../util/Http";
 import {
     addBalanceUrl,
-    addOrganizationShopUrl, addOwnedMerchandiseUrl, merchandiseByGameIdAndDestination,
+    addOrganizationShopUrl,
     organizationHeadUrl,
     removeOrganizationShopUrl
 } from "../../../../util/Parameters";
@@ -23,8 +23,6 @@ import ListItem from "../../../Common/ListElements/ListItem";
 import PriceInput from "../../../Common/Input/PriceInput";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import ItemForSaleForm from "../Form/ItemForSaleForm";
-import Destination from "../../../../data-layer/enums/Destination";
 import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByName";
 

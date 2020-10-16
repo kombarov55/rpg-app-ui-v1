@@ -29,6 +29,7 @@ import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
     addItemForSaleForGameUrl,
     deleteGameUrl,
+    deleteRecipe,
     merchandiseUrl,
     organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
@@ -379,7 +380,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <List title={"Рецепты крафта:"}
                       noItemsText={"Отсутствуют.."}
                       isAddButtonVisible={!recipeFormVisible}
-                      onAddClicked={() => setRecipeFormVisible(true)}
+                      onAddClicked={() => {
+                          setRecipeFormVisible(true)
+                      }}
                       values={props.recipes.map(recipe =>
                           <ExpandableListItemWithBullets
                               name={recipe.target.name}
@@ -389,10 +392,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                   "Зависит от навыка: " + recipe.dependantSkill.name,
                                   "Мин. уровень навыка для крафта: " + recipe.minSkillLvl,
                                   "Необходимые предметы для крафта:",
-                                  ...recipe.ingredients.map(warehouseEntry => warehouseEntry.merchandise.name + ": " + warehouseEntry.amount),
+                                  ...recipe.ingredients.map(warehouseEntry => warehouseEntry.merchandise.name + ": " + warehouseEntry.amount + "шт."),
                                   "Шанс успеха:",
                                   ...recipe.successChanceDependencies.map(successChanceDependency => successChanceDependency.min + " до " + successChanceDependency.max + ": " + successChanceDependency.percent + "%")
                               ]}
+                              onDeleteClicked={() => httpDelete(deleteRecipe(recipe.id), rs => {
+                                  props.setRecipes(props.recipes.filter(v => v.id !== rs.id))
+                                  Popup.info("Рецепт удалён")
+                              })}
 
                               alwaysExpand={true}
                               key={recipe.id}
@@ -408,8 +415,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         onSubmit={form => {
                             post(saveRecipe(props.activeGame.id), form, rs => props.setRecipes(props.recipes.concat(rs)))
                             Popup.info("Рецепт крафта создан.")
+                            setRecipeFormVisible(false)
                         }}
                     />
+
                 }
 
 

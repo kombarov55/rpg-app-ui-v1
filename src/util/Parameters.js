@@ -112,4 +112,5 @@ export const deleteSkillUpgrade = skillUpgradeId => rootUrl + "/skillUpgrade/" +
 
 export const getRecipesByGameId = gameId => rootUrl + "/game/" + gameId + "/recipe"
 export const saveRecipe = gameId => rootUrl + "/game/" + gameId + "/recipe"
+export const updateRecipe = (gameId, recipeId) => rootUrl + "/game/" + gameId + "/recipe/" + recipeId
 export const deleteRecipe = id => rootUrl + "/recipe/" + id

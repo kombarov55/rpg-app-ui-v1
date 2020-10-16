@@ -3,7 +3,13 @@ import {connect} from "react-redux";
 import {InputTextarea} from "primereact/inputtextarea";
 import {changeView, setGames, updateCurrencyForm, updateGameForm} from "../../../../data-layer/ActionCreators";
 import {post, upload} from "../../../../util/Http";
-import {gameByNetworkId, gameBySubnetworkId, gamesUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
+import {
+    gameByNetworkId,
+    gameBySubnetworkId,
+    openGamesUrl,
+    uploadServerUrl,
+    uploadUrl
+} from "../../../../util/Parameters";
 import {adminPageView, networkView, subnetworkView} from "../../../../Views";
 import Globals from "../../../../util/Globals";
 import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
@@ -67,7 +73,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
         switch (Globals.gameCreationMode) {
             case GameCreationMode.OPEN:
-                url = gamesUrl
+                url = openGamesUrl
                 nextView = adminPageView
                 break
 

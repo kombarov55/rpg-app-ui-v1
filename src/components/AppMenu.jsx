@@ -4,12 +4,11 @@ import {
     announcementView,
     conversationListView,
     favoriteAnnouncementView,
-    myAnnouncementView, networkSelectionView
+    myAnnouncementView,
+    myGamesView
 } from "../Views";
 import {changeView, setNetworks, toggleSidebar} from "../data-layer/ActionCreators";
 import {connect} from "react-redux";
-import {get} from "../util/Http";
-import {networkUrl} from "../util/Parameters";
 import Preload from "../util/Preload";
 
 function mapStateToProps(state) {
@@ -70,7 +69,9 @@ class ConnectedMenu extends React.Component {
                         Сообщения
                     </div>
                 </div>
-                <div className={"main-frame-nav-item"}>
+                <div className={"main-frame-nav-item"}
+                     onClick={() => this.onItemClicked(myGamesView)}
+                >
                     <i className={"pi pi-users"} style={{"fontSize": "6vmin"}}/>
                     <div className={"main-frame-nav-item-text"}>
                         Мои игры

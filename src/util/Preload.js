@@ -5,11 +5,11 @@ import {
     findQuestionnaireTemplatesByGameId,
     gameByNetworkId,
     gameBySubnetworkId,
-    gamesUrl,
     gameUrl,
     getRecipesByGameId,
     merchandiseUrl,
     networkUrl,
+    openGamesUrl,
     organizationByGameIdUrl,
     shortSkillsByGameIdUrl,
     subnetworkUrl
@@ -32,7 +32,7 @@ import {
 export default {
     adminPageView: () => {
         get(networkUrl, rs => window.store.dispatch(setNetworks(rs)))
-        get(gamesUrl, rs => window.store.dispatch(setGames(rs)))
+        get(openGamesUrl, rs => window.store.dispatch(setGames(rs)))
     },
 
     networkView: networkId => {

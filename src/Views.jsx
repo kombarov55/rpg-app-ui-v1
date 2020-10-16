@@ -29,6 +29,7 @@ import SpellSchoolView from "./components/Game/Skill/View/SpellSchoolView";
 import SchoolLvlView from "./components/Game/Skill/View/SchoolLvlView";
 import SkillView from "./components/Game/Skill/View/SkillView";
 import QuestionnaireTemplateView from "./components/Game/QuestionnaireTemplate/View/QuestionnaireTemplateView";
+import MyGamesView from "./components/Games/Self/View/MyGamesView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -66,13 +67,9 @@ export const spellSchoolView = {component: <SpellSchoolView/>, label: "Школ�
 export const schoolLvlView = {component: <SchoolLvlView/>, label: "Круг школы навыков"}
 
 export const skillView = {component: <SkillView/>, label: "Навык"}
-
 export const conversionView = {component: <ConversionView/>, label: "Обмен валют"}
-
 export const currencyFormView = {component: <CurrencyCreationView/>, label: "Валюта"}
-
 export const merchandiseView = {component: <MerchandiseView/>, label: "Товары"}
-
 export const organizationDetailsView = {component: <OrganizationDetailsView/>, label: "Организация"}
-
 export const questionnaireTemplateView = {component: <QuestionnaireTemplateView/>, label: "Шаблон анкеты"}
+export const myGamesView = {component: <MyGamesView/>, label: "Мои игры"}

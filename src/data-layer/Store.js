@@ -29,6 +29,7 @@ export const initialState = {
     activeSpellSchool: null,
     activeSchoolLvl: null,
     activeSkill: null,
+    activeQuestionnaireTemplate: null,
 
     msgs: [],
     networks: [],
@@ -39,6 +40,7 @@ export const initialState = {
     organizations: Stubs.organizations,
     recipes: [],
     skills: [],
+    questionnaireTemplates: [],
 
     availableMerchandise: [],
     availableItemsForSale: [],

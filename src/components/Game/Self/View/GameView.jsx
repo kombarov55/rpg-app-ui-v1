@@ -8,6 +8,7 @@ import {
     setAvailableMerchandise,
     setGames,
     setOrganizations,
+    setQuestionnaireTemplates,
     setRecipes,
     updateActiveGame,
     updateGameForm,
@@ -33,6 +34,7 @@ import {
     organizationByGameIdUrl,
     organizationUrl,
     removeItemForSaleForGameUrl,
+    saveQuestionnaireTemplateUrl,
     saveRecipe,
     saveSkillCategoryUrl,
     skillCategoryUrl
@@ -64,7 +66,8 @@ function mapStateToProps(state, props) {
         currencies: state.activeGame.currencies.map(v => v.name),
         availableMerchandise: state.availableMerchandise,
         recipes: state.recipes,
-        skills: state.skills
+        skills: state.skills,
+        questionnaireTemplates: state.questionnaireTemplates,
     }
 }
 
@@ -79,7 +82,8 @@ function mapDispatchToProps(dispatch) {
         setActiveOrganization: organization => dispatch(setActiveOrganization(organization)),
         setAvailableMerchandise: xs => dispatch(setAvailableMerchandise(xs)),
         setActiveSkillCategory: x => dispatch(setActiveSkillCategory(x)),
-        setRecipes: x => dispatch(setRecipes(x))
+        setRecipes: x => dispatch(setRecipes(x)),
+        setQuestionnaireTemplates: x => dispatch(setQuestionnaireTemplates(x)),
     }
 }
 
@@ -416,12 +420,27 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                       noItemsText={"Пусто.."}
                       isAddButtonVisible={!questionnaireTemplateFormVisible}
                       onAddClicked={() => setQuestionnaireTemplateFormVisible(true)}
+                      values={props.questionnaireTemplates.map(questionnaireTemplate =>
+                          <ExpandableListItemWithBullets
+                              name={questionnaireTemplate.name}
+                              description={questionnaireTemplate.description}
+                              img={questionnaireTemplate.img}
+                              alwaysExpand={true}
+                              key={questionnaireTemplate.id}
+                          />
+                      )}
                 />
 
                 {
                     questionnaireTemplateFormVisible &&
                     <QuestionnaireTemplateForm
-                        onSubmit={form => console.log(form)}
+                        onSubmit={form => {
+                            post(saveQuestionnaireTemplateUrl(props.activeGame.id), form, rs => {
+                                props.setQuestionnaireTemplates(props.questionnaireTemplates.concat(rs))
+                                Popup.info("Шаблон анкеты создан. Для дальнейшей настройки зайдите по кнопке 'Подробнее'")
+                                setQuestionnaireTemplateFormVisible(false)
+                            })
+                        }}
                     />
                 }
 

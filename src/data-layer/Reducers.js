@@ -20,6 +20,7 @@ import {
     SET_ACTIVE_GAME,
     SET_ACTIVE_NETWORK,
     SET_ACTIVE_ORGANIZATION,
+    SET_ACTIVE_QUESTIONNAIRE_TEMPLATE,
     SET_ACTIVE_SCHOOL_LVL,
     SET_ACTIVE_SKILL,
     SET_ACTIVE_SKILL_CATEGORY,
@@ -34,6 +35,7 @@ import {
     SET_MSGS,
     SET_NETWORKS,
     SET_ORGANIZATIONS,
+    SET_QUESTIONNAIRE_TEMPLATES,
     SET_RECIPES,
     SET_SKILLS,
     SET_SUBNETWORKS,
@@ -344,6 +346,16 @@ export function rootReducer(state = initialState, action) {
         case SET_SKILLS:
             return Object.assign({}, state, {
                 skills: action.payload.x
+            })
+
+        case SET_QUESTIONNAIRE_TEMPLATES:
+            return Object.assign({}, state, {
+                questionnaireTemplates: action.payload.x
+            })
+
+        case SET_ACTIVE_QUESTIONNAIRE_TEMPLATE:
+            return Object.assign({}, state, {
+                activeQuestionnaireTemplate: action.payload.x
             })
 
         default:

@@ -22,6 +22,7 @@ import {
     SET_ACTIVE_GAME,
     SET_ACTIVE_NETWORK,
     SET_ACTIVE_ORGANIZATION,
+    SET_ACTIVE_QUESTIONNAIRE_TEMPLATE,
     SET_ACTIVE_SCHOOL_LVL,
     SET_ACTIVE_SKILL,
     SET_ACTIVE_SKILL_CATEGORY,
@@ -36,6 +37,7 @@ import {
     SET_MSGS,
     SET_NETWORKS,
     SET_ORGANIZATIONS,
+    SET_QUESTIONNAIRE_TEMPLATES,
     SET_RECIPES,
     SET_SKILLS,
     SET_SUBNETWORKS,
@@ -561,6 +563,24 @@ export function setRecipes(x) {
 export function setSkills(x) {
     return {
         type: SET_SKILLS,
+        payload: {
+            x: x
+        }
+    }
+}
+
+export function setQuestionnaireTemplates(x) {
+    return {
+        type: SET_QUESTIONNAIRE_TEMPLATES,
+        payload: {
+            x: x
+        }
+    }
+}
+
+export function setActiveQuestionnaireTemplate(x) {
+    return {
+        type: SET_ACTIVE_QUESTIONNAIRE_TEMPLATE,
         payload: {
             x: x
         }

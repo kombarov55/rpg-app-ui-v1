@@ -2,6 +2,7 @@ import {get} from "./Http";
 import {
     conversionsByGameIdUrl,
     currenciesByGameIdUrl,
+    findQuestionnaireTemplatesByGameId,
     gameByNetworkId,
     gameBySubnetworkId,
     gamesUrl,
@@ -21,6 +22,7 @@ import {
     setGames,
     setNetworks,
     setOrganizations,
+    setQuestionnaireTemplates,
     setRecipes,
     setSkills,
     setSubnetworks
@@ -48,6 +50,7 @@ export default {
         get(getRecipesByGameId(gameId), rs => window.store.dispatch(setRecipes(rs)))
         get(merchandiseUrl(gameId), rs => window.store.dispatch(setAvailableMerchandise(rs)))
         get(shortSkillsByGameIdUrl(gameId), rs => window.store.dispatch(setSkills(rs)))
+        get(findQuestionnaireTemplatesByGameId(gameId), rs => window.store.dispatch(setQuestionnaireTemplates(rs)))
     },
 
     conversionView: gameId => {

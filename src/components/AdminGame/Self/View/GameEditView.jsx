@@ -16,7 +16,7 @@ import {
     uploadServerUrl,
     uploadUrl
 } from "../../../../util/Parameters";
-import {gameView} from "../../../../Views";
+import {adminGameView} from "../../../../Views";
 import Globals from "../../../../util/Globals";
 import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
@@ -99,7 +99,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             props.setGames(props.games.filter(it => it.id !== rs.id).concat(rs))
             props.updateGameForm(DefaultFormValues.gameForm)
             props.setActiveGame(rs)
-            props.changeView(gameView)
+            props.changeView(adminGameView)
         })
     }
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import GameItem from "../../GameItem";
 import {
@@ -8,8 +8,8 @@ import {
     updateGameForm,
     updateSubnetworkForm
 } from "../../../../data-layer/ActionCreators";
-import {gameCreationView, gameView, networkView, subnetworkEditView} from "../../../../Views";
-import AddGameItem from "../../../Game/Self/Component/AddGameItemComponent";
+import {adminGameView, gameCreationView, networkView, subnetworkEditView} from "../../../../Views";
+import AddGameItem from "../../../AdminGame/Self/Component/AddGameItemComponent";
 import Globals from "../../../../util/Globals";
 import Btn from "../../../Common/Buttons/Btn";
 import {httpDelete} from "../../../../util/Http";
@@ -43,7 +43,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onGameClicked(game) {
         Globals.gameCreationMode = GameCreationMode.BY_SUBNETWORK
         props.setActiveGame(game)
-        props.changeView(gameView)
+        props.changeView(adminGameView)
     }
 
     function onAddGameClicked() {

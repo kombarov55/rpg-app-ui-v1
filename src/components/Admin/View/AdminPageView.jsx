@@ -2,13 +2,14 @@ import React from "react";
 import {connect} from "react-redux";
 import Label from "../../Common/Labels/Label";
 import NetworkItem from "../NetworkItem";
-import {gameCreationView, gameView, networkCreationView, networkView} from "../../../Views";
+import {adminGameView, gameCreationView, networkCreationView, networkView} from "../../../Views";
 import {
     changeView,
     setActiveGame,
     setActiveNetwork,
     setGames,
-    setSubnetworks, updateGameForm
+    setSubnetworks,
+    updateGameForm
 } from "../../../data-layer/ActionCreators";
 import GameItem from "../GameItem";
 import Globals from "../../../util/Globals";
@@ -51,7 +52,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
         Preload.gameView(game.id)
         props.setActiveGame(game)
         Globals.gameCreationMode = GameCreationMode.OPEN
-        props.changeView(gameView)
+        props.changeView(adminGameView)
     }
 
     function onAddGameClick() {

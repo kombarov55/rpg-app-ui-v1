@@ -3,7 +3,7 @@ import FormViewStyle from "../../../../styles/FormViewStyle";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import {connect} from "react-redux";
 import {changeView, updateActiveGame} from "../../../../data-layer/ActionCreators";
-import {gameView} from "../../../../Views";
+import {adminGameView} from "../../../../Views";
 import IsNumeric from "../../../../util/IsNumeric";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import {patch, post} from "../../../../util/Http";
@@ -23,7 +23,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         updateActiveGame: fieldNameToValue => dispatch(updateActiveGame(fieldNameToValue)),
-        toPrevView: () => dispatch(changeView(gameView))
+        toPrevView: () => dispatch(changeView(adminGameView))
     }
 }
 

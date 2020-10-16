@@ -4,7 +4,7 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import Btn from "../../../Common/Buttons/Btn";
 import CountryTaxForm from "../Form/CountryTaxForm";
 import {httpDelete, post, put} from "../../../../util/Http";
-import {removeCreditOfferUrl, organizationByGameIdAndIdUrl, addCreditOfferUrl} from "../../../../util/Parameters";
+import {addCreditOfferUrl, organizationByGameIdAndIdUrl, removeCreditOfferUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";

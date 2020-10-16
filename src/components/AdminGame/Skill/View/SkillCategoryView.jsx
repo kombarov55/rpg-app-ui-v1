@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {changeView, setActiveSkill, setActiveSpellSchool} from "../../../../data-layer/ActionCreators";
-import {gameView, skillView, spellSchoolView} from "../../../../Views";
+import {adminGameView, skillView, spellSchoolView} from "../../../../Views";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import BasicSkillCategoryComponent from "../Component/BasicSkillCategoryComponent";
 import ComplexSkillCategoryComponent from "../Component/ComplexSkillCategoryComponent";
@@ -31,7 +31,7 @@ export default connect(
                 dispatch(setActiveSkill(skill))
                 dispatch(changeView(skillView))
             },
-            back: () => dispatch(changeView(gameView))
+            back: () => dispatch(changeView(adminGameView))
         }
     }
 )

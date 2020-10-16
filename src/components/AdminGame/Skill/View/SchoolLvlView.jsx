@@ -1,4 +1,4 @@
- import React from "react";
+import React from "react";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import {connect} from "react-redux"
 import {changeView} from "../../../../data-layer/ActionCreators";
@@ -15,12 +15,13 @@ import Popup from "../../../../util/Popup";
 import {httpDelete, post, put} from "../../../../util/Http";
 import {
     addSpellPurchaseOptionUrl,
-    addSpellUrl, deleteSpellPurchaseOption,
+    addSpellUrl,
+    deleteSpellPurchaseOption,
     editSpellPurchaseOption,
     editSpellUrl
 } from "../../../../util/Parameters";
 import SpellPurchaseForm from "../Form/SpellPurchaseForm";
- import IsLastElement from "../../../../util/IsLastElement";
+import IsLastElement from "../../../../util/IsLastElement";
 
 export default connect(
     state => ({

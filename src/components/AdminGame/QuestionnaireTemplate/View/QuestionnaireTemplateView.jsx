@@ -21,7 +21,7 @@ import FieldType from "../../../../data-layer/enums/FieldType";
 import ListItem from "../../../Common/ListElements/ListItem";
 import SkillCategoryToPointsForm from "../Form/SkillCategoryToPointsForm";
 import Btn from "../../../Common/Buttons/Btn";
-import {gameView} from "../../../../Views";
+import {adminGameView} from "../../../../Views";
 
 export default connect(
     state => ({
@@ -70,7 +70,7 @@ export default connect(
                 dispatch(setActiveQuestionnaireTemplate(qt))
             },
 
-            back: () => dispatch(changeView(gameView))
+            back: () => dispatch(changeView(adminGameView))
         }
     }
 )(class QuestionnaireTemplateView extends React.Component {

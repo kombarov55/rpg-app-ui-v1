@@ -2,9 +2,9 @@ import React from "react";
 import {connect} from "react-redux";
 import NetworkItem from "../../NetworkItem";
 import {
+    adminGameView,
     adminPageView,
     gameCreationView,
-    gameView,
     networkEditView,
     subnetworkCreationView,
     subnetworkView
@@ -13,15 +13,18 @@ import {
     changeView,
     setActiveGame,
     setActiveSubnetwork,
-    setGames, setNetworks,
-    setSubnetworks, updateGameForm, updateNetworkForm
+    setGames,
+    setNetworks,
+    setSubnetworks,
+    updateGameForm,
+    updateNetworkForm
 } from "../../../../data-layer/ActionCreators";
 import AddSubnetworkItem from "../AddSubnetworkItem";
-import AddGameItem from "../../../Game/Self/Component/AddGameItemComponent";
+import AddGameItem from "../../../AdminGame/Self/Component/AddGameItemComponent";
 import Globals from "../../../../util/Globals";
 import GameItem from "../../GameItem";
-import {get, httpDelete} from "../../../../util/Http";
-import {deleteNetworkUrl, gameBySubnetworkId} from "../../../../util/Parameters";
+import {httpDelete} from "../../../../util/Http";
+import {deleteNetworkUrl} from "../../../../util/Parameters";
 import Btn from "../../../Common/Buttons/Btn";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 import Preload from "../../../../util/Preload";
@@ -64,7 +67,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onGameClicked(game) {
         Globals.gameCreationMode = GameCreationMode.BY_NETWORK
         props.setActiveGame(game)
-        props.changeView(gameView)
+        props.changeView(adminGameView)
     }
 
     function onAddGameClicked() {

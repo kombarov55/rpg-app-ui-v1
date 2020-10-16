@@ -8,7 +8,7 @@ import ConversionForm from "../Form/ConversionForm";
 import {changeView, setConversions, updateConversionForm} from "../../../../data-layer/ActionCreators";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 import Btn from "../../../Common/Buttons/Btn";
-import {gameView} from "../../../../Views";
+import {adminGameView} from "../../../../Views";
 import {post} from "../../../../util/Http";
 import {conversionsByGameIdUrl} from "../../../../util/Parameters";
 
@@ -76,7 +76,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                }}
                 />
             }
-            <Btn text={"Назад"} onClick={() => props.changeView(gameView)}/>
+            <Btn text={"Назад"} onClick={() => props.changeView(adminGameView)}/>
         </div>
     )
 })

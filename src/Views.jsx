@@ -11,25 +11,25 @@ import ConversationInputView from "./components/Conversation/View/ConversationIn
 import NetworkSelectionView from "./components/Admin/Network/View/NetworkSelectionView";
 import NetworkView from "./components/Admin/Network/View/NetworkView";
 import SubnetworkView from "./components/Admin/Subnetwork/View/SubnetworkView";
-import GameView from "./components/Game/Self/View/GameView";
+import GameView from "./components/AdminGame/Self/View/AdminGameView";
 import NetworkCreationView from "./components/Admin/Network/View/NetworkCreationView";
 import SubnetworkCreationView from "./components/Admin/Subnetwork/View/SubnetworkCreationView";
-import GameCreationView from "./components/Game/Self/View/GameCreationView";
+import GameCreationView from "./components/AdminGame/Self/View/GameCreationView";
 import NetworkEditView from "./components/Admin/Network/View/NetworkEditView";
 import SubnetworkEditView from "./components/Admin/Subnetwork/View/SubnetworkEditView";
-import GameEditView from "./components/Game/Self/View/GameEditView";
+import GameEditView from "./components/AdminGame/Self/View/GameEditView";
 import AdminPageView from "./components/Admin/View/AdminPageView";
-import ConversionView from "./components/Game/Self/View/ConversionView";
-import CurrencyCreationView from "./components/Game/Self/View/CurrencyFormView";
-import MerchandiseView from "./components/Game/Merchandise/View/MerchandiseView";
-import SkillCategoryView from "./components/Game/Skill/View/SkillCategoryView";
-import OrganizationDetailsView from "./components/Game/Organization/View/OrganizationDetailsView";
+import ConversionView from "./components/AdminGame/Self/View/ConversionView";
+import CurrencyCreationView from "./components/AdminGame/Self/View/CurrencyFormView";
+import MerchandiseView from "./components/AdminGame/Merchandise/View/MerchandiseView";
+import SkillCategoryView from "./components/AdminGame/Skill/View/SkillCategoryView";
+import OrganizationDetailsView from "./components/AdminGame/Organization/View/OrganizationDetailsView";
 import TestView from "./components/TestView";
-import SpellSchoolView from "./components/Game/Skill/View/SpellSchoolView";
-import SchoolLvlView from "./components/Game/Skill/View/SchoolLvlView";
-import SkillView from "./components/Game/Skill/View/SkillView";
-import QuestionnaireTemplateView from "./components/Game/QuestionnaireTemplate/View/QuestionnaireTemplateView";
-import MyGamesView from "./components/Games/Self/View/MyGamesView";
+import SpellSchoolView from "./components/AdminGame/Skill/View/SpellSchoolView";
+import SchoolLvlView from "./components/AdminGame/Skill/View/SchoolLvlView";
+import SkillView from "./components/AdminGame/Skill/View/SkillView";
+import QuestionnaireTemplateView from "./components/AdminGame/QuestionnaireTemplate/View/QuestionnaireTemplateView";
+import MyGamesView from "./components/MyGames/Self/View/MyGamesView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -58,7 +58,7 @@ export const subnetworkCreationView = {component: <SubnetworkCreationView/>, lab
 export const subnetworkView = {component: <SubnetworkView/>, label: "Подсеть"}
 export const subnetworkEditView = {component: <SubnetworkEditView/>, label: "Редактирование подсети"}
 
-export const gameView = {component: <GameView/>, label: "Игра"}
+export const adminGameView = {component: <GameView/>, label: "Игра"}
 export const gameCreationView = {component: <GameCreationView/>, label: "Создание игры"}
 export const gameEditView = {component: <GameEditView/>, label: "Редактирование игры"}
 

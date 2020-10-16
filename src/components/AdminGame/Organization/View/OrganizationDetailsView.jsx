@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import Btn from "../../../Common/Buttons/Btn";
 import {changeView, setActiveOrganization, setAvailableMerchandise} from "../../../../data-layer/ActionCreators";
-import {gameView} from "../../../../Views";
+import {adminGameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithButtons from "../../../Common/ListElements/ExpandableListItemWithButtons";
@@ -36,7 +36,7 @@ export default connect(
     }), dispatch => ({
         setOrganization: organization => dispatch(setActiveOrganization(organization)),
         setAvailableMerchandise: merchandiseList => dispatch(setAvailableMerchandise(merchandiseList)),
-        back: () => dispatch(changeView(gameView))
+        back: () => dispatch(changeView(adminGameView))
     }))
 (class OrganizationDetailsView extends React.Component {
 

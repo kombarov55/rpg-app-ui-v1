@@ -111,3 +111,5 @@ export const deleteRecipe = id => rootUrl + "/recipe/" + id
 
 export const findQuestionnaireTemplatesByGameId = gameId => rootUrl + "/game/" + gameId + "/questionnaireTemplate"
 export const saveQuestionnaireTemplateUrl = gameId => rootUrl + "/game/" + gameId + "/questionnaireTemplate"
+export const deleteQuestionnaireTemplateUrl = id => rootUrl + "/questionnaireTemplate/" + id
+export const editQuestionnaireTemplateUrl = id => rootUrl + "/questionnaireTemplate/" + id

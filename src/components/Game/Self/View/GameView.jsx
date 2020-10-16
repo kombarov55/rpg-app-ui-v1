@@ -28,7 +28,9 @@ import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
     addItemForSaleForGameUrl,
     deleteGameUrl,
+    deleteQuestionnaireTemplateUrl,
     deleteRecipe,
+    editQuestionnaireTemplateUrl,
     merchandiseUrl,
     organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
@@ -102,6 +104,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     const [recipeFormVisible, setRecipeFormVisible] = useState(false)
 
     const [questionnaireTemplateFormVisible, setQuestionnaireTemplateFormVisible] = useState(false)
+    const [questionnaireTemplateForm, setQuestionnaireTemplateForm] = useState()
+    const [questionnaireTemplateMode, setQuestionnaireTemplateFormMode] = useState(FormMode.CREATE)
 
     function onEditClicked() {
         props.updateGameForm(props.activeGame)
@@ -419,12 +423,26 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <List title={"Шаблоны анкет:"}
                       noItemsText={"Пусто.."}
                       isAddButtonVisible={!questionnaireTemplateFormVisible}
-                      onAddClicked={() => setQuestionnaireTemplateFormVisible(true)}
+                      onAddClicked={() => {
+                          setQuestionnaireTemplateFormVisible(true)
+                          setQuestionnaireTemplateFormMode(FormMode.CREATE)
+                      }}
                       values={props.questionnaireTemplates.map(questionnaireTemplate =>
                           <ExpandableListItemWithBullets
                               name={questionnaireTemplate.name}
                               description={questionnaireTemplate.description}
                               img={questionnaireTemplate.img}
+                              onEditClicked={() => {
+                                  setQuestionnaireTemplateFormVisible(true)
+                                  setQuestionnaireTemplateForm(questionnaireTemplate)
+                                  setQuestionnaireTemplateFormMode(FormMode.EDIT)
+                              }}
+                              onDeleteClicked={() =>
+                                  httpDelete(deleteQuestionnaireTemplateUrl(questionnaireTemplate.id), rs => {
+                                      props.setQuestionnaireTemplates(props.questionnaireTemplates.filter(v => v.id !== rs.id))
+                                      Popup.info("Шаблон анкеты удалён")
+                                  })
+                              }
                               alwaysExpand={true}
                               key={questionnaireTemplate.id}
                           />
@@ -432,16 +450,29 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
 
                 {
-                    questionnaireTemplateFormVisible &&
-                    <QuestionnaireTemplateForm
-                        onSubmit={form => {
-                            post(saveQuestionnaireTemplateUrl(props.activeGame.id), form, rs => {
-                                props.setQuestionnaireTemplates(props.questionnaireTemplates.concat(rs))
-                                Popup.info("Шаблон анкеты создан. Для дальнейшей настройки зайдите по кнопке 'Подробнее'")
-                                setQuestionnaireTemplateFormVisible(false)
-                            })
-                        }}
-                    />
+                    questionnaireTemplateFormVisible && (
+                        questionnaireTemplateMode === FormMode.CREATE ?
+                            <QuestionnaireTemplateForm
+                                onSubmit={form => {
+                                    post(saveQuestionnaireTemplateUrl(props.activeGame.id), form, rs => {
+                                        props.setQuestionnaireTemplates(props.questionnaireTemplates.concat(rs))
+                                        Popup.info("Шаблон анкеты создан. Для дальнейшей настройки зайдите по кнопке 'Подробнее'")
+                                        setQuestionnaireTemplateFormVisible(false)
+                                    })
+                                }}
+                            /> :
+                            <QuestionnaireTemplateForm
+                                initialState={questionnaireTemplateForm}
+                                onSubmit={form => {
+                                    put(editQuestionnaireTemplateUrl(form.id), form, rs => {
+                                        props.setQuestionnaireTemplates(props.questionnaireTemplates.filter(v => v.id !== rs.id).concat(rs))
+                                        Popup.info("Шаблон анкеты обновлен")
+                                        setQuestionnaireTemplateFormVisible(false)
+                                    })
+                                }}
+                            />
+                    )
+
                 }
 
 

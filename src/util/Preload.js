@@ -6,14 +6,24 @@ import {
     gameBySubnetworkId,
     gamesUrl,
     gameUrl,
-    networkUrl, organizationByGameIdUrl, questionnaireTemplateByIdUrl,
-    skillsByGameIdUrl,
+    getRecipesByGameId,
+    merchandiseUrl,
+    networkUrl,
+    organizationByGameIdUrl,
+    questionnaireTemplateByIdUrl,
+    shortSkillsByGameIdUrl,
     subnetworkUrl
 } from "./Parameters";
 import {
-    setActiveGame, setConversions, setCurrencies,
+    setActiveGame,
+    setAvailableMerchandise,
+    setConversions,
+    setCurrencies,
     setGames,
-    setNetworks, setOrganizations,
+    setNetworks,
+    setOrganizations,
+    setRecipes,
+    setSkills,
     setSubnetworks,
     updateQuestionnaireTemplateForm
 } from "../data-layer/ActionCreators";
@@ -37,6 +47,9 @@ export default {
     gameView: (gameId) => {
         get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
         get(organizationByGameIdUrl(gameId), rs => window.store.dispatch(setOrganizations(rs)))
+        get(getRecipesByGameId(gameId), rs => window.store.dispatch(setRecipes(rs)))
+        get(merchandiseUrl(gameId), rs => window.store.dispatch(setAvailableMerchandise(rs)))
+        get(shortSkillsByGameIdUrl(gameId), rs => window.store.dispatch(setSkills(rs)))
     },
 
     questionnaireTemplateEditView: questionnaireId => {

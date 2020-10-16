@@ -109,3 +109,7 @@ export const deleteSpellPurchaseOption = spellPurchaseOptionId => rootUrl + "/sp
 export const addSkillUpgradeUrl = skillId => rootUrl + "/skill/" + skillId + "/skillUpgrade"
 export const editSkillUpgradeUrl = skillUpgradeId => rootUrl + "/skillUpgrade/" + skillUpgradeId
 export const deleteSkillUpgrade = skillUpgradeId => rootUrl + "/skillUpgrade/" + skillUpgradeId
+
+export const getRecipesByGameId = gameId => rootUrl + "/game/" + gameId + "/recipe"
+export const saveRecipe = gameId => rootUrl + "/game/" + gameId + "/recipe"
+export const deleteRecipe = id => rootUrl + "/recipe/" + id

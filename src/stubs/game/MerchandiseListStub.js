@@ -2,26 +2,26 @@ export default [
     {
         id: "1",
         name: "Амулет лоха",
-        img: "no-img"
+        img: "SkillIcons/Skill-1.png"
     },
     {
         id: "2",
         name: "Амулет тигра",
-        img: "no-img"
+        img: "SkillIcons/Skill-2.png"
     },
     {
         id: "3",
         name: "Кольцо мартышки",
-        img: "no-img"
+        img: "SkillIcons/Skill-3.png"
     },
     {
         id: "4",
         name: "Аумулет со знаком огня",
-        img: "no-img"
+        img: "SkillIcons/Skill-4.png"
     },
     {
         id: "5",
         name: "Серьга чемпиона",
-        img: "no-img"
+        img: "SkillIcons/Skill-5.png"
     }
 ]

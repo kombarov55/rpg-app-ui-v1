@@ -8,6 +8,7 @@ import {
     setAvailableMerchandise,
     setGames,
     setOrganizations,
+    setRecipes,
     updateActiveGame,
     updateGameForm,
     updateQuestionnaireTemplateForm
@@ -15,7 +16,6 @@ import {
 import {
     adminPageView,
     conversionView,
-    craftingView,
     currencyFormView,
     gameEditView,
     merchandiseView,
@@ -34,6 +34,7 @@ import {
     organizationByGameIdUrl,
     organizationUrl,
     removeItemForSaleForGameUrl,
+    saveRecipe,
     saveSkillCategoryUrl,
     skillCategoryUrl
 } from "../../../../util/Parameters";
@@ -54,6 +55,7 @@ import OrganizationForm from "../../Organization/Form/OrganizationForm";
 import ItemForSaleForm from "../../Merchandise/Form/ItemForSaleForm";
 import FormatDate from "../../../../util/FormatDate";
 import SkillCategoryForm from "../../Skill/Form/SkillCategoryForm";
+import RecipeForm from "../Form/RecipeForm";
 
 function mapStateToProps(state, props) {
     return {
@@ -62,7 +64,9 @@ function mapStateToProps(state, props) {
         organizations: state.organizations,
         userAccounts: state.userAccounts,
         currencies: state.activeGame.currencies.map(v => v.name),
-        availableMerchandise: state.availableMerchandise
+        availableMerchandise: state.availableMerchandise,
+        recipes: state.recipes,
+        skills: state.skills
     }
 }
 
@@ -78,7 +82,7 @@ function mapDispatchToProps(dispatch) {
         setActiveOrganization: organization => dispatch(setActiveOrganization(organization)),
         setAvailableMerchandise: xs => dispatch(setAvailableMerchandise(xs)),
         setActiveSkillCategory: x => dispatch(setActiveSkillCategory(x)),
-        toCraftingView: () => dispatch(changeView(craftingView))
+        setRecipes: x => dispatch(setRecipes(x))
     }
 }
 
@@ -93,6 +97,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     const [organizationFormMode, setOrganizationFormMode] = useState(FormMode.CREATE)
 
     const [itemForSaleFormVisible, setItemForSaleFormVisible] = useState(false)
+
+    const [recipeFormVisible, setRecipeFormVisible] = useState(false)
 
     function onEditClicked() {
         props.updateGameForm(props.activeGame)
@@ -370,10 +376,45 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         />)
                 }
 
+                <List title={"Рецепты крафта:"}
+                      noItemsText={"Отсутствуют.."}
+                      isAddButtonVisible={!recipeFormVisible}
+                      onAddClicked={() => setRecipeFormVisible(true)}
+                      values={props.recipes.map(recipe =>
+                          <ExpandableListItemWithBullets
+                              name={recipe.target.name}
+                              img={recipe.target.img}
+                              description={recipe.target.description}
+                              bullets={[
+                                  "Зависит от навыка: " + recipe.dependantSkill.name,
+                                  "Мин. уровень навыка для крафта: " + recipe.minSkillLvl,
+                                  "Необходимые предметы для крафта:",
+                                  ...recipe.ingredients.map(warehouseEntry => warehouseEntry.merchandise.name + ": " + warehouseEntry.amount),
+                                  "Шанс успеха:",
+                                  ...recipe.successChanceDependencies.map(successChanceDependency => successChanceDependency.min + " до " + successChanceDependency.max + ": " + successChanceDependency.percent + "%")
+                              ]}
+
+                              alwaysExpand={true}
+                              key={recipe.id}
+                          />
+                      )}
+                />
+                {
+                    recipeFormVisible &&
+                    <RecipeForm
+                        targetOptions={props.availableMerchandise.filter(v => v.canBeCrafted)}
+                        ingredientOptions={props.availableMerchandise.filter(v => v.canBeUsedInCraft)}
+                        dependantSkillOptions={props.skills}
+                        onSubmit={form => {
+                            post(saveRecipe(props.activeGame.id), form, rs => props.setRecipes(props.recipes.concat(rs)))
+                            Popup.info("Рецепт крафта создан.")
+                        }}
+                    />
+                }
+
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Товары"} onClick={() => onMerchandiseClicked()}/>
-                    <Btn text={"Крафт"} onClick={() => props.toCraftingView()}/>
                     <Btn text={"Создать шаблон анкеты"} onClick={() => onAddQuestionnaireTemplateClicked()}/>
                     <Btn text={"Настройки обмена валют"} onClick={() => onConversionClicked()}/>
                     {/*<Btn text={"Редактировать"} onClick={() => onEditClicked()}/>*/}

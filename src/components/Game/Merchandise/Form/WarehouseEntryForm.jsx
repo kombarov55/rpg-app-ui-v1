@@ -4,8 +4,7 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import IsNumeric from "../../../../util/IsNumeric";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
-import {AutoComplete} from "primereact/autocomplete";
-import HorizontalListItem from "../../../Common/ListElements/HorizontalListItem";
+import {SelectButton} from "primereact/selectbutton";
 
 export default class WarehouseEntryForm extends React.Component {
 
@@ -24,14 +23,12 @@ export default class WarehouseEntryForm extends React.Component {
     render() {
         return (
             <div style={InnerFormStyle}>
-                <FormTitleLabel text={"Товар на склад"}/>
-                <AutoComplete
-                    value={this.state.merchandise}
-                    suggestions={this.state.filteredMerchandiseList}
-                    completeMethod={e => this.completeMethod(e.query)}
-                    field={"name"}
-                    onChange={e => this.setState({merchandise: e.value})}
-                    itemTemplate={item => this.itemTemplate(item)}
+                <FormTitleLabel text={"Предмет + количество:"}/>
+
+                <InputLabel text={"Предмет:"}/>
+                <SelectButton options={this.props.merchandiseList.map(v => ({label: v.name, value: v}))}
+                              value={this.state.merchandise}
+                              onChange={e => this.setState({merchandise: e.target.value})}
                 />
                 <InputLabel text={"Количество:"}/>
                 <input value={this.state.amount}
@@ -43,24 +40,6 @@ export default class WarehouseEntryForm extends React.Component {
                 />
             </div>
         )
-    }
-
-    completeMethod(name) {
-        setTimeout(() => {
-            this.setState({
-                filteredMerchandiseList: !name.trim().length ?
-                    this.props.merchandiseList :
-                    this.props.merchandiseList.filter(v => v.name.toLowerCase().startsWith(name.toLowerCase()))
-            })
-        }, 250)
-    }
-
-    itemTemplate(merchandise) {
-        return (
-            <HorizontalListItem
-                name={merchandise.name}
-                imgSrc={merchandise.img}
-            />)
     }
 
     onSubmitClicked() {

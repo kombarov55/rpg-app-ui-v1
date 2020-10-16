@@ -14,6 +14,7 @@ import Popup from "../../../../util/Popup";
 import IsLastElement from "../../../../util/IsLastElement";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import SkillUpgradeForm from "../Form/SkillUpgradeForm";
+import LvlNumComparator from "../../../../util/LvlNumComparator";
 
 export default connect(
     state => ({
@@ -69,11 +70,14 @@ export default connect(
                           upgradeFormVisible: true,
                           upgradeFormMode: FormMode.CREATE
                       })}
-                      values={this.state.upgrades.map(skillUpgrade =>
+                      values={this.state.upgrades.sort((x1, x2) => LvlNumComparator(x1, x2)).map(skillUpgrade =>
                           <ExpandableListItemWithBullets
-                              name={skillUpgrade.lvlNum + " Уровень:"}
+                              name={skillUpgrade.lvlNum + " уровень:"}
                               description={skillUpgrade.description}
-                              bullets={skillUpgrade.prices.map(amounts => amounts.map(amount => amount.name + ": " + amount.amount).join(" + "))}
+                              bullets={[
+                                  "Стоимость прокачки:",
+                                  ...skillUpgrade.prices.map(amounts => amounts.map(amount => amount.name + ": " + amount.amount).join(" + "))
+                              ]}
 
                               isDeleteVisible={IsLastElement(skillUpgrade, this.state.upgrades)}
                               onDeleteClicked={() => this.deleteUpgrade(skillUpgrade)}

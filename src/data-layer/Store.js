@@ -37,6 +37,8 @@ export const initialState = {
     currencies: [],
     conversions: [],
     organizations: Stubs.organizations,
+    recipes: [],
+    skills: [],
 
     availableMerchandise: [],
     availableItemsForSale: [],

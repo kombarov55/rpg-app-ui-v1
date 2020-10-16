@@ -33,15 +33,17 @@ export default class SkillUpgradeForm extends React.Component {
                     <InputLabel text={this.props.lvlNum + " Уровень:"}/>
 
                     <InputLabel text={"Описание:"}/>
-                    <InputTextarea value={this.state.description}
+                    <InputTextarea autoResize={true}
+                                   value={this.state.description}
                                    onChange={e => this.setState({description: e.target.value})}
                     />
 
                     <List title={"Варианты повышения:"}
                           noItemsText={"Нет вариантов покупки"}
                           values={this.state.prices.map(amounts =>
-                              <ListItem text={amounts.map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount).join(" + ")}
-                                        onDelete={() => this.setState(state => ({prices: state.prices.filter(savedAmounts => !_.isEqual(amounts, savedAmounts))}))}
+                              <ListItem
+                                  text={amounts.map(currencyNameToAmount => currencyNameToAmount.name + ": " + currencyNameToAmount.amount).join(" + ")}
+                                  onDelete={() => this.setState(state => ({prices: state.prices.filter(savedAmounts => !_.isEqual(amounts, savedAmounts))}))}
                               />
                           )}
                     />

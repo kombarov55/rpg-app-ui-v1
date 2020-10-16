@@ -1,6 +1,5 @@
 import React from "react";
 import List from "../Lists/List";
-import ListItem from "../ListElements/ListItem";
 
 export default class CustomAutocomplete extends React.Component {
 
@@ -28,8 +27,7 @@ export default class CustomAutocomplete extends React.Component {
                 <List
                     noItemsText={"Не найдено.."}
                     values={[
-                        ...this.state.filteredItems.map(item => this.props.itemRenderer(item)),
-                        <ListItem text={"..."}/>
+                        ...this.state.filteredItems.map(item => this.props.itemRenderer(item))
                     ]}
                 />
             </div>

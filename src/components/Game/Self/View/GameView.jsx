@@ -53,6 +53,7 @@ import ItemForSaleForm from "../../Merchandise/Form/ItemForSaleForm";
 import FormatDate from "../../../../util/FormatDate";
 import SkillCategoryForm from "../../Skill/Form/SkillCategoryForm";
 import RecipeForm from "../Form/RecipeForm";
+import QuestionnaireTemplateForm from "../../QuestionnaireTemplate/Form/QuestionnaireTemplateForm";
 
 function mapStateToProps(state, props) {
     return {
@@ -95,6 +96,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     const [itemForSaleFormVisible, setItemForSaleFormVisible] = useState(false)
 
     const [recipeFormVisible, setRecipeFormVisible] = useState(false)
+
+    const [questionnaireTemplateFormVisible, setQuestionnaireTemplateFormVisible] = useState(false)
 
     function onEditClicked() {
         props.updateGameForm(props.activeGame)
@@ -407,7 +410,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                             setRecipeFormVisible(false)
                         }}
                     />
+                }
 
+                <List title={"Шаблоны анкет:"}
+                      noItemsText={"Пусто.."}
+                      isAddButtonVisible={!questionnaireTemplateFormVisible}
+                      onAddClicked={() => setQuestionnaireTemplateFormVisible(true)}
+                />
+
+                {
+                    questionnaireTemplateFormVisible &&
+                    <QuestionnaireTemplateForm
+                        onSubmit={form => console.log(form)}
+                    />
                 }
 
 

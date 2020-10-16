@@ -8,6 +8,7 @@ import ListItem from "../../../Common/ListElements/ListItem";
 import SkillInfluenceForm from "./SkillInfluenceForm";
 import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import _ from "lodash"
+import FormMode from "../../../../data-layer/enums/FormMode";
 
 export default class MerchandiseUpgradeForm extends React.Component {
 
@@ -18,7 +19,11 @@ export default class MerchandiseUpgradeForm extends React.Component {
             {},
             this.props.initialState != null ? this.props.initialState : this.initialState,
             {
-                lvlNum: props.lvlNum
+                lvlNum: props.lvlNum,
+
+                skillInfluenceFormVisible: false,
+                skillInfluenceForm: null,
+                skillInfluenceFormMode: FormMode.CREATE
             })
     }
 
@@ -33,20 +38,28 @@ export default class MerchandiseUpgradeForm extends React.Component {
             <div>
                 <FormTitleLabel text={this.state.lvlNum + " уровень:"}/>
 
-
                 <List title={"Влияние на навыки:"}
                       noItemsText={"Отсутствует.."}
+                      isAddButtonVisible={!this.state.skillInfluenceFormVisible}
+                      onAddClicked={() => this.setState({skillInfluenceFormVisible: true})}
                       values={this.state.skillInfluences.map(skillInfluence =>
                           <ListItem text={SkillInfluenceToString(skillInfluence)}
                                     onDelete={() => this.setState(state => ({skillInfluences: state.skillInfluences.filter(v => v != skillInfluence)}))}
                           />
                       )}
                 />
-
-                <SkillInfluenceForm
-                    skills={this.props.skills}
-                    onSubmit={form => this.setState(state => ({skillInfluences: state.skillInfluences.concat(form)}))}
-                />
+                {
+                    this.state.skillInfluenceFormVisible &&
+                    <SkillInfluenceForm
+                        skills={this.props.skills}
+                        onSubmit={form => {
+                            this.setState(state => ({
+                                skillInfluences: state.skillInfluences.concat(form),
+                                skillInfluenceFormVisible: false
+                            }))
+                        }}
+                    />
+                }
 
                 <List title={"Стоимость:"}
                       noItemsText={"Бесплатно!"}

@@ -19,7 +19,7 @@ import ExpandableListItemWithBullets from "../../../Common/ListElements/Expandab
 import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import AmountsToString from "../../../../util/AmountsToString";
 import MerchandiseUpgradeForm from "./MerchandiseUpgradeForm";
-import Stubs from "../../../../stubs/Stubs";
+import IsLastElement from "../../../../util/IsLastElement";
 
 export default connect(
     state => ({
@@ -47,10 +47,8 @@ export default connect(
                 skillInfluenceObjToUpdate: null,
 
                 upgradeFormVisible: false,
-                upgradeForm: null,
-                upgradeFormMode: FormMode.CREATE,
 
-                upgrades: Stubs.merchandiseUpgrades
+                upgrades: []
             })
     }
 
@@ -169,47 +167,46 @@ export default connect(
                              onChange={e => this.setState({upgradable: e.value})}
                 />
 
-                <List title={"Уровни предмета:"}
-                      noItemsText={"Отсутствуют.."}
-                      isAddButtonVisible={!this.state.upgradeFormVisible}
-                      onAddClicked={() => this.setState({upgradeFormVisible: true})}
-                      values={this.state.upgrades.map(merchandiseUpgrade =>
-                          <ExpandableListItemWithBullets
-                              name={merchandiseUpgrade.lvlNum + " Уровень"}
-                              bullets={[
-                                  "Влияние на навыки:",
-                                  ...merchandiseUpgrade.skillInfluences.map(skillInfluence => SkillInfluenceToString(skillInfluence)),
-                                  "Стоимость:",
-                                  ...merchandiseUpgrade.prices.map(amounts => AmountsToString(amounts))
-                              ]}
-
-                              alwaysExpand={true}
-                          />
-                      )}
-                />
                 {
-                    this.state.upgradeFormVisible && (
-                        this.state.upgradeFormMode == FormMode.CREATE ?
+                    this.state.upgradable &&
+                    <div>
+                        <List title={"Уровни предмета:"}
+                              noItemsText={"Отсутствуют.."}
+                              isAddButtonVisible={!this.state.upgradeFormVisible}
+                              onAddClicked={() => this.setState({upgradeFormVisible: true})}
+                              values={this.state.upgrades.map(merchandiseUpgrade =>
+                                  <ExpandableListItemWithBullets
+                                      name={merchandiseUpgrade.lvlNum + " Уровень:"}
+                                      bullets={[
+                                          "Влияние на навыки:",
+                                          ...merchandiseUpgrade.skillInfluences.map(skillInfluence => SkillInfluenceToString(skillInfluence)),
+                                          "Стоимость:",
+                                          ...merchandiseUpgrade.prices.map(amounts => AmountsToString(amounts))
+                                      ]}
+                                      isDeleteVisible={IsLastElement(merchandiseUpgrade, this.state.upgrades)}
+                                      onDelete={() => this.setState(state => ({upgrades: state.upgrades.filter(v => v != merchandiseUpgrade)}))}
+
+                                      alwaysExpand={true}
+                                  />
+                              )}
+                        />
+                        {
+                            this.state.upgradeFormVisible &&
                             <MerchandiseUpgradeForm
                                 lvlNum={this.state.upgrades.length + 1}
                                 skills={this.props.skills.filter(v => v.destination === this.state.destination)}
                                 currencyNames={this.props.currencies.map(v => v.name)}
                                 onSubmit={form => {
-                                    console.log(form)
-                                }}
-                            /> :
-                            <MerchandiseUpgradeForm
-                                lvlNum={this.state.upgrades.length + 1}
-                                skills={this.props.skills.filter(v => v.destination === this.state.destination)}
-                                currencyNames={this.props.currencies.map(v => v.name)}
-                                initialState={this.state.upgradeForm}
-                                onSubmit={form => {
-                                    console.log(form)
+                                    this.setState(state => ({
+                                        upgrades: state.upgrades.concat(form),
+                                        upgradeFormVisible: false
+                                    }))
                                 }}
                             />
-                    )
-                }
+                        }
+                    </div>
 
+                }
 
                 <SubmitButton text={"Сохранить товар"}
                               onClick={() => this.onSubmitClicked()}

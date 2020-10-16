@@ -35,6 +35,7 @@ import TestView from "./components/TestView";
 import SpellSchoolView from "./components/Game/Skill/View/SpellSchoolView";
 import SchoolLvlView from "./components/Game/Skill/View/SchoolLvlView";
 import SkillView from "./components/Game/Skill/View/SkillView";
+import CraftingView from "./components/Game/Crafting/View/CraftingView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -86,3 +87,5 @@ export const shopView = {component: <ShopView/>, label: "Магазин"}
 export const merchandiseView = {component: <MerchandiseView/>, label: "Товары"}
 
 export const organizationDetailsView = {component: <OrganizationDetailsView/>, label: "Организация"}
+
+export const craftingView = {component: <CraftingView/>, label: "Крафт"}

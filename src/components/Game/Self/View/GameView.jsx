@@ -3,7 +3,8 @@ import {connect} from "react-redux";
 import {
     changeView,
     setActiveGame,
-    setActiveOrganization, setActiveSkillCategory,
+    setActiveOrganization,
+    setActiveSkillCategory,
     setAvailableMerchandise,
     setGames,
     setOrganizations,
@@ -14,6 +15,7 @@ import {
 import {
     adminPageView,
     conversionView,
+    craftingView,
     currencyFormView,
     gameEditView,
     merchandiseView,
@@ -75,7 +77,8 @@ function mapDispatchToProps(dispatch) {
         setOrganizations: organizations => dispatch(setOrganizations(organizations)),
         setActiveOrganization: organization => dispatch(setActiveOrganization(organization)),
         setAvailableMerchandise: xs => dispatch(setAvailableMerchandise(xs)),
-        setActiveSkillCategory: x => dispatch(setActiveSkillCategory(x))
+        setActiveSkillCategory: x => dispatch(setActiveSkillCategory(x)),
+        toCraftingView: () => dispatch(changeView(craftingView))
     }
 }
 
@@ -135,10 +138,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onConversionClicked() {
         Preload.conversionView(props.activeGame.id)
         props.changeView(conversionView)
-    }
-
-    function onMerchandiseButtonClicked() {
-        props.changeView()
     }
 
     function onAddCurrencyClicked() {
@@ -374,12 +373,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Товары"} onClick={() => onMerchandiseClicked()}/>
-                    <Btn text={"Присоединиться к игре"}/>
+                    <Btn text={"Крафт"} onClick={() => props.toCraftingView()}/>
                     <Btn text={"Создать шаблон анкеты"} onClick={() => onAddQuestionnaireTemplateClicked()}/>
                     <Btn text={"Настройки обмена валют"} onClick={() => onConversionClicked()}/>
-                    <Btn text={"Товары"} onClick={() => onMerchandiseButtonClicked()}/>
-                    <Btn text={"Редактировать"} onClick={() => onEditClicked()}/>
-                    <Btn text={"Удалить"} onClick={() => onDeleteClicked()}/>
+                    {/*<Btn text={"Редактировать"} onClick={() => onEditClicked()}/>*/}
+                    {/*<Btn text={"Удалить"} onClick={() => onDeleteClicked()}/>*/}
                     <Btn text={"Назад"} onClick={() => onBackClicked()}/>
                 </div>
             </div>

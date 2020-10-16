@@ -114,3 +114,7 @@ export const questionnaireTemplateByIdUrl = id => rootUrl + "/questionnaireTempl
 export const saveQuestionnaireTemplateUrl = gameId => rootUrl + "/game/" + gameId + "/questionnaireTemplate"
 export const deleteQuestionnaireTemplateUrl = id => rootUrl + "/questionnaireTemplate/" + id
 export const editQuestionnaireTemplateUrl = id => rootUrl + "/questionnaireTemplate/" + id
+
+export const saveQuestionnaireTemplateFieldUrl = questionnaireTemplateId => rootUrl + "/questionnaireTemplate/" + questionnaireTemplateId + "/field"
+export const editQuestionnaireTemplateFieldUrl = id => rootUrl + "/field/" + id
+export const deleteQuestionnaireTemplateFieldUrl = id => rootUrl + "/field/" + id

@@ -53,6 +53,7 @@ export const updateCurrencyUrl = (gameId, currencyId) => rootUrl + "/game/" + ga
 
 export const saveSkillCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/skillCategory"
 export const skillCategoryUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId
+export const findAllSkillCategoriesShortByGameId = gameId => rootUrl + "/game/" + gameId + "/skillCategory/short"
 
 export const saveSkillUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/skill"
 export const skillByIdUrl = id => rootUrl + "/skill/" + id
@@ -118,3 +119,6 @@ export const editQuestionnaireTemplateUrl = id => rootUrl + "/questionnaireTempl
 export const saveQuestionnaireTemplateFieldUrl = questionnaireTemplateId => rootUrl + "/questionnaireTemplate/" + questionnaireTemplateId + "/field"
 export const editQuestionnaireTemplateFieldUrl = id => rootUrl + "/field/" + id
 export const deleteQuestionnaireTemplateFieldUrl = id => rootUrl + "/field/" + id
+
+export const saveSkillCategoryToPointsUrl = questionnaireTemplateId => rootUrl + "/questionnaireTemplate/" + questionnaireTemplateId + "/skillCategoryToPoints"
+export const deleteSkillCategoryToPointsUrl = id => rootUrl + "/skillCategoryToPoints/" + id

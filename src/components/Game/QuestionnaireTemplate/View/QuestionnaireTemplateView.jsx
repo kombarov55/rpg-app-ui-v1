@@ -6,19 +6,27 @@ import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import QuestionnaireTemplateFieldForm from "../Form/QuestionnaireTemplateFieldForm";
-import {httpDelete, post, put} from "../../../../util/Http";
+import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
     deleteQuestionnaireTemplateFieldUrl,
+    deleteSkillCategoryToPointsUrl,
     editQuestionnaireTemplateFieldUrl,
-    saveQuestionnaireTemplateFieldUrl
+    findAllSkillCategoriesShortByGameId,
+    saveQuestionnaireTemplateFieldUrl,
+    saveSkillCategoryToPointsUrl
 } from "../../../../util/Parameters";
-import {setActiveQuestionnaireTemplate} from "../../../../data-layer/ActionCreators";
+import {changeView, setActiveQuestionnaireTemplate} from "../../../../data-layer/ActionCreators";
 import Popup from "../../../../util/Popup";
 import FieldType from "../../../../data-layer/enums/FieldType";
+import ListItem from "../../../Common/ListElements/ListItem";
+import SkillCategoryToPointsForm from "../Form/SkillCategoryToPointsForm";
+import Btn from "../../../Common/Buttons/Btn";
+import {gameView} from "../../../../Views";
 
 export default connect(
     state => ({
-        questionnaireTemplate: state.activeQuestionnaireTemplate
+        questionnaireTemplate: state.activeQuestionnaireTemplate,
+        gameId: state.activeGame.id
     }),
     null,
     (stateProps, dispatchProps, ownProps) => {
@@ -47,6 +55,22 @@ export default connect(
 
                 dispatch(setActiveQuestionnaireTemplate(qt))
             },
+
+            addSkillCategoryToPoints: x => {
+                const qt = Object.assign({}, stateProps.questionnaireTemplate, {
+                    skillCategoryToPoints: stateProps.questionnaireTemplate.skillCategoryToPoints.concat(x)
+                })
+                dispatch(setActiveQuestionnaireTemplate(qt))
+            },
+
+            removeSkillCategoryToPoints: x => {
+                const qt = Object.assign({}, stateProps.questionnaireTemplate, {
+                    skillCategoryToPoints: stateProps.questionnaireTemplate.skillCategoryToPoints.filter(v => v.id !== x.id)
+                })
+                dispatch(setActiveQuestionnaireTemplate(qt))
+            },
+
+            back: () => dispatch(changeView(gameView))
         }
     }
 )(class QuestionnaireTemplateView extends React.Component {
@@ -55,10 +79,16 @@ export default connect(
         super(props);
 
         this.state = {
+            skillCategories: [],
+
             fieldFormVisible: false,
             fieldForm: null,
-            fieldFormMode: FormMode.CREATE
+            fieldFormMode: FormMode.CREATE,
+
+            skillCategoryToPointsFormVisible: false,
         }
+
+        get(findAllSkillCategoriesShortByGameId(this.props.gameId), rs => this.setState({skillCategories: rs}))
     }
 
     render() {
@@ -116,8 +146,33 @@ export default connect(
                                 })}
                             />
                     )
-
                 }
+                <List title={"Распределение начальных очков по категориям навыков:"}
+                      noItemsText={"Пусто.."}
+                      isAddButtonVisible={!this.state.skillCategoryToPointsFormVisible}
+                      onAddClicked={() => this.setState({skillCategoryToPointsFormVisible: true})}
+                      values={this.props.questionnaireTemplate.skillCategoryToPoints.map(skillCategoryToPoints =>
+                          <ListItem
+                              text={skillCategoryToPoints.skillCategory.name + ": " + skillCategoryToPoints.amount + " очков"}
+                              onDelete={() => httpDelete(deleteSkillCategoryToPointsUrl(skillCategoryToPoints.id), rs => {
+                                  this.props.removeSkillCategoryToPoints(rs)
+                                  Popup.info("Распределение удалено.")
+                              })}
+                          />
+                      )}
+                />
+                {
+                    this.state.skillCategoryToPointsFormVisible &&
+                        <SkillCategoryToPointsForm
+                            skillCategories={this.state.skillCategories}
+                            onSubmit={form => post(saveSkillCategoryToPointsUrl(this.props.questionnaireTemplate.id), form, rs => {
+                                this.props.addSkillCategoryToPoints(rs)
+                                Popup.info("Распределение очков добавлено.")
+                                this.setState({skillCategoryToPointsFormVisible: false})
+                            })}
+                        />
+                }
+                <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
     }

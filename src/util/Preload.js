@@ -3,9 +3,9 @@ import {
     conversionsByGameIdUrl,
     currenciesByGameIdUrl,
     findQuestionnaireTemplatesByGameId,
+    gameByIdUrl,
     gameByNetworkId,
     gameBySubnetworkId,
-    gameUrl,
     getRecipesByGameId,
     merchandiseUrl,
     networkUrl,
@@ -45,7 +45,7 @@ export default {
     },
 
     gameView: (gameId) => {
-        get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
+        get(gameByIdUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
         get(organizationByGameIdUrl(gameId), rs => window.store.dispatch(setOrganizations(rs)))
         get(getRecipesByGameId(gameId), rs => window.store.dispatch(setRecipes(rs)))
         get(merchandiseUrl(gameId), rs => window.store.dispatch(setAvailableMerchandise(rs)))
@@ -59,7 +59,7 @@ export default {
     },
 
     game: gameId => {
-        get(gameUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
+        get(gameByIdUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
     }
 
 }

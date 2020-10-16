@@ -11,7 +11,6 @@ import ConversationInputView from "./components/Conversation/View/ConversationIn
 import NetworkSelectionView from "./components/Admin/Network/View/NetworkSelectionView";
 import NetworkView from "./components/Admin/Network/View/NetworkView";
 import SubnetworkView from "./components/Admin/Subnetwork/View/SubnetworkView";
-import GameView from "./components/AdminGame/Self/View/AdminGameView";
 import NetworkCreationView from "./components/Admin/Network/View/NetworkCreationView";
 import SubnetworkCreationView from "./components/Admin/Subnetwork/View/SubnetworkCreationView";
 import GameCreationView from "./components/AdminGame/Self/View/GameCreationView";
@@ -30,6 +29,8 @@ import SchoolLvlView from "./components/AdminGame/Skill/View/SchoolLvlView";
 import SkillView from "./components/AdminGame/Skill/View/SkillView";
 import QuestionnaireTemplateView from "./components/AdminGame/QuestionnaireTemplate/View/QuestionnaireTemplateView";
 import MyGamesView from "./components/MyGames/Self/View/MyGamesView";
+import AdminGameView from "./components/AdminGame/Self/View/AdminGameView";
+import GameView from "./components/MyGames/Self/View/GameView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -58,7 +59,7 @@ export const subnetworkCreationView = {component: <SubnetworkCreationView/>, lab
 export const subnetworkView = {component: <SubnetworkView/>, label: "Подсеть"}
 export const subnetworkEditView = {component: <SubnetworkEditView/>, label: "Редактирование подсети"}
 
-export const adminGameView = {component: <GameView/>, label: "Игра"}
+export const adminGameView = {component: <AdminGameView/>, label: "Администрирование игры"}
 export const gameCreationView = {component: <GameCreationView/>, label: "Создание игры"}
 export const gameEditView = {component: <GameEditView/>, label: "Редактирование игры"}
 
@@ -73,3 +74,4 @@ export const merchandiseView = {component: <MerchandiseView/>, label: "Това�
 export const organizationDetailsView = {component: <OrganizationDetailsView/>, label: "Организация"}
 export const questionnaireTemplateView = {component: <QuestionnaireTemplateView/>, label: "Шаблон анкеты"}
 export const myGamesView = {component: <MyGamesView/>, label: "Мои игры"}
+export const gameView = {component: <GameView/>, label: "Игра"}

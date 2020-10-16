@@ -2,8 +2,27 @@ import React from "react";
 import Carousel from "../../../Common/Lists/Carousel";
 import {get} from "../../../../util/Http";
 import {allGamesUrl} from "../../../../util/Parameters";
+import {connect} from "react-redux"
+import {changeView, setActiveGame} from "../../../../data-layer/ActionCreators";
+import {gameView} from "../../../../Views";
 
-export default class MyGamesView extends React.Component {
+export default connect(
+    state => ({}),
+    null,
+    (stateProps, dispatchProps, ownProps) => {
+        const {dispatch} = dispatchProps
+
+        return {
+            ...stateProps,
+            ...ownProps,
+
+            toGameView: game => {
+                dispatch(setActiveGame(game))
+                dispatch(changeView(gameView))
+            }
+        }
+    }
+)(class MyGamesView extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,9 +41,9 @@ export default class MyGamesView extends React.Component {
                 <Carousel items={this.state.games}
                           imgKey={"img"}
                           titleKey={"name"}
-                          onSelected={game => console.log(game)}
+                          onSelected={game => this.props.toGameView(game)}
                 />
             </div>
         )
     }
-}
+})

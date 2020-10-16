@@ -12,7 +12,7 @@ import {put, upload} from "../../../../util/Http";
 import {
     editGameByNetworkId,
     editGamebySubnetworkId,
-    gameUrl,
+    gameByIdUrl,
     uploadServerUrl,
     uploadUrl
 } from "../../../../util/Parameters";
@@ -83,7 +83,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
         switch (Globals.gameCreationMode) {
             case GameCreationMode.OPEN:
-                url = gameUrl(props.gameForm.id)
+                url = gameByIdUrl(props.gameForm.id)
                 break;
             case GameCreationMode.BY_NETWORK:
                 url = editGameByNetworkId(props.activeNetwork.id, props.gameForm.id)

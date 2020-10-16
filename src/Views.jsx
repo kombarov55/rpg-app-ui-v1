@@ -28,6 +28,7 @@ import TestView from "./components/TestView";
 import SpellSchoolView from "./components/Game/Skill/View/SpellSchoolView";
 import SchoolLvlView from "./components/Game/Skill/View/SchoolLvlView";
 import SkillView from "./components/Game/Skill/View/SkillView";
+import QuestionnaireTemplateView from "./components/Game/QuestionnaireTemplate/View/QuestionnaireTemplateView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -73,3 +74,5 @@ export const currencyFormView = {component: <CurrencyCreationView/>, label: "В�
 export const merchandiseView = {component: <MerchandiseView/>, label: "Товары"}
 
 export const organizationDetailsView = {component: <OrganizationDetailsView/>, label: "Организация"}
+
+export const questionnaireTemplateView = {component: <QuestionnaireTemplateView/>, label: "Шаблон анкеты"}

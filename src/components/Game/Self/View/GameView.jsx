@@ -4,6 +4,7 @@ import {
     changeView,
     setActiveGame,
     setActiveOrganization,
+    setActiveQuestionnaireTemplate,
     setActiveSkillCategory,
     setAvailableMerchandise,
     setGames,
@@ -21,6 +22,7 @@ import {
     merchandiseView,
     networkView,
     organizationDetailsView,
+    questionnaireTemplateView,
     skillCategoryView,
     subnetworkView
 } from "../../../../Views";
@@ -35,6 +37,7 @@ import {
     organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
     organizationUrl,
+    questionnaireTemplateByIdUrl,
     removeItemForSaleForGameUrl,
     saveQuestionnaireTemplateUrl,
     saveRecipe,
@@ -86,6 +89,12 @@ function mapDispatchToProps(dispatch) {
         setActiveSkillCategory: x => dispatch(setActiveSkillCategory(x)),
         setRecipes: x => dispatch(setRecipes(x)),
         setQuestionnaireTemplates: x => dispatch(setQuestionnaireTemplates(x)),
+        toQuestionnaireTemplateView: questionnaireTemplate => {
+            get(questionnaireTemplateByIdUrl(questionnaireTemplate.id), rs => {
+                dispatch(setActiveQuestionnaireTemplate(rs))
+                dispatch(changeView(questionnaireTemplateView))
+            })
+        }
     }
 }
 
@@ -443,6 +452,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                       Popup.info("Шаблон анкеты удалён")
                                   })
                               }
+                              onDetailsClicked={() => props.toQuestionnaireTemplateView(questionnaireTemplate)}
                               alwaysExpand={true}
                               key={questionnaireTemplate.id}
                           />

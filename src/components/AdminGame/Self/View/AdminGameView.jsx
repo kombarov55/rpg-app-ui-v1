@@ -19,6 +19,7 @@ import {
     conversionView,
     currencyFormView,
     gameEditView,
+    gameSettingsView,
     merchandiseView,
     networkView,
     organizationDetailsView,
@@ -94,7 +95,8 @@ function mapDispatchToProps(dispatch) {
                 dispatch(setActiveQuestionnaireTemplate(rs))
                 dispatch(changeView(questionnaireTemplateView))
             })
-        }
+        },
+        toGameSettingsView: () => dispatch(changeView(gameSettingsView))
     }
 }
 
@@ -489,6 +491,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <div className={"game-view-button-group"}>
                     <Btn text={"Товары"} onClick={() => onMerchandiseClicked()}/>
                     <Btn text={"Настройки обмена валют"} onClick={() => onConversionClicked()}/>
+                    <Btn text={"Настройки"} onClick={() => props.toGameSettingsView()}/>
                     {/*<Btn text={"Редактировать"} onClick={() => onEditClicked()}/>*/}
                     {/*<Btn text={"Удалить"} onClick={() => onDeleteClicked()}/>*/}
                     <Btn text={"Назад"} onClick={() => onBackClicked()}/>

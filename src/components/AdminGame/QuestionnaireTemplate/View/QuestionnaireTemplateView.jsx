@@ -22,6 +22,7 @@ import ListItem from "../../../Common/ListElements/ListItem";
 import SkillCategoryToPointsForm from "../Form/SkillCategoryToPointsForm";
 import Btn from "../../../Common/Buttons/Btn";
 import {adminGameView} from "../../../../Views";
+import Destination from "../../../../data-layer/enums/Destination";
 
 export default connect(
     state => ({
@@ -163,17 +164,23 @@ export default connect(
                 />
                 {
                     this.state.skillCategoryToPointsFormVisible &&
-                        <SkillCategoryToPointsForm
-                            skillCategories={this.state.skillCategories}
-                            onSubmit={form => post(saveSkillCategoryToPointsUrl(this.props.questionnaireTemplate.id), form, rs => {
-                                this.props.addSkillCategoryToPoints(rs)
-                                Popup.info("Распределение очков добавлено.")
-                                this.setState({skillCategoryToPointsFormVisible: false})
-                            })}
-                        />
+                    <SkillCategoryToPointsForm
+                        skillCategories={this.state.skillCategories
+                            .filter(v => v.destination === Destination.PLAYER)
+                            .filter(v => !this.isSkillCategoryUsed(v))}
+                        onSubmit={form => post(saveSkillCategoryToPointsUrl(this.props.questionnaireTemplate.id), form, rs => {
+                            this.props.addSkillCategoryToPoints(rs)
+                            Popup.info("Распределение очков добавлено.")
+                            this.setState({skillCategoryToPointsFormVisible: false})
+                        })}
+                    />
                 }
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
+    }
+
+    isSkillCategoryUsed(skillCategory) {
+        return !this.props.questionnaireTemplate.skillCategoryToPoints.some((pair) => pair.skillCategory.id === skillCategory.id)
     }
 })

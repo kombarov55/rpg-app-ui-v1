@@ -3,6 +3,7 @@ import ExpandableListItemStyle from "../../../../styles/ExpandableListItemStyle"
 import SchoolLvlComponent from "./SchoolLvlComponent";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import getOrDefault from "../../../../util/getOrDefault";
+import Popup from "../../../../util/Popup";
 
 export default class SpellSchoolComponent extends React.Component {
 
@@ -14,6 +15,8 @@ export default class SpellSchoolComponent extends React.Component {
              */
             lvlToLearnedSpellCount: []
         }
+
+        this.minSpellCountToUnlockNextLevel = props.spellSchool.minSpellCountToUpgrade
     }
 
     render() {
@@ -35,10 +38,12 @@ export default class SpellSchoolComponent extends React.Component {
                                         onSpellAdded={spell => {
                                             this.props.onSpellAdded(spell)
                                             this.incLvlToLearnedSpellCount(schoolLvl.lvl)
+                                            this.spellAmountInfoPopup(schoolLvl.lvl)
                                         }}
                                         onSpellRemoved={spell => {
                                             this.props.onSpellRemoved(spell)
                                             this.decLvlToLearnedSpellCount(schoolLvl.lvl)
+                                            this.spellAmountInfoPopup(schoolLvl.lvl)
                                         }}
                                         key={schoolLvl.id}
                     />
@@ -61,9 +66,12 @@ export default class SpellSchoolComponent extends React.Component {
 
     enoughSpellsLearned(schoolLvl) {
         const lvl = schoolLvl.lvl
-        const learnedSpellsOnThatLevel = getOrDefault(this.state.lvlToLearnedSpellCount.find(v => v.lvl === lvl), {count: 0}).count
+        const learnedSpellsOnThatLevel = this.getCountOfLearnedSpellsOnLvl(lvl)
 
-        return learnedSpellsOnThatLevel >= this.props.spellSchool.minSpellCountToUpgrade;
+        let minLearnedSpellsCount = this.minSpellCountToUnlockNextLevel
+        const isEnough = learnedSpellsOnThatLevel >= minLearnedSpellsCount
+
+        return isEnough;
     }
 
     incLvlToLearnedSpellCount(lvl) {
@@ -93,6 +101,24 @@ export default class SpellSchoolComponent extends React.Component {
                     .filter(v => v !== savedEntity)
                     .concat({lvl: lvl, count: savedEntity.count - 1})
             }))
+        }
+    }
+
+    getCountOfLearnedSpellsOnLvl(lvl) {
+        return getOrDefault(this.state.lvlToLearnedSpellCount.find(v => v.lvl === lvl), {count: 0}).count
+    }
+
+    spellAmountInfoPopup(lvl) {
+        const learnedSpellCount = this.getCountOfLearnedSpellsOnLvl(lvl) + 1
+
+        if (learnedSpellCount < this.minSpellCountToUnlockNextLevel) {
+            const diff = this.minSpellCountToUnlockNextLevel - learnedSpellCount
+            Popup.info("Изучите ещё " + diff + " заклинаний чтобы открыть следующий круг.")
+        } else {
+            const nextLvlExists = this.props.spellSchool.schoolLvls.some(v => v.lvl === lvl + 1)
+            if (learnedSpellCount === this.minSpellCountToUnlockNextLevel && nextLvlExists) {
+                Popup.success("Вы открыли " + (lvl + 1) + " круг!")
+            }
         }
     }
 }

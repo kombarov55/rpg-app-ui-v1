@@ -11,6 +11,7 @@ import {findAllSkillCategoriesByGameIdAndDestionationUrl} from "../../../../util
 import {get} from "../../../../util/Http";
 import SkillDistributionComponent from "../Comonent/SkillDistributionComponent";
 import Destination from "../../../../data-layer/enums/Destination";
+import SpellSchoolComponent from "../Comonent/SpellSchoolComponent";
 
 export default connect(
     state => ({
@@ -86,8 +87,18 @@ export default connect(
                         />
                     </div>
                 )}
+                <FormTitleLabel text={"Школы магии:"}/>
+                {this.state.skillCategories.filter(v => v.complex).flatMap(v => v.spellSchools).map(spellSchool =>
+                <div>
 
-                <Btn text={"Сохранить"} onClick={() => console.log(this.state.selectedSkillsToLvl)}/>
+                    <SpellSchoolComponent spellSchool={spellSchool}
+                                          key={spellSchool.id}
+                    />
+
+                </div>
+                )}
+
+                <Btn text={"Сохранить"} onClick={() => console.log(this.state)}/>
             </div>
         )
     }

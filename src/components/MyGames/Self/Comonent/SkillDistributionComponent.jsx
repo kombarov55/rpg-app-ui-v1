@@ -3,6 +3,7 @@ import ExpandableListItemStyle from "../../../../styles/ExpandableListItemStyle"
 import CheckButton from "../../../Common/Buttons/CheckButton";
 import List from "../../../Common/Lists/List";
 import SkillUpgradeComponent from "./SkillUpgradeComponent";
+import Btn from "../../../Common/Buttons/Btn";
 
 export default class SkillDistributionComponent extends React.Component {
 
@@ -10,7 +11,9 @@ export default class SkillDistributionComponent extends React.Component {
         super(props);
 
         this.state = {
-            checked: false
+            checked: false,
+
+            selectedUpgrades: []
         }
     }
 
@@ -38,13 +41,41 @@ export default class SkillDistributionComponent extends React.Component {
                                   name={upgrade.lvlNum + " уровень:"}
                                   description={upgrade.description}
                                   alwaysExpand={true}
-                                  onClick={isChecked => console.log(isChecked)}
-                                  isButtonVisible={true}
+                                  onClick={isChecked => {
+                                      if (isChecked) {
+                                          this.onUpgradeAdded(upgrade)
+                                      } else {
+                                          this.onUpgradeRemoved(upgrade)
+                                      }
+                                  }}
+                                  isButtonVisible={this.isUpgradeComponentButtonVisible(upgrade)}
                               />
                           )}
                     />
                 }
+                <Btn text={"debug"} onClick={() =>  console.log(this.state)}/>
             </div>
         )
+    }
+
+    onUpgradeAdded(upgrade) {
+        this.setState(state => ({
+            selectedUpgrades: state.selectedUpgrades.concat(upgrade)
+        }))
+    }
+
+    onUpgradeRemoved(upgrade) {
+        this.setState(state => ({
+            selectedUpgrades: state.selectedUpgrades.filter(storedUpgrade => storedUpgrade.lvlNum < upgrade.lvlNum)
+        }))
+    }
+
+    isUpgradeComponentButtonVisible(upgrade) {
+        const maxLvlOfSelectedUpgrades = this.state.selectedUpgrades.length !== 0 ?
+            Math.max(...this.state.selectedUpgrades.map(v => v.lvlNum)) :
+            -1
+        console.log("maxLvlOfSelectedUpgrades:" + maxLvlOfSelectedUpgrades + ", upgrade.lvlNum: " + upgrade.lvlNum)
+
+        return upgrade.lvlNum <= maxLvlOfSelectedUpgrades + 1
     }
 }

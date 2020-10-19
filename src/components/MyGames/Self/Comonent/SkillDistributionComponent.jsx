@@ -30,6 +30,7 @@ export default class SkillDistributionComponent extends React.Component {
                     </div>
                 </div>
                 {this.props.skill.description}
+                {this.props.canSelectMore &&
                 <CheckButton uncheckedText={"Выбрать"}
                              checkedText={"Выбрано"}
                              onClick={isChecked => {
@@ -40,7 +41,7 @@ export default class SkillDistributionComponent extends React.Component {
                                      this.props.onSkillRemoved()
                                  }
                              }}
-                />
+                />                }
                 {this.state.checked && this.props.skill.upgradable &&
                 <div>
                     <InputLabel text={"Уровни навыка:"}/>
@@ -54,7 +55,6 @@ export default class SkillDistributionComponent extends React.Component {
                         <SkillUpgradeComponent
                             name={upgrade.lvlNum + " уровень:"}
                             description={upgrade.description}
-                            alwaysExpand={true}
                             onClick={isChecked => {
                                 if (isChecked) {
                                     this.props.onUpgradeCountChanged(this.state.selectedUpgrades.length + 1)
@@ -94,6 +94,12 @@ export default class SkillDistributionComponent extends React.Component {
             Math.max(...this.state.selectedUpgrades.map(v => v.lvlNum)) :
             0
 
-        return upgrade.lvlNum <= maxLvlOfSelectedUpgrades + 1
+        if (this.props.canSelectMore) {
+            return upgrade.lvlNum <= maxLvlOfSelectedUpgrades + 1
+        } else {
+            return upgrade.lvlNum <= maxLvlOfSelectedUpgrades
+        }
+
+
     }
 }

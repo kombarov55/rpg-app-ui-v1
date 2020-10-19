@@ -76,7 +76,7 @@ export default connect(
                 {this.state.skillCategories.filter(v => !v.complex).map(skillCategory => skillCategory.skills.map(skill =>
                     <div>
                         <SkillDistributionComponent skill={skill}
-                                                    canSelected={this.haveEnoughFreeSkillPoints(skillCategory)}
+                                                    canSelectMore={this.haveEnoughFreeSkillPoints(skillCategory)}
                                                     onSkillAdded={() => {
                                                         this.setState(state => ({
                                                             selectedSkillsToLvl: this.state.selectedSkillsToLvl.concat({skill: skill, amount: 0})

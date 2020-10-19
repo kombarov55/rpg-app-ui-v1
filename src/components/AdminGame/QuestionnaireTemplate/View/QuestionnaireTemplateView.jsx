@@ -181,6 +181,6 @@ export default connect(
     }
 
     isSkillCategoryUsed(skillCategory) {
-        return !this.props.questionnaireTemplate.skillCategoryToPoints.some((pair) => pair.skillCategory.id === skillCategory.id)
+        return this.props.questionnaireTemplate.skillCategoryToPoints.some((pair) => pair.skillCategory.id === skillCategory.id)
     }
 })

@@ -78,6 +78,6 @@ export const organizationDetailsView = {component: <OrganizationDetailsView/>, l
 export const questionnaireTemplateView = {component: <QuestionnaireTemplateView/>, label: "Шаблон анкеты"}
 export const myGamesView = {component: <MyGamesView/>, label: "Мои игры"}
 export const gameView = {component: <GameView/>, label: "Игра"}
-export const questionnaireDisclaimerView = {component: <QuestionnaireDisclaimerView/>, label: "Дисклеймер"}
+export const questionnaireDisclaimerView = {component: <QuestionnaireDisclaimerView/>, label: "Правила игры"}
 export const questionnaireFillingView = {component: <QuestionnaireFillingView/>, label: "Заполнение анкеты"}
 export const gameSettingsView = {component: <GameSettingsView/>, label: "Настройки"}

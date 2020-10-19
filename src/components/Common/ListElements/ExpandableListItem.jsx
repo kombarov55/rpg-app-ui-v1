@@ -1,4 +1,5 @@
 import React from "react";
+import ExpandableListItemStyle from "../../../styles/ExpandableListItemStyle";
 
 export default class ExpandableListItem extends React.Component {
 
@@ -13,16 +14,16 @@ export default class ExpandableListItem extends React.Component {
 
     render() {
         return (
-            <div style={containerStyle}>
-                <div style={innerHorizontalStyle}>
-                    <div style={imgAndName} onClick={() => this.expand()}>
+            <div style={ExpandableListItemStyle.containerStyle}>
+                <div style={ExpandableListItemStyle.innerHorizontalStyle}>
+                    <div style={ExpandableListItemStyle.imgAndNameStyle} onClick={() => this.expand()}>
                         {
                             this.props.img &&
-                            <img style={imgStyle} src={this.props.img}/>
+                            <img style={ExpandableListItemStyle.imgStyle} src={this.props.img}/>
                         }
-                        <div style={nameStyle}>{this.props.name}</div>
+                        <div style={ExpandableListItemStyle.nameStyle}>{this.props.name}</div>
                     </div>
-                    <div style={upperButtonsStyle}>{this.props.upperButtons}</div>
+                    <div style={ExpandableListItemStyle.upperButtonsStyle}>{this.props.upperButtons}</div>
                 </div>
                 {
                     (this.props.alwaysExpand || this.state.expand) &&
@@ -35,45 +36,4 @@ export default class ExpandableListItem extends React.Component {
     expand() {
         this.setState(state => ({expand: !state.expand}))
     }
-}
-
-const containerStyle = {
-    display: "flex",
-    flexDirection: "column",
-
-    width: "100%",
-    padding: "1vmax",
-    margin: "0 0 0.5vmax 0",
-
-    background: "#212121",
-    borderRadius: "5px"
-}
-
-const innerHorizontalStyle = {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between"
-}
-
-const imgAndName = {
-    display: "flex",
-    flexDirection: "row"
-}
-
-const upperButtonsStyle = {}
-
-const imgStyle = {
-    width: "40px",
-    height: "40px",
-    margin: "0 2vmin 0 0"
-}
-
-const nameStyle = {
-    fontSize: "2.5vmax",
-    margin: " 0.5vmax 0 1vmax 0"
-}
-
-const descriptionStyle = {
-    fontSize: "1.5vmax",
-    margin: " 0.5vmax 0 1vmax 0"
 }

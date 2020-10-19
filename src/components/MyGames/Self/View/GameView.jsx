@@ -1,7 +1,11 @@
 import React from "react";
 import {connect} from "react-redux"
 import {get} from "../../../../util/Http";
-import {findQuestionnaireTemplatesByGameId, gameByIdUrl} from "../../../../util/Parameters";
+import {
+    findQuestionnaireTemplatesByGameId,
+    gameByIdUrl,
+    questionnaireTemplateByIdUrl
+} from "../../../../util/Parameters";
 import {changeView, setActiveGame, setActiveQuestionnaireTemplate} from "../../../../data-layer/ActionCreators";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import Btn from "../../../Common/Buttons/Btn";
@@ -24,7 +28,7 @@ export default connect(
 
             setActiveGame: game => dispatch(setActiveGame(game)),
             toFillingQuestionnaire: questionnaireTemplate => {
-                dispatch(setActiveQuestionnaireTemplate(questionnaireTemplate))
+                get(questionnaireTemplateByIdUrl(questionnaireTemplate.id), rs => dispatch(setActiveQuestionnaireTemplate(rs)))
                 dispatch(changeView(questionnaireDisclaimerView))
             },
             back: () => dispatch(changeView(myGamesView))

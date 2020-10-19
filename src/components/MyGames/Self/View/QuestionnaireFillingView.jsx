@@ -7,13 +7,17 @@ import FieldType from "../../../../data-layer/enums/FieldType";
 import FileUpload from "../../../Common/Input/FileUpload";
 import {SelectButton} from "primereact/selectbutton";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
-import {findAllSkillCategoriesByGameIdAndDestionationUrl} from "../../../../util/Parameters";
+import {
+    findAllSkillCategoriesByGameIdAndDestionationUrl,
+    organizationByGameIdAndTypeUrl
+} from "../../../../util/Parameters";
 import {get} from "../../../../util/Http";
 import SkillDistributionComponent from "../Comonent/SkillDistributionComponent";
 import Destination from "../../../../data-layer/enums/Destination";
 import SpellSchoolComponent from "../Comonent/SpellSchoolComponent";
 import IdComparator from "../../../../util/IdComparator";
 import Popup from "../../../../util/Popup";
+import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 
 export default connect(
     state => ({
@@ -39,21 +43,25 @@ export default connect(
              * [{field: Field, value: String}]
              */
             fieldToValueList: [],
-            /**
-             * [{skillCategory: SkillCategory, amount: Int}]
-             */
-            skillCategoryToRemainingSkillPoints: props.questionnaireTemplate.skillCategoryToPoints,
 
-            skillCategories: [],
+            country: null,
 
             /**
              * [{skill: Skill, amount: Int}]
              */
             selectedSkillsToLvl: [],
-            selectedSpells: []
+            selectedSpells: [],
+
+            /**
+             * [{skillCategory: SkillCategory, amount: Int}]
+             */
+            skillCategoryToRemainingSkillPoints: props.questionnaireTemplate.skillCategoryToPoints,
+            skillCategories: [],
+            countries: []
         }
 
         get(findAllSkillCategoriesByGameIdAndDestionationUrl(props.gameId, Destination.PLAYER), rs => this.setState({skillCategories: rs}))
+        get(organizationByGameIdAndTypeUrl(props.gameId, OrganizationType.COUNTRY), rs => this.setState({countries: rs}))
     }
 
     render() {
@@ -66,6 +74,12 @@ export default connect(
                         <div>{field.description}</div>
                     </div>
                 )}
+
+                <InputLabel text={"Страна:"}/>
+                <SelectButton options={this.state.countries.map(v => ({label: v.name, value: v}))}
+                              value={this.state.country}
+                              onChange={e => this.setState({country: e.target.value})}
+                />
 
                 <FormTitleLabel text={"Оставшееся количество очков навыков:"}/>
                 {this.state.skillCategoryToRemainingSkillPoints.sort((x1, x2) => IdComparator(x1.skillCategory, x2.skillCategory)).map(({skillCategory, amount}) =>

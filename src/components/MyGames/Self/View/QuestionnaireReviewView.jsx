@@ -10,6 +10,7 @@ import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
@@ -77,8 +78,30 @@ export default connect(
                         key={spell.id}
                     />
                 )}/>
+
+                <Btn text={"Принять"} onClick={() => this.onApproved()}/>
+                <Btn text={"Уточнить"} onClick={() => this.onClarifying()}/>
+                <Btn text={"Отклонить"} onClick={() => this.onDeclined()}/>
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
+    }
+
+    onApproved() {
+        Popup.success("Анкета принята.")
+        this.props.back()
+    }
+
+    onClarifying() {
+        Popup.success("Анкета отправлена на рассмотрение. Сейчас откроется диалог с автором анкеты.")
+        setTimeout(() => {
+            window.location = "https://vk.com/im?sel=" + this.props.questionnaire.author.vkUserId
+        }, 2000)
+        this.props.back()
+    }
+
+    onDeclined() {
+        Popup.error("Анкета отклонена.")
+        this.props.back()
     }
 })

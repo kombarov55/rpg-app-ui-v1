@@ -2,17 +2,25 @@ import React from "react";
 import {connect} from "react-redux"
 import {get} from "../../../../util/Http";
 import {
+    findAllQuestionnairesByGameIdUrl,
     findQuestionnaireTemplatesByGameId,
     gameByIdUrl,
     questionnaireTemplateByIdUrl
 } from "../../../../util/Parameters";
-import {changeView, setActiveGame, setActiveQuestionnaireTemplate} from "../../../../data-layer/ActionCreators";
+import {
+    changeView,
+    setActiveGame,
+    setActiveQuestionnaire,
+    setActiveQuestionnaireTemplate
+} from "../../../../data-layer/ActionCreators";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import Btn from "../../../Common/Buttons/Btn";
-import {myGamesView, questionnaireDisclaimerView} from "../../../../Views";
+import {myGamesView, questionnaireDisclaimerView, questionnaireReviewView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import QuestionnaireStatus from "../../../../data-layer/enums/QuestionnaireStatus";
+import FormatDate from "../../../../util/FormatDate";
 
 export default connect(
     state => ({
@@ -31,6 +39,10 @@ export default connect(
                 get(questionnaireTemplateByIdUrl(questionnaireTemplate.id), rs => dispatch(setActiveQuestionnaireTemplate(rs)))
                 dispatch(changeView(questionnaireDisclaimerView))
             },
+            toQuestionnaireReviewView: (questionnaire) => {
+                dispatch(setActiveQuestionnaire(questionnaire))
+                dispatch(changeView(questionnaireReviewView))
+            },
             back: () => dispatch(changeView(myGamesView))
         }
     }
@@ -41,7 +53,8 @@ export default connect(
 
         this.state = {
             game: {},
-            questionnaireTemplates: []
+            questionnaireTemplates: [],
+            questionnaires: []
         }
 
         get(gameByIdUrl(this.props.game.id), rs => {
@@ -49,6 +62,7 @@ export default connect(
             this.props.setActiveGame(rs)
         })
         get(findQuestionnaireTemplatesByGameId(this.props.game.id), rs => this.setState({questionnaireTemplates: rs}))
+        get(findAllQuestionnairesByGameIdUrl(this.props.game.id), rs => this.setState({questionnaires: rs}))
     }
 
     render() {
@@ -70,6 +84,27 @@ export default connect(
                           onDetailsClicked={() => this.props.toFillingQuestionnaire(questionnaireTemplate)}
                           alwaysExpand={true}
                           key={questionnaireTemplate.id}
+                      />
+                      )}
+                />
+
+                <List title={"Анкеты игроков:"}
+                      noItemsText={"Отсутствуют.."}
+                      values={this.state.questionnaires.map(questionnaire =>
+                      <ExpandableListItemWithBullets
+                          name={questionnaire.template.name}
+                          img={questionnaire.template.img}
+                          description={questionnaire.template.description}
+                          bullets={[
+                              "Автор: " + questionnaire.author.fullName,
+                              "Дата создания: " + FormatDate(new Date(questionnaire.creationDate)),
+                              "Статус: " + QuestionnaireStatus.getLabel(questionnaire.status),
+                              "Дата изменения статуса: " + FormatDate(new Date(questionnaire.statusChangeDate))
+                          ]}
+                          onDetailsClicked={() => this.props.toQuestionnaireReviewView(questionnaire)}
+
+                          alwaysExpand={true}
+                          key={questionnaire.key}
                       />
                       )}
                 />

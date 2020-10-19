@@ -20,6 +20,7 @@ import {
     SET_ACTIVE_GAME,
     SET_ACTIVE_NETWORK,
     SET_ACTIVE_ORGANIZATION,
+    SET_ACTIVE_QUESTIONNAIRE,
     SET_ACTIVE_QUESTIONNAIRE_TEMPLATE,
     SET_ACTIVE_SCHOOL_LVL,
     SET_ACTIVE_SKILL,
@@ -362,6 +363,11 @@ export function rootReducer(state = initialState, action) {
         case SET_ACTIVE_USER_ACCOUNT:
             return Object.assign({}, state, {
                 activeUserAccount: action.payload.x
+            })
+
+        case SET_ACTIVE_QUESTIONNAIRE:
+            return Object.assign({}, state, {
+                activeQuestionnaire: action.payload.x
             })
 
         default:

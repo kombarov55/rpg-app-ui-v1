@@ -249,7 +249,7 @@ export default connect(
             Popup.error("Пожалуйста, распределите все очки навыков")
             return
         } else {
-            post(saveQuestionnaireUrl(this.props.gameId), form, rs => {
+            post(saveQuestionnaireUrl(this.props.gameId, this.props.questionnaireTemplate.id), form, rs => {
                 Popup.info("Анкета отправлена на проверку.")
                 this.props.back()
             })

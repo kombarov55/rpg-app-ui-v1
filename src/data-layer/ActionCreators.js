@@ -22,6 +22,7 @@ import {
     SET_ACTIVE_GAME,
     SET_ACTIVE_NETWORK,
     SET_ACTIVE_ORGANIZATION,
+    SET_ACTIVE_QUESTIONNAIRE,
     SET_ACTIVE_QUESTIONNAIRE_TEMPLATE,
     SET_ACTIVE_SCHOOL_LVL,
     SET_ACTIVE_SKILL,
@@ -591,6 +592,15 @@ export function setActiveQuestionnaireTemplate(x) {
 export function setActiveUserAccount(x) {
     return {
         type: SET_ACTIVE_USER_ACCOUNT,
+        payload: {
+            x: x
+        }
+    }
+}
+
+export function setActiveQuestionnaire(x) {
+    return {
+        type: SET_ACTIVE_QUESTIONNAIRE,
         payload: {
             x: x
         }

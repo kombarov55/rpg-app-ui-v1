@@ -31,6 +31,7 @@ export const initialState = {
     activeSkill: null,
     activeQuestionnaireTemplate: null,
     activeUserAccount: null,
+    activeQuestionnaire: null,
 
     msgs: [],
     networks: [],

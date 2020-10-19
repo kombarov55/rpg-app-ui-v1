@@ -63,7 +63,7 @@ export default connect(
                     <InputLabel text={skillCategory.name + ": " + amount + " очков"}/>
                 )}
 
-                <InputLabel text={"Распределение очков навыков:"}/>
+                <FormTitleLabel text={"Распределение очков навыков:"}/>
                 {this.state.skillCategories.filter(v => !v.complex).flatMap(v => v.skills).map(skill =>
                     <div>
                         <SkillDistributionComponent skill={skill}

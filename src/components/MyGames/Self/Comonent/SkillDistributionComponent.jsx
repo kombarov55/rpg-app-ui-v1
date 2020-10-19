@@ -1,9 +1,8 @@
 import React from "react";
 import ExpandableListItemStyle from "../../../../styles/ExpandableListItemStyle";
 import CheckButton from "../../../Common/Buttons/CheckButton";
-import List from "../../../Common/Lists/List";
 import SkillUpgradeComponent from "./SkillUpgradeComponent";
-import Btn from "../../../Common/Buttons/Btn";
+import InputLabel from "../../../Common/Labels/InputLabel";
 
 export default class SkillDistributionComponent extends React.Component {
 
@@ -35,25 +34,25 @@ export default class SkillDistributionComponent extends React.Component {
                              onClick={isChecked => this.setState({checked: isChecked})}
                 />
                 {this.state.checked && this.props.skill.upgradable &&
-                    <List title={"Уровни навыка:"}
-                          values={this.props.skill.upgrades.map(upgrade =>
-                              <SkillUpgradeComponent
-                                  name={upgrade.lvlNum + " уровень:"}
-                                  description={upgrade.description}
-                                  alwaysExpand={true}
-                                  onClick={isChecked => {
-                                      if (isChecked) {
-                                          this.onUpgradeAdded(upgrade)
-                                      } else {
-                                          this.onUpgradeRemoved(upgrade)
-                                      }
-                                  }}
-                                  isButtonVisible={this.isUpgradeComponentButtonVisible(upgrade)}
-                              />
-                          )}
-                    />
+                <div>
+                    <InputLabel text={"Уровни навыка:"}/>
+                    {this.props.skill.upgrades.map(upgrade =>
+                        <SkillUpgradeComponent
+                            name={upgrade.lvlNum + " уровень:"}
+                            description={upgrade.description}
+                            alwaysExpand={true}
+                            onClick={isChecked => {
+                                if (isChecked) {
+                                    this.onUpgradeAdded(upgrade)
+                                } else {
+                                    this.onUpgradeRemoved(upgrade)
+                                }
+                            }}
+                            isButtonVisible={this.isUpgradeComponentButtonVisible(upgrade)}
+                        />
+                    )}
+                </div>
                 }
-                <Btn text={"debug"} onClick={() =>  console.log(this.state)}/>
             </div>
         )
     }

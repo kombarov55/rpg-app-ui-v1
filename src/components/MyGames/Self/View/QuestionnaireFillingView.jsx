@@ -76,13 +76,13 @@ export default connect(
                     <div>
                         <SkillDistributionComponent skill={skill}
                                                     canSelected={this.haveEnoughFreeSkillPoints(skillCategory)}
-                                                    onSelected={() => {
+                                                    onSkillAdded={() => {
                                                         this.setState(state => ({
                                                             selectedSkillsToLvl: this.state.selectedSkillsToLvl.concat({skill: skill, amount: 0})
                                                         }))
                                                         this.decPointsAmount(skillCategory)
                                                     }}
-                                                    onSelectRemoved={() => {
+                                                    onSkillRemoved={() => {
                                                         this.setState(state => ({
                                                             selectedSkillsToLvl: this.state.selectedSkillsToLvl.filter(v => v.skill.id !== skill.id)
                                                         }))
@@ -93,6 +93,8 @@ export default connect(
                                                             .filter(v => v.skill.id !== skill.id)
                                                             .concat({skill: skill, amount: count})
                                                     }))}
+                                                    incUpgradeCountCallback={() => this.decPointsAmount(skillCategory)}
+                                                    decUpgradeCountCallback={() => this.incPointsAmount(skillCategory)}
                         />
                     </div>
                 ))}

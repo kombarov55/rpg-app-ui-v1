@@ -35,9 +35,9 @@ export default class SkillDistributionComponent extends React.Component {
                              onClick={isChecked => {
                                  this.setState({checked: isChecked})
                                  if (isChecked) {
-                                     this.props.onSelected()
+                                     this.props.onSkillAdded()
                                  } else {
-                                     this.props.onSelectRemoved()
+                                     this.props.onSkillRemoved()
                                  }
                              }}
                 />
@@ -59,9 +59,11 @@ export default class SkillDistributionComponent extends React.Component {
                                 if (isChecked) {
                                     this.props.onUpgradeCountChanged(this.state.selectedUpgrades.length + 1)
                                     this.onUpgradeAdded(upgrade)
+                                    this.props.incUpgradeCountCallback()
                                 } else {
                                     this.props.onUpgradeCountChanged(this.state.selectedUpgrades.filter(storedUpgrade => storedUpgrade.lvlNum < upgrade.lvlNum).length)
                                     this.onUpgradeRemoved(upgrade)
+                                    this.props.decUpgradeCountCallback()
                                 }
 
 
@@ -91,8 +93,6 @@ export default class SkillDistributionComponent extends React.Component {
         const maxLvlOfSelectedUpgrades = this.state.selectedUpgrades.length !== 0 ?
             Math.max(...this.state.selectedUpgrades.map(v => v.lvlNum)) :
             0
-
-        console.log({maxLvlOfSelectedUpgrades: maxLvlOfSelectedUpgrades, lvlNum: upgrade.lvlNum})
 
         return upgrade.lvlNum <= maxLvlOfSelectedUpgrades + 1
     }

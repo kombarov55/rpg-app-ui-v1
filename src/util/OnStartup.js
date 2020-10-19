@@ -1,11 +1,37 @@
-import {allUsersShortUrl, announcementUrl, loginUrl, userAccountUrl} from "./Parameters";
+import {allUsersShortUrl, announcementUrl, loginUrl, notificationUrl, userAccountUrl} from "./Parameters";
 import {store} from "../data-layer/Store";
 import {addAnnouncement, addUserAccount, setUserAccounts} from "../data-layer/ActionCreators";
 import {get, postWithoutAuth} from "./Http";
 import Globals from "./Globals";
+import Popup from "./Popup";
+import NotificationSeverity from "../data-layer/enums/NotificationSeverity";
 
 function loadAnnouncements() {
     get(announcementUrl, xs => xs.forEach(x => store.dispatch(addAnnouncement(x))))
+}
+
+function startNotificationPolling() {
+    setInterval(() => get(notificationUrl, rs => {
+        console.log("received notifications")
+        console.log(rs)
+        rs.forEach(notification => {
+            switch (notification.severity) {
+                case NotificationSeverity.GOOD:
+                    Popup.success(notification.text)
+                    break
+                case NotificationSeverity.NORMAL:
+                    Popup.info(notification.text)
+                    break
+                case NotificationSeverity.BAD:
+                    Popup.error(notification.text)
+                    break
+                default:
+                    Popup.info(notification.text)
+                    break
+            }
+        })
+    }), 15000)
+
 }
 
 export function onStartup() {
@@ -22,5 +48,7 @@ export function onStartup() {
         })
 
         get(allUsersShortUrl, rs => store.dispatch(setUserAccounts(rs)))
+
+        startNotificationPolling()
     })
 }

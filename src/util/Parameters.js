@@ -131,3 +131,7 @@ export const deleteSkillCategoryToPointsUrl = id => rootUrl + "/skillCategoryToP
 export const findAllQuestionnairesByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/questionnaire"
 export const saveQuestionnaireUrl = (gameId, questionnaireTemplateId) => rootUrl + "/game/" + gameId + "/questionnaireTemplate/" + questionnaireTemplateId + "/questionnaire"
 export const getQuestionnaireById = id => rootUrl + "/questionnaire/" + id
+
+export const approveQuestionnaireUrl = rootUrl + "/questionnaire/approve.do"
+export const clarifyQuestionnaireUrl = rootUrl + "/questionnaire/clarify.do"
+export const archiveQuestionnaireUrl = rootUrl + "/questionnaire/decline.do"

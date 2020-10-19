@@ -11,6 +11,7 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import Popup from "../../../../util/Popup";
+import QuestionnaireProcedures from "../../../../data-layer/Procedures/QuestionnaireProcedures";
 
 export default connect(
     state => ({
@@ -88,20 +89,26 @@ export default connect(
     }
 
     onApproved() {
-        Popup.success("Анкета принята.")
-        this.props.back()
+        QuestionnaireProcedures.approve(this.props.questionnaire.id, () => {
+            Popup.success("Анкета принята.")
+            this.props.back()
+        })
     }
 
     onClarifying() {
-        Popup.success("Анкета отправлена на рассмотрение. Сейчас откроется диалог с автором анкеты.")
-        setTimeout(() => {
-            window.location = "https://vk.com/im?sel=" + this.props.questionnaire.author.vkUserId
-        }, 2000)
-        this.props.back()
+        QuestionnaireProcedures.clarify(this.props.questionnaire.id, () => {
+            Popup.success("Анкета отправлена на рассмотрение. Сейчас откроется диалог с автором анкеты.")
+            setTimeout(() => {
+                window.location = "https://vk.com/im?sel=" + this.props.questionnaire.author.vkUserId
+            }, 2000)
+            this.props.back()
+        })
     }
 
     onDeclined() {
-        Popup.error("Анкета отклонена.")
-        this.props.back()
+        QuestionnaireProcedures.archive(this.props.questionnaire.id, () => {
+            Popup.error("Анкета отклонена.")
+            this.props.back()
+        })
     }
 })

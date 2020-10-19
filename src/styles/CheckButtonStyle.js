@@ -1,21 +1,19 @@
 export default {
-    unchecked: {
-        "padding": "1vmin",
-        "borderRadius": "5px",
-        "background": "rgb(88, 88, 88)",
+    unchecked:  {
+        "alignSelf": "center",
+        "padding": "1vmax 0",
+        "margin": "0.5vmax 0",
+        "width": "100%",
         "textAlign": "center",
-        "color": "white",
-        "fontSize": "2vmax",
-        "width": "80%"
+        "background": "rgb(88, 88, 88)"
     },
 
     checked: {
-        "padding": "1vmin",
-        "borderRadius": "5px",
-        "background": "#592e83",
+        "alignSelf": "center",
+        "padding": "1vmax 0",
+        "margin": "0.5vmax 0",
+        "width": "100%",
         "textAlign": "center",
-        "color": "white",
-        "fontSize": "2vmax",
-        "width": "80%"
+        "background": "#592e83"
     }
 }

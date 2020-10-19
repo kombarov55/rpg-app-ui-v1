@@ -7,9 +7,10 @@ import FieldType from "../../../../data-layer/enums/FieldType";
 import FileUpload from "../../../Common/Input/FileUpload";
 import {SelectButton} from "primereact/selectbutton";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
-import {findAllSkillCategoriesByGameIdUrl} from "../../../../util/Parameters";
-import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import {findAllSkillCategoriesByGameIdAndDestionationUrl} from "../../../../util/Parameters";
 import {get} from "../../../../util/Http";
+import SkillDistributionComponent from "../Comonent/SkillDistributionComponent";
+import Destination from "../../../../data-layer/enums/Destination";
 
 export default connect(
     state => ({
@@ -43,7 +44,7 @@ export default connect(
             skillCategories: []
         }
 
-        get(findAllSkillCategoriesByGameIdUrl(props.gameId), rs => this.setState({skillCategories: rs}))
+        get(findAllSkillCategoriesByGameIdAndDestionationUrl(props.gameId, Destination.PLAYER), rs => this.setState({skillCategories: rs}))
     }
 
     render() {
@@ -65,12 +66,11 @@ export default connect(
                 <InputLabel text={"Распределение очков навыков:"}/>
                 {this.state.skillCategories.filter(v => !v.complex).flatMap(v => v.skills).map(skill =>
                     <div>
-                        <ExpandableListItemWithBullets
+                        <SkillDistributionComponent
                             name={skill.name}
                             img={skill.img}
                             description={skill.description}
 
-                            alwaysExpand={true}
                             key={skill.id}
                         />
                     </div>

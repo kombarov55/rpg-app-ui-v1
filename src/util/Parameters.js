@@ -56,6 +56,7 @@ export const saveSkillCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/sk
 export const skillCategoryUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId
 export const findAllSkillCategoriesShortByGameId = gameId => rootUrl + "/game/" + gameId + "/skillCategory/short"
 export const findAllSkillCategoriesByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/skillCategory"
+export const findAllSkillCategoriesByGameIdAndDestionationUrl = (gameId, destination) => rootUrl + "/game/" + gameId + "/skillCategory/filter?destination=" + destination
 
 export const saveSkillUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/skill"
 export const skillByIdUrl = id => rootUrl + "/skill/" + id

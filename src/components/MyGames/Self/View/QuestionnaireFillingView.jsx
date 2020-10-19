@@ -12,6 +12,7 @@ import {get} from "../../../../util/Http";
 import SkillDistributionComponent from "../Comonent/SkillDistributionComponent";
 import Destination from "../../../../data-layer/enums/Destination";
 import SpellSchoolComponent from "../Comonent/SpellSchoolComponent";
+import IdComparator from "../../../../util/IdComparator";
 
 export default connect(
     state => ({
@@ -24,7 +25,7 @@ export default connect(
 
         return {
             ...stateProps,
-            ...ownProps
+
         }
     }
 )(class QuestionnaireFillingView extends React.Component {
@@ -66,20 +67,27 @@ export default connect(
                 )}
 
                 <FormTitleLabel text={"Оставшееся количество очков навыков:"}/>
-                {this.state.skillCategoryToRemainingSkillPoints.map(({skillCategory, amount}) =>
+                {this.state.skillCategoryToRemainingSkillPoints.sort((x1, x2) => IdComparator(x1.skillCategory, x2.skillCategory)).map(({skillCategory, amount}) =>
                     <InputLabel text={skillCategory.name + ": " + amount + " очков"}/>
                 )}
 
                 <FormTitleLabel text={"Распределение очков навыков:"}/>
-                {this.state.skillCategories.filter(v => !v.complex).flatMap(v => v.skills).map(skill =>
+                {this.state.skillCategories.filter(v => !v.complex).map(skillCategory => skillCategory.skills.map(skill =>
                     <div>
                         <SkillDistributionComponent skill={skill}
-                                                    onSelected={() => this.setState(state => ({
-                                                        selectedSkillsToLvl: this.state.selectedSkillsToLvl.concat({skill: skill, amount: 0})
-                                                    }))}
-                                                    onSelectRemoved={() => this.setState(state => ({
-                                                        selectedSkillsToLvl: this.state.selectedSkillsToLvl.filter(v => v.skill.id !== skill.id)
-                                                    }))}
+                                                    canSelected={this.haveEnoughFreeSkillPoints(skillCategory)}
+                                                    onSelected={() => {
+                                                        this.setState(state => ({
+                                                            selectedSkillsToLvl: this.state.selectedSkillsToLvl.concat({skill: skill, amount: 0})
+                                                        }))
+                                                        this.decPointsAmount(skillCategory)
+                                                    }}
+                                                    onSelectRemoved={() => {
+                                                        this.setState(state => ({
+                                                            selectedSkillsToLvl: this.state.selectedSkillsToLvl.filter(v => v.skill.id !== skill.id)
+                                                        }))
+                                                        this.incPointsAmount(skillCategory)
+                                                    }}
                                                     onUpgradeCountChanged={count => this.setState(state => ({
                                                         selectedSkillsToLvl: this.state.selectedSkillsToLvl
                                                             .filter(v => v.skill.id !== skill.id)
@@ -87,7 +95,7 @@ export default connect(
                                                     }))}
                         />
                     </div>
-                )}
+                ))}
                 <FormTitleLabel text={"Школы магии:"}/>
                 {this.state.skillCategories.filter(v => v.complex).flatMap(v => v.spellSchools).map(spellSchool =>
                 <div>
@@ -153,5 +161,33 @@ export default connect(
         } else {
             return ""
         }
+    }
+
+    haveEnoughFreeSkillPoints(skillCategory) {
+        return this.getAmountOfLeftSkillPoints(skillCategory) > 0
+    }
+
+    incPointsAmount(skillCategory) {
+        const prevAmount = this.getAmountOfLeftSkillPoints(skillCategory)
+
+        this.setState(state => ({
+            skillCategoryToRemainingSkillPoints: state.skillCategoryToRemainingSkillPoints
+                .filter(v => v.skillCategory.id !== skillCategory.id)
+                .concat({skillCategory: skillCategory, amount: prevAmount + 1})
+        }))
+    }
+
+    decPointsAmount(skillCategory) {
+        const prevAmount = this.getAmountOfLeftSkillPoints(skillCategory)
+
+        this.setState(state => ({
+            skillCategoryToRemainingSkillPoints: state.skillCategoryToRemainingSkillPoints
+                .filter(v => v.skillCategory.id !== skillCategory.id)
+                .concat({skillCategory: skillCategory, amount: prevAmount - 1})
+        }))
+    }
+
+    getAmountOfLeftSkillPoints(skillCategory) {
+        return this.state.skillCategoryToRemainingSkillPoints.find(v => v.skillCategory.id === skillCategory.id).amount
     }
 })

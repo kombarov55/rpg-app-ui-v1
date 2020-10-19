@@ -1,28 +1,42 @@
 import React from "react";
-import InputLabel from "../../../Common/Labels/InputLabel";
 import SpellComponent from "./SpellComponent";
+import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 
 export default class SchoolLvlComponent extends React.Component {
 
     constructor(props) {
         super(props);
 
+        this.state = {
+            addedSpells: []
+        }
     }
 
     render() {
         return (
             <div>
-                <InputLabel text={this.props.schoolLvl.lvl + " круг:"}/>
+                <FormTitleLabel text={this.props.schoolLvl.lvl + " круг:"}/>
                 {this.props.schoolLvl.spells.map(spell =>
                     <SpellComponent name={spell.name}
                                     img={spell.img}
                                     description={spell.description}
-                                    onSpellAdded={() => this.props.onSpellAdded(spell)}
-                                    onSpellRemoved={() => this.props.onSpellRemoved(spell)}
+                                    isCheckButtonVisible={this.isCheckButtonVisible(spell)}
+                                    onSpellAdded={() => {
+                                        this.setState(state => ({addedSpells: state.addedSpells.concat(spell)}))
+                                        this.props.onSpellAdded(spell)
+                                    }}
+                                    onSpellRemoved={() => {
+                                        this.setState(state => ({addedSpells: state.addedSpells.filter(v => v.id !== spell.id)}))
+                                        this.props.onSpellRemoved(spell)
+                                    }}
                                     key={spell.id}
                     />
                 )}
             </div>
         )
+    }
+
+    isCheckButtonVisible(spell) {
+        return this.props.canSelectMore || this.state.addedSpells.some(v => v.id !== spell.id)
     }
 }

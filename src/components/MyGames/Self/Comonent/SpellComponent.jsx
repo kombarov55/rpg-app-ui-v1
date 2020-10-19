@@ -7,6 +7,7 @@ export default class SpellComponent extends React.Component {
     constructor(props) {
         super(props);
 
+
     }
 
     render() {
@@ -16,6 +17,7 @@ export default class SpellComponent extends React.Component {
                                     img={this.props.img}
                                     description={this.props.description}
                 />
+                {this.props.isCheckButtonVisible &&
                 <CheckButton uncheckedText={"Выбрать"}
                              checkedText={"Выбрано"}
                              onClick={checked => {
@@ -26,6 +28,8 @@ export default class SpellComponent extends React.Component {
                                  }
                              }}
                 />
+                }
+
             </div>
         )
     }

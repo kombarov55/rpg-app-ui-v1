@@ -2,21 +2,17 @@ import React from "react";
 import ExpandableListItemStyle from "../../../../styles/ExpandableListItemStyle";
 import SchoolLvlComponent from "./SchoolLvlComponent";
 import InputLabel from "../../../Common/Labels/InputLabel";
-import getOrDefault from "../../../../util/getOrDefault";
-import Popup from "../../../../util/Popup";
 
 export default class SpellSchoolComponent extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            /**
-             * [{lvl: Int, count: Int}]
-             */
-            lvlToLearnedSpellCount: []
+            visibleSchoolLvls: [this.props.spellSchool.schoolLvls[0]],
+            learnedSpells: []
         }
 
-        this.minSpellCountToUnlockNextLevel = props.spellSchool.minSpellCountToUpgrade
+        this.minSpellCountToUnlockNextLevel = this.props.spellSchool.minSpellCountToUpgrade
     }
 
     render() {
@@ -32,18 +28,24 @@ export default class SpellSchoolComponent extends React.Component {
                     </div>
                 </div>
                 <div>{this.props.spellSchool.description}</div>
-                <InputLabel text={"Выберите " + this.props.spellSchool.minSpellCountToUpgrade + " заклинаний чтобы открыть следующий уровень"}/>
-                {this.props.spellSchool.schoolLvls.filter(v => this.isSchoolLvlVisible(v)).map(schoolLvl =>
+                <InputLabel
+                    text={"Необходимо " + this.props.spellSchool.minSpellCountToUpgrade + " заклинаний для открытия следующего круга."}/>
+
+                {this.state.visibleSchoolLvls.map(schoolLvl =>
                     <SchoolLvlComponent schoolLvl={schoolLvl}
+                                        canSelectMore={this.props.canSelectMore}
+                                        minSpellCountToUnlockNextLvl={schoolLvl.minSpellCountToUpgrade}
+                                        onNextLvlUnlocked={() => this.makeThisAndPreviousLevelsVisible(schoolLvl.lvl + 1)}
+                                        onNextLvlLocked={() => {
+                                            this.makeThisAndPreviousLevelsVisible(schoolLvl.lvl)
+                                        }}
                                         onSpellAdded={spell => {
+                                            this.addSpell(spell)
                                             this.props.onSpellAdded(spell)
-                                            this.incLvlToLearnedSpellCount(schoolLvl.lvl)
-                                            this.spellAmountInfoPopup(schoolLvl.lvl)
                                         }}
                                         onSpellRemoved={spell => {
+                                            this.removeSpell(spell)
                                             this.props.onSpellRemoved(spell)
-                                            this.decLvlToLearnedSpellCount(schoolLvl.lvl)
-                                            this.spellAmountInfoPopup(schoolLvl.lvl)
                                         }}
                                         key={schoolLvl.id}
                     />
@@ -52,73 +54,31 @@ export default class SpellSchoolComponent extends React.Component {
         )
     }
 
-    isSchoolLvlVisible(schoolLvl) {
-        const lvl = schoolLvl.lvl
-        const prevLvl = this.props.spellSchool.schoolLvls.find(v => v.lvl === lvl - 1)
+    makeThisAndPreviousLevelsVisible(lvl) {
+        if (lvl === 0) return
 
-        if (prevLvl == null) {
-            return true
-        }
-
-        return this.enoughSpellsLearned(prevLvl)
-    }
-
-
-    enoughSpellsLearned(schoolLvl) {
-        const lvl = schoolLvl.lvl
-        const learnedSpellsOnThatLevel = this.getCountOfLearnedSpellsOnLvl(lvl)
-
-        let minLearnedSpellsCount = this.minSpellCountToUnlockNextLevel
-        const isEnough = learnedSpellsOnThatLevel >= minLearnedSpellsCount
-
-        return isEnough;
-    }
-
-    incLvlToLearnedSpellCount(lvl) {
-        const savedEntity = this.state.lvlToLearnedSpellCount.find(v => v.lvl === lvl)
-        if (savedEntity == null) {
+        const isVisible = this.state.visibleSchoolLvls.some(v => v.lvl === lvl)
+        if (!isVisible) {
             this.setState(state => ({
-                lvlToLearnedSpellCount: state.lvlToLearnedSpellCount.concat({lvl: lvl, count: 1})
-            }))
-        } else {
-            this.setState(state => ({
-                lvlToLearnedSpellCount: state.lvlToLearnedSpellCount
-                    .filter(v => v !== savedEntity)
-                    .concat({lvl: lvl, count: savedEntity.count + 1})
+                visibleSchoolLvls: state.visibleSchoolLvls.concat(this.getSchoolLvl(lvl))
             }))
         }
+
+        this.makeThisAndPreviousLevelsVisible(lvl - 1)
     }
 
-    decLvlToLearnedSpellCount(lvl) {
-        const savedEntity = this.state.lvlToLearnedSpellCount.find(v => v.lvl === lvl)
-        if (savedEntity == null) {
-            this.setState(state => ({
-                lvlToLearnedSpellCount: state.lvlToLearnedSpellCount.concat({lvl: lvl, count: 1})
-            }))
-        } else {
-            this.setState(state => ({
-                lvlToLearnedSpellCount: state.lvlToLearnedSpellCount
-                    .filter(v => v !== savedEntity)
-                    .concat({lvl: lvl, count: savedEntity.count - 1})
-            }))
-        }
+    addSpell(spell) {
+        this.setState(state => ({learnedSpells: state.learnedSpells.concat(spell)}))
     }
 
-    getCountOfLearnedSpellsOnLvl(lvl) {
-        return getOrDefault(this.state.lvlToLearnedSpellCount.find(v => v.lvl === lvl), {count: 0}).count
+    removeSpell(spell) {
+        this.setState(state => ({learnedSpells: state.learnedSpells.filter(v => v.id !== spell.id)}))
     }
 
-    spellAmountInfoPopup(lvl) {
-        const learnedSpellCount = this.getCountOfLearnedSpellsOnLvl(lvl) + 1
 
-        if (learnedSpellCount < this.minSpellCountToUnlockNextLevel) {
-            const diff = this.minSpellCountToUnlockNextLevel - learnedSpellCount
-            Popup.info("Изучите ещё " + diff + " заклинаний чтобы открыть следующий круг.")
-        } else {
-            const nextLvlExists = this.props.spellSchool.schoolLvls.some(v => v.lvl === lvl + 1)
-            if (learnedSpellCount === this.minSpellCountToUnlockNextLevel && nextLvlExists) {
-                Popup.success("Вы открыли " + (lvl + 1) + " круг!")
-            }
-        }
+    getSchoolLvl(lvl) {
+        return this.props.spellSchool.schoolLvls.find(v => v.lvl === lvl)
     }
+
+
 }

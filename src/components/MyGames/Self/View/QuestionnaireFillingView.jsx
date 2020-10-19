@@ -100,17 +100,24 @@ export default connect(
                     </div>
                 ))}
                 <FormTitleLabel text={"Школы магии:"}/>
-                {this.state.skillCategories.filter(v => v.complex).flatMap(v => v.spellSchools).map(spellSchool =>
+                {this.state.skillCategories.filter(v => v.complex).map(skillCategory => skillCategory.spellSchools.map(spellSchool =>
                 <div>
 
                     <SpellSchoolComponent spellSchool={spellSchool}
-                                          onSpellAdded={spell => this.setState(state => ({selectedSpells: state.selectedSpells.concat(spell)}))}
-                                          onSpellRemoved={spell => this.setState(state => ({selectedSpells: state.selectedSpells.filter(v => v !== spell)}))}
+                                          canSelectMore={this.haveEnoughFreeSkillPoints(skillCategory)}
+                                          onSpellAdded={spell => {
+                                              this.setState(state => ({selectedSpells: state.selectedSpells.concat(spell)}))
+                                              this.decPointsAmount(skillCategory)
+                                          }}
+                                          onSpellRemoved={spell => {
+                                              this.setState(state => ({selectedSpells: state.selectedSpells.filter(v => v !== spell)}))
+                                              this.incPointsAmount(skillCategory)
+                                          }}
                                           key={spellSchool.id}
                     />
 
                 </div>
-                )}
+                ))}
 
                 <Btn text={"Сохранить"} onClick={() => console.log(this.state)}/>
             </div>

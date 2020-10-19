@@ -17,6 +17,7 @@ import {
     addSpellPurchaseOptionUrl,
     addSpellUrl,
     deleteSpellPurchaseOption,
+    deleteSpellUrl,
     editSpellPurchaseOption,
     editSpellUrl
 } from "../../../../util/Parameters";
@@ -77,6 +78,10 @@ export default connect(
                                   spellFormVisible: true,
                                   spellForm: spell,
                                   spellFormMode: FormMode.EDIT
+                              })}
+                              onDeleteClicked={() => httpDelete(deleteSpellUrl(spell.id), rs => {
+                                  this.setState(state => ({spells: state.spells.filter(v => v.id !== rs.id)}))
+                                  Popup.info("Заклинание удалено.")
                               })}
 
                               alwaysExpand={true}

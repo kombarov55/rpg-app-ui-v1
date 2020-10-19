@@ -34,6 +34,7 @@ import GameView from "./components/MyGames/Self/View/GameView";
 import QuestionnaireFillingView from "./components/MyGames/Self/View/QuestionnaireFillingView";
 import QuestionnaireDisclaimerView from "./components/MyGames/Self/View/QuestionnaireDisclaimerView";
 import GameSettingsView from "./components/AdminGame/Self/View/GameSettingsView";
+import UserAccountDetailsView from "./components/Admin/View/UserAccountDetailsView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -81,3 +82,4 @@ export const gameView = {component: <GameView/>, label: "Игра"}
 export const questionnaireDisclaimerView = {component: <QuestionnaireDisclaimerView/>, label: "Правила игры"}
 export const questionnaireFillingView = {component: <QuestionnaireFillingView/>, label: "Заполнение анкеты"}
 export const gameSettingsView = {component: <GameSettingsView/>, label: "Настройки"}
+export const userAccountDetailsView = {component: <UserAccountDetailsView/>, label: "Управление игроком"}

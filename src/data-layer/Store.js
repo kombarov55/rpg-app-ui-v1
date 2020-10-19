@@ -30,6 +30,7 @@ export const initialState = {
     activeSchoolLvl: null,
     activeSkill: null,
     activeQuestionnaireTemplate: null,
+    activeUserAccount: null,
 
     msgs: [],
     networks: [],

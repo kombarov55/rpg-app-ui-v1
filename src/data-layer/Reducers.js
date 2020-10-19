@@ -26,6 +26,7 @@ import {
     SET_ACTIVE_SKILL_CATEGORY,
     SET_ACTIVE_SPELL_SCHOOL,
     SET_ACTIVE_SUBNETWORK,
+    SET_ACTIVE_USER_ACCOUNT,
     SET_AVAILABLE_ITEMS_FOR_SALE,
     SET_AVAILABLE_MERCHANDISE,
     SET_CONVERSIONS,
@@ -356,6 +357,11 @@ export function rootReducer(state = initialState, action) {
         case SET_ACTIVE_QUESTIONNAIRE_TEMPLATE:
             return Object.assign({}, state, {
                 activeQuestionnaireTemplate: action.payload.x
+            })
+
+        case SET_ACTIVE_USER_ACCOUNT:
+            return Object.assign({}, state, {
+                activeUserAccount: action.payload.x
             })
 
         default:

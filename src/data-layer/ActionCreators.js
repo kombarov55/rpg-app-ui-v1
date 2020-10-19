@@ -28,6 +28,7 @@ import {
     SET_ACTIVE_SKILL_CATEGORY,
     SET_ACTIVE_SPELL_SCHOOL,
     SET_ACTIVE_SUBNETWORK,
+    SET_ACTIVE_USER_ACCOUNT,
     SET_AVAILABLE_ITEMS_FOR_SALE,
     SET_AVAILABLE_MERCHANDISE,
     SET_CONVERSIONS,
@@ -581,6 +582,15 @@ export function setQuestionnaireTemplates(x) {
 export function setActiveQuestionnaireTemplate(x) {
     return {
         type: SET_ACTIVE_QUESTIONNAIRE_TEMPLATE,
+        payload: {
+            x: x
+        }
+    }
+}
+
+export function setActiveUserAccount(x) {
+    return {
+        type: SET_ACTIVE_USER_ACCOUNT,
         payload: {
             x: x
         }

@@ -41,7 +41,12 @@ export default connect(
              */
             skillCategoryToRemainingSkillPoints: props.questionnaireTemplate.skillCategoryToPoints,
 
-            skillCategories: []
+            skillCategories: [],
+
+            /**
+             * [{skill: Skill, amount: Int}]
+             */
+            selectedSkillsToLvl: []
         }
 
         get(findAllSkillCategoriesByGameIdAndDestionationUrl(props.gameId, Destination.PLAYER), rs => this.setState({skillCategories: rs}))
@@ -67,11 +72,22 @@ export default connect(
                 {this.state.skillCategories.filter(v => !v.complex).flatMap(v => v.skills).map(skill =>
                     <div>
                         <SkillDistributionComponent skill={skill}
+                                                    onSelected={() => this.setState(state => ({
+                                                        selectedSkillsToLvl: this.state.selectedSkillsToLvl.concat({skill: skill, amount: 0})
+                                                    }))}
+                                                    onSelectRemoved={() => this.setState(state => ({
+                                                        selectedSkillsToLvl: this.state.selectedSkillsToLvl.filter(v => v.skill.id !== skill.id)
+                                                    }))}
+                                                    onUpgradeCountChanged={count => this.setState(state => ({
+                                                        selectedSkillsToLvl: this.state.selectedSkillsToLvl
+                                                            .filter(v => v.skill.id !== skill.id)
+                                                            .concat({skill: skill, amount: count})
+                                                    }))}
                         />
                     </div>
                 )}
 
-                <Btn text={"Сохранить"} onClick={() => console.log(this.state)}/>
+                <Btn text={"Сохранить"} onClick={() => console.log(this.state.selectedSkillsToLvl)}/>
             </div>
         )
     }

@@ -15,7 +15,7 @@ import {
 } from "../../../../data-layer/ActionCreators";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import Btn from "../../../Common/Buttons/Btn";
-import {myGamesView, questionnaireDisclaimerView, questionnaireReviewView} from "../../../../Views";
+import {characterListView, myGamesView, questionnaireDisclaimerView, questionnaireReviewView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
@@ -42,6 +42,9 @@ export default connect(
             toQuestionnaireReviewView: (questionnaire) => {
                 dispatch(setActiveQuestionnaire(questionnaire))
                 dispatch(changeView(questionnaireReviewView))
+            },
+            toCharacterList: () => {
+                dispatch(changeView(characterListView))
             },
             back: () => dispatch(changeView(myGamesView))
         }
@@ -73,7 +76,7 @@ export default connect(
                           description={this.state.game.imgSrc}
                 />
 
-                <List title={"Шаблоны анкет"}
+                <List title={"Шаблоны анкет:"}
                       noItemsText={"Пусто.."}
                       values={this.state.questionnaireTemplates.map(questionnaireTemplate =>
                       <ExpandableListItemWithBullets
@@ -109,6 +112,7 @@ export default connect(
                       )}
                 />
 
+                <Btn text={"Лист персонажа"} onClick={() => this.props.toCharacterList()}/>
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )

@@ -127,3 +127,5 @@ export const deleteQuestionnaireTemplateFieldUrl = id => rootUrl + "/field/" + i
 
 export const saveSkillCategoryToPointsUrl = questionnaireTemplateId => rootUrl + "/questionnaireTemplate/" + questionnaireTemplateId + "/skillCategoryToPoints"
 export const deleteSkillCategoryToPointsUrl = id => rootUrl + "/skillCategoryToPoints/" + id
+
+export const saveQuestionnaireUrl = gameId => rootUrl + "/game/" + gameId + "/questionnaire"

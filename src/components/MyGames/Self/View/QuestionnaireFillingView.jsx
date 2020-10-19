@@ -9,9 +9,10 @@ import {SelectButton} from "primereact/selectbutton";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import {
     findAllSkillCategoriesByGameIdAndDestionationUrl,
-    organizationByGameIdAndTypeUrl
+    organizationByGameIdAndTypeUrl,
+    saveQuestionnaireUrl
 } from "../../../../util/Parameters";
-import {get} from "../../../../util/Http";
+import {get, post} from "../../../../util/Http";
 import SkillDistributionComponent from "../Comonent/SkillDistributionComponent";
 import Destination from "../../../../data-layer/enums/Destination";
 import SpellSchoolComponent from "../Comonent/SpellSchoolComponent";
@@ -204,8 +205,6 @@ export default connect(
 
     haveEnoughFreeSkillPoints(skillCategory) {
         let b = this.getAmountOfLeftSkillPoints(skillCategory) > 0;
-        console.log("haveEnoughFreeSkillPoints()")
-        console.log({skillCategory: skillCategory, result: b})
         return b
     }
 
@@ -250,13 +249,14 @@ export default connect(
             Popup.error("Пожалуйста, распределите все очки навыков")
             return
         } else {
-            console.log("success")
+            post(saveQuestionnaireUrl(this.props.gameId), form, rs => {
+                Popup.info("Анкета отправлена на проверку.")
+                this.props.back()
+            })
         }
     }
 
     allFieldsAreFilled(form) {
-        console.log({fieldToValueList: form.fieldToValueList, fields: this.props.questionnaireTemplate.fields})
-
         const allFieldsAreIncluded = this.props.questionnaireTemplate.fields.every(field =>
             form.fieldToValueList.some(pair => pair.field.id === field.id)
         )

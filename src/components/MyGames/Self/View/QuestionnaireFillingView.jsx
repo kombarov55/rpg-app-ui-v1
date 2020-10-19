@@ -18,6 +18,10 @@ import SpellSchoolComponent from "../Comonent/SpellSchoolComponent";
 import IdComparator from "../../../../util/IdComparator";
 import Popup from "../../../../util/Popup";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
+import {changeView} from "../../../../data-layer/ActionCreators";
+import {gameView} from "../../../../Views";
+import {InputTextarea} from "primereact/inputtextarea";
+import IsNumeric from "../../../../util/IsNumeric";
 
 export default connect(
     state => ({
@@ -30,7 +34,7 @@ export default connect(
 
         return {
             ...stateProps,
-
+            back: () => dispatch(changeView(gameView))
         }
     }
 )(class QuestionnaireFillingView extends React.Component {
@@ -93,7 +97,10 @@ export default connect(
                                                     canSelectMore={this.haveEnoughFreeSkillPoints(skillCategory)}
                                                     onSkillAdded={() => {
                                                         this.setState(state => ({
-                                                            selectedSkillsToLvl: this.state.selectedSkillsToLvl.concat({skill: skill, amount: 0})
+                                                            selectedSkillsToLvl: this.state.selectedSkillsToLvl.concat({
+                                                                skill: skill,
+                                                                amount: 0
+                                                            })
                                                         }))
                                                         this.decPointsAmount(skillCategory)
                                                     }}
@@ -115,30 +122,39 @@ export default connect(
                 ))}
                 <FormTitleLabel text={"Школы магии:"}/>
                 {this.state.skillCategories.filter(v => v.complex).map(skillCategory => skillCategory.spellSchools.map(spellSchool =>
-                <div>
-                    <SpellSchoolComponent spellSchool={spellSchool}
-                                          canSelectMore={this.haveEnoughFreeSkillPoints(skillCategory)}
-                                          onSpellAdded={spell => {
-                                              this.setState(state => ({selectedSpells: state.selectedSpells.concat(spell)}))
-                                              this.decPointsAmount(skillCategory)
-                                          }}
-                                          onSpellRemoved={spell => {
-                                              this.setState(state => ({selectedSpells: state.selectedSpells.filter(v => v !== spell)}))
-                                              this.incPointsAmount(skillCategory)
-                                          }}
-                                          key={spellSchool.id}
-                    />
-
-                </div>
+                    <div>
+                        <SpellSchoolComponent spellSchool={spellSchool}
+                                              canSelectMore={this.haveEnoughFreeSkillPoints(skillCategory)}
+                                              onSpellAdded={spell => {
+                                                  this.setState(state => ({selectedSpells: state.selectedSpells.concat(spell)}))
+                                                  this.decPointsAmount(skillCategory)
+                                              }}
+                                              onSpellRemoved={spell => {
+                                                  this.setState(state => ({selectedSpells: state.selectedSpells.filter(v => v !== spell)}))
+                                                  this.incPointsAmount(skillCategory)
+                                              }}
+                                              key={spellSchool.id}
+                        />
+                    </div>
                 ))}
 
-                <Btn text={"Сохранить"} onClick={() => console.log(this.state)}/>
+                <Btn text={"Сохранить"} onClick={() => this.save()}/>
+                <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
     }
 
     getInputByType(field, type) {
-        if (type === FieldType.STRING || type === FieldType.NUMBER) {
+        if (type === FieldType.STRING) {
+            return (
+                <InputTextarea autoResize={true}
+                               value={this.getValueOfField(field)}
+                               onChange={e => this.onFieldValueEntered(field, e.target.value)}
+                />
+            )
+        }
+
+        if (type === FieldType.NUMBER) {
             return (
                 <input value={this.getValueOfField(field)}
                        onChange={e => this.onFieldValueEntered(field, e.target.value)}
@@ -218,4 +234,47 @@ export default connect(
     getAmountOfLeftSkillPoints(skillCategory) {
         return this.state.skillCategoryToRemainingSkillPoints.find(v => v.skillCategory.id === skillCategory.id).amount
     }
+
+    save() {
+        const form = {
+            fieldToValueList: this.state.fieldToValueList,
+            country: this.state.country,
+            selectedSkillsToLvl: this.state.selectedSkillsToLvl,
+            selectedSpells: this.state.selectedSpells
+        }
+
+        if (!this.allFieldsAreFilled(form)) {
+            Popup.error("Пожалуйста, заполните все поля.")
+            return
+        } else if (!this.allSkillPointsAreDistributed(form)) {
+            Popup.error("Пожалуйста, распределите все очки навыков")
+            return
+        } else {
+            console.log("success")
+        }
+    }
+
+    allFieldsAreFilled(form) {
+        console.log({fieldToValueList: form.fieldToValueList, fields: this.props.questionnaireTemplate.fields})
+
+        const allFieldsAreIncluded = this.props.questionnaireTemplate.fields.every(field =>
+            form.fieldToValueList.some(pair => pair.field.id === field.id)
+        )
+
+        const allValuesAreValid = form.fieldToValueList.every(({field, value}) => {
+                if (field.type === FieldType.NUMBER ) {
+                    return value != null && IsNumeric(value)
+                } else {
+                    return value != null
+                }
+            }
+        )
+
+        return allFieldsAreIncluded && allValuesAreValid && form.country != null
+    }
+
+    allSkillPointsAreDistributed() {
+        return this.state.skillCategoryToRemainingSkillPoints.every(({_, amount}) => amount === 0)
+    }
+
 })

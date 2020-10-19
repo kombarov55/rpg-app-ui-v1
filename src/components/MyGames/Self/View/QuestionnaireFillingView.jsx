@@ -13,6 +13,7 @@ import SkillDistributionComponent from "../Comonent/SkillDistributionComponent";
 import Destination from "../../../../data-layer/enums/Destination";
 import SpellSchoolComponent from "../Comonent/SpellSchoolComponent";
 import IdComparator from "../../../../util/IdComparator";
+import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
@@ -177,6 +178,7 @@ export default connect(
                 .filter(v => v.skillCategory.id !== skillCategory.id)
                 .concat({skillCategory: skillCategory, amount: prevAmount + 1})
         }))
+        Popup.info("Осталось " + (prevAmount + 1) + " очков в категории '" + skillCategory.name + "'")
     }
 
     decPointsAmount(skillCategory) {
@@ -187,6 +189,7 @@ export default connect(
                 .filter(v => v.skillCategory.id !== skillCategory.id)
                 .concat({skillCategory: skillCategory, amount: prevAmount - 1})
         }))
+        Popup.info("Осталось " + (prevAmount - 1) + " очков в категории '" + skillCategory.name + "'")
     }
 
     getAmountOfLeftSkillPoints(skillCategory) {

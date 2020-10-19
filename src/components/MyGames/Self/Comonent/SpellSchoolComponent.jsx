@@ -1,5 +1,6 @@
 import React from "react";
 import ExpandableListItemStyle from "../../../../styles/ExpandableListItemStyle";
+import SchoolLvlComponent from "./SchoolLvlComponent";
 
 export default class SpellSchoolComponent extends React.Component {
 
@@ -20,7 +21,14 @@ export default class SpellSchoolComponent extends React.Component {
                         <div style={ExpandableListItemStyle.nameStyle}>{this.props.spellSchool.name}</div>
                     </div>
                 </div>
-                {this.props.spellSchool.description}
+                <div>{this.props.spellSchool.description}</div>
+                {this.props.spellSchool.schoolLvls.map(schoolLvl =>
+                    <SchoolLvlComponent schoolLvl={schoolLvl}
+                                        onSpellAdded={spell => this.props.onSpellAdded(spell)}
+                                        onSpellRemoved={spell => this.props.onSpellRemoved(spell)}
+                                        key={schoolLvl.id}
+                    />
+                )}
             </div>
         )
     }

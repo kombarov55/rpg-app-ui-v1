@@ -47,7 +47,8 @@ export default connect(
             /**
              * [{skill: Skill, amount: Int}]
              */
-            selectedSkillsToLvl: []
+            selectedSkillsToLvl: [],
+            selectedSpells: []
         }
 
         get(findAllSkillCategoriesByGameIdAndDestionationUrl(props.gameId, Destination.PLAYER), rs => this.setState({skillCategories: rs}))
@@ -92,6 +93,8 @@ export default connect(
                 <div>
 
                     <SpellSchoolComponent spellSchool={spellSchool}
+                                          onSpellAdded={spell => this.setState(state => ({selectedSpells: state.selectedSpells.concat(spell)}))}
+                                          onSpellRemoved={spell => this.setState(state => ({selectedSpells: state.selectedSpells.filter(v => v !== spell)}))}
                                           key={spellSchool.id}
                     />
 

@@ -102,7 +102,6 @@ export default connect(
                 <FormTitleLabel text={"Школы магии:"}/>
                 {this.state.skillCategories.filter(v => v.complex).map(skillCategory => skillCategory.spellSchools.map(spellSchool =>
                 <div>
-
                     <SpellSchoolComponent spellSchool={spellSchool}
                                           canSelectMore={this.haveEnoughFreeSkillPoints(skillCategory)}
                                           onSpellAdded={spell => {
@@ -174,7 +173,10 @@ export default connect(
     }
 
     haveEnoughFreeSkillPoints(skillCategory) {
-        return this.getAmountOfLeftSkillPoints(skillCategory) > 0
+        let b = this.getAmountOfLeftSkillPoints(skillCategory) > 0;
+        console.log("haveEnoughFreeSkillPoints()")
+        console.log({skillCategory: skillCategory, result: b})
+        return b
     }
 
     incPointsAmount(skillCategory) {

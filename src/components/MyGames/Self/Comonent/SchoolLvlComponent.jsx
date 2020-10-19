@@ -20,7 +20,7 @@ export default class SchoolLvlComponent extends React.Component {
                     <SpellComponent name={spell.name}
                                     img={spell.img}
                                     description={spell.description}
-                                    isCheckButtonVisible={this.isCheckButtonVisible(spell)}
+                                    isCheckButtonVisible={this.props.canSelectMore || this.isSpellAlreadyAdded(spell)}
                                     onSpellAdded={() => {
                                         this.setState(state => ({addedSpells: state.addedSpells.concat(spell)}))
                                         this.props.onSpellAdded(spell)
@@ -36,7 +36,7 @@ export default class SchoolLvlComponent extends React.Component {
         )
     }
 
-    isCheckButtonVisible(spell) {
-        return this.props.canSelectMore || this.state.addedSpells.some(v => v.id !== spell.id)
+    isSpellAlreadyAdded(spell) {
+        return this.state.addedSpells.some(v => v.id === spell.id)
     }
 }

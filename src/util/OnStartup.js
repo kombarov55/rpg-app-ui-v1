@@ -12,8 +12,6 @@ function loadAnnouncements() {
 
 function startNotificationPolling() {
     setInterval(() => get(notificationUrl, rs => {
-        console.log("received notifications")
-        console.log(rs)
         rs.forEach(notification => {
             switch (notification.severity) {
                 case NotificationSeverity.GOOD:

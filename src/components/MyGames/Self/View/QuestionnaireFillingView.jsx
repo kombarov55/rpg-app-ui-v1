@@ -66,12 +66,7 @@ export default connect(
                 <InputLabel text={"Распределение очков навыков:"}/>
                 {this.state.skillCategories.filter(v => !v.complex).flatMap(v => v.skills).map(skill =>
                     <div>
-                        <SkillDistributionComponent
-                            name={skill.name}
-                            img={skill.img}
-                            description={skill.description}
-
-                            key={skill.id}
+                        <SkillDistributionComponent skill={skill}
                         />
                     </div>
                 )}

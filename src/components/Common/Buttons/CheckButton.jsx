@@ -28,9 +28,9 @@ export default class CheckButton extends React.Component {
     }
 
     onClick() {
-        this.setState(state => ({checked: !state.checked}))
         if (this.props.onClick != null) {
-            this.props.onClick()
+            this.props.onClick(!this.state.checked)
         }
+        this.setState(state => ({checked: !state.checked}))
     }
 }

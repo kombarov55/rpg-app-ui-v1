@@ -1,0 +1,4 @@
+export default {
+    CHARACTER: "CHARACTER",
+    ORGANIZATION: "ORGANIZATION"
+}

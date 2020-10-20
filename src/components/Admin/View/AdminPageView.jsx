@@ -121,7 +121,7 @@ export default connect(mapStateToProps, mapDispatchToProps)
                 </div>
 
                 <div style={FormViewStyle}>
-                    <List title={"Игроки"}
+                    <List title={"Игроки:"}
                           noItemsText={"Пусто.."}
                           values={this.state.userAccounts.map(userAccount =>
                               <ExpandableListItemWithBullets

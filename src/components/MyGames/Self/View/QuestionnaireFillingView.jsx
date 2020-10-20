@@ -242,6 +242,7 @@ export default connect(
 
     save() {
         const form = {
+            name: this.state.name,
             fieldToValueList: this.state.fieldToValueList,
             country: this.state.country,
             selectedSkillsToLvl: this.state.selectedSkillsToLvl,

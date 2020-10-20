@@ -139,3 +139,4 @@ export const archiveQuestionnaireUrl = rootUrl + "/questionnaire/decline.do"
 export const notificationUrl = rootUrl + "/notification"
 
 export const getCharacterByIdUrl = id => rootUrl + "/character/" + id
+export const getCharactersByUserIdUrl = userId => `${rootUrl}/userAccount/${userId}/character`

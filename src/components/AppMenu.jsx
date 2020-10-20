@@ -5,7 +5,8 @@ import {
     conversationListView,
     favoriteAnnouncementView,
     myAnnouncementView,
-    myGamesView
+    myGamesView,
+    officeView
 } from "../Views";
 import {changeView, setNetworks, toggleSidebar} from "../data-layer/ActionCreators";
 import {connect} from "react-redux";
@@ -58,7 +59,7 @@ class ConnectedMenu extends React.Component {
                 <div className={"main-frame-nav-item"}
                      onClick={() => this.onItemClicked(favoriteAnnouncementView)}>
                     <i className={"pi pi-heart"} style={{"fontSize": "6vmin"}}/>
-                    <div className={"main-frame-nav-item-text"}>
+                    <div cassName={"main-frame-nav-item-text"}>
                         Избранное
                     </div>
                 </div>
@@ -77,7 +78,9 @@ class ConnectedMenu extends React.Component {
                         Мои игры
                     </div>
                 </div>
-                <div className={"main-frame-nav-item"}>
+                <div className={"main-frame-nav-item"}
+                     onClick={() => this.onItemClicked(officeView)}
+                >
                     <i className={"pi pi-id-card"} style={{"fontSize": "6vmin"}}/>
                     <div className={"main-frame-nav-item-text"}>
                         Кабинет

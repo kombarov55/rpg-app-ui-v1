@@ -37,6 +37,7 @@ import GameSettingsView from "./components/AdminGame/Self/View/GameSettingsView"
 import UserAccountDetailsView from "./components/Admin/View/UserAccountDetailsView";
 import QuestionnaireReviewView from "./components/MyGames/Self/View/QuestionnaireReviewView";
 import CharacterListView from "./components/MyGames/Self/View/CharacterListView";
+import OfficeView from "./components/Office/Self/View/OfficeView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -87,3 +88,4 @@ export const gameSettingsView = {component: <GameSettingsView/>, label: "Нас�
 export const userAccountDetailsView = {component: <UserAccountDetailsView/>, label: "Управление игроком"}
 export const questionnaireReviewView = {component: <QuestionnaireReviewView/>, label: "Рассмотрение анкеты"}
 export const characterListView = {component: <CharacterListView/>, label: "Лист персонажа"}
+export const officeView = {component: <OfficeView/>, label: "Кабинет"}

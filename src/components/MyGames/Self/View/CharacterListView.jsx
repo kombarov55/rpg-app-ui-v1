@@ -13,6 +13,7 @@ import List from "../../../Common/Lists/List";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 import TransferForm from "../../Game/Form/TransferForm";
 import Popup from "../../../../util/Popup";
+import TransferDestination from "../../../../data-layer/enums/TransferDestination";
 
 export default connect(
     state => ({
@@ -56,6 +57,7 @@ export default connect(
         return (
             <div style={FormViewStyle}>
                 <FormTitleLabel text={"Персонаж:"}/>
+                <InputLabel text={this.state.character.name}/>
                 <div>{Object.entries(this.state.character.fieldNameToValueList).map(([name, value]) =>
                     <div>
                         <InputLabel text={name + ":"}/>
@@ -126,7 +128,11 @@ export default connect(
                 from: this.state.character.balanceId,
                 to: form.destination.balanceId,
                 currency: form.currency,
-                amount: form.amount
+                amount: form.amount,
+                originId: this.state.character.id,
+                originType: TransferDestination.CHARACTER,
+                destinationId: form.destination.id,
+                destinationType: form.destinationType
             }, () => {
                 get(getCharacterByIdUrl(this.props.characterId), rs => {
                     Popup.info("Перевод выполнен")

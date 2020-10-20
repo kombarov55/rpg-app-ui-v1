@@ -4,14 +4,15 @@ import {changeView, setCurrencies} from "../../../../data-layer/ActionCreators";
 import {gameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
-import {get} from "../../../../util/Http";
-import {currenciesByGameIdUrl, getCharacterByIdUrl} from "../../../../util/Parameters";
+import {get, post} from "../../../../util/Http";
+import {currenciesByGameIdUrl, getCharacterByIdUrl, transferUrl} from "../../../../util/Parameters";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import ListItem from "../../../Common/ListElements/ListItem";
 import List from "../../../Common/Lists/List";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 import TransferForm from "../../Game/Form/TransferForm";
+import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
@@ -75,10 +76,10 @@ export default connect(
                     this.setState({transferFormVisible: true})
                 }}/>
                 {this.state.transferFormVisible &&
-                    <TransferForm currencyNames={this.props.currencies.map(v => v.name)}
-                                  gameId={this.props.gameId}
-                                  onSubmit={form => console.log(form)}
-                    />
+                <TransferForm currencyNames={this.props.currencies.map(v => v.name)}
+                              gameId={this.props.gameId}
+                              onSubmit={form => this.performTransfer(form)}
+                />
                 }
 
                 <List title={"Выученные заклинания:"}
@@ -117,5 +118,31 @@ export default connect(
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
+    }
+
+    performTransfer(form) {
+        if (this.isEnoughMoneyOnBalance(form.currency, form.amount)) {
+            post(transferUrl, {
+                from: this.state.character.balanceId,
+                to: form.destination.balanceId,
+                currency: form.currency,
+                amount: form.amount
+            }, () => {
+                get(getCharacterByIdUrl(this.props.characterId), rs => {
+                    Popup.info("Перевод выполнен")
+                    this.setState({
+                        character: rs,
+                        transferFormVisible: false
+                    })
+                })
+            })
+        } else {
+            Popup.error("У вас недостаточно средств для такого перевода.")
+        }
+    }
+
+    isEnoughMoneyOnBalance(currency, amount) {
+        console.log({currency: currency, amount: amount, balance: this.state.character.balance})
+        return this.state.character.balance.find(v => v.name === currency).amount >= amount
     }
 })

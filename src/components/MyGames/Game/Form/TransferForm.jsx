@@ -18,8 +18,7 @@ export default class TransferForm extends React.Component {
 
         this.state = {
             destinationType: TransferDestination.CHARACTER,
-            characterDestination: null,
-            organizationDestination: null,
+            destination: null,
             currency: null,
             amount: null
         }
@@ -34,8 +33,7 @@ export default class TransferForm extends React.Component {
                 <SelectButton value={this.state.destinationType}
                               onChange={e => this.setState({
                                   destinationType: e.target.value,
-                                  characterDestination: null,
-                                  organizationDestination: null
+                                  destination: null
                               })}
                               options={[
                                   {label: "Персонажу", value: TransferDestination.CHARACTER},
@@ -61,17 +59,8 @@ export default class TransferForm extends React.Component {
 
                 <SubmitButton text={"Отправить"}
                               onClick={() => {
-                                  if (this.state.destinationType === TransferDestination.CHARACTER && this.state.characterDestination == null) {
-                                      Popup.error("Пожалуйста, заполните получателя.")
-                                      return
-                                  }
-
-                                  if (this.state.destinationType === TransferDestination.ORGANIZATION && this.state.organizationDestination == null) {
-                                      Popup.error("Пожалуйста, заполните получателя.")
-                                      return
-                                  }
-
                                   if (
+                                      this.state.destination == null ||
                                       this.state.currency == null ||
                                       this.state.amount == null ||
                                       !IsNumeric(this.state.amount)
@@ -93,15 +82,15 @@ export default class TransferForm extends React.Component {
             <div>
                 <List title={"Получатель:"}
                       noItemsText={"Не выбран"}
-                      values={[this.state.characterDestination].filter(v => v != null).map(destination =>
+                      values={[this.state.destination].filter(v => v != null).map(destination =>
                           <ListItem text={destination.name}
-                                    onDelete={() => this.setState({characterDestination: null})}
+                                    onDelete={() => this.setState({destination: null})}
                           />
                       )}
                 />
 
                 <RemoteAutocomplete fieldToDisplay={"name"}
-                                    onSelected={item => this.setState({characterDestination: item})}
+                                    onSelected={item => this.setState({destination: item})}
                                     buildSyncUrl={input => findCharacterByNameUrl(this.props.gameId, input)}
                                     key={"character"}
                 />
@@ -114,15 +103,15 @@ export default class TransferForm extends React.Component {
             <div>
                 <List title={"Получатель:"}
                       noItemsText={"Не выбран"}
-                      values={[this.state.organizationDestination].filter(v => v != null).map(destination =>
+                      values={[this.state.destination].filter(v => v != null).map(destination =>
                           <ListItem text={destination.name}
-                                    onDelete={() => this.setState({organizationDestination: null})}
+                                    onDelete={() => this.setState({destination: null})}
                           />
                       )}
                 />
 
                 <RemoteAutocomplete fieldToDisplay={"name"}
-                                    onSelected={item => this.setState({organizationDestination: item})}
+                                    onSelected={item => this.setState({destination: item})}
                                     buildSyncUrl={input => findOrganizationByGameIdAndNameUrl(this.props.gameId, input)}
                                     key={"organization"}
                 />

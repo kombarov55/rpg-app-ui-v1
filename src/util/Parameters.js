@@ -142,6 +142,8 @@ export const makeCharacterActiveUrl = `${rootUrl}/userAccount/makeCharacterActiv
 export const killCharacterUrl = `${rootUrl}/userAccount/killCharacter.do`
 export const reviveCharacterUrl = `${rootUrl}/userAccount/reviveCharacter.do`
 
+export const transferUrl = `${rootUrl}/balance/transfer.do`
+
 export const notificationUrl = rootUrl + "/notification"
 
 export const getCharacterByIdUrl = id => rootUrl + "/character/" + id

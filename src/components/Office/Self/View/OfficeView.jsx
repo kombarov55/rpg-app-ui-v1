@@ -3,7 +3,13 @@ import {connect} from "react-redux"
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
 import {get, post} from "../../../../util/Http";
-import {getCharactersByUserIdUrl, makeCharacterActiveUrl, userAccountUrl} from "../../../../util/Parameters";
+import {
+    getCharactersByUserIdUrl,
+    killCharacterUrl,
+    makeCharacterActiveUrl,
+    reviveCharacterUrl,
+    userAccountUrl
+} from "../../../../util/Parameters";
 import Globals from "../../../../util/Globals";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 import Btn from "../../../Common/Buttons/Btn";
@@ -71,19 +77,12 @@ export default connect(
                                                             <div>{`Гражданин страны: ${character.country.name}`}</div>,
                                                             <div>{`Статус: ${CharacterStatus.getLabel(character.status)}`}</div>,
                                                             <div>{`Дата смены статуса: ${FormatDate(new Date(character.statusChangeDate))}`}</div>,
-                                                            this.isCharacterActive(character) ?
-                                                                <Btn text={"Активен"}/> :
-                                                                <Btn text={"Сделать активным"} onClick={() => {
-                                                                    post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () => {
-                                                                        get(userAccountUrl(Globals.userId), rs => {
-                                                                            this.props.setUserAccount(rs)
-                                                                            Popup.info(`Персонаж теперь активен.`)
-                                                                        })
-                                                                    })
-                                                                }}/>,
-                                                            <Btn text={"Убить персонажа"}/>,
-                                                            <Btn text={"Открыть лист персонажа"}/>
-                                                        ]}
+                                                            this.killCharacterButton(game, character),
+                                                            ...(character.status !== CharacterStatus.DEAD ? [
+                                                                this.makeCharacterActiveButton(game, character),
+                                                                <Btn text={"Открыть лист персонажа"}/>
+                                                            ] : [])
+                                                        ].filter(v => v != null)}
                                                         key={character.id}
                                     />
                                 )}
@@ -92,6 +91,48 @@ export default connect(
                 />
             </div>
         )
+    }
+
+    makeCharacterActiveButton(game, character) {
+        return (
+            !this.isCharacterActive(character) &&
+            <Btn text={"Сделать активным"} onClick={() => {
+                post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () =>
+                    get(userAccountUrl(Globals.userId), rs => {
+                        this.props.setUserAccount(rs)
+                        Popup.info(`Персонаж теперь активен.`)
+                    })
+                )
+            }}/>
+        )
+    }
+
+    killCharacterButton(game, character) {
+        if (character.status === CharacterStatus.DEAD) {
+            return (
+                <Btn text={"Оживить персонажа"} onClick={() => {
+                    post(reviveCharacterUrl, {characterId: character.id}, () =>
+                        get(getCharactersByUserIdUrl(Globals.userId), rs => {
+                            this.setState({characters: rs})
+                            Popup.success(`Вы оживили персонажа!`)
+                        })
+                    )
+                }}/>
+            )
+        } else {
+            return (
+                <Btn text={"Убить персонажа"} onClick={() => {
+                    if (window.confirm("Вы действительно хотите убить персонажа?")) {
+                        post(killCharacterUrl, {characterId: character.id}, () =>
+                            get(getCharactersByUserIdUrl(Globals.userId), rs => {
+                                this.setState({characters: rs})
+                                Popup.success(`Персонаж успешно убит. Дата смерти: ${new Date()}`)
+                            })
+                        )
+                    }
+                }}/>
+            )
+        }
     }
 
     isCharacterActive(character) {

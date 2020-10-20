@@ -7,9 +7,12 @@ import {getCharactersByUserIdUrl} from "../../../../util/Parameters";
 import Globals from "../../../../util/Globals";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 import Btn from "../../../Common/Buttons/Btn";
+import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 
 export default connect(
-    state => ({}),
+    state => ({
+        userAccount: state.userAccount
+    }),
     null,
     (stateProps, dispatchProps, ownProps) => {
         const {dispatch} = dispatchProps
@@ -26,7 +29,8 @@ export default connect(
 
 
         this.state = {
-            characters: []
+            characters: [],
+            games: []
         }
 
         get(getCharactersByUserIdUrl(Globals.userId), rs => this.setState({characters: rs}))
@@ -35,14 +39,32 @@ export default connect(
     render() {
         return (
             <div style={FormViewStyle}>
+                <FormTitleLabel text={"Активные персонажи:"}/>
+                {this.props.userAccount.gameToActiveCharacter.map(({game, activeCharacter}) =>
+                    <div>
+                        {
+                            activeCharacter != null ?
+                                <List title={`${game.name}:`}
+                                      values={[<ExpandableListItem name={activeCharacter.name}/>]}
+                                /> :
+                                <List title={game.name}
+                                      noItemsText={"Нет активного персонажа.."}
+                                />
+                        }
+                    </div>
+                )}
+
                 <List title={"Мои персонажи:"}
                       noItemsText={"Пусто.."}
                       values={this.state.characters.map(character =>
                           <ExpandableListItem name={character.name}
                                               alwaysExpand={true}
                                               expandableElements={[
-                                                  <div>{`Участвует в игре: ${character.game.name}`}</div>,
+                                                  <div>{`Игра: ${character.game.name}`}</div>,
                                                   <div>{`Гражданин страны: ${character.country.name}`}</div>,
+                                                  this.isCharacterActive(character) ?
+                                                      <Btn text={"Активен"}/> :
+                                                      <Btn text={"Сделать активным"}/>,
                                                   <Btn text={"Убить персонажа"}/>,
                                                   <Btn text={"Открыть лист персонажа"}/>
                                               ]}
@@ -52,5 +74,9 @@ export default connect(
                 />
             </div>
         )
+    }
+
+    isCharacterActive(character) {
+        return this.props.userAccount.gameToActiveCharacter.some(({activeCharacter}) => activeCharacter.id === character.id)
     }
 })

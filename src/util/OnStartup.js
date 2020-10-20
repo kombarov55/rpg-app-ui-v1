@@ -43,6 +43,7 @@ export function onStartup() {
         get(userAccountUrl(Globals.userId), rs => {
             store.dispatch(addUserAccount(rs))
             loadAnnouncements()
+            Popup.success(`Привет, ${rs.firstName}!`)
         })
 
         get(allUsersShortUrl, rs => store.dispatch(setUserAccounts(rs)))

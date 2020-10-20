@@ -248,6 +248,7 @@ export default connect(
             selectedSkillsToLvl: this.state.selectedSkillsToLvl,
             selectedSpells: this.state.selectedSpells
         }
+        console.log(form)
 
         if (!this.allFieldsAreFilled(form)) {
             Popup.error("Пожалуйста, заполните все поля.")

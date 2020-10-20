@@ -44,6 +44,7 @@ export default connect(
         super(props);
 
         this.state = {
+            name: null,
             /**
              * [{field: Field, value: String}]
              */
@@ -72,6 +73,11 @@ export default connect(
     render() {
         return (
             <div style={FormViewStyle}>
+                <InputLabel text={"Имя персонажа:"}/>
+                <input value={this.state.name}
+                       onChange={e => this.setState({name: e.target.value})}
+                />
+
                 {this.props.questionnaireTemplate.fields.map(field =>
                     <div>
                         <InputLabel text={field.name}/>

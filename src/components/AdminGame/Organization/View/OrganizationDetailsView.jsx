@@ -174,7 +174,7 @@ export default connect(
         }
 
         detailsComponent() {
-            switch (this.props.organization.type.name) {
+            switch (this.props.organization.type) {
                 case OrganizationType.COUNTRY:
                     return (
                         <CountryDetailsComponent gameId={this.props.gameId}

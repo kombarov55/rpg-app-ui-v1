@@ -9,7 +9,7 @@ import Popup from "../../../../util/Popup";
 import List from "../../../Common/Lists/List";
 import ListItem from "../../../Common/ListElements/ListItem";
 import RemoteAutocomplete from "../../../Common/Input/RemoteAutocomplete";
-import {findCharacterByNameUrl} from "../../../../util/Parameters";
+import {findCharacterByNameUrl, findOrganizationByGameIdAndNameUrl} from "../../../../util/Parameters";
 
 export default class TransferForm extends React.Component {
 
@@ -17,7 +17,7 @@ export default class TransferForm extends React.Component {
         super(props);
 
         this.state = {
-            transferDestination: TransferDestination.CHARACTER,
+            destinationType: TransferDestination.CHARACTER,
             destination: null,
 
             currency: null,
@@ -31,8 +31,8 @@ export default class TransferForm extends React.Component {
                 <FormTitleLabel text={"Перевод:"}/>
 
                 <InputLabel text={"Кому?"}/>
-                <SelectButton value={this.state.transferDestination}
-                              onChange={e => this.setState({transferDestination: e.target.value})}
+                <SelectButton value={this.state.destinationType}
+                              onChange={e => this.setState({destinationType: e.target.value})}
                               options={[
                                   {label: "Персонажу", value: TransferDestination.CHARACTER},
                                   {label: "Организации", value: TransferDestination.ORGANIZATION}
@@ -42,14 +42,23 @@ export default class TransferForm extends React.Component {
                 <List title={"Получатель:"}
                       noItemsText={"Не выбран"}
                       values={[this.state.destination].filter(v => v != null).map(destination =>
-                          <ListItem text={destination.name}/>
+                          <ListItem text={destination.name}
+                                    onDelete={() => this.setState({destination: null})}
+                          />
                       )}
                 />
 
-                <RemoteAutocomplete fieldToDisplay={"name"}
-                                    onSelected={item => this.setState({destination: item})}
-                                    buildSyncUrl={input => findCharacterByNameUrl(this.props.gameId, input)}
-                />
+                {this.state.destinationType === TransferDestination.CHARACTER ?
+                    <RemoteAutocomplete fieldToDisplay={"name"}
+                                        onSelected={item => this.setState({destination: item})}
+                                        buildSyncUrl={input => findCharacterByNameUrl(this.props.gameId, input)}
+                    /> :
+                    <RemoteAutocomplete fieldToDisplay={"name"}
+                                        onSelected={item => this.setState({destination: item})}
+                                        buildSyncUrl={input => findOrganizationByGameIdAndNameUrl(this.props.gameId, input)}
+                    />
+                }
+
 
                 <InputLabel text={"Валюта:"}/>
                 <SelectButton value={this.state.currency}

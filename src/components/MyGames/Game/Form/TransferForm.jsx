@@ -18,8 +18,8 @@ export default class TransferForm extends React.Component {
 
         this.state = {
             destinationType: TransferDestination.CHARACTER,
-            destination: null,
-
+            characterDestination: null,
+            organizationDestination: null,
             currency: null,
             amount: null
         }
@@ -32,33 +32,21 @@ export default class TransferForm extends React.Component {
 
                 <InputLabel text={"Кому?"}/>
                 <SelectButton value={this.state.destinationType}
-                              onChange={e => this.setState({destinationType: e.target.value})}
+                              onChange={e => this.setState({
+                                  destinationType: e.target.value,
+                                  characterDestination: null,
+                                  organizationDestination: null
+                              })}
                               options={[
                                   {label: "Персонажу", value: TransferDestination.CHARACTER},
                                   {label: "Организации", value: TransferDestination.ORGANIZATION}
                               ]}
                 />
 
-                <List title={"Получатель:"}
-                      noItemsText={"Не выбран"}
-                      values={[this.state.destination].filter(v => v != null).map(destination =>
-                          <ListItem text={destination.name}
-                                    onDelete={() => this.setState({destination: null})}
-                          />
-                      )}
-                />
-
                 {this.state.destinationType === TransferDestination.CHARACTER ?
-                    <RemoteAutocomplete fieldToDisplay={"name"}
-                                        onSelected={item => this.setState({destination: item})}
-                                        buildSyncUrl={input => findCharacterByNameUrl(this.props.gameId, input)}
-                    /> :
-                    <RemoteAutocomplete fieldToDisplay={"name"}
-                                        onSelected={item => this.setState({destination: item})}
-                                        buildSyncUrl={input => findOrganizationByGameIdAndNameUrl(this.props.gameId, input)}
-                    />
+                    this.inputForCharacter() :
+                    this.inputForOrganization()
                 }
-
 
                 <InputLabel text={"Валюта:"}/>
                 <SelectButton value={this.state.currency}
@@ -73,17 +61,70 @@ export default class TransferForm extends React.Component {
 
                 <SubmitButton text={"Отправить"}
                               onClick={() => {
+                                  if (this.state.destinationType === TransferDestination.CHARACTER && this.state.characterDestination == null) {
+                                      Popup.error("Пожалуйста, заполните получателя.")
+                                      return
+                                  }
+
+                                  if (this.state.destinationType === TransferDestination.ORGANIZATION && this.state.organizationDestination == null) {
+                                      Popup.error("Пожалуйста, заполните получателя.")
+                                      return
+                                  }
+
                                   if (
-                                      this.state.destination == null ||
                                       this.state.currency == null ||
                                       this.state.amount == null ||
                                       !IsNumeric(this.state.amount)
                                   ) {
-                                      Popup.info("Пожалуйста, заполните поля правильно.")
+                                      Popup.error("Пожалуйста, заполните поля правильно.")
                                       return
                                   }
+
+
                                   this.props.onSubmit(this.state)
                               }}
+                />
+            </div>
+        )
+    }
+
+    inputForCharacter() {
+        return (
+            <div>
+                <List title={"Получатель:"}
+                      noItemsText={"Не выбран"}
+                      values={[this.state.characterDestination].filter(v => v != null).map(destination =>
+                          <ListItem text={destination.name}
+                                    onDelete={() => this.setState({characterDestination: null})}
+                          />
+                      )}
+                />
+
+                <RemoteAutocomplete fieldToDisplay={"name"}
+                                    onSelected={item => this.setState({characterDestination: item})}
+                                    buildSyncUrl={input => findCharacterByNameUrl(this.props.gameId, input)}
+                                    key={"character"}
+                />
+            </div>
+        )
+    }
+
+    inputForOrganization() {
+        return (
+            <div>
+                <List title={"Получатель:"}
+                      noItemsText={"Не выбран"}
+                      values={[this.state.organizationDestination].filter(v => v != null).map(destination =>
+                          <ListItem text={destination.name}
+                                    onDelete={() => this.setState({organizationDestination: null})}
+                          />
+                      )}
+                />
+
+                <RemoteAutocomplete fieldToDisplay={"name"}
+                                    onSelected={item => this.setState({organizationDestination: item})}
+                                    buildSyncUrl={input => findOrganizationByGameIdAndNameUrl(this.props.gameId, input)}
+                                    key={"organization"}
                 />
             </div>
         )

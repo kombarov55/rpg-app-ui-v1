@@ -10,6 +10,8 @@ import Btn from "../../../Common/Buttons/Btn";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import Popup from "../../../../util/Popup";
 import {addUserAccount} from "../../../../data-layer/ActionCreators";
+import FormatDate from "../../../../util/FormatDate";
+import CharacterStatus from "../../../../data-layer/enums/CharacterStatus";
 
 export default connect(
     state => ({
@@ -67,6 +69,8 @@ export default connect(
                                                         expandableElements={[
                                                             <div>{`Игра: ${character.game.name}`}</div>,
                                                             <div>{`Гражданин страны: ${character.country.name}`}</div>,
+                                                            <div>{`Статус: ${CharacterStatus.getLabel(character.status)}`}</div>,
+                                                            <div>{`Дата смены статуса: ${FormatDate(new Date(character.statusChangeDate))}`}</div>,
                                                             this.isCharacterActive(character) ?
                                                                 <Btn text={"Активен"}/> :
                                                                 <Btn text={"Сделать активным"} onClick={() => {

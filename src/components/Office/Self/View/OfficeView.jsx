@@ -56,19 +56,23 @@ export default connect(
 
                 <List title={"Мои персонажи:"}
                       noItemsText={"Пусто.."}
-                      values={this.state.characters.map(character =>
-                          <ExpandableListItem name={character.name}
-                                              alwaysExpand={true}
-                                              expandableElements={[
-                                                  <div>{`Игра: ${character.game.name}`}</div>,
-                                                  <div>{`Гражданин страны: ${character.country.name}`}</div>,
-                                                  this.isCharacterActive(character) ?
-                                                      <Btn text={"Активен"}/> :
-                                                      <Btn text={"Сделать активным"}/>,
-                                                  <Btn text={"Убить персонажа"}/>,
-                                                  <Btn text={"Открыть лист персонажа"}/>
-                                              ]}
-                                              key={character.id}
+                      values={this.groupCharactersByGame(this.state.characters).map(({game, characters}) =>
+                          <List title={`${game.name}:`}
+                                values={characters.map(character =>
+                                    <ExpandableListItem name={character.name}
+                                                        alwaysExpand={true}
+                                                        expandableElements={[
+                                                            <div>{`Игра: ${character.game.name}`}</div>,
+                                                            <div>{`Гражданин страны: ${character.country.name}`}</div>,
+                                                            this.isCharacterActive(character) ?
+                                                                <Btn text={"Активен"}/> :
+                                                                <Btn text={"Сделать активным"}/>,
+                                                            <Btn text={"Убить персонажа"}/>,
+                                                            <Btn text={"Открыть лист персонажа"}/>
+                                                        ]}
+                                                        key={character.id}
+                                    />
+                                )}
                           />
                       )}
                 />
@@ -78,5 +82,22 @@ export default connect(
 
     isCharacterActive(character) {
         return this.props.userAccount.gameToActiveCharacter.some(({activeCharacter}) => activeCharacter.id === character.id)
+    }
+
+    groupCharactersByGame(characters) {
+        return characters.reduce((resultList, character) => {
+            const stored = resultList.find(v => v.game.id === character.game.id)
+            if (stored == null) {
+                return resultList.concat({
+                    game: character.game,
+                    characters: [character]
+                })
+            } else {
+                return resultList.filter(v => v.game.id !== stored.game.id).concat({
+                    game: stored.game,
+                    characters: stored.characters.concat(character)
+                })
+            }
+        }, [])
     }
 })

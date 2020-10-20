@@ -6,7 +6,7 @@ import {post, upload} from "../../../../util/Http";
 import {
     gameByNetworkId,
     gameBySubnetworkId,
-    openGamesUrl,
+    saveGameUrl,
     uploadServerUrl,
     uploadUrl
 } from "../../../../util/Parameters";
@@ -73,7 +73,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
 
         switch (Globals.gameCreationMode) {
             case GameCreationMode.OPEN:
-                url = openGamesUrl
+                url = saveGameUrl
                 nextView = adminPageView
                 break
 

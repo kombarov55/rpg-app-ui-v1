@@ -33,6 +33,7 @@ export const subnetworkUrl = networkId => networkUrl + "/" + networkId + "/subne
 export const editSubnetworkUrl = (networkId, subnetworkId) => subnetworkUrl(networkId) + "/" + subnetworkId
 export const deleteSubnetworkUrl = (networkId, subnetworkId) => subnetworkUrl(networkId) + "/" + subnetworkId
 
+export const saveGameUrl = `${rootUrl}/game/`
 export const openGamesUrl = rootUrl + "/game/open"
 export const allGamesUrl = rootUrl + "/game"
 export const gameByIdUrl = (gameId) => rootUrl + "/game/" + gameId

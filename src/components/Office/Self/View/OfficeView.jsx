@@ -2,12 +2,14 @@ import React from "react";
 import {connect} from "react-redux"
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
-import {get} from "../../../../util/Http";
-import {getCharactersByUserIdUrl} from "../../../../util/Parameters";
+import {get, post} from "../../../../util/Http";
+import {getCharactersByUserIdUrl, makeCharacterActiveUrl, userAccountUrl} from "../../../../util/Parameters";
 import Globals from "../../../../util/Globals";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 import Btn from "../../../Common/Buttons/Btn";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
+import Popup from "../../../../util/Popup";
+import {addUserAccount} from "../../../../data-layer/ActionCreators";
 
 export default connect(
     state => ({
@@ -19,7 +21,8 @@ export default connect(
 
         return {
             ...stateProps,
-            ...ownProps
+            ...ownProps,
+            setUserAccount: x => dispatch(addUserAccount(x))
         }
     }
 )(class OfficeView extends React.Component {
@@ -66,7 +69,14 @@ export default connect(
                                                             <div>{`Гражданин страны: ${character.country.name}`}</div>,
                                                             this.isCharacterActive(character) ?
                                                                 <Btn text={"Активен"}/> :
-                                                                <Btn text={"Сделать активным"}/>,
+                                                                <Btn text={"Сделать активным"} onClick={() => {
+                                                                    post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () => {
+                                                                        get(userAccountUrl(Globals.userId), rs => {
+                                                                            this.props.setUserAccount(rs)
+                                                                            Popup.info(`Персонаж теперь активен.`)
+                                                                        })
+                                                                    })
+                                                                }}/>,
                                                             <Btn text={"Убить персонажа"}/>,
                                                             <Btn text={"Открыть лист персонажа"}/>
                                                         ]}

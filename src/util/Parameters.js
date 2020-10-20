@@ -136,6 +136,7 @@ export const getQuestionnaireById = id => rootUrl + "/questionnaire/" + id
 export const approveQuestionnaireUrl = rootUrl + "/questionnaire/approve.do"
 export const clarifyQuestionnaireUrl = rootUrl + "/questionnaire/clarify.do"
 export const archiveQuestionnaireUrl = rootUrl + "/questionnaire/decline.do"
+export const makeCharacterActiveUrl = `${rootUrl}/userAccount/makeCharacterActive.do`
 
 export const notificationUrl = rootUrl + "/notification"
 

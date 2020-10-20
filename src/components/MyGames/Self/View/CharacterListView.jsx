@@ -16,7 +16,7 @@ import TransferForm from "../../Game/Form/TransferForm";
 export default connect(
     state => ({
         gameId: state.activeGame.id,
-        characterId: state.userAccount.gameIdToActiveCharacterId[state.activeGame.id],
+        characterId: state.userAccount.gameToActiveCharacter.find(v => v.game.id === state.activeGame.id).activeCharacter.id,
         currencies: state.currencies,
     }),
     null,

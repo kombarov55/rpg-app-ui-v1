@@ -15,9 +15,10 @@ import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem"
 import Btn from "../../../Common/Buttons/Btn";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import Popup from "../../../../util/Popup";
-import {addUserAccount} from "../../../../data-layer/ActionCreators";
+import {addUserAccount, changeView, setActiveCharacter, setActiveGame} from "../../../../data-layer/ActionCreators";
 import FormatDate from "../../../../util/FormatDate";
 import CharacterStatus from "../../../../data-layer/enums/CharacterStatus";
+import {characterListView} from "../../../../Views";
 
 export default connect(
     state => ({
@@ -30,7 +31,12 @@ export default connect(
         return {
             ...stateProps,
             ...ownProps,
-            setUserAccount: x => dispatch(addUserAccount(x))
+            setUserAccount: x => dispatch(addUserAccount(x)),
+            toCharacterListView: (game, character) => {
+                dispatch(setActiveGame(game))
+                dispatch(setActiveCharacter(character))
+                dispatch(changeView(characterListView))
+            }
         }
     }
 )(class OfficeView extends React.Component {
@@ -77,11 +83,11 @@ export default connect(
                                                             <div>{`Гражданин страны: ${character.country.name}`}</div>,
                                                             <div>{`Статус: ${CharacterStatus.getLabel(character.status)}`}</div>,
                                                             <div>{`Дата смены статуса: ${FormatDate(new Date(character.statusChangeDate))}`}</div>,
-                                                            this.killCharacterButton(game, character),
                                                             ...(character.status !== CharacterStatus.DEAD ? [
                                                                 this.makeCharacterActiveButton(game, character),
-                                                                <Btn text={"Открыть лист персонажа"}/>
-                                                            ] : [])
+                                                                this.toCharacterListViewButton(game, character)
+                                                            ] : []),
+                                                            this.killCharacterButton(game, character)
                                                         ].filter(v => v != null)}
                                                         key={character.id}
                                     />
@@ -104,6 +110,14 @@ export default connect(
                     })
                 )
             }}/>
+        )
+    }
+
+    toCharacterListViewButton(game, character) {
+        return (
+            <Btn text={"Открыть лист персонажа"}
+                 onClick={() => this.props.toCharacterListView(game, character)}
+            />
         )
     }
 

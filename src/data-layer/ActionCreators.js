@@ -18,6 +18,7 @@ import {
     INC_ANNOUNCEMENT_FIELD,
     RESTORE_ANNOUNCEMENT,
     RESTORE_COMMENT,
+    SET_ACTIVE_CHARACTER,
     SET_ACTIVE_CONVERSATION,
     SET_ACTIVE_GAME,
     SET_ACTIVE_NETWORK,
@@ -601,6 +602,15 @@ export function setActiveUserAccount(x) {
 export function setActiveQuestionnaire(x) {
     return {
         type: SET_ACTIVE_QUESTIONNAIRE,
+        payload: {
+            x: x
+        }
+    }
+}
+
+export function setActiveCharacter(x) {
+    return {
+        type: SET_ACTIVE_CHARACTER,
         payload: {
             x: x
         }

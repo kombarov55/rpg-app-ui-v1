@@ -16,6 +16,7 @@ import {
     INC_ANNOUNCEMENT_FIELD,
     RESTORE_ANNOUNCEMENT,
     RESTORE_COMMENT,
+    SET_ACTIVE_CHARACTER,
     SET_ACTIVE_CONVERSATION,
     SET_ACTIVE_GAME,
     SET_ACTIVE_NETWORK,
@@ -368,6 +369,11 @@ export function rootReducer(state = initialState, action) {
         case SET_ACTIVE_QUESTIONNAIRE:
             return Object.assign({}, state, {
                 activeQuestionnaire: action.payload.x
+            })
+
+        case SET_ACTIVE_CHARACTER:
+            return Object.assign({}, state, {
+                activeCharacter: action.payload.x
             })
 
         default:

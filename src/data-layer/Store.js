@@ -32,6 +32,7 @@ export const initialState = {
     activeQuestionnaireTemplate: null,
     activeUserAccount: null,
     activeQuestionnaire: null,
+    activeCharacter: null,
 
     msgs: [],
     networks: [],

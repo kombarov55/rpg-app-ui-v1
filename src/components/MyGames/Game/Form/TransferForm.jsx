@@ -6,6 +6,10 @@ import {SelectButton} from "primereact/selectbutton";
 import TransferDestination from "../../../../data-layer/enums/TransferDestination";
 import IsNumeric from "../../../../util/IsNumeric";
 import Popup from "../../../../util/Popup";
+import List from "../../../Common/Lists/List";
+import ListItem from "../../../Common/ListElements/ListItem";
+import RemoteAutocomplete from "../../../Common/Input/RemoteAutocomplete";
+import {findCharacterByNameUrl} from "../../../../util/Parameters";
 
 export default class TransferForm extends React.Component {
 
@@ -13,7 +17,9 @@ export default class TransferForm extends React.Component {
         super(props);
 
         this.state = {
-            destination: TransferDestination.CHARACTER,
+            transferDestination: TransferDestination.CHARACTER,
+            destination: null,
+
             currency: null,
             amount: null
         }
@@ -25,13 +31,26 @@ export default class TransferForm extends React.Component {
                 <FormTitleLabel text={"Перевод:"}/>
 
                 <InputLabel text={"Кому?"}/>
-                <SelectButton value={this.state.destination}
-                              onChange={e => this.setState({destination: e.target.value})}
+                <SelectButton value={this.state.transferDestination}
+                              onChange={e => this.setState({transferDestination: e.target.value})}
                               options={[
                                   {label: "Персонажу", value: TransferDestination.CHARACTER},
                                   {label: "Организации", value: TransferDestination.ORGANIZATION}
                               ]}
                 />
+
+                <List title={"Получатель:"}
+                      noItemsText={"Не выбран"}
+                      values={[this.state.destination].filter(v => v != null).map(destination =>
+                          <ListItem text={destination.name}/>
+                      )}
+                />
+
+                <RemoteAutocomplete fieldToDisplay={"name"}
+                                    onSelected={item => this.setState({destination: item})}
+                                    buildSyncUrl={input => findCharacterByNameUrl(this.props.gameId, input)}
+                />
+
                 <InputLabel text={"Валюта:"}/>
                 <SelectButton value={this.state.currency}
                               onChange={e => this.setState({currency: e.target.value})}

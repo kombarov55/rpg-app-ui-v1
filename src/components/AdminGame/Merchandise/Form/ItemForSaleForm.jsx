@@ -1,6 +1,6 @@
 import React from "react";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
-import CustomAutocomplete from "../../../Common/Input/CustomAutocomplete";
+import LocalAutocomplete from "../../../Common/Input/LocalAutocomplete";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import ListItem from "../../../Common/ListElements/ListItem";
 import PriceInput from "../../../Common/Input/PriceInput";
@@ -30,7 +30,7 @@ export default class ItemForSaleForm extends React.Component {
                 <FormTitleLabel text={"Добавление товара на продажу"}/>
 
                 <InputLabel text={"Товар:"}/>
-                <CustomAutocomplete
+                <LocalAutocomplete
                     items={this.props.merchandiseList}
                     filteringField={"name"}
                     itemRenderer={item =>

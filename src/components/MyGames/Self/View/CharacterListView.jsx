@@ -76,6 +76,7 @@ export default connect(
                 }}/>
                 {this.state.transferFormVisible &&
                     <TransferForm currencyNames={this.props.currencies.map(v => v.name)}
+                                  gameId={this.props.gameId}
                                   onSubmit={form => console.log(form)}
                     />
                 }

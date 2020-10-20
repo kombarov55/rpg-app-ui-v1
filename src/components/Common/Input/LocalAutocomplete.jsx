@@ -1,7 +1,7 @@
 import React from "react";
 import List from "../Lists/List";
 
-export default class CustomAutocomplete extends React.Component {
+export default class LocalAutocomplete extends React.Component {
 
     constructor(props) {
         super(props);

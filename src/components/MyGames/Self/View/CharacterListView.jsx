@@ -10,6 +10,7 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import ListItem from "../../../Common/ListElements/ListItem";
 import List from "../../../Common/Lists/List";
+import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 
 export default connect(
     state => ({
@@ -34,7 +35,9 @@ export default connect(
         this.state = {
             character: {
                 fieldNameToValueList: [],
-                balance: []
+                balance: [],
+                learnedSpells: [],
+                learnedSkills: []
             }
         }
 
@@ -54,12 +57,43 @@ export default connect(
                     </div>
                 )}</div>
 
-                <FormTitleLabel text={"Баланс:"}/>
-                <List values={this.state.character.balance.map(amount =>
-                    <ListItem text={`${amount.name}: ${amount.amount}`}
-                        key={amount.name}
-                    />
-                )}/>
+                <List title={"Баланс:"}
+                      values={this.state.character.balance.map(amount =>
+                          <ListItem text={`${amount.name}: ${amount.amount}`}
+                                    key={amount.name}
+                          />
+                      )}/>
+
+                <List title={"Выученные заклинания:"}
+                      noItemsText={"Ничего не выучено.."}
+                      isAddButtonVisible={true}
+                      onAddClicked={() => {}}
+                      values={this.state.character.learnedSpells.map(spell =>
+                          <ExpandableListItem
+                              img={spell.img}
+                              name={spell.name}
+                              description={spell.description}
+                              expandableElements={[]}
+                              alwaysExpand={true}
+                              key={spell.id}
+                          />
+                      )}
+                />
+
+                <List title={"Выученные навыки:"}
+                      noItemsText={"Ничего не выучено.."}
+                      isAddButtonVisible={true}
+                      onAddClicked={() => {}}
+                      values={this.state.character.learnedSkills.map(({skill, lvl}) =>
+                          <ExpandableListItem
+                              img={skill.img}
+                              name={skill.name}
+                              description={skill.description}
+
+                              key={skill.id}
+                          />
+                      )}
+                />
 
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>

@@ -143,6 +143,7 @@ export const killCharacterUrl = `${rootUrl}/userAccount/killCharacter.do`
 export const reviveCharacterUrl = `${rootUrl}/userAccount/reviveCharacter.do`
 
 export const transferUrl = `${rootUrl}/balance/transfer.do`
+export const adminTransferUrl = `${rootUrl}/balance/adminTransfer.do`
 
 export const notificationUrl = rootUrl + "/notification"
 

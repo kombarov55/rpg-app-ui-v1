@@ -62,6 +62,8 @@ import FormatDate from "../../../../util/FormatDate";
 import SkillCategoryForm from "../../Skill/Form/SkillCategoryForm";
 import RecipeForm from "../Form/RecipeForm";
 import QuestionnaireTemplateForm from "../../QuestionnaireTemplate/Form/QuestionnaireTemplateForm";
+import TransferComponent from "../Component/TransferComponent";
+import BalanceProcedures from "../../../../data-layer/Procedures/BalanceProcedures";
 
 function mapStateToProps(state, props) {
     return {
@@ -484,9 +486,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                                 }}
                             />
                     )
-
                 }
 
+                <TransferComponent currencyNames={props.currencies}
+                                   gameId={props.activeGame.id}
+                                   onSubmit={({destinationType, destination, currency, amount}) =>
+                                       BalanceProcedures.adminTransfer(destination.balanceId, currency, amount, destination.id, destinationType, () => {
+                                           Popup.info("Перевод сделан.")
+                                       })}
+                />
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Товары"} onClick={() => onMerchandiseClicked()}/>

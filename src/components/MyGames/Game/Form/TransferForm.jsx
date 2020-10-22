@@ -11,6 +11,22 @@ import ListItem from "../../../Common/ListElements/ListItem";
 import RemoteAutocomplete from "../../../Common/Input/RemoteAutocomplete";
 import {findCharacterByNameUrl, findOrganizationByGameIdAndNameUrl} from "../../../../util/Parameters";
 
+/**
+ * props: {
+ *     currencyNames: [name: String]
+ *     gameId: String,
+ *     onSubmit: (state) => {
+ *          destinationType: TransferDestination.CHARACTER,
+ *          destination: {
+ *              id: String,
+ *              name: String,
+ *              balanceId: String
+ *          }
+ *          currency: String,
+ *          amount: Int
+ *     }
+ * }
+ */
 export default class TransferForm extends React.Component {
 
     constructor(props) {

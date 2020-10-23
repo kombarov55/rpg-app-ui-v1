@@ -3,6 +3,7 @@ import {connect} from "react-redux"
 import {get} from "../../../../util/Http";
 import {
     findAllQuestionnairesByGameIdUrl,
+    findOrganizationsShortByGameIdUrl,
     findQuestionnaireTemplatesByGameId,
     gameByIdUrl,
     questionnaireTemplateByIdUrl
@@ -56,6 +57,7 @@ export default connect(
 
         this.state = {
             game: {},
+            organizations: [],
             questionnaireTemplates: [],
             questionnaires: []
         }
@@ -66,6 +68,7 @@ export default connect(
         })
         get(findQuestionnaireTemplatesByGameId(this.props.game.id), rs => this.setState({questionnaireTemplates: rs}))
         get(findAllQuestionnairesByGameIdUrl(this.props.game.id), rs => this.setState({questionnaires: rs}))
+        get(findOrganizationsShortByGameIdUrl(this.props.game.id), rs => this.setState({organizations: []}))
     }
 
     render() {
@@ -74,6 +77,24 @@ export default connect(
                 <ViewInfo img={this.state.game.img}
                           name={this.state.game.title}
                           description={this.state.game.imgSrc}
+                />
+
+                <List title={"Организации:"}
+                      noItemsText={"Пусто.."}
+                      values={this.state.organizations.map(organization =>
+                          <ExpandableListItemWithBullets
+                              img={organization.img}
+                              name={organization.name}
+                              description={organization.description}
+                              bullets={[`Тип: ${organization.type}`]}
+                              onDetailsClicked={() => alert("click")}
+
+
+
+                              alwaysExpand={true}
+                              key={organization.id}
+                          />
+                      )}
                 />
 
                 <List title={"Шаблоны анкет:"}

@@ -77,6 +77,7 @@ export const updateItemForSaleUrl = (gameId, shopId, id) => rootUrl + "/game/" +
 export const deleteItemForSaleUrl = (gameId, shopId, id) => rootUrl + "/game/" + gameId + "/shop/" + shopId + "/itemForSale/" + id
 export const organizationByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/organization"
 export const organizationUrl = id => rootUrl + "/organization/" + id
+export const findOrganizationsShortByGameIdUrl = gameId => `${rootUrl}/game/${gameId}/organization/short`
 export const organizationByGameIdAndTypeUrl = (id, type) => rootUrl + "/game/" + id + "/organization/filter?type=" + type
 export const organizationByGameIdAndIdUrl = (gameId, id) => rootUrl + "/game/" + gameId + "/organization/" + id
 export const organizationHeadUrl = (organizationId, headId) => rootUrl + "/organization/" + organizationId + "/head/" + headId

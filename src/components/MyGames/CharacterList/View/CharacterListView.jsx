@@ -18,6 +18,7 @@ import NameImgDescription from "../../../Common/Constructions/NameImgDescription
 import SkillAlreadyUpgradedComponent from "../Component/SkillAlreadyUpgradedComponent";
 import SkillUpgradeComponent from "../Component/SkillUpgradeComponent";
 import NotAvailableSkillUpgradeComponent from "../Component/NotAvailableSkillUpgradeComponent";
+import GameCharacterProcedures from "../../../../data-layer/Procedures/GameCharacterProcedures";
 
 export default connect(
     state => ({
@@ -97,11 +98,12 @@ export default connect(
 
                                             key={skill.id}
                         />
+                        <InputLabel text={`Текущий уровень: ${amount}`}/>
                         {skill.upgradable &&
                         <List title={"Уровни навыка:"}
                               noItemsText={"Пусто.."}
                               values={skill.upgrades.map(skillUpgrade =>
-                                  this.getSkillUpgradeComponent(skillUpgrade, amount)
+                                  this.getSkillUpgradeComponent(skill, skillUpgrade, amount)
                               )}
                         />
                         }
@@ -160,7 +162,7 @@ export default connect(
         return this.state.character.balance.find(v => v.name === currency).amount >= amount
     }
 
-    getSkillUpgradeComponent(skillUpgrade, learnedLvl) {
+    getSkillUpgradeComponent(skill, skillUpgrade, learnedLvl) {
         console.log({lvlNum: skillUpgrade.lvlNum, learnedLvl: learnedLvl})
 
         if (skillUpgrade.lvlNum <= learnedLvl) {
@@ -172,10 +174,21 @@ export default connect(
         if (skillUpgrade.lvlNum === learnedLvl + 1) {
             return <SkillUpgradeComponent skillUpgrade={skillUpgrade}
                                           key={skillUpgrade.id}
-            />
-        }
+                                          onUpgradeClicked={amounts => {
+                                              if (amounts.every(({name, amount}) => this.isEnoughMoneyOnBalance(name, amount))) {
+                                                  GameCharacterProcedures.upgradeSkill(this.state.character.id, skill.id, amounts, () =>
+                                                      get(getCharacterByIdUrl(this.props.characterId), rs => {
+                                                          this.setState({character: rs})
+                                                          Popup.success("Навык повышен.")
+                                                      })
+                                                  )
+                                              } else {
+                                                  Popup.error("Недостаточно средств.")
+                                              }
+                                          }}
 
-        else {
+            />
+        } else {
             return <NotAvailableSkillUpgradeComponent skillUpgrade={skillUpgrade}
                                                       key={skillUpgrade.id}
             />

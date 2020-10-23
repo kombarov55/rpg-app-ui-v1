@@ -135,6 +135,12 @@ export const findAllQuestionnairesByGameIdUrl = gameId => rootUrl + "/game/" + g
 export const saveQuestionnaireUrl = (gameId, questionnaireTemplateId) => rootUrl + "/game/" + gameId + "/questionnaireTemplate/" + questionnaireTemplateId + "/questionnaire"
 export const getQuestionnaireById = id => rootUrl + "/questionnaire/" + id
 
+export const notificationUrl = rootUrl + "/notification"
+
+export const getCharacterByIdUrl = id => rootUrl + "/character/" + id
+export const getCharactersByUserIdUrl = userId => `${rootUrl}/userAccount/${userId}/character`
+export const findCharacterByNameUrl = (gameId, name) => `${rootUrl}/game/${gameId}/character/filter?name=${name}`
+
 export const approveQuestionnaireUrl = rootUrl + "/questionnaire/approve.do"
 export const clarifyQuestionnaireUrl = rootUrl + "/questionnaire/clarify.do"
 export const archiveQuestionnaireUrl = rootUrl + "/questionnaire/decline.do"
@@ -146,8 +152,4 @@ export const reviveCharacterUrl = `${rootUrl}/userAccount/reviveCharacter.do`
 export const transferUrl = `${rootUrl}/balance/transfer.do`
 export const adminTransferUrl = `${rootUrl}/balance/adminTransfer.do`
 
-export const notificationUrl = rootUrl + "/notification"
-
-export const getCharacterByIdUrl = id => rootUrl + "/character/" + id
-export const getCharactersByUserIdUrl = userId => `${rootUrl}/userAccount/${userId}/character`
-export const findCharacterByNameUrl = (gameId, name) => `${rootUrl}/game/${gameId}/character/filter?name=${name}`
+export const upgradeSkillUrl = `${rootUrl}/gameCharacter/upgradeSkill.do`

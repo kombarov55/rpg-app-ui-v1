@@ -19,7 +19,7 @@ export default class SkillUpgradeComponent extends React.Component {
                                     <InputLabel text={"Прокачать: "}/>,
                                     ...this.props.skillUpgrade.prices.map(amounts =>
                                         <Btn text={AmountsToString(amounts)}
-                                             onClick={() => alert("Прокачка за " + AmountsToString(amounts))}/>
+                                             onClick={() => this.props.onUpgradeClicked(amounts)}/>
                                     )
                                 ]}
                                 alwaysExpand={true}

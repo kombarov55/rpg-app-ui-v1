@@ -14,6 +14,10 @@ import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem"
 import TransferForm from "../../Game/Form/TransferForm";
 import Popup from "../../../../util/Popup";
 import TransferDestination from "../../../../data-layer/enums/TransferDestination";
+import NameImgDescription from "../../../Common/Constructions/NameImgDescription";
+import SkillAlreadyUpgradedComponent from "../Component/SkillAlreadyUpgradedComponent";
+import SkillUpgradeComponent from "../Component/SkillUpgradeComponent";
+import NotAvailableSkillUpgradeComponent from "../Component/NotAvailableSkillUpgradeComponent";
 
 export default connect(
     state => ({
@@ -84,6 +88,26 @@ export default connect(
                 />
                 }
 
+                <FormTitleLabel text={"Навыки:"}/>
+                {this.state.character.learnedSkills.map(({skill, amount}) =>
+                    <div>
+                        <NameImgDescription img={skill.img}
+                                            name={skill.name}
+                                            description={skill.description}
+
+                                            key={skill.id}
+                        />
+                        {skill.upgradable &&
+                        <List title={"Уровни навыка:"}
+                              noItemsText={"Пусто.."}
+                              values={skill.upgrades.map(skillUpgrade =>
+                                  this.getSkillUpgradeComponent(skillUpgrade, amount)
+                              )}
+                        />
+                        }
+                    </div>
+                )}
+
                 <List title={"Выученные заклинания:"}
                       noItemsText={"Ничего не выучено.."}
                       isAddButtonVisible={true}
@@ -101,21 +125,6 @@ export default connect(
                       )}
                 />
 
-                <List title={"Выученные навыки:"}
-                      noItemsText={"Ничего не выучено.."}
-                      isAddButtonVisible={true}
-                      onAddClicked={() => {
-                      }}
-                      values={this.state.character.learnedSkills.map(({skill, lvl}) =>
-                          <ExpandableListItem
-                              img={skill.img}
-                              name={skill.name}
-                              description={skill.description}
-
-                              key={skill.id}
-                          />
-                      )}
-                />
 
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
@@ -148,7 +157,28 @@ export default connect(
     }
 
     isEnoughMoneyOnBalance(currency, amount) {
-        console.log({currency: currency, amount: amount, balance: this.state.character.balance})
         return this.state.character.balance.find(v => v.name === currency).amount >= amount
+    }
+
+    getSkillUpgradeComponent(skillUpgrade, learnedLvl) {
+        console.log({lvlNum: skillUpgrade.lvlNum, learnedLvl: learnedLvl})
+
+        if (skillUpgrade.lvlNum <= learnedLvl) {
+            return <SkillAlreadyUpgradedComponent skillUpgrade={skillUpgrade}
+                                                  key={skillUpgrade.id}
+            />
+        }
+
+        if (skillUpgrade.lvlNum === learnedLvl + 1) {
+            return <SkillUpgradeComponent skillUpgrade={skillUpgrade}
+                                          key={skillUpgrade.id}
+            />
+        }
+
+        else {
+            return <NotAvailableSkillUpgradeComponent skillUpgrade={skillUpgrade}
+                                                      key={skillUpgrade.id}
+            />
+        }
     }
 })

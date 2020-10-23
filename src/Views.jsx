@@ -36,7 +36,7 @@ import QuestionnaireDisclaimerView from "./components/MyGames/Self/View/Question
 import GameSettingsView from "./components/AdminGame/Self/View/GameSettingsView";
 import UserAccountDetailsView from "./components/Admin/View/UserAccountDetailsView";
 import QuestionnaireReviewView from "./components/MyGames/Self/View/QuestionnaireReviewView";
-import CharacterListView from "./components/MyGames/Self/View/CharacterListView";
+import CharacterListView from "./components/MyGames/CharacterList/View/CharacterListView";
 import OfficeView from "./components/Office/Self/View/OfficeView";
 
 export const testView = {component: <TestView/>, label: "Тест"}

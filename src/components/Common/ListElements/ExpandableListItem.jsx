@@ -1,7 +1,7 @@
 import React from "react";
 import ExpandableListItemStyle from "../../../styles/ExpandableListItemStyle";
 
-export default class xpandableListItem extends React.Component {
+export default class ExpandableListItem extends React.Component {
 
     constructor(props) {
         super(props);

@@ -19,6 +19,7 @@ import SkillAlreadyUpgradedComponent from "../Component/SkillAlreadyUpgradedComp
 import SkillUpgradeComponent from "../Component/SkillUpgradeComponent";
 import NotAvailableSkillUpgradeComponent from "../Component/NotAvailableSkillUpgradeComponent";
 import GameCharacterProcedures from "../../../../data-layer/Procedures/GameCharacterProcedures";
+import LearnNewSkillComponent from "../Component/LearnNewSkillComponent";
 
 export default connect(
     state => ({
@@ -109,6 +110,16 @@ export default connect(
                         }
                     </div>
                 )}
+                <LearnNewSkillComponent
+                    gameId={this.props.gameId}
+                    learnedSkills={this.state.character.learnedSkills.map(v => v.skill)}
+                    onSkillPurchase={(skill, amounts) => GameCharacterProcedures.purchaseSkill(this.state.character.id, skill.id, amounts, () =>
+                        get(getCharacterByIdUrl(this.props.characterId), rs => {
+                            this.setState({character: rs})
+                            Popup.success("Навык изучен.")
+                        })
+                    )}
+                />
 
                 <List title={"Выученные заклинания:"}
                       noItemsText={"Ничего не выучено.."}
@@ -179,7 +190,7 @@ export default connect(
                                                   GameCharacterProcedures.upgradeSkill(this.state.character.id, skill.id, amounts, () =>
                                                       get(getCharacterByIdUrl(this.props.characterId), rs => {
                                                           this.setState({character: rs})
-                                                          Popup.success("Навык повышен.")
+                                                          Popup.success("Уровень навыка повышен.")
                                                       })
                                                   )
                                               } else {

@@ -61,6 +61,7 @@ export const findAllSkillCategoriesByGameIdAndDestionationUrl = (gameId, destina
 
 export const saveSkillUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/skill"
 export const skillByIdUrl = id => rootUrl + "/skill/" + id
+export const findSkillsByGameIdAndDestination = (gameId, destination) => `${rootUrl}/game/${gameId}/skill/short/find?destination=${destination}`
 
 export const merchandiseCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/merchandiseCategory"
 export const merchandiseCategoryByIdUrl = (gameId, merchandiseCategoryId) => rootUrl + "/game/" + gameId + "/merchandiseCategory/" + merchandiseCategoryId
@@ -153,3 +154,4 @@ export const transferUrl = `${rootUrl}/balance/transfer.do`
 export const adminTransferUrl = `${rootUrl}/balance/adminTransfer.do`
 
 export const upgradeSkillUrl = `${rootUrl}/gameCharacter/upgradeSkill.do`
+export const purchaseSkillUrl = `${rootUrl}/gameCharacter/purchaseSkill.do`

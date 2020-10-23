@@ -174,8 +174,6 @@ export default connect(
     }
 
     getSkillUpgradeComponent(skill, skillUpgrade, learnedLvl) {
-        console.log({lvlNum: skillUpgrade.lvlNum, learnedLvl: learnedLvl})
-
         if (skillUpgrade.lvlNum <= learnedLvl) {
             return <SkillAlreadyUpgradedComponent skillUpgrade={skillUpgrade}
                                                   key={skillUpgrade.id}

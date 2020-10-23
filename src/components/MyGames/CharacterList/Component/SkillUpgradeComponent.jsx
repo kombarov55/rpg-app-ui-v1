@@ -17,10 +17,12 @@ export default class SkillUpgradeComponent extends React.Component {
                                 description={this.props.skillUpgrade.description}
                                 expandableElements={[
                                     <InputLabel text={"Прокачать: "}/>,
-                                    ...this.props.skillUpgrade.prices.map(amounts =>
+                                    ...(this.props.skillUpgrade.prices.length !== 0 ? (this.props.skillUpgrade.prices.map(amounts =>
                                         <Btn text={AmountsToString(amounts)}
                                              onClick={() => this.props.onUpgradeClicked(amounts)}/>
-                                    )
+                                    )) : [
+                                        <Btn text={"Бесплатно!"} onClick={() => this.props.onUpgradeClicked([])}/>
+                                    ])
                                 ]}
                                 alwaysExpand={true}
 

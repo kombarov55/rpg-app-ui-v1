@@ -125,24 +125,22 @@ export default connect(
                     }}
                 />
 
-                <List title={"Выученные заклинания:"}
-                      noItemsText={"Ничего не выучено.."}
-                      values={this.state.character.learnedSpells.map(spell =>
-                          <ExpandableListItem
-                              img={spell.img}
-                              name={spell.name}
-                              description={spell.description}
-                              expandableElements={[
-                                  <div>
-                                      <div>Школа: {spell.spellSchoolName}</div>
-                                      <div>Уровень: {spell.lvl}</div>
-                                  </div>
-                              ]}
-                              alwaysExpand={true}
-                              key={spell.id}
-                          />
-                      )}
-                />
+                <FormTitleLabel text={"Заклинания:"}/>
+                {this.state.character.learnedSpells.map(spell =>
+                    <ExpandableListItem
+                        img={spell.img}
+                        name={spell.name}
+                        description={spell.description}
+                        expandableElements={[
+                            <div>
+                                <div>Школа: {spell.spellSchoolName}</div>
+                                <div>Уровень: {spell.lvl}</div>
+                            </div>
+                        ]}
+                        alwaysExpand={true}
+                        key={spell.id}
+                    />
+                )}
                 <LearnNewSpellComponent gameId={this.props.gameId}
                                         characterId={this.props.characterId}
                                         onSpellPurchase={(spell, amounts) => {

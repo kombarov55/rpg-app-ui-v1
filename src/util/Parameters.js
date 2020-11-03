@@ -99,6 +99,8 @@ export const removeItemForSaleForGameUrl = (gameId, itemForSaleId) => rootUrl + 
 
 export const addSpellSchoolUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/spellSchool"
 export const editSpellSchoolUrl = id => rootUrl + "/spellSchool/" + id
+export const findSpellSchoolsByGameIdAndDestination = (gameId, destination) => `${rootUrl}/game/${gameId}/skillCategory/findByDestination?destination=${destination}`
+export const findAvailableSpells = (gameId, characterId) => `${rootUrl}/game/${gameId}/spell/available?characterId=${characterId}`
 
 export const addSchoolLvlToSpellSchoolUrl = spellSchoolId => rootUrl + "/spellSchool/" + spellSchoolId + "/schoolLvl"
 
@@ -155,3 +157,4 @@ export const adminTransferUrl = `${rootUrl}/balance/adminTransfer.do`
 
 export const upgradeSkillUrl = `${rootUrl}/gameCharacter/upgradeSkill.do`
 export const purchaseSkillUrl = `${rootUrl}/gameCharacter/purchaseSkill.do`
+export const purchaseSpellUrl = `${rootUrl}/gameCharacter/purchaseSpell.do`

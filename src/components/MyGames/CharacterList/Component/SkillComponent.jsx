@@ -59,13 +59,10 @@ export default class SkillComponent extends React.Component {
             return <SkillAlreadyUpgradedComponent skillUpgrade={skillUpgrade}
                                                   key={skillUpgrade.id}
             />
-        }
-
-        if (skillUpgrade.lvlNum === learnedLvl + 1) {
+        } else if (skillUpgrade.lvlNum === learnedLvl + 1) {
             return <SkillUpgradeComponent skillUpgrade={skillUpgrade}
                                           key={skillUpgrade.id}
                                           onUpgradeClicked={amounts => this.props.onUpgradeClicked(skillUpgrade, amounts)}
-
             />
         } else {
             return <NotAvailableSkillUpgradeComponent skillUpgrade={skillUpgrade}

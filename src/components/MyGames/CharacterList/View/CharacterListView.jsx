@@ -17,6 +17,7 @@ import TransferDestination from "../../../../data-layer/enums/TransferDestinatio
 import GameCharacterProcedures from "../../../../data-layer/Procedures/GameCharacterProcedures";
 import LearnNewSkillComponent from "../Component/LearnNewSkillComponent";
 import SkillComponent from "../Component/SkillComponent";
+import LearnNewSpellComponent from "../Component/LearnNewSpellComponent";
 
 export default connect(
     state => ({
@@ -113,26 +114,37 @@ export default connect(
                     onSkillPurchase={(skill, amounts) => GameCharacterProcedures.purchaseSkill(this.state.character.id, skill.id, amounts, () =>
                         get(getCharacterByIdUrl(this.props.characterId), rs => {
                             this.setState({character: rs})
-                            Popup.success("Навык изучен.")
+                            Popup.success(`Навык ${skill.name} изучен.`)
                         })
                     )}
                 />
 
                 <List title={"Выученные заклинания:"}
                       noItemsText={"Ничего не выучено.."}
-                      isAddButtonVisible={true}
-                      onAddClicked={() => {
-                      }}
                       values={this.state.character.learnedSpells.map(spell =>
                           <ExpandableListItem
                               img={spell.img}
                               name={spell.name}
                               description={spell.description}
-                              expandableElements={[]}
+                              expandableElements={[
+                                  <div>
+                                      <div>Школа: {spell.spellSchoolName}</div>
+                                      <div>Уровень: {spell.lvl}</div>
+                                  </div>
+                              ]}
                               alwaysExpand={true}
                               key={spell.id}
                           />
                       )}
+                />
+                <LearnNewSpellComponent gameId={this.props.gameId}
+                                        characterId={this.props.characterId}
+                                        onSpellPurchase={(spell, amounts) => GameCharacterProcedures.purchaseSpell(this.props.characterId, spell.id, amounts, () => {
+                                            get(getCharacterByIdUrl(this.props.characterId), rs => {
+                                                this.setState({character: rs})
+                                                Popup.success(`Заклинание "${spell.name}" изучено.`)
+                                            })
+                                        })}
                 />
 
 

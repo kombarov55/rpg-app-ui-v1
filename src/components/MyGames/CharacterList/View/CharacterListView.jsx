@@ -151,11 +151,11 @@ export default connect(
                                                 return
                                             }
 
-                                            GameCharacterProcedures.purchaseSpell(this.props.characterId, spell.id, amounts, ({isNextLvlUnlocked}) => {
+                                            GameCharacterProcedures.purchaseSpell(this.props.characterId, spell.id, amounts, ({nextLvlUnlocked}) => {
                                                 get(getCharacterByIdUrl(this.props.characterId), rs => {
                                                     this.setState({character: rs})
                                                     Popup.success(`Заклинание "${spell.name}" изучено.`)
-                                                    if (isNextLvlUnlocked) {
+                                                    if (nextLvlUnlocked) {
                                                         Popup.success("Вы открыли следующий круг.")
                                                     }
                                                 })

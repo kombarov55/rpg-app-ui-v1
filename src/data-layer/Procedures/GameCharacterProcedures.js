@@ -16,5 +16,5 @@ export default {
         characterId: gameCharacterId,
         spellId: skillId,
         chosenPrice: chosenPrice
-    }, () => then())
+    }, rs => then(rs))
 }

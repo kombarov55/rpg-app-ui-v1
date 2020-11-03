@@ -139,10 +139,13 @@ export default connect(
                 />
                 <LearnNewSpellComponent gameId={this.props.gameId}
                                         characterId={this.props.characterId}
-                                        onSpellPurchase={(spell, amounts) => GameCharacterProcedures.purchaseSpell(this.props.characterId, spell.id, amounts, () => {
+                                        onSpellPurchase={(spell, amounts) => GameCharacterProcedures.purchaseSpell(this.props.characterId, spell.id, amounts, ({isNextLvlUnlocked}) => {
                                             get(getCharacterByIdUrl(this.props.characterId), rs => {
                                                 this.setState({character: rs})
                                                 Popup.success(`Заклинание "${spell.name}" изучено.`)
+                                                if (isNextLvlUnlocked) {
+                                                    Popup.success("Вы открыли следующий круг.")
+                                                }
                                             })
                                         })}
                 />

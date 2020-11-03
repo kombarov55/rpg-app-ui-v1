@@ -111,12 +111,18 @@ export default connect(
                 <LearnNewSkillComponent
                     gameId={this.props.gameId}
                     learnedSkills={this.state.character.learnedSkills.map(v => v.skill)}
-                    onSkillPurchase={(skill, amounts) => GameCharacterProcedures.purchaseSkill(this.state.character.id, skill.id, amounts, () =>
-                        get(getCharacterByIdUrl(this.props.characterId), rs => {
-                            this.setState({character: rs})
-                            Popup.success(`Навык ${skill.name} изучен.`)
-                        })
-                    )}
+                    onSkillPurchase={(skill, amounts) => {
+                        if (!amounts.every(amount => this.isEnoughMoneyOnBalance(amount.name, amount.amount))) {
+                            Popup.error("Недостаточно средств.")
+                            return
+                        }
+                        GameCharacterProcedures.purchaseSkill(this.state.character.id, skill.id, amounts, () =>
+                            get(getCharacterByIdUrl(this.props.characterId), rs => {
+                                this.setState({character: rs})
+                                Popup.success(`Навык ${skill.name} изучен.`)
+                            })
+                        )
+                    }}
                 />
 
                 <List title={"Выученные заклинания:"}
@@ -139,15 +145,22 @@ export default connect(
                 />
                 <LearnNewSpellComponent gameId={this.props.gameId}
                                         characterId={this.props.characterId}
-                                        onSpellPurchase={(spell, amounts) => GameCharacterProcedures.purchaseSpell(this.props.characterId, spell.id, amounts, ({isNextLvlUnlocked}) => {
-                                            get(getCharacterByIdUrl(this.props.characterId), rs => {
-                                                this.setState({character: rs})
-                                                Popup.success(`Заклинание "${spell.name}" изучено.`)
-                                                if (isNextLvlUnlocked) {
-                                                    Popup.success("Вы открыли следующий круг.")
-                                                }
+                                        onSpellPurchase={(spell, amounts) => {
+                                            if (!amounts.every(amount => this.isEnoughMoneyOnBalance(amount.name, amount.amount))) {
+                                                Popup.error("Недостаточно средств.")
+                                                return
+                                            }
+
+                                            GameCharacterProcedures.purchaseSpell(this.props.characterId, spell.id, amounts, ({isNextLvlUnlocked}) => {
+                                                get(getCharacterByIdUrl(this.props.characterId), rs => {
+                                                    this.setState({character: rs})
+                                                    Popup.success(`Заклинание "${spell.name}" изучено.`)
+                                                    if (isNextLvlUnlocked) {
+                                                        Popup.success("Вы открыли следующий круг.")
+                                                    }
+                                                })
                                             })
-                                        })}
+                                        }}
                 />
 
 

@@ -16,12 +16,19 @@ import {
 } from "../../../../data-layer/ActionCreators";
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import Btn from "../../../Common/Buttons/Btn";
-import {characterListView, myGamesView, questionnaireDisclaimerView, questionnaireReviewView} from "../../../../Views";
+import {
+    characterListView,
+    merchandiseView,
+    myGamesView,
+    questionnaireDisclaimerView,
+    questionnaireReviewView
+} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import QuestionnaireStatus from "../../../../data-layer/enums/QuestionnaireStatus";
 import FormatDate from "../../../../util/FormatDate";
+import StorageComponent from "../Component/StorageComponent";
 
 export default connect(
     state => ({
@@ -47,6 +54,11 @@ export default connect(
             toCharacterList: () => {
                 dispatch(changeView(characterListView))
             },
+            toMerchandiseView: () => {
+                dispatch(changeView(merchandiseView, {
+                    gameId: stateProps.game.id
+                }))
+            },
             back: () => dispatch(changeView(myGamesView))
         }
     }
@@ -56,16 +68,15 @@ export default connect(
         super(props);
 
         this.state = {
-            game: {},
+            game: {
+                itemsForSale: []
+            },
             organizations: [],
             questionnaireTemplates: [],
-            questionnaires: []
+            questionnaires: [],
         }
 
-        get(gameByIdUrl(this.props.game.id), rs => {
-            this.setState({game: rs})
-            this.props.setActiveGame(rs)
-        })
+        this.refreshGame()
         get(findQuestionnaireTemplatesByGameId(this.props.game.id), rs => this.setState({questionnaireTemplates: rs}))
         get(findAllQuestionnairesByGameIdUrl(this.props.game.id), rs => this.setState({questionnaires: rs}))
         get(findOrganizationsShortByGameIdUrl(this.props.game.id), rs => this.setState({organizations: []}))
@@ -90,7 +101,6 @@ export default connect(
                               onDetailsClicked={() => alert("click")}
 
 
-
                               alwaysExpand={true}
                               key={organization.id}
                           />
@@ -100,42 +110,55 @@ export default connect(
                 <List title={"Шаблоны анкет:"}
                       noItemsText={"Пусто.."}
                       values={this.state.questionnaireTemplates.map(questionnaireTemplate =>
-                      <ExpandableListItemWithBullets
-                          name={questionnaireTemplate.name}
-                          img={questionnaireTemplate.img}
-                          description={questionnaireTemplate.description}
-                          detailsButtonText={"Заполнить"}
-                          onDetailsClicked={() => this.props.toFillingQuestionnaire(questionnaireTemplate)}
-                          alwaysExpand={true}
-                          key={questionnaireTemplate.id}
-                      />
+                          <ExpandableListItemWithBullets
+                              name={questionnaireTemplate.name}
+                              img={questionnaireTemplate.img}
+                              description={questionnaireTemplate.description}
+                              detailsButtonText={"Заполнить"}
+                              onDetailsClicked={() => this.props.toFillingQuestionnaire(questionnaireTemplate)}
+                              alwaysExpand={true}
+                              key={questionnaireTemplate.id}
+                          />
                       )}
                 />
 
                 <List title={"Анкеты игроков:"}
                       noItemsText={"Отсутствуют.."}
                       values={this.state.questionnaires.map(questionnaire =>
-                      <ExpandableListItemWithBullets
-                          name={questionnaire.template.name}
-                          img={questionnaire.template.img}
-                          description={questionnaire.template.description}
-                          bullets={[
-                              "Автор: " + questionnaire.author.fullName,
-                              "Дата создания: " + FormatDate(new Date(questionnaire.creationDate)),
-                              "Статус: " + QuestionnaireStatus.getLabel(questionnaire.status),
-                              "Дата изменения статуса: " + FormatDate(new Date(questionnaire.statusChangeDate))
-                          ]}
-                          onDetailsClicked={() => this.props.toQuestionnaireReviewView(questionnaire)}
+                          <ExpandableListItemWithBullets
+                              name={questionnaire.template.name}
+                              img={questionnaire.template.img}
+                              description={questionnaire.template.description}
+                              bullets={[
+                                  "Автор: " + questionnaire.author.fullName,
+                                  "Дата создания: " + FormatDate(new Date(questionnaire.creationDate)),
+                                  "Статус: " + QuestionnaireStatus.getLabel(questionnaire.status),
+                                  "Дата изменения статуса: " + FormatDate(new Date(questionnaire.statusChangeDate))
+                              ]}
+                              onDetailsClicked={() => this.props.toQuestionnaireReviewView(questionnaire)}
 
-                          alwaysExpand={true}
-                          key={questionnaire.key}
-                      />
+                              alwaysExpand={true}
+                              key={questionnaire.key}
+                          />
                       )}
                 />
 
+                <StorageComponent gameId={this.props.game.id}
+                                  currencies={this.props.game.currencies}
+                                  items={this.state.game.itemsForSale}
+                                  onItemForSaleAdded={() => this.refreshGame()}
+                />
+                <Btn text={"Товары"} onClick={() => this.props.toMerchandiseView()}/>
                 <Btn text={"Лист персонажа"} onClick={() => this.props.toCharacterList()}/>
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
+    }
+
+    refreshGame() {
+        get(gameByIdUrl(this.props.game.id), rs => {
+            this.setState({game: rs})
+            this.props.setActiveGame(rs)
+        })
     }
 })

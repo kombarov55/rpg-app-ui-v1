@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux"
 import {changeView} from "../../../../data-layer/ActionCreators";
-import {adminGameView} from "../../../../Views";
+import {gameView} from "../../../../Views";
 import Btn from "../../../Common/Buttons/Btn";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import FormViewStyle from "../../../../styles/FormViewStyle";
@@ -32,7 +32,7 @@ export default connect(
     }),
 
     dispatch => ({
-        toPrevView: () => dispatch(changeView(adminGameView))
+        toPrevView: () => dispatch(changeView(gameView))
     })
 )(class MerchandiseView extends React.Component {
     constructor(props) {

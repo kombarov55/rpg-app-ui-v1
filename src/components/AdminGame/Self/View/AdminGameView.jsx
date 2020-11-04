@@ -57,7 +57,7 @@ import ExpandableListItemWithButtons from "../../../Common/ListElements/Expandab
 import Popup from "../../../../util/Popup";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import OrganizationForm from "../../Organization/Form/OrganizationForm";
-import ItemForSaleForm from "../../Merchandise/Form/ItemForSaleForm";
+import ItemForSaleForm from "../../../MyGames/Self/Form/ItemForSaleForm";
 import FormatDate from "../../../../util/FormatDate";
 import SkillCategoryForm from "../../Skill/Form/SkillCategoryForm";
 import RecipeForm from "../Form/RecipeForm";
@@ -148,12 +148,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 props.changeView(subnetworkView)
                 break
         }
-    }
-
-    function onMerchandiseClicked() {
-        props.changeView(merchandiseView, {
-            gameId: props.activeGame.id
-        })
     }
 
     function onConversionClicked() {
@@ -498,7 +492,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
 
                 <div className={"game-view-button-group"}>
-                    <Btn text={"Товары"} onClick={() => onMerchandiseClicked()}/>
                     <Btn text={"Настройки обмена валют"} onClick={() => onConversionClicked()}/>
                     <Btn text={"Настройки"} onClick={() => props.toGameSettingsView()}/>
                     {/*<Btn text={"Редактировать"} onClick={() => onEditClicked()}/>*/}

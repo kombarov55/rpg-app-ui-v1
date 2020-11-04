@@ -13,9 +13,9 @@ import {
     saveQuestionnaireUrl
 } from "../../../../util/Parameters";
 import {get, post} from "../../../../util/Http";
-import SkillDistributionComponent from "../Comonent/SkillDistributionComponent";
+import SkillDistributionComponent from "../Component/SkillDistributionComponent";
 import Destination from "../../../../data-layer/enums/Destination";
-import SpellSchoolComponent from "../Comonent/SpellSchoolComponent";
+import SpellSchoolComponent from "../Component/SpellSchoolComponent";
 import IdComparator from "../../../../util/IdComparator";
 import Popup from "../../../../util/Popup";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";

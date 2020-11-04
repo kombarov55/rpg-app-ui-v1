@@ -16,6 +16,7 @@ export default class StorageComponent extends React.Component {
         this.state = {
             addItemVisible: false,
 
+
             merchandiseList: []
         }
     }

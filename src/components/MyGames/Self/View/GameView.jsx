@@ -29,10 +29,13 @@ import ExpandableListItemWithBullets from "../../../Common/ListElements/Expandab
 import QuestionnaireStatus from "../../../../data-layer/enums/QuestionnaireStatus";
 import FormatDate from "../../../../util/FormatDate";
 import StorageComponent from "../Component/StorageComponent";
+import getOrDefault from "../../../../util/getOrDefault";
+import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
-        game: state.activeGame
+        game: state.activeGame,
+        activeCharacter: getOrDefault(state.userAccount.gameToActiveCharacter.find(it => it.game.id === state.activeGame.id), {activeCharacter: {}}).activeCharacter
     }),
     null,
     (stateProps, dispatchProps, ownProps) => {
@@ -80,6 +83,11 @@ export default connect(
         get(findQuestionnaireTemplatesByGameId(this.props.game.id), rs => this.setState({questionnaireTemplates: rs}))
         get(findAllQuestionnairesByGameIdUrl(this.props.game.id), rs => this.setState({questionnaires: rs}))
         get(findOrganizationsShortByGameIdUrl(this.props.game.id), rs => this.setState({organizations: []}))
+        if (this.props.activeCharacter != null) {
+            Popup.info(`Вы совершаете действия от лица персонажа ${this.props.activeCharacter.name}`)
+        } else {
+            Popup.error("Выберите активного персонажа для этой игры в разделе 'Кабинет'")
+        }
     }
 
     render() {

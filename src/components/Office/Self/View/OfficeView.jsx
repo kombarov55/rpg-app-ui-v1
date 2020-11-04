@@ -137,7 +137,7 @@ export default connect(
             return (
                 <Btn text={"Убить персонажа"} onClick={() => {
                     if (window.confirm("Вы действительно хотите убить персонажа?")) {
-                        post(killCharacterUrl, {characterId: character.id}, () =>
+                        post(killCharacterUrl, {characterId: character.id, gameId: character.game.id}, () =>
                             get(getCharactersByUserIdUrl(Globals.userId), rs => {
                                 this.setState({characters: rs})
                                 Popup.success(`Персонаж успешно убит. Дата смерти: ${new Date()}`)
@@ -150,7 +150,7 @@ export default connect(
     }
 
     isCharacterActive(character) {
-        return this.props.userAccount.gameToActiveCharacter.some(({activeCharacter}) => activeCharacter.id === character.id)
+        return this.props.userAccount.gameToActiveCharacter.some(({activeCharacter}) => activeCharacter?.id === character.id)
     }
 
     groupCharactersByGame(characters) {

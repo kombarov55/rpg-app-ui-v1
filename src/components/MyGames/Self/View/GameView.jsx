@@ -154,10 +154,15 @@ export default connect(
                 <StorageComponent gameId={this.props.game.id}
                                   currencies={this.props.game.currencies}
                                   items={this.state.game.itemsForSale}
+                                  purchaseVisible={this.props.activeCharacter != null}
                                   onItemForSaleAdded={() => this.refreshGame()}
                 />
                 <Btn text={"Товары"} onClick={() => this.props.toMerchandiseView()}/>
-                <Btn text={"Лист персонажа"} onClick={() => this.props.toCharacterList()}/>
+                {
+                    this.props.activeCharacter != null &&
+                    <Btn text={"Лист персонажа"} onClick={() => this.props.toCharacterList()}/>
+                }
+
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )

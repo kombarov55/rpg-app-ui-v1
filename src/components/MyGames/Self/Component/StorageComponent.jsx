@@ -7,6 +7,8 @@ import Btn from "../../../Common/Buttons/Btn";
 import ItemForSaleForm from "../Form/ItemForSaleForm";
 import {get, post} from "../../../../util/Http";
 import {addItemForSaleForGameUrl, merchandiseUrl} from "../../../../util/Parameters";
+import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
+import RedButton from "../../../Common/Buttons/RedButton";
 
 export default class StorageComponent extends React.Component {
 
@@ -43,10 +45,14 @@ export default class StorageComponent extends React.Component {
                                       <div>Количество: {itemForSale.amount}</div>
                                       <div>Дата выставления на
                                           продажу: {FormatDate(new Date(itemForSale.creationDate))}</div>
-                                      <Btn text={`Купить за ${AmountsToString(itemForSale.price)}`}
-                                           onClick={() => {
-                                           }}
-                                      />
+                                      {
+                                          this.props.purchaseVisible ?
+                                          <Btn text={`Купить за ${AmountsToString(itemForSale.price)}`}
+                                               onClick={() => {
+                                               }}
+                                          /> : <RedButton text={"Выберите активного персонажа, чтобы купить этот предмет."}/>
+                                      }
+
                                   </div>
                               ]}
 

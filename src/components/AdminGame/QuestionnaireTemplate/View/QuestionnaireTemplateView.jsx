@@ -23,6 +23,7 @@ import SkillCategoryToPointsForm from "../Form/SkillCategoryToPointsForm";
 import Btn from "../../../Common/Buttons/Btn";
 import {adminGameView} from "../../../../Views";
 import Destination from "../../../../data-layer/enums/Destination";
+import InputLabel from "../../../Common/Labels/InputLabel";
 
 export default connect(
     state => ({
@@ -100,6 +101,8 @@ export default connect(
                     name={this.props.questionnaireTemplate.name}
                     description={this.props.questionnaireTemplate.description}
                 />
+
+                <InputLabel text={`Поле "Имя" уже включено в анкету.`}/>
 
                 <List title={"Поля анкеты:"}
                       noItemsText={"Пусто.."}

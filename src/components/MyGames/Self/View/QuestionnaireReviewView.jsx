@@ -47,6 +47,9 @@ export default connect(
     render() {
         return (
             <div style={FormViewStyle}>
+                <InputLabel text={"Имя:"}/>
+                <div>{this.state.questionnaire.name}</div>
+
                 {this.state.questionnaire.fieldToValueList.map(({field, value}) => (
                     <div>
                         <InputLabel text={field.name + ":"}/>

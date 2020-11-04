@@ -73,9 +73,6 @@ export const merchandiseUrl = gameId => rootUrl + "/game/" + gameId + "/merchand
 export const merchandiseByIdUrl = (gameId, merchandiseId) => rootUrl + "/game/" + gameId + "/merchandise/" + merchandiseId
 export const merchandiseByGameIdAndDestination = (gameId, destination) => rootUrl + "/game/" + gameId + "/merchandise/filter?destination=" + destination
 
-export const saveItemForSaleUrl = (gameId, shopId) => rootUrl + "/game/" + gameId + "/shop/" + shopId + "/itemForSale"
-export const updateItemForSaleUrl = (gameId, shopId, id) => rootUrl + "/game/" + gameId + "/shop/" + shopId + "/itemForSale/" + id
-export const deleteItemForSaleUrl = (gameId, shopId, id) => rootUrl + "/game/" + gameId + "/shop/" + shopId + "/itemForSale/" + id
 export const organizationByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/organization"
 export const organizationUrl = id => rootUrl + "/organization/" + id
 export const findOrganizationsShortByGameIdUrl = gameId => `${rootUrl}/game/${gameId}/organization/short`
@@ -83,6 +80,7 @@ export const organizationByGameIdAndTypeUrl = (id, type) => rootUrl + "/game/" +
 export const organizationByGameIdAndIdUrl = (gameId, id) => rootUrl + "/game/" + gameId + "/organization/" + id
 export const organizationHeadUrl = (organizationId, headId) => rootUrl + "/organization/" + organizationId + "/head/" + headId
 export const findOrganizationByGameIdAndNameUrl = (gameId, name) => `${rootUrl}/game/${gameId}/organization/filterByName?name=${name}`
+export const getOrganizationByIdUrl = id => `${rootUrl}/organization/${id}`
 
 export const addOrganizationShopUrl = organizationUrl => rootUrl + "/organization/" + organizationUrl + "/shop"
 export const removeOrganizationShopUrl = (organizationUrl, shopId) => rootUrl + "/organization/" + organizationUrl + "/shop/" + shopId

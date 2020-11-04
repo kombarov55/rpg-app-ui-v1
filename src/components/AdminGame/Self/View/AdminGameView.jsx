@@ -64,6 +64,7 @@ import RecipeForm from "../Form/RecipeForm";
 import QuestionnaireTemplateForm from "../../QuestionnaireTemplate/Form/QuestionnaireTemplateForm";
 import TransferComponent from "../Component/TransferComponent";
 import BalanceProcedures from "../../../../data-layer/Procedures/BalanceProcedures";
+import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 
 function mapStateToProps(state, props) {
     return {
@@ -356,7 +357,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                               name={organization.name}
                               description={organization.description}
                               bullets={[
-                                  "Тип: " + organization.type.value,
+                                  "Тип: " + OrganizationType.getLabelByName(organization.type),
                                   "Бюджет: " + organization.balance.map(v => v.name + ": " + v.amount).join(", "),
                                   "Главы: " + organization.heads.map(v => v.fullName).join(", ")
                               ]}

@@ -35,7 +35,7 @@ export default class CountryDetailsComponent extends React.Component {
                 <Label text={"Налоги:"}/>
                 <InputLabel text={"Налог на вход/выход из игры:"}/>
                 {
-                    this.props.organization.entranceTax.length != 0 ?
+                    (this.props.organization.entranceTax != null && this.props.organization.entranceTax.length != 0) ?
                         this.props.organization.entranceTax.map(v => v.name + ": " + v.amount).join(" + ") :
                         "Не указан"
                 }

@@ -26,6 +26,15 @@ export default {
             name: "MARKETPLACE",
             value: "Рынок"
         }
+    ],
 
-    ]
+    getLabelByName: name => {
+        switch (name) {
+            case "COUNTRY": return "Страна"
+            case "INSTITUTION": return "Заведение"
+            case "HOUSE": return "Жилой дом"
+            case "SHIP": return "Корабль"
+            case "MARKETPLACE": return "Рынок"
+        }
+    }
 }

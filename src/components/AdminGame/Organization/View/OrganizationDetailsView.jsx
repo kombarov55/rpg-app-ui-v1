@@ -7,10 +7,10 @@ import {adminGameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithButtons from "../../../Common/ListElements/ExpandableListItemWithButtons";
-import {httpDelete, post, put} from "../../../../util/Http";
+import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
     addBalanceUrl,
-    addOrganizationShopUrl,
+    addOrganizationShopUrl, getOrganizationByIdUrl,
     organizationHeadUrl,
     removeOrganizationShopUrl
 } from "../../../../util/Parameters";
@@ -43,10 +43,20 @@ export default connect(
         constructor(props) {
             super(props);
             this.state = this.formInitialState
+            
+            get(getOrganizationByIdUrl(this.props.organization.id), rs => this.setState({organization: rs}))
         }
 
 
         formInitialState = {
+            organization: {
+                heads: [],
+                balance: [],
+                shops: [],
+                ownedMerchandise: [],
+                entranceTax: []
+            },
+
             addHeadVisible: false,
 
             addShopVisible: false,
@@ -60,15 +70,15 @@ export default connect(
         render() {
             return (
                 <div style={FormViewStyle}>
-                    <FormTitleLabel text={this.props.organization.name}/>
-                    <div>{this.props.organization.type.value}</div>
-                    <div>{this.props.organization.description}</div>
+                    <FormTitleLabel text={this.state.organization.name}/>
+                    <div>{OrganizationType.getLabelByName(this.state.organization.type)}</div>
+                    <div>{this.state.organization.description}</div>
 
                     <List title={"Главы организации:"}
                           noItemsText={"Нет глав"}
                           isAddButtonVisible={!this.state.addHeadVisible}
                           onAddClicked={() => this.setState({addHeadVisible: true})}
-                          values={this.props.organization.heads.map(userAccount =>
+                          values={this.state.organization.heads.map(userAccount =>
                               <ExpandableListItemWithButtons
                                   img={userAccount.img}
                                   name={userAccount.fullName}
@@ -84,7 +94,7 @@ export default connect(
                         this.state.addHeadVisible &&
                         <List title={"Выбор игрока:"}
                               noItemsText={"Все доступные игроки уже выбраны!"}
-                              values={this.props.userAccounts.filter(v => !this.props.organization.heads.some(head => head.id === v.id)).map(userAccount =>
+                              values={this.props.userAccounts.filter(v => !this.state.organization.heads.some(head => head.id === v.id)).map(userAccount =>
                                   <SmallerExpandableListItem
                                       img={userAccount.img}
                                       name={userAccount.fullName}
@@ -99,7 +109,7 @@ export default connect(
                     }
 
                     <List title={"Бюджет: "}
-                          values={this.props.organization.balance.map(v =>
+                          values={this.state.organization.balance.map(v =>
                               <ListItem text={v.name + ": " + v.amount}/>
                           )}
                     />
@@ -120,7 +130,7 @@ export default connect(
                               shopFormMode: FormMode.CREATE,
                               addShopVisible: true,
                           })}
-                          values={this.props.organization.shops.map(shop =>
+                          values={this.state.organization.shops.map(shop =>
                               <ListItem text={shop.name}
                                         onEdit={() => this.setState({
                                             shopFormMode: FormMode.EDIT,
@@ -146,7 +156,7 @@ export default connect(
 
                     <List title={"Склад:"}
                           noItemsText={"Пусто.."}
-                          values={this.props.organization.ownedMerchandise.map(warehouseEntry =>
+                          values={this.state.organization.ownedMerchandise.map(warehouseEntry =>
                               <ExpandableListItemWithBullets
                                   img={warehouseEntry.merchandise.img}
                                   name={warehouseEntry.merchandise.name}
@@ -174,11 +184,11 @@ export default connect(
         }
 
         detailsComponent() {
-            switch (this.props.organization.type) {
+            switch (this.state.organization.type) {
                 case OrganizationType.COUNTRY:
                     return (
                         <CountryDetailsComponent gameId={this.props.gameId}
-                                                 organization={this.props.organization}
+                                                 organization={this.state.organization}
                                                  currencies={this.props.currencies}
                                                  setOrganization={organization => this.props.setOrganization(organization)}
                         />
@@ -188,7 +198,7 @@ export default connect(
         }
 
         onAddHeadClicked(userAccount) {
-            post(organizationHeadUrl(this.props.organization.id, userAccount.id), {}, rs => {
+            post(organizationHeadUrl(this.state.organization.id, userAccount.id), {}, rs => {
                 this.props.setOrganization(rs)
                 this.setState({addHeadVisible: false})
                 Popup.info(userAccount.fullName + " был(а) добавлен(а) в правящие члены организаций.")
@@ -196,14 +206,14 @@ export default connect(
         }
 
         onDeleteHeadClicked(userAccount) {
-            httpDelete(organizationHeadUrl(this.props.organization.id, userAccount.id), rs => {
+            httpDelete(organizationHeadUrl(this.state.organization.id, userAccount.id), rs => {
                 this.props.setOrganization(rs)
                 Popup.info(userAccount.fullName + " исключен из правления организацией.")
             })
         }
 
         onAddShopClicked(form) {
-            post(addOrganizationShopUrl(this.props.organization.id), form, rs => {
+            post(addOrganizationShopUrl(this.state.organization.id), form, rs => {
                 this.props.setOrganization(rs)
                 Popup.info("Магазин добавлен")
                 this.setState({
@@ -213,7 +223,7 @@ export default connect(
         }
 
         onEditShopClicked(form) {
-            put(removeOrganizationShopUrl(this.props.organization.id, form.id), form, rs => {
+            put(removeOrganizationShopUrl(this.state.organization.id, form.id), form, rs => {
                 this.props.setOrganization(rs)
                 Popup.info("Магазин добавлен")
                 this.setState({
@@ -223,14 +233,14 @@ export default connect(
         }
 
         onDeleteShopClicked(shop) {
-            httpDelete(removeOrganizationShopUrl(this.props.organization.id, shop.id), rs => {
+            httpDelete(removeOrganizationShopUrl(this.state.organization.id, shop.id), rs => {
                 this.props.setOrganization(rs)
                 Popup.info("Магазин удалён")
             })
         }
 
         onAddBalanceSubmit(amountList) {
-            post(addBalanceUrl(this.props.organization.id), amountList, rs => {
+            post(addBalanceUrl(this.state.organization.id), amountList, rs => {
                 this.props.setOrganization(rs)
                 this.setState({addBalanceVisible: false})
                 Popup.info("Баланс пополнен.")

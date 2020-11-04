@@ -1,14 +1,9 @@
 import React from "react";
 import List from "../../../Common/Lists/List";
-import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
-import AmountsToString from "../../../../util/AmountsToString";
-import FormatDate from "../../../../util/FormatDate";
-import Btn from "../../../Common/Buttons/Btn";
 import ItemForSaleForm from "../Form/ItemForSaleForm";
 import {get, post} from "../../../../util/Http";
 import {addItemForSaleForGameUrl, merchandiseUrl} from "../../../../util/Parameters";
-import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
-import RedButton from "../../../Common/Buttons/RedButton";
+import ItemForSaleComponent from "./ItemForSaleComponent";
 
 export default class StorageComponent extends React.Component {
 
@@ -17,7 +12,6 @@ export default class StorageComponent extends React.Component {
 
         this.state = {
             addItemVisible: false,
-
 
             merchandiseList: []
         }
@@ -36,28 +30,11 @@ export default class StorageComponent extends React.Component {
                           }))
                       }}
                       values={this.props.items.map(itemForSale =>
-                          <ExpandableListItem
-                              img={itemForSale.merchandise.img}
-                              name={itemForSale.merchandise.name}
-                              description={itemForSale.merchandise.description}
-                              expandableElements={[
-                                  <div>
-                                      <div>Количество: {itemForSale.amount}</div>
-                                      <div>Дата выставления на
-                                          продажу: {FormatDate(new Date(itemForSale.creationDate))}</div>
-                                      {
-                                          this.props.purchaseVisible ?
-                                          <Btn text={`Купить за ${AmountsToString(itemForSale.price)}`}
-                                               onClick={() => {
-                                               }}
-                                          /> : <RedButton text={"Выберите активного персонажа, чтобы купить этот предмет."}/>
-                                      }
-
-                                  </div>
-                              ]}
-
-                              alwaysExpand={true}
-                              key={itemForSale.id}
+                          <ItemForSaleComponent itemForSale={itemForSale}
+                                                characterId={this.props.characterId}
+                                                purchaseVisible={this.props.purchaseVisible}
+                                                key={itemForSale.id}
+                                                onItemPurchase={balanceId => console.log({item: itemForSale, balanceId: balanceId})}
                           />
                       )}
                 />

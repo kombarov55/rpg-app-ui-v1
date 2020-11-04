@@ -141,6 +141,7 @@ export const notificationUrl = rootUrl + "/notification"
 export const getCharacterByIdUrl = id => rootUrl + "/character/" + id
 export const getCharactersByUserIdUrl = userId => `${rootUrl}/userAccount/${userId}/character`
 export const findCharacterByNameUrl = (gameId, name) => `${rootUrl}/game/${gameId}/character/filter?name=${name}`
+export const getCharacterBalances = id => `${rootUrl}/character/${id}/balances`
 
 export const approveQuestionnaireUrl = rootUrl + "/questionnaire/approve.do"
 export const clarifyQuestionnaireUrl = rootUrl + "/questionnaire/clarify.do"

@@ -152,6 +152,7 @@ export default connect(
                 />
 
                 <StorageComponent gameId={this.props.game.id}
+                                  characterId={this.props.activeCharacter.id}
                                   currencies={this.props.game.currencies}
                                   items={this.state.game.itemsForSale}
                                   purchaseVisible={this.props.activeCharacter != null}

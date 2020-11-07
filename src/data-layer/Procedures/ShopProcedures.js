@@ -1,5 +1,6 @@
 import {post} from "../../util/Http";
 import {purchaseFromGameShopUrl} from "../../util/Parameters";
+import Popup from "../../util/Popup";
 
 export default {
     purchaseFromGameShop: (buyerBalanceId, price, buyerCharacterId, gameId, merchandiseId, then) => post(purchaseFromGameShopUrl, {
@@ -8,5 +9,5 @@ export default {
         buyerCharacterId: buyerCharacterId,
         gameId: gameId,
         merchandiseId: merchandiseId
-    }, () => then())
+    }, () => then(), rs => Popup.error(rs.message))
 }

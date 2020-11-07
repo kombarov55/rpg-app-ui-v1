@@ -31,7 +31,7 @@ export function post(url, body, onSuccess, onFailure) {
         if (xhr.status === 200) {
             onSuccessCallback(parseResponse(xhr.responseText))
         } else {
-            onFailureCallback()
+            onFailureCallback(parseResponse(xhr.responseText))
         }
     }
 }

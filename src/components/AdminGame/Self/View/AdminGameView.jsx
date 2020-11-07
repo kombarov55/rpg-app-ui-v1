@@ -309,6 +309,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     )
                 }
 
+                {/*
                 <List title={"База:"}
                       noItemsText={"Нет товаров.."}
                       isAddButtonVisible={!itemForSaleFormVisible}
@@ -338,6 +339,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                         onSubmit={form => onItemForSaleSubmit(form)}
                     />
                 }
+
+                */}
 
                 <List title={"Организации"}
                       noItemsText={"Нет организаций"}

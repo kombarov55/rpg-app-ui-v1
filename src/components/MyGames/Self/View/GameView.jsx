@@ -10,7 +10,7 @@ import {
 } from "../../../../util/Parameters";
 import {
     changeView,
-    setActiveGame,
+    setActiveGame, setActiveOrganization,
     setActiveQuestionnaire,
     setActiveQuestionnaireTemplate
 } from "../../../../data-layer/ActionCreators";
@@ -19,7 +19,7 @@ import Btn from "../../../Common/Buttons/Btn";
 import {
     characterListView,
     merchandiseView,
-    myGamesView,
+    myGamesView, organizationDetailsView,
     questionnaireDisclaimerView,
     questionnaireReviewView
 } from "../../../../Views";
@@ -28,10 +28,9 @@ import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import QuestionnaireStatus from "../../../../data-layer/enums/QuestionnaireStatus";
 import FormatDate from "../../../../util/FormatDate";
-import StorageComponent from "../Component/StorageComponent";
 import getOrDefault from "../../../../util/getOrDefault";
 import Popup from "../../../../util/Popup";
-import ShopProcedures from "../../../../data-layer/Procedures/ShopProcedures";
+import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 
 export default connect(
     state => ({
@@ -47,6 +46,10 @@ export default connect(
             ...ownProps,
 
             setActiveGame: game => dispatch(setActiveGame(game)),
+            toOrganizationView: organization => {
+                dispatch(setActiveOrganization(organization))
+                dispatch(changeView(organizationDetailsView))
+            },
             toFillingQuestionnaire: questionnaireTemplate => {
                 get(questionnaireTemplateByIdUrl(questionnaireTemplate.id), rs => dispatch(setActiveQuestionnaireTemplate(rs)))
                 dispatch(changeView(questionnaireDisclaimerView))
@@ -83,7 +86,7 @@ export default connect(
         this.refreshGame()
         get(findQuestionnaireTemplatesByGameId(this.props.game.id), rs => this.setState({questionnaireTemplates: rs}))
         get(findAllQuestionnairesByGameIdUrl(this.props.game.id), rs => this.setState({questionnaires: rs}))
-        get(findOrganizationsShortByGameIdUrl(this.props.game.id), rs => this.setState({organizations: []}))
+        get(findOrganizationsShortByGameIdUrl(this.props.game.id), rs => this.setState({organizations: rs}))
         if (this.props.activeCharacter != null) {
             Popup.info(`Вы совершаете действия от лица персонажа ${this.props.activeCharacter.name}`)
         } else {
@@ -106,8 +109,8 @@ export default connect(
                               img={organization.img}
                               name={organization.name}
                               description={organization.description}
-                              bullets={[`Тип: ${organization.type}`]}
-                              onDetailsClicked={() => alert("click")}
+                              bullets={[`${OrganizationType.getLabelByName(organization.type)}`]}
+                              onDetailsClicked={() => this.props.toOrganizationView(organization)}
 
 
                               alwaysExpand={true}
@@ -152,6 +155,7 @@ export default connect(
                       )}
                 />
 
+                {/*
                 <StorageComponent gameId={this.props.game.id}
                                   characterId={this.props.activeCharacter.id}
                                   currencies={this.props.game.currencies}
@@ -165,6 +169,7 @@ export default connect(
                                       })
                                   }}
                 />
+                */}
                 <Btn text={"Товары"} onClick={() => this.props.toMerchandiseView()}/>
                 {
                     this.props.activeCharacter != null &&

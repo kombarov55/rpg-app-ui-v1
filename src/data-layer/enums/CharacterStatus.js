@@ -9,5 +9,13 @@ export default {
             case "DEAD":
                 return "Мертв"
         }
+    },
+
+    compare: (x1, x2) => {
+        if (x1 === "DEAD") {
+            return 1
+        } else {
+            return -1
+        }
     }
 }

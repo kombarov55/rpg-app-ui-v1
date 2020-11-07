@@ -75,23 +75,24 @@ export default connect(
                       noItemsText={"Пусто.."}
                       values={this.groupCharactersByGame(this.state.characters).map(({game, characters}) =>
                           <List title={`${game.name}:`}
-                                values={characters.map(character =>
-                                    <ExpandableListItem name={character.name}
-                                                        alwaysExpand={true}
-                                                        expandableElements={[
-                                                            <div>{`Игра: ${character.game.name}`}</div>,
-                                                            <div>{`Гражданин страны: ${character.country.name}`}</div>,
-                                                            <div>{`Статус: ${CharacterStatus.getLabel(character.status)}`}</div>,
-                                                            <div>{`Дата смены статуса: ${FormatDate(new Date(character.statusChangeDate))}`}</div>,
-                                                            ...(character.status !== CharacterStatus.DEAD ? [
-                                                                this.makeCharacterActiveButton(game, character),
-                                                                this.toCharacterListViewButton(game, character)
-                                                            ] : []),
-                                                            this.killCharacterButton(game, character)
-                                                        ].filter(v => v != null)}
-                                                        key={character.id}
-                                    />
-                                )}
+                                values={characters.sort((c1, c2) => CharacterStatus.compare(c1.status, c2.status))
+                                                  .map(character =>
+                                                      <ExpandableListItem name={character.name}
+                                                                          alwaysExpand={true}
+                                                                          expandableElements={[
+                                                                              <div>{`Игра: ${character.game.name}`}</div>,
+                                                                              <div>{`Гражданин страны: ${character.country.name}`}</div>,
+                                                                              <div>{`Статус: ${CharacterStatus.getLabel(character.status)}`}</div>,
+                                                                              <div>{`Дата смены статуса: ${FormatDate(new Date(character.statusChangeDate))}`}</div>,
+                                                                              ...(character.status !== CharacterStatus.DEAD ? [
+                                                                                  this.makeCharacterActiveButton(game, character),
+                                                                                  this.toCharacterListViewButton(game, character)
+                                                                              ] : []),
+                                                                              this.killCharacterButton(game, character)
+                                                                          ].filter(v => v != null)}
+                                                                          key={character.id}
+                                                      />
+                                                  )}
                           />
                       )}
                 />

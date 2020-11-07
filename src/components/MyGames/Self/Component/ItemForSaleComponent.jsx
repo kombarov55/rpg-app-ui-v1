@@ -37,6 +37,7 @@ export default class ItemForSaleComponent extends React.Component {
                                          onClick={() => {
                                              get(getCharacterBalances(this.props.characterId), rs => this.setState({
                                                  purchaseFormVisible: true,
+
                                                  balances: rs
                                              }))
                                          }}
@@ -48,7 +49,7 @@ export default class ItemForSaleComponent extends React.Component {
                             this.state.purchaseFormVisible &&
                             <BuyerBalanceSelectionForm balances={this.state.balances}
                                                        price={AmountsToString(this.props.itemForSale.price)}
-                                                       onSubmit={balanceId => this.props.onItemPurchase(balanceId)}
+                                                       onSubmit={form => this.props.onItemPurchase(form.balanceId)}
                             />
                         }
 

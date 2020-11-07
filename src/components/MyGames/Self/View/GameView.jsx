@@ -31,6 +31,7 @@ import FormatDate from "../../../../util/FormatDate";
 import StorageComponent from "../Component/StorageComponent";
 import getOrDefault from "../../../../util/getOrDefault";
 import Popup from "../../../../util/Popup";
+import ShopProcedures from "../../../../data-layer/Procedures/ShopProcedures";
 
 export default connect(
     state => ({
@@ -157,6 +158,12 @@ export default connect(
                                   items={this.state.game.itemsForSale}
                                   purchaseVisible={this.props.activeCharacter != null}
                                   onItemForSaleAdded={() => this.refreshGame()}
+                                  onItemPurchase={(balanceId, price, itemForSale) => {
+                                      ShopProcedures.
+                                      purchaseFromGameShop(balanceId, price, this.props.activeCharacter.id, this.props.game.id, itemForSale.merchandise.id, () => {
+                                          this.refreshGame(() => Popup.success(`Вы приобрели "${itemForSale.merchandise.name}"!`))
+                                      })
+                                  }}
                 />
                 <Btn text={"Товары"} onClick={() => this.props.toMerchandiseView()}/>
                 {
@@ -169,10 +176,11 @@ export default connect(
         )
     }
 
-    refreshGame() {
+    refreshGame(then = () => {}) {
         get(gameByIdUrl(this.props.game.id), rs => {
             this.setState({game: rs})
             this.props.setActiveGame(rs)
+            then()
         })
     }
 })

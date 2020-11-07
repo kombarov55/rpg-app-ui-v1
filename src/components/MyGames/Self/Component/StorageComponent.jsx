@@ -34,7 +34,7 @@ export default class StorageComponent extends React.Component {
                                                 characterId={this.props.characterId}
                                                 purchaseVisible={this.props.purchaseVisible}
                                                 key={itemForSale.id}
-                                                onItemPurchase={balanceId => console.log({item: itemForSale, balanceId: balanceId})}
+                                                onItemPurchase={balanceId => this.props.onItemPurchase(balanceId, itemForSale.price, itemForSale)}
                           />
                       )}
                 />

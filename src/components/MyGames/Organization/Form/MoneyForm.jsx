@@ -53,7 +53,7 @@ export default class MoneyForm extends React.Component {
 
                 <InputLabel text={"Количество: "}/>
                 <input value={this.state.amount}
-                       onChange={e => this.setState(e.target.value)}
+                       onChange={e => this.setState({amount: e.target.value})}
                 />
 
                 <InputLabel text={"Выберите счёт:"}/>
@@ -62,7 +62,6 @@ export default class MoneyForm extends React.Component {
                     value={this.state.buyerBalance}
                     onChange={e => this.setState({buyerBalance: e.target.value})}
                 />
-
 
                 <SubmitButton text={"Сохранить"}
                               onClick={() => {
@@ -80,6 +79,7 @@ export default class MoneyForm extends React.Component {
                                       return
                                   }
 
+                                  console.log(this.state)
                                   this.props.onSubmit(this.state)
                               }}
                 />

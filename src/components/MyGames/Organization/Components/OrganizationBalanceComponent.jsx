@@ -12,7 +12,7 @@ export default class OrganizationBalanceComponent extends React.Component {
         super(props);
 
         this.state = {
-            addBalanceVisible: false,
+            formVisible: false,
 
             balances: []
         }
@@ -27,16 +27,19 @@ export default class OrganizationBalanceComponent extends React.Component {
                       )}
                 />
                 {
-                    this.state.addBalanceVisible ?
+                    this.state.formVisible ?
                         <MoneyForm title={"Введите сумму и счёт"}
                                    currencyNames={this.props.currencyNames}
                                    balances={this.state.balances}
-                                   onSubmit={({name, amount, buyerBalance}) => {}}
+                                   onSubmit={({name, amount, buyerBalance}) => {
+                                       this.props.onTransferToOrganization(name, amount, buyerBalance)
+                                       this.setState({formVisible: false})
+                                   }}
                         />
                         :
                         <Btn text={"Пополнить бюджет со своего счёта"}
                              onClick={() => get(getCharacterBalances(this.props.characterId), rs => this.setState({
-                                 addBalanceVisible: true,
+                                 formVisible: true,
                                  balances: rs
                              }))}
                         />

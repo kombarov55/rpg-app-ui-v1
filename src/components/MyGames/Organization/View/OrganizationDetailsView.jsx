@@ -10,7 +10,8 @@ import {
     addOrganizationShopUrl,
     getOrganizationByIdUrl,
     organizationHeadUrl,
-    removeOrganizationShopUrl
+    removeOrganizationShopUrl,
+    transferUrl
 } from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import CountryDetailsComponent from "../Components/CountryDetailsComponent";
@@ -20,6 +21,7 @@ import OrganizationBalanceComponent from "../Components/OrganizationBalanceCompo
 import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
 import OrganizationShopsComponent from "../Components/OrganizationShopsComponent";
 import OwnedMerchandiseComponent from "../Components/OwnedMerchandiseComponent";
+import TransferDestination from "../../../../data-layer/enums/TransferDestination";
 
 export default connect(
     store => ({
@@ -48,7 +50,7 @@ export default connect(
                 }
             }
 
-            get(getOrganizationByIdUrl(this.props.organization.id), rs => this.setState({organization: rs}))
+            this.refresh()
         }
 
         render() {
@@ -68,6 +70,7 @@ export default connect(
                                                   characterId={this.props.characterId}
                                                   currencyNames={this.props.currencies.map(v => v.name)}
                                                   balance={this.state.organization.balance}
+                                                  onTransferToOrganization={(name, amount, buyerBalance) => this.onTransferToOrganization(name, amount, buyerBalance)}
                     />
 
                     <OrganizationShopsComponent shops={this.state.organization.shops}
@@ -128,6 +131,21 @@ export default connect(
             })
         }
 
+        onTransferToOrganization(currencyName, amount, buyerBalance) {
+            post(transferUrl, {
+                from: buyerBalance.id,
+                to: this.state.organization.balanceId,
+                currency: currencyName,
+                amount: amount,
+                originId: this.props.characterId,
+                originType: TransferDestination.PLAYER,
+                destinationId: this.state.organization.id,
+                destinationType: TransferDestination.ORGANIZATION
+            }, () => {
+                this.refresh(() => Popup.info("Перевод выполнен."))
+            })
+        }
+
         onAddShopClicked(form) {
             post(addOrganizationShopUrl(this.state.organization.id), form, rs => {
                 this.setState({organization: rs})
@@ -146,6 +164,13 @@ export default connect(
             httpDelete(removeOrganizationShopUrl(this.state.organization.id, shop.id), rs => {
                 this.setState({organization: rs})
                 Popup.info("Магазин удалён")
+            })
+        }
+
+        refresh(then = () => {}) {
+            get(getOrganizationByIdUrl(this.props.organization.id), rs => {
+                this.setState({organization: rs})
+                then()
             })
         }
     }

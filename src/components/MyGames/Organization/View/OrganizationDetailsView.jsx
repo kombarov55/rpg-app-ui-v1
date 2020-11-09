@@ -5,10 +5,8 @@ import Btn from "../../../Common/Buttons/Btn";
 import {changeView, setActiveOrganization, setAvailableMerchandise} from "../../../../data-layer/ActionCreators";
 import {gameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
-import List from "../../../Common/Lists/List";
 import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
-    addBalanceUrl,
     addOrganizationShopUrl,
     getOrganizationByIdUrl,
     organizationHeadUrl,
@@ -16,16 +14,12 @@ import {
 } from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import CountryDetailsComponent from "../Components/CountryDetailsComponent";
-import FormMode from "../../../../data-layer/enums/FormMode";
-import ShopForm from "../Form/ShopForm";
-import ListItem from "../../../Common/ListElements/ListItem";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
-import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
-import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByName";
 import OrganizationHeadsComponent from "../Components/OrganizationHeadsComponent";
 import OrganizationBalanceComponent from "../Components/OrganizationBalanceComponent";
 import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
+import OrganizationShopsComponent from "../Components/OrganizationShopsComponent";
+import OwnedMerchandiseComponent from "../Components/OwnedMerchandiseComponent";
 
 export default connect(
     store => ({
@@ -44,29 +38,18 @@ export default connect(
 
         constructor(props) {
             super(props);
-            this.state = this.formInitialState
+            this.state = {
+                organization: {
+                    heads: [],
+                    balance: [],
+                    shops: [],
+                    ownedMerchandise: [],
+                    entranceTax: []
+                }
+            }
 
             get(getOrganizationByIdUrl(this.props.organization.id), rs => this.setState({organization: rs}))
         }
-
-        formInitialState = {
-            organization: {
-                heads: [],
-                balance: [],
-                shops: [],
-                ownedMerchandise: [],
-                entranceTax: []
-            },
-
-            addHeadVisible: false,
-
-            addShopVisible: false,
-            shopForm: null,
-            shopFormMode: FormMode.CREATE,
-
-            addBalanceVisible: false
-        }
-
 
         render() {
             return (
@@ -77,14 +60,8 @@ export default connect(
 
                     <OrganizationHeadsComponent gameId={this.props.gameId}
                                                 heads={this.state.organization.heads}
-                                                onAddHead={character => post(organizationHeadUrl(this.state.organization.id, character.id), {}, rs => {
-                                                    this.setState({organization: rs})
-                                                    Popup.info(`${character.name} назначен одним из глав организации.`)
-                                                })}
-                                                onRemoveHead={character => httpDelete(organizationHeadUrl(this.state.organization.id, character.id), rs => {
-                                                    this.setState({organization: rs})
-                                                    Popup.info(`${character.name} снят с правления организацией.`)
-                                                })}
+                                                onAddHead={character => this.onAddHead(character)}
+                                                onRemoveHead={character => this.onRemoveHead(character)}
                     />
 
                     <OrganizationBalanceComponent gameId={this.state.gameId}
@@ -93,58 +70,13 @@ export default connect(
                                                   balance={this.state.organization.balance}
                     />
 
-                    <List title={"Магазины:"}
-                          noItemsText={"Отсутствуют.."}
-                          isAddButtonVisible={!this.state.addShopVisible}
-                          onAddClicked={() => this.setState({
-                              shopFormMode: FormMode.CREATE,
-                              addShopVisible: true,
-                          })}
-                          values={this.state.organization.shops.map(shop =>
-                              <ListItem text={shop.name}
-                                        onEdit={() => this.setState({
-                                            shopFormMode: FormMode.EDIT,
-                                            shopForm: shop,
-                                            addShopVisible: true,
-                                        })}
-                                        onDelete={() => this.onDeleteShopClicked(shop)}
-                              />
-                          )}
+                    <OrganizationShopsComponent shops={this.state.organization.shops}
+                                                onShopAdded={form => this.onAddShopClicked(form)}
+                                                onShopEdited={form => this.onEditShopClicked(form)}
+                                                onShopDeleted={shop => this.onDeleteShopClicked(shop)}
                     />
-                    {
-                        this.state.addShopVisible &&
-                        (this.state.shopFormMode === FormMode.CREATE ?
-                                <ShopForm
-                                    onSubmit={form => this.onAddShopClicked(form)}
-                                /> :
-                                <ShopForm
-                                    initialState={this.state.shopForm}
-                                    onSubmit={form => this.onEditShopClicked(form)}
-                                />
-                        )
-                    }
 
-                    <List title={"Склад:"}
-                          noItemsText={"Пусто.."}
-                          values={this.state.organization.ownedMerchandise.map(warehouseEntry =>
-                              <ExpandableListItemWithBullets
-                                  img={warehouseEntry.merchandise.img}
-                                  name={warehouseEntry.merchandise.name}
-                                  description={warehouseEntry.merchandise.description}
-
-                                  bullets={[
-                                      GetDestinationByName(warehouseEntry.merchandise.destination),
-                                      "Категория: " + warehouseEntry.merchandise.category.name,
-                                      "Тип: " + warehouseEntry.merchandise.type.name,
-                                      warehouseEntry.merchandise.slots + " слот(ов)",
-                                      warehouseEntry.merchandise.skillInfluences.map(it => SkillInfluenceToString(it)).join(", ")
-                                  ]}
-
-                                  alwaysExpand={true}
-                                  key={warehouseEntry.id}
-                              />
-                          )}
-                    />
+                    <OwnedMerchandiseComponent ownedMerchandise={this.state.organization.ownedMerchandise}/>
 
                     {this.detailsComponent()}
 
@@ -171,7 +103,6 @@ export default connect(
         onAddHeadClicked(userAccount) {
             post(organizationHeadUrl(this.state.organization.id, userAccount.id), {}, rs => {
                 this.props.setOrganization(rs)
-                this.setState({addHeadVisible: false})
                 Popup.info(userAccount.fullName + " был(а) добавлен(а) в правящие члены организаций.")
             })
         }
@@ -183,38 +114,38 @@ export default connect(
             })
         }
 
+        onAddHead(character) {
+            post(organizationHeadUrl(this.state.organization.id, character.id), {}, rs => {
+                this.setState({organization: rs})
+                Popup.info(`${character.name} назначен одним из глав организации.`)
+            })
+        }
+
+        onRemoveHead(character) {
+            httpDelete(organizationHeadUrl(this.state.organization.id, character.id), rs => {
+                this.setState({organization: rs})
+                Popup.info(`${character.name} снят с правления организацией.`)
+            })
+        }
+
         onAddShopClicked(form) {
             post(addOrganizationShopUrl(this.state.organization.id), form, rs => {
-                this.props.setOrganization(rs)
+                this.setState({organization: rs})
                 Popup.info("Магазин добавлен")
-                this.setState({
-                    addShopVisible: false
-                })
             })
         }
 
         onEditShopClicked(form) {
             put(removeOrganizationShopUrl(this.state.organization.id, form.id), form, rs => {
-                this.props.setOrganization(rs)
+                this.setState({organization: rs})
                 Popup.info("Магазин добавлен")
-                this.setState({
-                    addShopVisible: false
-                })
             })
         }
 
         onDeleteShopClicked(shop) {
             httpDelete(removeOrganizationShopUrl(this.state.organization.id, shop.id), rs => {
-                this.props.setOrganization(rs)
+                this.setState({organization: rs})
                 Popup.info("Магазин удалён")
-            })
-        }
-
-        onAddBalanceSubmit(amountList) {
-            post(addBalanceUrl(this.state.organization.id), amountList, rs => {
-                this.props.setOrganization(rs)
-                this.setState({addBalanceVisible: false})
-                Popup.info("Баланс пополнен.")
             })
         }
     }

@@ -27,7 +27,7 @@ export default class ShopForm extends React.Component {
     render() {
         return (
             <div>
-                <FormTitleLabel text={"Создание магазина организации"}/>
+                <FormTitleLabel text={this.props.title}/>
 
                 <InputLabel text={"Название:"}/>
                 <input value={this.state.name} onChange={e => this.setState({name: e.target.value})}/>

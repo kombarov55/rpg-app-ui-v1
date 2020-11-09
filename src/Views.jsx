@@ -38,6 +38,7 @@ import UserAccountDetailsView from "./components/Admin/View/UserAccountDetailsVi
 import QuestionnaireReviewView from "./components/MyGames/Self/View/QuestionnaireReviewView";
 import CharacterListView from "./components/MyGames/CharacterList/View/CharacterListView";
 import OfficeView from "./components/Office/Self/View/OfficeView";
+import ShopView from "./components/MyGames/ShopView/View/ShopView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -89,3 +90,4 @@ export const userAccountDetailsView = {component: <UserAccountDetailsView/>, lab
 export const questionnaireReviewView = {component: <QuestionnaireReviewView/>, label: "Рассмотрение анкеты"}
 export const characterListView = {component: <CharacterListView/>, label: "Лист персонажа"}
 export const officeView = {component: <OfficeView/>, label: "Кабинет"}
+export const shopView = {component: <ShopView/>, label: "Магазин"}

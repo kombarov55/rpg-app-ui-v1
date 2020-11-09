@@ -1,9 +1,7 @@
 import React from "react";
 import List from "../../../Common/Lists/List";
 import FormMode from "../../../../data-layer/enums/FormMode";
-import ListItem from "../../../Common/ListElements/ListItem";
 import ShopForm from "../Form/ShopForm";
-import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 
 export default class OrganizationShopsComponent extends React.Component {
@@ -38,6 +36,11 @@ export default class OrganizationShopsComponent extends React.Component {
                                                              formVisible: true,
                                                          })}
                                                          onDeleteClicked={() => this.props.onShopDeleted(shop)}
+                                                         onDetailsClicked={() => this.props.onDetailsClicked(shop)}
+                                                         detailsButtonText={"Зайти"}
+
+                                                         alwaysExpand={true}
+                                                         key={shop.id}
                           />
                       )}
                 />

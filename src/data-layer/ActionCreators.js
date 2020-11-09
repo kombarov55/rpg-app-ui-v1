@@ -25,7 +25,7 @@ import {
     SET_ACTIVE_ORGANIZATION,
     SET_ACTIVE_QUESTIONNAIRE,
     SET_ACTIVE_QUESTIONNAIRE_TEMPLATE,
-    SET_ACTIVE_SCHOOL_LVL,
+    SET_ACTIVE_SCHOOL_LVL, SET_ACTIVE_SHOP,
     SET_ACTIVE_SKILL,
     SET_ACTIVE_SKILL_CATEGORY,
     SET_ACTIVE_SPELL_SCHOOL,
@@ -611,6 +611,15 @@ export function setActiveQuestionnaire(x) {
 export function setActiveCharacter(x) {
     return {
         type: SET_ACTIVE_CHARACTER,
+        payload: {
+            x: x
+        }
+    }
+}
+
+export function setActiveShop(x) {
+    return {
+        type: SET_ACTIVE_SHOP,
         payload: {
             x: x
         }

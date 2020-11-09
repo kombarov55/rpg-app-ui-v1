@@ -23,7 +23,7 @@ import {
     SET_ACTIVE_ORGANIZATION,
     SET_ACTIVE_QUESTIONNAIRE,
     SET_ACTIVE_QUESTIONNAIRE_TEMPLATE,
-    SET_ACTIVE_SCHOOL_LVL,
+    SET_ACTIVE_SCHOOL_LVL, SET_ACTIVE_SHOP,
     SET_ACTIVE_SKILL,
     SET_ACTIVE_SKILL_CATEGORY,
     SET_ACTIVE_SPELL_SCHOOL,
@@ -374,6 +374,11 @@ export function rootReducer(state = initialState, action) {
         case SET_ACTIVE_CHARACTER:
             return Object.assign({}, state, {
                 activeCharacter: action.payload.x
+            })
+
+        case SET_ACTIVE_SHOP:
+            return Object.assign({}, state, {
+                activeShop: action.payload.x
             })
 
         default:

@@ -2,8 +2,13 @@ import React from "react";
 import {connect} from "react-redux"
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import Btn from "../../../Common/Buttons/Btn";
-import {changeView, setActiveOrganization, setAvailableMerchandise} from "../../../../data-layer/ActionCreators";
-import {gameView} from "../../../../Views";
+import {
+    changeView,
+    setActiveOrganization,
+    setActiveShop,
+    setAvailableMerchandise
+} from "../../../../data-layer/ActionCreators";
+import {gameView, shopView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
@@ -34,6 +39,10 @@ export default connect(
     }), dispatch => ({
         setOrganization: organization => dispatch(setActiveOrganization(organization)),
         setAvailableMerchandise: merchandiseList => dispatch(setAvailableMerchandise(merchandiseList)),
+        toShopView: shop => {
+            dispatch(setActiveShop(shop))
+            dispatch(changeView(shopView))
+        },
         back: () => dispatch(changeView(gameView))
     }))
 (class OrganizationDetailsView extends React.Component {
@@ -77,6 +86,7 @@ export default connect(
                                                 onShopAdded={form => this.onAddShopClicked(form)}
                                                 onShopEdited={form => this.onEditShopClicked(form)}
                                                 onShopDeleted={shop => this.onDeleteShopClicked(shop)}
+                                                onDetailsClicked={shop => this.props.toShopView(shop)}
                     />
 
                     <OwnedMerchandiseComponent ownedMerchandise={this.state.organization.ownedMerchandise}/>

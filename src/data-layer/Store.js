@@ -33,6 +33,7 @@ export const initialState = {
     activeUserAccount: null,
     activeQuestionnaire: null,
     activeCharacter: null,
+    activeShop: null,
 
     msgs: [],
     networks: [],

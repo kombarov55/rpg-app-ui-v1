@@ -6,6 +6,7 @@ import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import IconSelect from "../../../Common/Input/IconSelect";
 import SkillIcons from "../../../../data-layer/enums/SkillIcons";
 import FileUpload from "../../../Common/Input/FileUpload";
+import MerchandisePublisherType from "../../../../data-layer/enums/MerchandisePublisherType";
 
 export default class ShopForm extends React.Component {
 
@@ -38,11 +39,9 @@ export default class ShopForm extends React.Component {
                 <InputLabel text={"Или загрузите:"}/>
                 <FileUpload onChange={img => this.setState({img: img})} />
 
+                <InputLabel text={"Кто может выставлять предметы на продажу?"}/>
                 <SelectButton
-                    options={[
-                        {label: "Игроки", value: "PLAYERS"},
-                        {label: "Организации", value: "ORGANIZATIONS"}
-                    ]}
+                    options={MerchandisePublisherType.values}
                     value={this.state.type}
                     onChange={e => this.setState({type: e.target.value})}
                 />

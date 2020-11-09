@@ -11,7 +11,7 @@ export default function (props) {
             <div className={"list"}>
                 {
                     props.values == null || props.values.length === 0 ?
-                        <NoItemsLabel text={props.noItemsText}/> :
+                        <NoItemsLabel text={props.noItemsText != null ? props.noItemsText : "Пусто.."}/> :
                         props.values
                 }
             </div>

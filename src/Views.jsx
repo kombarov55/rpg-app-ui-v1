@@ -22,7 +22,7 @@ import ConversionView from "./components/AdminGame/Self/View/ConversionView";
 import CurrencyCreationView from "./components/AdminGame/Self/View/CurrencyFormView";
 import MerchandiseView from "./components/AdminGame/Merchandise/View/MerchandiseView";
 import SkillCategoryView from "./components/AdminGame/Skill/View/SkillCategoryView";
-import OrganizationDetailsView from "./components/AdminGame/Organization/View/OrganizationDetailsView";
+import OrganizationDetailsView from "./components/MyGames/Organization/View/OrganizationDetailsView";
 import TestView from "./components/TestView";
 import SpellSchoolView from "./components/AdminGame/Skill/View/SpellSchoolView";
 import SchoolLvlView from "./components/AdminGame/Skill/View/SchoolLvlView";

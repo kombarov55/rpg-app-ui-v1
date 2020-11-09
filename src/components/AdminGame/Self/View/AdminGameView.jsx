@@ -56,7 +56,7 @@ import FormMode from "../../../../data-layer/enums/FormMode";
 import ExpandableListItemWithButtons from "../../../Common/ListElements/ExpandableListItemWithButtons";
 import Popup from "../../../../util/Popup";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import OrganizationForm from "../../Organization/Form/OrganizationForm";
+import OrganizationForm from "../../../MyGames/Organization/Form/OrganizationForm";
 import ItemForSaleForm from "../../../MyGames/Self/Form/ItemForSaleForm";
 import FormatDate from "../../../../util/FormatDate";
 import SkillCategoryForm from "../../Skill/Form/SkillCategoryForm";

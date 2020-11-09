@@ -10,7 +10,8 @@ import {
 } from "../../../../util/Parameters";
 import {
     changeView,
-    setActiveGame, setActiveOrganization,
+    setActiveGame,
+    setActiveOrganization,
     setActiveQuestionnaire,
     setActiveQuestionnaireTemplate
 } from "../../../../data-layer/ActionCreators";
@@ -19,7 +20,8 @@ import Btn from "../../../Common/Buttons/Btn";
 import {
     characterListView,
     merchandiseView,
-    myGamesView, organizationDetailsView,
+    myGamesView,
+    organizationDetailsView,
     questionnaireDisclaimerView,
     questionnaireReviewView
 } from "../../../../Views";
@@ -28,14 +30,14 @@ import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import QuestionnaireStatus from "../../../../data-layer/enums/QuestionnaireStatus";
 import FormatDate from "../../../../util/FormatDate";
-import getOrDefault from "../../../../util/getOrDefault";
 import Popup from "../../../../util/Popup";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
+import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
 
 export default connect(
     state => ({
         game: state.activeGame,
-        activeCharacter: getOrDefault(state.userAccount.gameToActiveCharacter.find(it => it.game.id === state.activeGame.id), {activeCharacter: {}}).activeCharacter
+        activeCharacter: GetActiveCharacterFromStore(state)
     }),
     null,
     (stateProps, dispatchProps, ownProps) => {

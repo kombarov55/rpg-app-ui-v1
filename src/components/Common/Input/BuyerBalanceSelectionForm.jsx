@@ -1,8 +1,17 @@
 import React from "react";
-import SubmitButton from "../../../Common/Buttons/SubmitButton";
+import SubmitButton from "../Buttons/SubmitButton";
 import {SelectButton} from "primereact/selectbutton";
-import InputLabel from "../../../Common/Labels/InputLabel";
+import InputLabel from "../Labels/InputLabel";
 
+/**
+ * props: {
+ *     balances: [{
+ *         id: String,
+ *         type: [CHARACTER, ORGANIZATION],
+ *         name: String
+ *     }]
+ * }
+ */
 export default class BuyerBalanceSelectionForm extends React.Component {
 
     constructor(props) {
@@ -16,7 +25,7 @@ export default class BuyerBalanceSelectionForm extends React.Component {
     render() {
         return (
             <div>
-                <InputLabel text={"С какого счёта будет производиться покупка?"}/>
+                <InputLabel text={"Выберите счёт:"}/>
                 <SelectButton
                     options={this.props.balances.map(balanceDto => ({
                         label: `${balanceDto.name} (${this.getLabelByType(balanceDto.type)})`,

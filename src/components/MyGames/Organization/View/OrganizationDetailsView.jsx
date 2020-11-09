@@ -3,32 +3,34 @@ import {connect} from "react-redux"
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import Btn from "../../../Common/Buttons/Btn";
 import {changeView, setActiveOrganization, setAvailableMerchandise} from "../../../../data-layer/ActionCreators";
-import {adminGameView, gameView} from "../../../../Views";
+import {gameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
-import ExpandableListItemWithButtons from "../../../Common/ListElements/ExpandableListItemWithButtons";
 import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
     addBalanceUrl,
-    addOrganizationShopUrl, getOrganizationByIdUrl,
+    addOrganizationShopUrl,
+    getOrganizationByIdUrl,
     organizationHeadUrl,
     removeOrganizationShopUrl
 } from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
-import SmallerExpandableListItem from "../../../Common/ListElements/SmallerExpandableListItem";
 import CountryDetailsComponent from "../Components/CountryDetailsComponent";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import ShopForm from "../Form/ShopForm";
 import ListItem from "../../../Common/ListElements/ListItem";
-import PriceInput from "../../../Common/Input/PriceInput";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByName";
+import OrganizationHeadsComponent from "../Components/OrganizationHeadsComponent";
+import OrganizationBalanceComponent from "../Components/OrganizationBalanceComponent";
+import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
 
 export default connect(
     store => ({
         gameId: store.activeGame.id,
+        characterId: GetActiveCharacterFromStore(store)?.id,
         organization: store.activeOrganization,
         userAccounts: store.userAccounts,
         currencies: store.activeGame.currencies,
@@ -43,10 +45,9 @@ export default connect(
         constructor(props) {
             super(props);
             this.state = this.formInitialState
-            
+
             get(getOrganizationByIdUrl(this.props.organization.id), rs => this.setState({organization: rs}))
         }
-
 
         formInitialState = {
             organization: {
@@ -74,54 +75,23 @@ export default connect(
                     <div>{OrganizationType.getLabelByName(this.state.organization.type)}</div>
                     <div>{this.state.organization.description}</div>
 
-                    <List title={"Главы организации:"}
-                          noItemsText={"Нет глав"}
-                          isAddButtonVisible={!this.state.addHeadVisible}
-                          onAddClicked={() => this.setState({addHeadVisible: true})}
-                          values={this.state.organization.heads.map(userAccount =>
-                              <ExpandableListItemWithButtons
-                                  img={userAccount.img}
-                                  name={userAccount.fullName}
-                                  description={userAccount.role}
-
-                                  onDeleteClicked={() => this.onDeleteHeadClicked(userAccount)}
-
-                                  key={userAccount.id}
-                              />
-                          )}
+                    <OrganizationHeadsComponent gameId={this.props.gameId}
+                                                heads={this.state.organization.heads}
+                                                onAddHead={character => post(organizationHeadUrl(this.state.organization.id, character.id), {}, rs => {
+                                                    this.setState({organization: rs})
+                                                    Popup.info(`${character.name} назначен одним из глав организации.`)
+                                                })}
+                                                onRemoveHead={character => httpDelete(organizationHeadUrl(this.state.organization.id, character.id), rs => {
+                                                    this.setState({organization: rs})
+                                                    Popup.info(`${character.name} снят с правления организацией.`)
+                                                })}
                     />
-                    {
-                        this.state.addHeadVisible &&
-                        <List title={"Выбор игрока:"}
-                              noItemsText={"Все доступные игроки уже выбраны!"}
-                              values={this.props.userAccounts.filter(v => !this.state.organization.heads.some(head => head.id === v.id)).map(userAccount =>
-                                  <SmallerExpandableListItem
-                                      img={userAccount.img}
-                                      name={userAccount.fullName}
-                                      description={userAccount.role}
-                                      onClick={() => this.onAddHeadClicked(userAccount)}
 
-                                      alwaysExpand={true}
-                                      key={userAccount.id}
-                                  />
-                              )}
-                        />
-                    }
-
-                    <List title={"Бюджет: "}
-                          values={this.state.organization.balance.map(v =>
-                              <ListItem text={v.name + ": " + v.amount}/>
-                          )}
+                    <OrganizationBalanceComponent gameId={this.state.gameId}
+                                                  characterId={this.props.characterId}
+                                                  currencyNames={this.props.currencies.map(v => v.name)}
+                                                  balance={this.state.organization.balance}
                     />
-                    {
-                        this.state.addBalanceVisible ?
-                            <PriceInput currencies={this.props.currencies.map(v => v.name)}
-                                        onSubmit={amountList => this.onAddBalanceSubmit(amountList)}
-                            /> :
-                            <Btn text={"Пополнить бюджет со своего счёта"}
-                                 onClick={() => this.setState({addBalanceVisible: true})}
-                            />
-                    }
 
                     <List title={"Магазины:"}
                           noItemsText={"Отсутствуют.."}
@@ -193,7 +163,8 @@ export default connect(
                                                  setOrganization={organization => this.props.setOrganization(organization)}
                         />
                     )
-                default: return <div/>
+                default:
+                    return <div/>
             }
         }
 

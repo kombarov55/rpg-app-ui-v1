@@ -6,7 +6,7 @@ import RedButton from "../../../Common/Buttons/RedButton";
 import FormatDate from "../../../../util/FormatDate";
 import {get} from "../../../../util/Http";
 import {getCharacterBalances} from "../../../../util/Parameters";
-import BuyerBalanceSelectionForm from "../Form/BuyerBalanceSelectionForm";
+import BuyerBalanceSelectionForm from "../../../Common/Input/BuyerBalanceSelectionForm";
 
 export default class ItemForSaleComponent extends React.Component {
 
@@ -37,7 +37,6 @@ export default class ItemForSaleComponent extends React.Component {
                                          onClick={() => {
                                              get(getCharacterBalances(this.props.characterId), rs => this.setState({
                                                  purchaseFormVisible: true,
-
                                                  balances: rs
                                              }))
                                          }}

@@ -50,7 +50,6 @@ export default class SkillInfluenceForm extends React.Component {
     }
 
     onSubmitClicked() {
-        console.log(this.state)
         if (this.state.skill == null || this.state.modifier == null || this.state.amount == null) return
 
         this.props.onSubmit(this.state)

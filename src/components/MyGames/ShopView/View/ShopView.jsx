@@ -72,18 +72,17 @@ export default connect(
 
     onItemPurchase(balanceId, itemForSale) {
         post(purchaseFromShopUrl, {
-            shopId: this.state.id,
-            buyerBalanceId: balanceId,
-            buyerCharacterId: this.props.character.id,
-            gameId: this.props.gameId,
-            itemForSaleId: itemForSale.id
-        }, () => this.refresh(() => {
-            Popup.success(`${itemForSale.merchandise.name} был приобретён и добавлен в инвентарь персонажа ${this.props.character.name}`)
-        }), rs => Popup.error(rs.message))
+                shopId: this.state.id,
+                buyerBalanceId: balanceId,
+                buyerCharacterId: this.props.character.id,
+                gameId: this.props.gameId,
+                itemForSaleId: itemForSale.id
+            },
+            () => this.refresh(() => Popup.success(`${itemForSale.merchandise.name} был приобретён и добавлен в инвентарь персонажа ${this.props.character.name}`)),
+            rs => Popup.error(rs.message))
     }
 
-    refresh(then = () => {
-    }) {
+    refresh(then = () => {}) {
         get(shopByIdUrl(this.state.id), rs => {
             this.setState(rs)
             then()

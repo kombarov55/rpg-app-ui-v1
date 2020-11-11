@@ -51,7 +51,6 @@ export default class ItemForSaleForm extends React.Component {
                               onClick={() => {
                                   if (this.state.merchandise == null || this.state.price.length === 0) {
                                       Popup.error("Заполните все поля: Товар, Стоимость")
-                                      console.log(this.state)
                                       return
                                   }
 

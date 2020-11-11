@@ -52,8 +52,6 @@ export default connect(
             transferFormVisible: false
         }
 
-        console.log({id: this.props.characterId})
-
         get(getCharacterByIdUrl(this.props.characterId), rs => this.setState({character: rs}))
     }
 

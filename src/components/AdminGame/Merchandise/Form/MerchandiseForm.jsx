@@ -230,7 +230,6 @@ export default connect(
     }
 
     onSkillInfluenceDeleted(skillInfluence) {
-        console.log(skillInfluence)
         this.setState(state => ({
             skillInfluences: state.skillInfluences.filter(it => it.skill.name !== skillInfluence.skill.name)
         }))

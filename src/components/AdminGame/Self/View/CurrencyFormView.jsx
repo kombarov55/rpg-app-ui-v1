@@ -32,8 +32,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(class CurrencyFormVi
     constructor(props) {
         super(props)
 
-        console.log(props.params)
-
         const {formType, formState} = props.params
 
         this.formType = formType

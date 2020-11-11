@@ -80,8 +80,6 @@ export default class SkillCategoryForm extends React.Component {
 
                 <SubmitButton text={"Сохранить"}
                               onClick={() => {
-                                  console.log("submit: ")
-                                  console.log(this.state)
                                   if (
                                       this.state.name == "" ||
                                       this.state.description == "" ||

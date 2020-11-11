@@ -63,7 +63,7 @@ import MergeLists from "../util/MergeLists";
 import ChangeUrl from "../util/ChangeUrl";
 
 export function rootReducer(state = initialState, action) {
-    console.log(action)
+    // console.log(action)
 
     switch (action.type) {
         case ADD_USER_ACCOUNT:

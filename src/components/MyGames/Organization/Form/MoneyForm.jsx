@@ -79,7 +79,6 @@ export default class MoneyForm extends React.Component {
                                       return
                                   }
 
-                                  console.log(this.state)
                                   this.props.onSubmit(this.state)
                               }}
                 />

@@ -5,7 +5,7 @@ import {
     findAllQuestionnairesByGameIdUrl,
     findOrganizationsShortByGameIdUrl,
     findQuestionnaireTemplatesByGameId,
-    gameByIdUrl,
+    gameByIdUrl, purchaseFromGameUrl,
     questionnaireTemplateByIdUrl,
     setItemForSaleInGameUrl
 } from "../../../../util/Parameters";
@@ -129,11 +129,8 @@ export default connect(
                                   characterId={this.props.activeCharacter?.id}
                                   purchaseVisible={this.props.activeCharacter != null}
                                   currencyNames={this.state.game.currencies.map(v => v.name)}
-                                  onItemForSaleAdded={itemForSale => {
-                                      this.onItemForSaleAdded(itemForSale)
-                                  }}
-                                  onItemPurchase={() => {
-                                  }}
+                                  onItemForSaleAdded={itemForSale => this.onItemForSaleAdded(itemForSale)}
+                                  onItemPurchase={(balanceId, itemForSale) => this.onItemPurchase(balanceId, itemForSale)}
                 />
 
                 <List title={"Шаблоны анкет:"}
@@ -213,5 +210,16 @@ export default connect(
             price: itemForSale.price,
             gameId: this.state.game.id
         }, () => this.refreshGame(() => Popup.info("Товар добавлен на продажу в базу.")))
+    }
+
+    onItemPurchase(balanceId, itemForSale) {
+        post(purchaseFromGameUrl, {
+                itemForSaleId: itemForSale.id,
+                gameId: this.state.game.id,
+                characterId: this.props.activeCharacter.id,
+                balanceId: balanceId
+            },
+            () => this.refreshGame(() => Popup.info(`${itemForSale.merchandise.name} приобретён и передан активному персонажу.'`)),
+            rs => Popup.error(rs.message))
     }
 })

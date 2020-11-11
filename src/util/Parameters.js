@@ -163,5 +163,6 @@ export const purchaseSkillUrl = `${rootUrl}/gameCharacter/purchaseSkill.do`
 export const purchaseSpellUrl = `${rootUrl}/gameCharacter/purchaseSpell.do`
 
 export const purchaseFromGameShopUrl = `${rootUrl}/shop/purchaseFromGameShop.do`
+export const purchaseFromGameUrl = `${rootUrl}/game/purchaseItem.do`
 export const setItemForSaleUrl = `${rootUrl}/shop/setItemForSale.do`
 export const setItemForSaleInGameUrl = `${rootUrl}/game/setItemForSale.do`

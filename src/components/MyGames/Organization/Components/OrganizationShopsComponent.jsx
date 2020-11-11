@@ -55,7 +55,10 @@ export default class OrganizationShopsComponent extends React.Component {
                             /> :
                             <ShopForm title={"Редактирование магазина организации"}
                                       initialState={this.state.form}
-                                      onSubmit={form => this.props.onShopEdited(form)}
+                                      onSubmit={form => {
+                                          this.props.onShopEdited(form)
+                                          this.setState({formVisible: false})
+                                      }}
                             />
                     )
                 }

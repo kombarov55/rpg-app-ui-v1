@@ -166,7 +166,7 @@ export default connect(
         onEditShopClicked(form) {
             put(removeOrganizationShopUrl(this.state.organization.id, form.id), form, rs => {
                 this.setState({organization: rs})
-                Popup.info("Магазин добавлен")
+                Popup.info("Магазин обновлен")
             })
         }
 

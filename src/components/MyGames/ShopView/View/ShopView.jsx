@@ -7,14 +7,17 @@ import {organizationDetailsView, shopManagementView} from "../../../../Views";
 import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
 import ItemsForSaleComponent from "../Components/ItemsForSaleComponent";
 import {get, post} from "../../../../util/Http";
-import {purchaseFromGameShopUrl, shopByIdUrl} from "../../../../util/Parameters";
+import {purchaseFromGameShopUrl, setItemForSaleUrl, shopByIdUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
+import MerchandisePublisherType from "../../../../data-layer/enums/MerchandisePublisherType";
 
 export default connect(
     state => ({
         shop: state.activeShop,
         character: GetActiveCharacterFromStore(state),
-        gameId: state.activeGame.id
+        gameId: state.activeGame.id,
+        organization: state.activeOrganization,
+        currencyNames: state.activeGame.currencies.map(v => v.name)
     }),
     null,
     (stateProps, dispatchProps, ownProps) => {
@@ -32,26 +35,39 @@ export default connect(
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            shop: props.shop
-        }
-
+        this.state = props.shop
         this.refresh()
     }
 
     render() {
         return (
             <div style={FormViewStyle}>
-                <ItemsForSaleComponent itemsForSale={this.state.shop.itemsForSale}
+                <ItemsForSaleComponent gameId={this.props.gameId}
                                        characterId={this.props.character?.id}
+                                       currencyNames={this.props.currencyNames}
+                                       itemsForSale={this.state.itemsForSale}
+                                       isPurchaseAvailable={this.isPurchaseAvailable()}
+                                       onItemForSaleAdded={form => this.onItemForSaleAdded(form)}
                                        onItemPurchase={(balanceId, itemForSale) => this.onItemPurchase(balanceId, itemForSale)}
                 />
-                <Btn text={"Настройки"} />
                 <Btn text={"Управление магазином"} onClick={() => this.props.toShopManagementView()}/>
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
+    }
+
+    isPurchaseAvailable() {
+        return this.state.type === MerchandisePublisherType.PLAYERS ||
+            this.props.organization.heads.some(v => v.id === this.props.character.id)
+    }
+
+    onItemForSaleAdded(form) {
+        post(setItemForSaleUrl, {
+            merchandiseId: form.merchandise.id,
+            shopId: this.state.id,
+            publisherId: this.props.characterId,
+            price: form.price
+        }, () => this.refresh(() => Popup.info("Товар выставлен на продажу")))
     }
 
     onItemPurchase(balanceId, itemForSale) {
@@ -66,9 +82,10 @@ export default connect(
         }), rs => Popup.error(rs.message))
     }
 
-    refresh(then = () => {}) {
-        get(shopByIdUrl(this.state.shop.id), rs => {
-            this.setState({shop: rs})
+    refresh(then = () => {
+    }) {
+        get(shopByIdUrl(this.state.id), rs => {
+            this.setState(rs)
             then()
         })
     }

@@ -1,19 +1,23 @@
-import GetEnumLabelByName from "../../util/GetEnumLabelByName";
+import FindEnum from "../../util/FindEnum";
 
 class MerchandisePublisherType {
+
+    PLAYERS = "PLAYERS"
+    ORGANIZATION_HEADS = "ORGANIZATION_HEADS"
+
     values = [
         {
-            value: "PLAYERS",
+            value: this.PLAYERS,
             label: "Игроки"
         },
         {
-            value: "ORGANIZATION_HEADS",
+            value: this.ORGANIZATION_HEADS,
             label: "Главы организации"
         }
     ]
 
     getLabel(value) {
-        return GetEnumLabelByName(this.values, value)
+        return FindEnum(this.values, value)?.label
     }
 
 }

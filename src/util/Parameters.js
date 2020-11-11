@@ -72,6 +72,8 @@ export const merchandiseTypeByIdUrl = (gameId, merchandiseTypeId) => rootUrl + "
 export const merchandiseUrl = gameId => rootUrl + "/game/" + gameId + "/merchandise"
 export const merchandiseByIdUrl = (gameId, merchandiseId) => rootUrl + "/game/" + gameId + "/merchandise/" + merchandiseId
 export const merchandiseByGameIdAndDestination = (gameId, destination) => rootUrl + "/game/" + gameId + "/merchandise/filter?destination=" + destination
+export const merchandiseByGameIdAndName = (gameId, name) => `${rootUrl}/game/${gameId}/merchandise/filterByName?name=${name}`
+export const getOwnedMerchandiseUrl = characterId => `${rootUrl}/character/${characterId}/ownedMerchandise/short`
 
 export const organizationByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/organization"
 export const organizationUrl = id => rootUrl + "/organization/" + id
@@ -161,3 +163,4 @@ export const purchaseSkillUrl = `${rootUrl}/gameCharacter/purchaseSkill.do`
 export const purchaseSpellUrl = `${rootUrl}/gameCharacter/purchaseSpell.do`
 
 export const purchaseFromGameShopUrl = `${rootUrl}/shop/purchaseFromGameShop.do`
+export const setItemForSaleUrl = `${rootUrl}/shop/setItemForSale.do`

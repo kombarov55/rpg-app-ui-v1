@@ -18,6 +18,7 @@ import GameCharacterProcedures from "../../../../data-layer/Procedures/GameChara
 import LearnNewSkillComponent from "../Component/LearnNewSkillComponent";
 import SkillComponent from "../Component/SkillComponent";
 import LearnNewSpellComponent from "../Component/LearnNewSpellComponent";
+import CharacterOwnedMerchandiseComponent from "../Component/CharacterOwnedMerchandiseComponent";
 
 export default connect(
     state => ({
@@ -46,7 +47,8 @@ export default connect(
                 fieldNameToValueList: [],
                 balance: [],
                 learnedSpells: [],
-                learnedSkills: []
+                learnedSkills: [],
+                ownedMerchandise: []
             },
 
             transferFormVisible: false
@@ -85,6 +87,10 @@ export default connect(
                               onSubmit={form => this.performTransfer(form)}
                 />
                 }
+
+                <CharacterOwnedMerchandiseComponent merchandiseList={this.state.character.ownedMerchandise}
+
+                />
 
                 <FormTitleLabel text={"Навыки:"}/>
                 {this.state.character.learnedSkills.map(({skill, amount}) =>

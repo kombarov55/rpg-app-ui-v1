@@ -10,7 +10,11 @@ export default function (props) {
             <div style={bulletListStyle}>
                 {
                     props.values &&
-                    props.values.map(name => <div style={bulletContainerItemStyle}>- {name}</div>)
+                    props.values
+                        .filter(v => v != null)
+                        .map(name =>
+                            <div style={bulletContainerItemStyle}>- {name}</div>
+                        )
                 }
             </div>
         </div>

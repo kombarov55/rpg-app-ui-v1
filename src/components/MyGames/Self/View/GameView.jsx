@@ -1,12 +1,13 @@
 import React from "react";
 import {connect} from "react-redux"
-import {get} from "../../../../util/Http";
+import {get, post} from "../../../../util/Http";
 import {
     findAllQuestionnairesByGameIdUrl,
     findOrganizationsShortByGameIdUrl,
     findQuestionnaireTemplatesByGameId,
     gameByIdUrl,
-    questionnaireTemplateByIdUrl
+    questionnaireTemplateByIdUrl,
+    setItemForSaleInGameUrl
 } from "../../../../util/Parameters";
 import {
     changeView,
@@ -33,6 +34,7 @@ import FormatDate from "../../../../util/FormatDate";
 import Popup from "../../../../util/Popup";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
+import StorageComponent from "../Component/StorageComponent";
 
 export default connect(
     state => ({
@@ -78,7 +80,8 @@ export default connect(
 
         this.state = {
             game: {
-                itemsForSale: []
+                itemsForSale: [],
+                currencies: []
             },
             organizations: [],
             questionnaireTemplates: [],
@@ -119,6 +122,18 @@ export default connect(
                               key={organization.id}
                           />
                       )}
+                />
+
+                <StorageComponent gameId={this.state.game.id}
+                                  items={this.state.game.itemsForSale}
+                                  characterId={this.props.activeCharacter?.id}
+                                  purchaseVisible={this.props.activeCharacter != null}
+                                  currencyNames={this.state.game.currencies.map(v => v.name)}
+                                  onItemForSaleAdded={itemForSale => {
+                                      this.onItemForSaleAdded(itemForSale)
+                                  }}
+                                  onItemPurchase={() => {
+                                  }}
                 />
 
                 <List title={"Шаблоны анкет:"}
@@ -183,11 +198,20 @@ export default connect(
         )
     }
 
-    refreshGame(then = () => {}) {
+    refreshGame(then = () => {
+    }) {
         get(gameByIdUrl(this.props.game.id), rs => {
             this.setState({game: rs})
             this.props.setActiveGame(rs)
             then()
         })
+    }
+
+    onItemForSaleAdded(itemForSale) {
+        post(setItemForSaleInGameUrl, {
+            merchandiseId: itemForSale.merchandise.id,
+            price: itemForSale.price,
+            gameId: this.state.game.id
+        }, () => this.refreshGame(() => Popup.info("Товар добавлен на продажу в базу.")))
     }
 })

@@ -1,10 +1,22 @@
 import React from "react";
 import List from "../../../Common/Lists/List";
 import ItemForSaleForm from "../Form/ItemForSaleForm";
-import {get, post} from "../../../../util/Http";
-import {addItemForSaleForGameUrl, merchandiseUrl} from "../../../../util/Parameters";
+import {get} from "../../../../util/Http";
+import {merchandiseUrl} from "../../../../util/Parameters";
 import ItemForSaleComponent from "./ItemForSaleComponent";
+import AutocompleteComponentMode from "../../../../data-layer/enums/AutocompleteComponentMode";
 
+/**
+ * props: {
+ *     gameId: String
+ *     items: []
+ *     characterId: String
+ *     purchaseVisible: Boolean
+ *     currencyNames: []
+ *     onItemForSaleAdded: () => {}
+ *     onItemPurchase: () => {}
+ * }
+ */
 export default class StorageComponent extends React.Component {
 
     constructor(props) {
@@ -38,13 +50,16 @@ export default class StorageComponent extends React.Component {
                           />
                       )}
                 />
-                {this.state.addItemVisible &&
-                <ItemForSaleForm merchandiseList={this.state.merchandiseList}
-                                 currencies={this.props.currencies}
-                                 onSubmit={form => post(addItemForSaleForGameUrl(this.props.gameId), form, rs =>
-                                     this.props.onItemForSaleAdded(rs)
-                                 )}
-                />
+                {
+                    this.state.addItemVisible &&
+                    <ItemForSaleForm gameId={this.props.gameId}
+                                     mode={AutocompleteComponentMode.REMOTE}
+                                     currencyNames={this.props.currencyNames}
+                                     onSubmit={itemForSale => {
+                                         this.props.onItemForSaleAdded(itemForSale)
+                                         this.setState({addItemVisible: false})
+                                     }}
+                    />
                 }
             </div>
         )

@@ -1,25 +1,25 @@
 import React from "react";
 import {connect} from "react-redux"
 import {changeView} from "../../../../data-layer/ActionCreators";
-import {gameView} from "../../../../Views";
+import {adminGameView} from "../../../../Views";
 import Btn from "../../../Common/Buttons/Btn";
 import FormMode from "../../../../data-layer/enums/FormMode";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import List from "../../../Common/Lists/List";
 import ListItem from "../../../Common/ListElements/ListItem";
-import MerchandiseCategoryForm from "../Form/MerchandiseCategoryForm";
-import MerchandiseTypeForm from "../Form/MerchandiseTypeForm";
-import MerchandiseForm from "../Form/MerchandiseForm";
+import ItemCategoryForm from "../Form/ItemCategoryForm";
+import ItemTypeForm from "../Form/ItemTypeForm";
+import ItemTemplateForm from "../Form/ItemTemplateForm";
 import {get, httpDelete, post, put} from "../../../../util/Http";
 import Popup from "../../../../util/Popup";
 import {
     currenciesByGameIdUrl,
-    merchandiseByIdUrl,
-    merchandiseCategoryByIdUrl,
-    merchandiseCategoryUrl,
-    merchandiseTypeByIdUrl,
-    merchandiseTypeUrl,
-    merchandiseUrl,
+    itemCategoryByIdUrl,
+    itemCategoryUrl,
+    itemTemplateByIdUrl,
+    itemTemplateUrl,
+    itemTypeByIdUrl,
+    itemTypeUrl,
     shortSkillsByGameIdUrl
 } from "../../../../util/Parameters";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
@@ -28,30 +28,28 @@ import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByN
 
 export default connect(
     state => ({
-        changeViewParams: state.changeViewParams
+        gameId: state.activeGame.id
     }),
 
     dispatch => ({
-        toPrevView: () => dispatch(changeView(gameView))
+        back: () => dispatch(changeView(adminGameView))
     })
 )(class MerchandiseView extends React.Component {
     constructor(props) {
         super(props)
 
-        this.gameId = props.changeViewParams.gameId
-
         this.state = this.initialState
 
-        get(merchandiseCategoryUrl(this.gameId), rs => this.setState({merchandiseCategories: rs}))
-        get(merchandiseTypeUrl(this.gameId), rs => this.setState({merchandiseTypes: rs}))
-        get(shortSkillsByGameIdUrl(this.gameId), rs => this.setState({skills: rs}))
-        get(currenciesByGameIdUrl(this.gameId), rs => this.setState({currencies: rs}))
-        get(merchandiseUrl(this.gameId), rs => this.setState({merchandiseList: rs}))
+        get(itemCategoryUrl(props.gameId), rs => this.setState({merchandiseCategories: rs}))
+        get(itemTypeUrl(props.gameId), rs => this.setState({itemTypes: rs}))
+        get(shortSkillsByGameIdUrl(props.gameId), rs => this.setState({skills: rs}))
+        get(currenciesByGameIdUrl(props.gameId), rs => this.setState({currencies: rs}))
+        get(itemTemplateUrl(props.gameId), rs => this.setState({merchandiseList: rs}))
     }
 
     initialState = {
         merchandiseCategories: [],
-        merchandiseTypes: [],
+        itemTypes: [],
         merchandiseList: [],
 
         skills: [],
@@ -74,59 +72,58 @@ export default connect(
         return (
             <div style={FormViewStyle}>
                 <List
-                    title={"Категории товаров:"}
+                    title={"Категории предметов:"}
                     noItemsText={"Нет категорий"}
                     values={this.state.merchandiseCategories.map(category =>
                         <ListItem text={category.name}
-                                  onDelete={() => this.onMerchandiseCategoryItemDelete(category)}
-                                  onEdit={() => this.onEditMerchandiseCategoryClicked(category)}
+                                  onDelete={() => this.onItemCategoryItemDelete(category)}
+                                  onEdit={() => this.onEditItemCategoryClicked(category)}
                         />
                     )}
                     isAddButtonVisible={!this.state.merchandiseCategoryFormVisible}
-                    onAddClicked={() => this.onAddMerchandiseCategoryClicked()}
+                    onAddClicked={() => this.onAddItemCategoryClicked()}
                 />
                 {
                     this.state.merchandiseCategoryFormVisible && (
                         this.state.merchandiseCategoryFormMode === FormMode.CREATE ?
-                            <MerchandiseCategoryForm
-                                onSubmit={form => this.saveMerchandiseCategory(form)}
+                            <ItemCategoryForm
+                                onSubmit={form => this.saveItemCategory(form)}
                             /> :
-                            <MerchandiseCategoryForm
+                            <ItemCategoryForm
                                 initialState={this.state.merchandiseCategoryObjToUpdate}
-                                onSubmit={form => this.updateMerchandiseCategory(form)}
+                                onSubmit={form => this.updateItemCategory(form)}
                             />
                     )
                 }
 
                 <List
-                    title={"Типы товаров:"}
+                    title={"Типы предметов:"}
                     isAddButtonVisible={!this.state.merchandiseTypeFormVisible}
                     noItemsText={"Нет типов"}
-                    values={this.state.merchandiseTypes.map(merchandiseType =>
-                        <ListItem text={merchandiseType.name}
-                                  onDelete={() => this.onDeleteMerchandiseTypeClicked(merchandiseType)}
-                                  onEdit={() => this.onEditMerchandiseTypeClicked(merchandiseType)}
+                    values={this.state.itemTypes.map(itemType =>
+                        <ListItem text={itemType.name}
+                                  onDelete={() => this.onDeleteItemTypeClicked(itemType)}
+                                  onEdit={() => this.onEditItemTypeClicked(itemType)}
                         />
                     )}
-                    onAddClicked={() => this.onAddMerchandiseTypeClicked()}
+                    onAddClicked={() => this.onAddItemTypeClicked()}
                 />
 
                 {
                     this.state.merchandiseTypeFormVisible && (
                         this.state.merchandiseTypeFormMode === FormMode.CREATE ?
-                            <MerchandiseTypeForm
-                                onSubmit={form => this.saveMerchandiseType(form)}
+                            <ItemTypeForm
+                                onSubmit={form => this.saveItemType(form)}
                             /> :
-                            <MerchandiseTypeForm
+                            <ItemTypeForm
                                 initialState={this.state.merchandiseTypeObjToUpdate}
-                                onSubmit={form => this.updateMerchandiseType(form)}
+                                onSubmit={form => this.updateItemType(form)}
                             />
                     )
                 }
 
-                <List title={"Товары:"}
+                <List title={"Шаблоны предметов"}
                       isAddButtonVisible={!this.state.merchandiseFormVisible}
-                      noItemsText={"Нет товаров"}
                       onAddClicked={() => this.onAddMerchandiseClicked()}
                       values={this.state.merchandiseList.map(merchandise =>
                           <ExpandableListItemWithBullets
@@ -155,17 +152,17 @@ export default connect(
                 {
                     this.state.merchandiseFormVisible && (
                         this.state.merchandiseFormMode === FormMode.CREATE ?
-                            <MerchandiseForm
-                                merchandiseCategories={this.state.merchandiseCategories}
-                                merchandiseTypes={this.state.merchandiseTypes}
+                            <ItemTemplateForm
+                                itemCategories={this.state.itemCategories}
+                                itemTypes={this.state.itemTypes}
                                 currencies={this.state.currencies}
                                 skills={this.state.skills}
 
                                 onSubmit={form => this.addMerchandise(form)}
                             /> :
-                            <MerchandiseForm
-                                merchandiseCategories={this.state.merchandiseCategories}
-                                merchandiseTypes={this.state.merchandiseTypes}
+                            <ItemTemplateForm
+                                itemCategories={this.state.itemCategories}
+                                itemTypes={this.state.itemTypes}
                                 currencies={this.state.currencies}
                                 skills={this.state.skills}
 
@@ -175,19 +172,19 @@ export default connect(
                     )
                 }
 
-                <Btn text={"Назад"} onClick={() => this.onBackClicked()}/>
+                <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
     }
 
-    onAddMerchandiseCategoryClicked() {
+    onAddItemCategoryClicked() {
         this.setState({
             merchandiseCategoryFormVisible: true,
             merchandiseCategoryFormMode: FormMode.CREATE
         })
     }
 
-    onEditMerchandiseCategoryClicked(category) {
+    onEditItemCategoryClicked(category) {
         this.setState({
             merchandiseCategoryFormVisible: true,
             merchandiseCategoryFormMode: FormMode.EDIT,
@@ -195,33 +192,33 @@ export default connect(
         })
     }
 
-    onAddMerchandiseTypeClicked() {
+    onAddItemTypeClicked() {
         this.setState({
             merchandiseTypeFormVisible: true,
             merchandiseTypeFormMode: FormMode.CREATE
         })
     }
 
-    onEditMerchandiseTypeClicked(merchandiseType) {
+    onEditItemTypeClicked(itemType) {
         this.setState({
             merchandiseTypeFormVisible: true,
             merchandiseTypeFormMode: FormMode.EDIT,
-            merchandiseTypeObjToUpdate: merchandiseType
+            merchandiseTypeObjToUpdate: itemType
         })
     }
 
-    onDeleteMerchandiseTypeClicked(merchandiseType) {
+    onDeleteItemTypeClicked(itemType) {
         httpDelete(
-            merchandiseTypeByIdUrl(this.gameId, merchandiseType.id), () => {
+            itemTypeByIdUrl(this.props.gameId, itemType.id), () => {
                 this.setState(state => ({
-                    merchandiseTypes: state.merchandiseTypes.filter(it => it.id !== merchandiseType.id)
+                    itemTypes: state.itemTypes.filter(it => it.id !== itemType.id)
                 }))
                 Popup.info("Тип товара удалён")
             }, () => Popup.error("Ошибка при удалении типа товара"))
     }
 
-    saveMerchandiseCategory(form) {
-        post(merchandiseCategoryUrl(this.gameId), form, rs => {
+    saveItemCategory(form) {
+        post(itemCategoryUrl(this.props.gameId), form, rs => {
             this.setState({
                 merchandiseCategories: this.state.merchandiseCategories.concat(rs),
                 merchandiseCategoryFormVisible: false
@@ -231,8 +228,8 @@ export default connect(
         }, () => Popup.error("Ошибка при создании категории товара. Обратитесь к администратору."))
     }
 
-    updateMerchandiseCategory(form) {
-        put(merchandiseCategoryUrl(this.gameId), form, rs => {
+    updateItemCategory(form) {
+        put(itemCategoryUrl(this.props.gameId), form, rs => {
             this.setState({
                 merchandiseCategories: this.state.merchandiseCategories.filter(it => it.id !== rs.id).concat(rs),
                 merchandiseCategoryFormVisible: false
@@ -242,29 +239,29 @@ export default connect(
         }, () => Popup.error("Ошибка при обновлении категории товара. Обратитесь к администратору."))
     }
 
-    saveMerchandiseType(form) {
-        post(merchandiseTypeUrl(this.gameId), form, rs => {
+    saveItemType(form) {
+        post(itemTypeUrl(this.props.gameId), form, rs => {
             this.setState(state => ({
-                merchandiseTypes: state.merchandiseTypes.concat(rs),
+                itemTypes: state.itemTypes.concat(rs),
                 merchandiseTypeFormVisible: false
             }))
             Popup.info("Тип товара создан.")
         }, () => Popup.error("Ошибка при создании типа товара."))
     }
 
-    updateMerchandiseType(form) {
-        put(merchandiseTypeByIdUrl(this.gameId, form.id), form, rs => {
+    updateItemType(form) {
+        put(itemTypeByIdUrl(this.props.gameId, form.id), form, rs => {
             this.setState(state => ({
-                merchandiseTypes: state.merchandiseTypes.filter(it => it.id !== rs.id).concat(rs),
+                itemTypes: state.itemTypes.filter(it => it.id !== rs.id).concat(rs),
                 merchandiseTypeFormVisible: false
             }))
             Popup.info("Тип товара обновлен.")
         }, () => Popup.error("Ошибка при обновлении типа товара."))
     }
 
-    onMerchandiseCategoryItemDelete(category) {
+    onItemCategoryItemDelete(category) {
         httpDelete(
-            merchandiseCategoryByIdUrl(this.gameId, category.id), () => {
+            itemCategoryByIdUrl(this.props.gameId, category.id), () => {
                 this.setState(state => ({
                     merchandiseCategories: state.merchandiseCategories.filter(it => it !== category)
                 }))
@@ -277,7 +274,7 @@ export default connect(
     }
 
     addMerchandise(form) {
-        post(merchandiseUrl(this.gameId), form, rs => {
+        post(itemTemplateUrl(this.props.gameId), form, rs => {
             this.setState(state => ({
                 merchandiseList: state.merchandiseList.concat(rs),
                 merchandiseFormVisible: false
@@ -287,7 +284,7 @@ export default connect(
     }
 
     updateMerchandise(form) {
-        put(merchandiseByIdUrl(this.gameId, form.id), form, rs => {
+        put(itemTemplateByIdUrl(this.props.gameId, form.id), form, rs => {
             this.setState(state => ({
                 merchandiseList: state.merchandiseList.filter(it => it.id !== rs.id).concat(rs),
                 merchandiseFormVisible: false
@@ -305,18 +302,12 @@ export default connect(
     }
 
     onMerchandiseDeleteClicked(merchandise) {
-        httpDelete(merchandiseByIdUrl(this.gameId, merchandise.id), ignored => {
+        httpDelete(itemTemplateByIdUrl(this.props.gameId, merchandise.id), ignored => {
                 this.setState(state => ({
                     merchandiseList: state.merchandiseList.filter(it => it.id !== merchandise.id)
                 }))
                 Popup.info("Товар удалён")
             }, () => Popup.error("Ошибка при удалении товара. Обратитесь к администратору.")
         )
-
-
-    }
-
-    onBackClicked() {
-        this.props.toPrevView()
     }
 })

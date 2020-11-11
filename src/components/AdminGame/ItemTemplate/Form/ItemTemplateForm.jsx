@@ -18,19 +18,19 @@ import FileUpload from "../../../Common/Input/FileUpload";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import AmountsToString from "../../../../util/AmountsToString";
-import MerchandiseUpgradeForm from "./MerchandiseUpgradeForm";
+import ItemUpgradeForm from "./ItemUpgradeForm";
 import IsLastElement from "../../../../util/IsLastElement";
 
 export default connect(
     state => ({
         gameId: state.activeGame.id
     }), null
-)(class MerchandiseForm extends React.Component {
+)(class ItemTemplateForm extends React.Component {
 
     /**
      * @param props: {
-     *   types:      [{MerchandiseType}],
-     *   categories: [{MerchandiseCategory}],
+     *   types:      [{ItemType}],
+     *   categories: [{ItemCategory}],
      *   skills:     [{Skill}]
      *   currencies: [{Currency}]
      * }
@@ -97,7 +97,7 @@ export default connect(
 
                 <InputLabel text={"Категория:"}/>
                 <SelectButton
-                    options={this.props.merchandiseCategories.map(category => ({
+                    options={this.props.itemCategories.map(category => ({
                         label: category.name,
                         value: category
                     }))}
@@ -107,7 +107,7 @@ export default connect(
 
                 <InputLabel text={"Тип:"}/>
                 <SelectButton
-                    options={this.props.merchandiseTypes.map(type => ({label: type.name, value: type}))}
+                    options={this.props.itemTypes.map(type => ({label: type.name, value: type}))}
                     value={this.state.type}
                     onChange={e => this.setState({type: e.target.value})}
                 />
@@ -174,17 +174,17 @@ export default connect(
                               noItemsText={"Отсутствуют.."}
                               isAddButtonVisible={!this.state.upgradeFormVisible}
                               onAddClicked={() => this.setState({upgradeFormVisible: true})}
-                              values={this.state.upgrades.map(merchandiseUpgrade =>
+                              values={this.state.upgrades.map(itemUpgrade =>
                                   <ExpandableListItemWithBullets
-                                      name={merchandiseUpgrade.lvlNum + " Уровень:"}
+                                      name={itemUpgrade.lvlNum + " Уровень:"}
                                       bullets={[
                                           "Влияние на навыки:",
-                                          ...merchandiseUpgrade.skillInfluences.map(skillInfluence => SkillInfluenceToString(skillInfluence)),
+                                          ...itemUpgrade.skillInfluences.map(skillInfluence => SkillInfluenceToString(skillInfluence)),
                                           "Стоимость:",
-                                          ...merchandiseUpgrade.prices.map(amounts => AmountsToString(amounts))
+                                          ...itemUpgrade.prices.map(amounts => AmountsToString(amounts))
                                       ]}
-                                      isDeleteVisible={IsLastElement(merchandiseUpgrade, this.state.upgrades)}
-                                      onDelete={() => this.setState(state => ({upgrades: state.upgrades.filter(v => v != merchandiseUpgrade)}))}
+                                      isDeleteVisible={IsLastElement(itemUpgrade, this.state.upgrades)}
+                                      onDelete={() => this.setState(state => ({upgrades: state.upgrades.filter(v => v != itemUpgrade)}))}
 
                                       alwaysExpand={true}
                                   />
@@ -192,7 +192,7 @@ export default connect(
                         />
                         {
                             this.state.upgradeFormVisible &&
-                            <MerchandiseUpgradeForm
+                            <ItemUpgradeForm
                                 lvlNum={this.state.upgrades.length + 1}
                                 skills={this.props.skills.filter(v => v.destination === this.state.destination)}
                                 currencyNames={this.props.currencies.map(v => v.name)}

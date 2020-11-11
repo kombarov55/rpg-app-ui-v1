@@ -5,7 +5,7 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import ListItem from "../../../Common/ListElements/ListItem";
 import List from "../../../Common/Lists/List";
-import WarehouseEntryForm from "../../Merchandise/Form/WarehouseEntryForm";
+import WarehouseEntryForm from "../../ItemTemplate/Form/WarehouseEntryForm";
 import {SelectButton} from "primereact/selectbutton";
 import SuccessChanceDependencyForm from "./SuccessChanceDependencyForm";
 

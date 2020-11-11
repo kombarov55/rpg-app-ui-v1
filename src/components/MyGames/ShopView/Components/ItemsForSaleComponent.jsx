@@ -3,7 +3,7 @@ import List from "../../../Common/Lists/List";
 import ItemForSaleComponent from "../../Self/Component/ItemForSaleComponent";
 import ItemForSaleForm from "../../Self/Form/ItemForSaleForm";
 import {get} from "../../../../util/Http";
-import {getOwnedMerchandiseUrl} from "../../../../util/Parameters";
+import {getItemsUrl} from "../../../../util/Parameters";
 import AutocompleteComponentMode from "../../../../data-layer/enums/AutocompleteComponentMode";
 
 export default class ItemsForSaleComponent extends React.Component {
@@ -23,7 +23,7 @@ export default class ItemsForSaleComponent extends React.Component {
             <div>
                 <List title={"Товары на продажу:"}
                       isAddButtonVisible={this.props.isPublishingAvailable && !this.state.formVisible}
-                      onAddClicked={() => get(getOwnedMerchandiseUrl(this.props.characterId), rs => this.setState({
+                      onAddClicked={() => get(getItemsUrl(this.props.characterId), rs => this.setState({
                           formVisible: true,
                           merchandiseList: rs
                       }))}

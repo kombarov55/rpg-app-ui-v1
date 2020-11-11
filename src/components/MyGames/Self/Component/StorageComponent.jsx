@@ -2,7 +2,7 @@ import React from "react";
 import List from "../../../Common/Lists/List";
 import ItemForSaleForm from "../Form/ItemForSaleForm";
 import {get} from "../../../../util/Http";
-import {merchandiseUrl} from "../../../../util/Parameters";
+import {itemTemplateUrl} from "../../../../util/Parameters";
 import ItemForSaleComponent from "./ItemForSaleComponent";
 import AutocompleteComponentMode from "../../../../data-layer/enums/AutocompleteComponentMode";
 
@@ -36,7 +36,7 @@ export default class StorageComponent extends React.Component {
                       noItemsText={"Пусто.."}
                       isAddButtonVisible={!this.state.addItemVisible}
                       onAddClicked={() => {
-                          get(merchandiseUrl(this.props.gameId), rs => this.setState({
+                          get(itemTemplateUrl(this.props.gameId), rs => this.setState({
                               addItemVisible: true,
                               merchandiseList: rs
                           }))

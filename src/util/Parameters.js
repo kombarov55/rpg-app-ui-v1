@@ -63,17 +63,17 @@ export const saveSkillUrl = skillCategoryId => rootUrl + "/skillCategory/" + ski
 export const skillByIdUrl = id => rootUrl + "/skill/" + id
 export const findSkillsByGameIdAndDestination = (gameId, destination) => `${rootUrl}/game/${gameId}/skill/short/find?destination=${destination}`
 
-export const merchandiseCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/merchandiseCategory"
-export const merchandiseCategoryByIdUrl = (gameId, merchandiseCategoryId) => rootUrl + "/game/" + gameId + "/merchandiseCategory/" + merchandiseCategoryId
+export const itemCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/itemCategory"
+export const itemCategoryByIdUrl = (gameId, itemCategoryId) => rootUrl + "/game/" + gameId + "/itemCategory/" + itemCategoryId
 
-export const merchandiseTypeUrl = gameId => rootUrl + "/game/" + gameId + "/merchandiseType"
-export const merchandiseTypeByIdUrl = (gameId, merchandiseTypeId) => rootUrl + "/game/" + gameId + "/merchandiseType/" + merchandiseTypeId
+export const itemTypeUrl = gameId => rootUrl + "/game/" + gameId + "/itemType"
+export const itemTypeByIdUrl = (gameId, itemTypeId) => rootUrl + "/game/" + gameId + "/itemType/" + itemTypeId
 
-export const merchandiseUrl = gameId => rootUrl + "/game/" + gameId + "/merchandise"
-export const merchandiseByIdUrl = (gameId, merchandiseId) => rootUrl + "/game/" + gameId + "/merchandise/" + merchandiseId
-export const merchandiseByGameIdAndDestination = (gameId, destination) => rootUrl + "/game/" + gameId + "/merchandise/filter?destination=" + destination
-export const merchandiseByGameIdAndName = (gameId, name) => `${rootUrl}/game/${gameId}/merchandise/filterByName?name=${name}`
-export const getOwnedMerchandiseUrl = characterId => `${rootUrl}/character/${characterId}/ownedMerchandise/short`
+export const itemTemplateUrl = gameId => rootUrl + "/game/" + gameId + "/itemTemplate"
+export const itemTemplateByIdUrl = (gameId, itemTemplateId) => rootUrl + "/game/" + gameId + "/itemTemplate/" + itemTemplateId
+export const itemTemplateByGameIdAndDestination = (gameId, destination) => rootUrl + "/game/" + gameId + "/itemTemplate/filter?destination=" + destination
+export const itemTemplateByGameIdAndName = (gameId, name) => `${rootUrl}/game/${gameId}/itemTemplate/filterByName?name=${name}`
+export const getItemsUrl = characterId => `${rootUrl}/character/${characterId}/items/short`
 
 export const organizationByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/organization"
 export const organizationUrl = id => rootUrl + "/organization/" + id

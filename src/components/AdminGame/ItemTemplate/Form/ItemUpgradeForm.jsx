@@ -10,7 +10,7 @@ import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import _ from "lodash"
 import FormMode from "../../../../data-layer/enums/FormMode";
 
-export default class MerchandiseUpgradeForm extends React.Component {
+export default class ItemUpgradeForm extends React.Component {
 
     constructor(props) {
         super(props);

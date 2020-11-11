@@ -9,7 +9,7 @@ import Popup from "../../../../util/Popup";
 import LocalAutocomplete from "../../../Common/Input/LocalAutocomplete";
 import AutocompleteComponentMode from "../../../../data-layer/enums/AutocompleteComponentMode";
 import RemoteAutocomplete from "../../../Common/Input/RemoteAutocomplete";
-import {merchandiseByGameIdAndName} from "../../../../util/Parameters";
+import {itemTemplateByGameIdAndName} from "../../../../util/Parameters";
 import getOrDefault from "../../../../util/getOrDefault";
 
 /**
@@ -69,7 +69,7 @@ export default class ItemForSaleForm extends React.Component {
         if (mode === AutocompleteComponentMode.REMOTE) {
             return (
                 <RemoteAutocomplete fieldToDisplay={"name"}
-                                    buildSyncUrl={name => merchandiseByGameIdAndName(this.props.gameId, name)}
+                                    buildSyncUrl={name => itemTemplateByGameIdAndName(this.props.gameId, name)}
                                     onSelected={merchandise => this.setState({merchandise: merchandise})}
                 />
             )

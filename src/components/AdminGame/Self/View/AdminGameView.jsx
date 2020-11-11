@@ -19,8 +19,7 @@ import {
     conversionView,
     currencyFormView,
     gameEditView,
-    gameSettingsView,
-    merchandiseView,
+    gameSettingsView, itemTemplateView,
     networkView,
     organizationDetailsView,
     questionnaireTemplateView,
@@ -34,7 +33,7 @@ import {
     deleteQuestionnaireTemplateUrl,
     deleteRecipe,
     editQuestionnaireTemplateUrl,
-    merchandiseUrl,
+    itemTemplateUrl,
     organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
     organizationUrl,
@@ -57,8 +56,6 @@ import ExpandableListItemWithButtons from "../../../Common/ListElements/Expandab
 import Popup from "../../../../util/Popup";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import OrganizationForm from "../../../MyGames/Organization/Form/OrganizationForm";
-import ItemForSaleForm from "../../../MyGames/Self/Form/ItemForSaleForm";
-import FormatDate from "../../../../util/FormatDate";
 import SkillCategoryForm from "../../Skill/Form/SkillCategoryForm";
 import RecipeForm from "../Form/RecipeForm";
 import QuestionnaireTemplateForm from "../../QuestionnaireTemplate/Form/QuestionnaireTemplateForm";
@@ -80,6 +77,7 @@ function mapStateToProps(state, props) {
     }
 }
 
+
 function mapDispatchToProps(dispatch) {
     return {
         changeView: (view, params = {}) => dispatch(changeView(view, params)),
@@ -99,7 +97,8 @@ function mapDispatchToProps(dispatch) {
                 dispatch(changeView(questionnaireTemplateView))
             })
         },
-        toGameSettingsView: () => dispatch(changeView(gameSettingsView))
+        toGameSettingsView: () => dispatch(changeView(gameSettingsView)),
+        toItemTemplateView: () => dispatch(changeView(itemTemplateView))
     }
 }
 
@@ -212,7 +211,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     }
 
     function onAddItemForSaleClicked() {
-        get(merchandiseUrl(props.activeGame.id), rs => {
+        get(itemTemplateUrl(props.activeGame.id), rs => {
             props.setAvailableMerchandise(rs)
             setItemForSaleFormVisible(true)
         })
@@ -495,6 +494,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 />
 
                 <div className={"game-view-button-group"}>
+                    <Btn text={"Предметы"} onClick={() => props.toItemTemplateView()}/>
                     <Btn text={"Настройки обмена валют"} onClick={() => onConversionClicked()}/>
                     <Btn text={"Настройки"} onClick={() => props.toGameSettingsView()}/>
                     {/*<Btn text={"Редактировать"} onClick={() => onEditClicked()}/>*/}

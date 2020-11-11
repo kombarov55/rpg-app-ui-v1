@@ -3,7 +3,7 @@ import InnerFormStyle from "../../../../styles/InnerFormStyle";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 
-export default class MerchandiseCategoryForm extends React.Component {
+export default class ItemCategoryForm extends React.Component {
     constructor(props) {
         super(props)
 

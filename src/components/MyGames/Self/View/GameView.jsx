@@ -5,7 +5,8 @@ import {
     findAllQuestionnairesByGameIdUrl,
     findOrganizationsShortByGameIdUrl,
     findQuestionnaireTemplatesByGameId,
-    gameByIdUrl, purchaseFromGameUrl,
+    gameByIdUrl,
+    purchaseFromGameUrl,
     questionnaireTemplateByIdUrl,
     setItemForSaleInGameUrl
 } from "../../../../util/Parameters";
@@ -20,7 +21,6 @@ import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import Btn from "../../../Common/Buttons/Btn";
 import {
     characterListView,
-    merchandiseView,
     myGamesView,
     organizationDetailsView,
     questionnaireDisclaimerView,
@@ -65,11 +65,7 @@ export default connect(
             toCharacterList: () => {
                 dispatch(changeView(characterListView))
             },
-            toMerchandiseView: () => {
-                dispatch(changeView(merchandiseView, {
-                    gameId: stateProps.game.id
-                }))
-            },
+
             back: () => dispatch(changeView(myGamesView))
         }
     }
@@ -168,23 +164,6 @@ export default connect(
                           />
                       )}
                 />
-
-                {/*
-                <StorageComponent gameId={this.props.game.id}
-                                  characterId={this.props.activeCharacter.id}
-                                  currencies={this.props.game.currencies}
-                                  items={this.state.game.itemsForSale}
-                                  purchaseVisible={this.props.activeCharacter != null}
-                                  onItemForSaleAdded={() => this.refreshGame()}
-                                  onItemPurchase={(balanceId, price, itemForSale) => {
-                                      ShopProcedures.
-                                      purchaseFromGameShop(balanceId, price, this.props.activeCharacter.id, this.props.game.id, itemForSale.merchandise.id, () => {
-                                          this.refreshGame(() => Popup.success(`Вы приобрели "${itemForSale.merchandise.name}"!`))
-                                      })
-                                  }}
-                />
-                */}
-                <Btn text={"Товары"} onClick={() => this.props.toMerchandiseView()}/>
                 {
                     this.props.activeCharacter != null &&
                     <Btn text={"Лист персонажа"} onClick={() => this.props.toCharacterList()}/>

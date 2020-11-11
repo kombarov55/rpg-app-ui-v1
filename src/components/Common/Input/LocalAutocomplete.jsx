@@ -35,8 +35,11 @@ export default class LocalAutocomplete extends React.Component {
                 <List values={[
                         ...this.state.filteredItems.map(item =>
                             <ListItem text={item[this.props.fieldToDisplay]}
-                                      onClick={() => this.setState({selectedItem: item})}
-                                      selected={this.state.selectedItem.id === item.id}
+                                      onClick={() => {
+                                          this.setState({selectedItem: item})
+                                          this.props.onSelected(item)
+                                      }}
+                                      selected={this.state.selectedItem?.id === item.id}
                             />
                         )
                     ]}

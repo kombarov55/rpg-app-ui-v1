@@ -7,7 +7,7 @@ import {organizationDetailsView, shopManagementView} from "../../../../Views";
 import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
 import ItemsForSaleComponent from "../Components/ItemsForSaleComponent";
 import {get, post} from "../../../../util/Http";
-import {purchaseFromGameShopUrl, setItemForSaleUrl, shopByIdUrl} from "../../../../util/Parameters";
+import {purchaseFromShopUrl, setItemForSaleUrl, shopByIdUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import MerchandisePublisherType from "../../../../data-layer/enums/MerchandisePublisherType";
 
@@ -46,7 +46,7 @@ export default connect(
                                        characterId={this.props.character?.id}
                                        currencyNames={this.props.currencyNames}
                                        itemsForSale={this.state.itemsForSale}
-                                       isPurchaseAvailable={this.isPurchaseAvailable()}
+                                       isPublishingAvailable={this.isPublishingAvailable()}
                                        onItemForSaleAdded={form => this.onItemForSaleAdded(form)}
                                        onItemPurchase={(balanceId, itemForSale) => this.onItemPurchase(balanceId, itemForSale)}
                 />
@@ -56,7 +56,7 @@ export default connect(
         )
     }
 
-    isPurchaseAvailable() {
+    isPublishingAvailable() {
         return this.state.type === MerchandisePublisherType.PLAYERS ||
             this.props.organization.heads.some(v => v.id === this.props.character.id)
     }
@@ -65,18 +65,18 @@ export default connect(
         post(setItemForSaleUrl, {
             merchandiseId: form.merchandise.id,
             shopId: this.state.id,
-            publisherId: this.props.characterId,
+            publisherId: this.props.character.id,
             price: form.price
         }, () => this.refresh(() => Popup.info("Товар выставлен на продажу")))
     }
 
     onItemPurchase(balanceId, itemForSale) {
-        post(purchaseFromGameShopUrl, {
+        post(purchaseFromShopUrl, {
+            shopId: this.state.id,
             buyerBalanceId: balanceId,
-            price: itemForSale.price,
             buyerCharacterId: this.props.character.id,
             gameId: this.props.gameId,
-            merchandiseId: itemForSale.merchandise.id,
+            itemForSaleId: itemForSale.id
         }, () => this.refresh(() => {
             Popup.success(`${itemForSale.merchandise.name} был приобретён и добавлен в инвентарь персонажа ${this.props.character.name}`)
         }), rs => Popup.error(rs.message))

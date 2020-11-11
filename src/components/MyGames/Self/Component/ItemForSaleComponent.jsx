@@ -27,9 +27,12 @@ export default class ItemForSaleComponent extends React.Component {
                 description={this.props.itemForSale.merchandise.description}
                 expandableElements={[
                     <div>
-                        <div>Количество: {this.props.itemForSale.amount}</div>
                         <div>Дата выставления на
                             продажу: {FormatDate(new Date(this.props.itemForSale.creationDate))}</div>
+                        {
+                            this.props.itemForSale.ownerName &&
+                            <div>Владелец: {this.props.itemForSale.ownerName}</div>
+                        }
                         {
                             !this.state.purchaseFormVisible && (
                                 this.props.purchaseVisible ?

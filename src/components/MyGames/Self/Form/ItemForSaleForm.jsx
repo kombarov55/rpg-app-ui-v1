@@ -49,8 +49,9 @@ export default class ItemForSaleForm extends React.Component {
 
                 <SubmitButton text={"Выставить на продажу"}
                               onClick={() => {
-                                  if (this.state.merchandise == null || this.state.price.length === 0 || this.state.amount <= 0) {
-                                      Popup.error("Заполните все поля: Товар, Стоимость, Количество")
+                                  if (this.state.merchandise == null || this.state.price.length === 0) {
+                                      Popup.error("Заполните все поля: Товар, Стоимость")
+                                      console.log(this.state)
                                       return
                                   }
 

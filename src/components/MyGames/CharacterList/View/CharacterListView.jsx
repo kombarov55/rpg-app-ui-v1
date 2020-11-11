@@ -5,7 +5,12 @@ import {gameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {get, post} from "../../../../util/Http";
-import {currenciesByGameIdUrl, getCharacterByIdUrl, transferUrl} from "../../../../util/Parameters";
+import {
+    currenciesByGameIdUrl,
+    disposeMerchandiseUrl,
+    getCharacterByIdUrl,
+    transferUrl
+} from "../../../../util/Parameters";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import ListItem from "../../../Common/ListElements/ListItem";
@@ -54,7 +59,7 @@ export default connect(
             transferFormVisible: false
         }
 
-        get(getCharacterByIdUrl(this.props.characterId), rs => this.setState({character: rs}))
+        this.refresh()
     }
 
     render() {
@@ -89,6 +94,7 @@ export default connect(
                 }
 
                 <CharacterOwnedMerchandiseComponent merchandiseList={this.state.character.ownedMerchandise}
+                                                    onDisposeMerchandise={merchandise => this.onDisposeMerchandise(merchandise)}
 
                 />
 
@@ -196,7 +202,21 @@ export default connect(
         }
     }
 
+    refresh(then = () => {}) {
+        get(getCharacterByIdUrl(this.props.characterId), rs => {
+            this.setState({character: rs})
+            then()
+        })
+    }
+
     isEnoughMoneyOnBalance(currency, amount) {
         return this.state.character.balance.find(v => v.name === currency).amount >= amount
+    }
+
+    onDisposeMerchandise(merchandise) {
+        post(disposeMerchandiseUrl, {
+            merchandiseId: merchandise.id,
+            characterId: this.state.character.id
+        }, () => this.refresh(() => Popup.info("Предмет выброшен.")))
     }
 })

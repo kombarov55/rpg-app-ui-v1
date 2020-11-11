@@ -1,7 +1,6 @@
 import React from "react";
 import List from "../../../Common/Lists/List";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
-import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import BulletList from "../../../Common/Lists/BulletList";
 import Btn from "../../../Common/Buttons/Btn";
 
@@ -31,7 +30,7 @@ export default class CharacterOwnedMerchandiseComponent extends React.Component 
                                                       `${merchandise.lvl} уровень предмета`
                                                   ]}/>,
                                                   <Btn text={"Передать"}/>,
-                                                  <Btn text={"Выбросить"}/>
+                                                  <Btn text={"Выбросить"} onClick={() => this.props.onDisposeMerchandise(merchandise)}/>
                                               ]}
 
                                               alwaysExpand={true}

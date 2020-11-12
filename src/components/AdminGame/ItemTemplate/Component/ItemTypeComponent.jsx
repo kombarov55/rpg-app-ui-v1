@@ -1,10 +1,10 @@
 import React from "react";
 import List from "../../../Common/Lists/List";
 import ListItem from "../../../Common/ListElements/ListItem";
-import ItemCategoryForm from "../Form/ItemCategoryForm";
 import FormMode from "../../../../data-layer/enums/FormMode";
+import ItemTypeForm from "../Form/ItemTypeForm";
 
-export default class ItemCategoryComponent extends React.Component {
+export default class ItemTypeComponent extends React.Component {
 
     constructor(props) {
         super(props);
@@ -20,37 +20,38 @@ export default class ItemCategoryComponent extends React.Component {
         return (
             <div>
                 <List
-                    title={"Категории предметов:"}
-                    noItemsText={"Нет категорий"}
+                    title={"Типы предметов:"}
                     isAddButtonVisible={!this.state.formVisible}
-                    onAddClicked={() => this.setState({
-                        formMode: FormMode.CREATE,
-                        formVisible: true
-                    })}
-                    values={this.props.itemCategories.map(category =>
-                        <ListItem text={category.name}
-                                  onDelete={() => this.props.onDeleteItemCategory(category)}
+                    noItemsText={"Нет типов"}
+                    values={this.props.itemTypes.map(itemType =>
+                        <ListItem text={itemType.name}
+                                  onDelete={() => this.props.onDeleteItemType(itemType)}
                                   onEdit={() => this.setState({
                                       formMode: FormMode.EDIT,
-                                      form: category,
-                                      formVisible: true
+                                      formVisible: true,
+                                      form: itemType
                                   })}
                         />
                     )}
+                    onAddClicked={() => this.setState({
+                        formVisible: true,
+                        formMode: FormMode.CREATE
+                    })}
                 />
+
                 {
                     this.state.formVisible && (
                         this.state.formMode === FormMode.CREATE ?
-                            <ItemCategoryForm
+                            <ItemTypeForm
                                 onSubmit={form => {
-                                    this.props.onSaveItemCategory(form)
+                                    this.props.onSaveItemType(form)
                                     this.setState({formVisible: false})
                                 }}
                             /> :
-                            <ItemCategoryForm
+                            <ItemTypeForm
                                 initialState={this.state.form}
                                 onSubmit={form => {
-                                    this.props.onUpdateItemCategory(form)
+                                    this.props.onUpdateItemType(form)
                                     this.setState({formVisible: false})
                                 }}
                             />

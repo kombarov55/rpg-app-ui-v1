@@ -25,6 +25,7 @@ import ExpandableListItemWithBullets from "../../../Common/ListElements/Expandab
 import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByName";
 import ItemCategoryComponent from "../Component/ItemCategoryComponent";
+import ItemTypeComponent from "../Component/ItemTypeComponent";
 
 export default connect(
     state => ({
@@ -74,31 +75,11 @@ export default connect(
                                        onUpdateItemCategory={itemCategory => this.onUpdateItemCategory(itemCategory)}
                 />
 
-                <List
-                    title={"Типы предметов:"}
-                    isAddButtonVisible={!this.state.merchandiseTypeFormVisible}
-                    noItemsText={"Нет типов"}
-                    values={this.state.itemTypes.map(itemType =>
-                        <ListItem text={itemType.name}
-                                  onDelete={() => this.onDeleteItemTypeClicked(itemType)}
-                                  onEdit={() => this.onEditItemTypeClicked(itemType)}
-                        />
-                    )}
-                    onAddClicked={() => this.onAddItemTypeClicked()}
+                <ItemTypeComponent itemTypes={this.state.itemTypes}
+                                   onDeleteItemType={itemType => this.onDeleteItemType(itemType)}
+                                   onSaveItemType={itemType => this.onSaveItemType(itemType)}
+                                   onUpdateItemType={itemType => this.onUpdateItemType(itemType)}
                 />
-
-                {
-                    this.state.merchandiseTypeFormVisible && (
-                        this.state.merchandiseTypeFormMode === FormMode.CREATE ?
-                            <ItemTypeForm
-                                onSubmit={form => this.saveItemType(form)}
-                            /> :
-                            <ItemTypeForm
-                                initialState={this.state.merchandiseTypeObjToUpdate}
-                                onSubmit={form => this.updateItemType(form)}
-                            />
-                    )
-                }
 
                 <List title={"Шаблоны предметов"}
                       isAddButtonVisible={!this.state.merchandiseFormVisible}
@@ -178,7 +159,7 @@ export default connect(
         })
     }
 
-    onDeleteItemTypeClicked(itemType) {
+    onDeleteItemType(itemType) {
         httpDelete(
             itemTypeByIdUrl(this.props.gameId, itemType.id), () => {
                 this.setState(state => ({
@@ -188,7 +169,7 @@ export default connect(
             }, () => Popup.error("Ошибка при удалении типа товара"))
     }
 
-    saveItemType(form) {
+    onSaveItemType(form) {
         post(itemTypeUrl(this.props.gameId), form, rs => {
             this.setState(state => ({
                 itemTypes: state.itemTypes.concat(rs),
@@ -198,7 +179,7 @@ export default connect(
         }, () => Popup.error("Ошибка при создании типа товара."))
     }
 
-    updateItemType(form) {
+    onUpdateItemType(form) {
         put(itemTypeByIdUrl(this.props.gameId, form.id), form, rs => {
             this.setState(state => ({
                 itemTypes: state.itemTypes.filter(it => it.id !== rs.id).concat(rs),

@@ -21,7 +21,7 @@ import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import Btn from "../../../Common/Buttons/Btn";
 import {
     characterListView,
-    myGamesView,
+    myGamesView, officeView,
     organizationDetailsView,
     questionnaireDisclaimerView,
     questionnaireReviewView
@@ -66,6 +66,8 @@ export default connect(
                 dispatch(changeView(characterListView))
             },
 
+            toOfficeView: () => dispatch(changeView(officeView)),
+
             back: () => dispatch(changeView(myGamesView))
         }
     }
@@ -73,6 +75,11 @@ export default connect(
 
     constructor(props) {
         super(props);
+
+        if (this.props.activeCharacter == null) {
+            Popup.info("Выберите персонажа")
+            this.props.toOfficeView()
+        }
 
         this.state = {
             game: {

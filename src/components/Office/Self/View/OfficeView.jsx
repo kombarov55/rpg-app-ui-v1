@@ -13,7 +13,6 @@ import {
 import Globals from "../../../../util/Globals";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 import Btn from "../../../Common/Buttons/Btn";
-import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import Popup from "../../../../util/Popup";
 import {addUserAccount, changeView, setActiveCharacter, setActiveGame} from "../../../../data-layer/ActionCreators";
 import FormatDate from "../../../../util/FormatDate";
@@ -56,43 +55,27 @@ export default connect(
     render() {
         return (
             <div style={FormViewStyle}>
-                <FormTitleLabel text={"Активные персонажи:"}/>
-                {this.props.userAccount.gameToActiveCharacter.map(({game, activeCharacter}) =>
-                    <div>
-                        {
-                            activeCharacter != null ?
-                                <List title={`${game.name}:`}
-                                      values={[<ExpandableListItem name={activeCharacter.name}/>]}
-                                /> :
-                                <List title={game.name}
-                                      noItemsText={"Нет активного персонажа.."}
-                                />
-                        }
-                    </div>
-                )}
-
                 <List title={"Мои персонажи:"}
                       noItemsText={"Пусто.."}
                       values={this.groupCharactersByGame(this.state.characters).map(({game, characters}) =>
                           <List title={`${game.name}:`}
                                 values={characters.sort((c1, c2) => CharacterStatus.compare(c1.status, c2.status))
-                                                  .map(character =>
-                                                      <ExpandableListItem name={character.name}
-                                                                          alwaysExpand={true}
-                                                                          expandableElements={[
-                                                                              <div>{`Игра: ${character.game.name}`}</div>,
-                                                                              <div>{`Гражданин страны: ${character.country.name}`}</div>,
-                                                                              <div>{`Статус: ${CharacterStatus.getLabel(character.status)}`}</div>,
-                                                                              <div>{`Дата смены статуса: ${FormatDate(new Date(character.statusChangeDate))}`}</div>,
-                                                                              ...(character.status !== CharacterStatus.DEAD ? [
-                                                                                  this.makeCharacterActiveButton(game, character),
-                                                                                  this.toCharacterListViewButton(game, character)
-                                                                              ] : []),
-                                                                              this.killCharacterButton(game, character)
-                                                                          ].filter(v => v != null)}
-                                                                          key={character.id}
-                                                      />
-                                                  )}
+                                    .map(character =>
+                                        <ExpandableListItem name={character.name}
+                                                            alwaysExpand={true}
+                                                            expandableElements={[
+                                                                <div>{`Игра: ${character.game.name}`}</div>,
+                                                                <div>{`Гражданин страны: ${character.country.name}`}</div>,
+                                                                <div>{`Статус: ${CharacterStatus.getLabel(character.status)}`}</div>,
+                                                                <div>{`Дата смены статуса: ${FormatDate(new Date(character.statusChangeDate))}`}</div>,
+                                                                ...(character.status !== CharacterStatus.DEAD ? [
+                                                                    this.toCharacterListViewButton(game, character)
+                                                                ] : []),
+                                                                this.killCharacterButton(game, character)
+                                                            ].filter(v => v != null)}
+                                                            key={character.id}
+                                        />
+                                    )}
                           />
                       )}
                 />
@@ -100,24 +83,12 @@ export default connect(
         )
     }
 
-    makeCharacterActiveButton(game, character) {
-        return (
-            !this.isCharacterActive(character) &&
-            <Btn text={"Сделать активным"} onClick={() => {
-                post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () =>
-                    get(userAccountUrl(Globals.userId), rs => {
-                        this.props.setUserAccount(rs)
-                        Popup.info(`Персонаж теперь активен.`)
-                    })
-                )
-            }}/>
-        )
-    }
-
     toCharacterListViewButton(game, character) {
         return (
-            <Btn text={"Открыть лист персонажа"}
-                 onClick={() => this.props.toCharacterListView(game, character)}
+            <Btn text={"Выбрать"}
+                 onClick={() => post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () =>
+                     this.props.toCharacterListView(game, character)
+                 )}
             />
         )
     }
@@ -125,17 +96,22 @@ export default connect(
     killCharacterButton(game, character) {
         if (character.status === CharacterStatus.DEAD) {
             return (
-                <Btn text={"Оживить персонажа"} onClick={() => {
-                    post(reviveCharacterUrl, {characterId: character.id}, () =>
-                        get(getCharactersByUserIdUrl(Globals.userId), rs => {
-                            this.setState({characters: rs})
-                            Popup.success(`Вы оживили персонажа!`)
-                        })
-                    )
-                }}/>
+                <Btn
+                    text={"Оживить персонажа"}
+                    onClick={() => {
+                        post(reviveCharacterUrl, {characterId: character.id}, () =>
+                            get(getCharactersByUserIdUrl(Globals.userId), rs => {
+                                this.setState({characters: rs})
+                                Popup.success(`Вы оживили персонажа!`)
+                            })
+                        )
+                    }
+                    }
+                />
             )
         } else {
             return (
+
                 <Btn text={"Убить персонажа"} onClick={() => {
                     if (window.confirm("Вы действительно хотите убить персонажа?")) {
                         post(killCharacterUrl, {characterId: character.id, gameId: character.game.id}, () =>

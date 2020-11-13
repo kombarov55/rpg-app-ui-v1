@@ -11,10 +11,10 @@ import {gameView, shopView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
-    addOrganizationShopUrl,
+    addOrganizationShopUrl, disposeOrganizationItemUrl,
     getOrganizationByIdUrl,
     organizationHeadUrl,
-    removeOrganizationShopUrl,
+    removeOrganizationShopUrl, transferItemUrl,
     transferUrl
 } from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
@@ -86,7 +86,11 @@ export default connect(
                                                 onDetailsClicked={shop => this.props.toShopView(shop)}
                     />
 
-                    <OrganizationItemsComponent items={this.state.organization.items}/>
+                    <OrganizationItemsComponent items={this.state.organization.items}
+                                                gameId={this.props.gameId}
+                                                onDisposeItem={item => this.onDisposeItem(item)}
+                                                onTransferItem={(item, destinationType, destination) => this.onTransferItem(item, destinationType, destination)}
+                    />
 
                     {this.detailsComponent()}
 
@@ -174,7 +178,25 @@ export default connect(
             })
         }
 
-        refresh(then = () => {}) {
+        onDisposeItem(item) {
+            post(disposeOrganizationItemUrl, {
+                itemId: item.id,
+                organizationId: this.state.organization.id
+            }, () => this.refresh(() => Popup.info("Предмет выброшен.")))
+        }
+
+        onTransferItem(item, destinationType, destination) {
+            post(transferItemUrl, {
+                itemId: item.id,
+                fromType: TransferDestination.ORGANIZATION,
+                fromId: this.state.organization.id,
+                toType: destinationType,
+                toId: destination.id
+            }, () => this.refresh(() => Popup.info("Предмет отправлен.")))
+        }
+
+        refresh(then = () => {
+        }) {
             get(getOrganizationByIdUrl(this.props.organization.id), rs => {
                 this.setState({organization: rs})
                 then()

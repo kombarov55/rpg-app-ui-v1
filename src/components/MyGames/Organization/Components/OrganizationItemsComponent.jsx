@@ -1,8 +1,6 @@
 import React from "react";
-import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByName";
-import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import List from "../../../Common/Lists/List";
+import ItemComponent from "../../CharacterList/Component/ItemComponent";
 
 export default class OrganizationItemsComponent extends React.Component {
 
@@ -16,21 +14,11 @@ export default class OrganizationItemsComponent extends React.Component {
             <List title={"Склад:"}
                   noItemsText={"Пусто.."}
                   values={this.props.items.map(item =>
-                      <ExpandableListItemWithBullets
-                          img={item.img}
-                          name={item.name}
-                          description={item.description}
-
-                          bullets={[
-                              GetDestinationByName(item.destination),
-                              "Категория: " + item.category.name,
-                              "Тип: " + item.type.name,
-                              item.slots + " слот(ов)",
-                              item.skillInfluences.map(it => SkillInfluenceToString(it)).join(", ")
-                          ]}
-
-                          alwaysExpand={true}
-                          key={item.id}
+                      <ItemComponent item={item}
+                                     gameId={this.props.gameId}
+                                     onDisposeItem={item => this.props.onDisposeItem(item)}
+                                     onTransferItem={(destinationType, destination) => this.props.onTransferItem(item, destinationType, destination)}
+                                     key={item.id}
                       />
                   )}
             />

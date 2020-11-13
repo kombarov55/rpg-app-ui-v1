@@ -5,7 +5,13 @@ import {gameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {get, post} from "../../../../util/Http";
-import {currenciesByGameIdUrl, disposeItemUrl, getCharacterByIdUrl, transferUrl} from "../../../../util/Parameters";
+import {
+    currenciesByGameIdUrl,
+    disposeCharacterItemUrl,
+    getCharacterByIdUrl,
+    transferItemUrl,
+    transferUrl
+} from "../../../../util/Parameters";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import ListItem from "../../../Common/ListElements/ListItem";
@@ -89,6 +95,8 @@ export default connect(
                 }
 
                 <CharacterItemsComponent items={this.state.character.items}
+                                         gameId={this.props.gameId}
+                                         onTransferItem={(item, destinationType, destination) => this.onTransferItem(item, destinationType, destination)}
                                          onDisposeItem={item => this.onDisposeItem(item)}
                 />
 
@@ -207,8 +215,18 @@ export default connect(
         return this.state.character.balance.find(v => v.name === currency).amount >= amount
     }
 
+    onTransferItem(item, destinationType, destination) {
+        post(transferItemUrl, {
+            itemId: item.id,
+            fromType: TransferDestination.CHARACTER,
+            fromId: this.state.character.id,
+            toType: destinationType,
+            toId: destination.id
+        }, () => this.refresh(() => Popup.info("Предмет отпралвен.")))
+    }
+
     onDisposeItem(item) {
-        post(disposeItemUrl, {
+        post(disposeCharacterItemUrl, {
             itemId: item.id,
             characterId: this.state.character.id
         }, () => this.refresh(() => Popup.info("Предмет выброшен.")))

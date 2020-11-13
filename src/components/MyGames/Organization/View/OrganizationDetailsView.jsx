@@ -5,8 +5,7 @@ import Btn from "../../../Common/Buttons/Btn";
 import {
     changeView,
     setActiveOrganization,
-    setActiveShop,
-    setAvailableMerchandise
+    setActiveShop
 } from "../../../../data-layer/ActionCreators";
 import {gameView, shopView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
@@ -25,7 +24,7 @@ import OrganizationHeadsComponent from "../Components/OrganizationHeadsComponent
 import OrganizationBalanceComponent from "../Components/OrganizationBalanceComponent";
 import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
 import OrganizationShopsComponent from "../Components/OrganizationShopsComponent";
-import OwnedMerchandiseComponent from "../Components/OwnedMerchandiseComponent";
+import OrganizationItemsComponent from "../Components/OrganizationItemsComponent";
 import TransferDestination from "../../../../data-layer/enums/TransferDestination";
 
 export default connect(
@@ -34,11 +33,9 @@ export default connect(
         characterId: GetActiveCharacterFromStore(store)?.id,
         organization: store.activeOrganization,
         userAccounts: store.userAccounts,
-        currencies: store.activeGame.currencies,
-        availableMerchandise: store.availableMerchandise
+        currencies: store.activeGame.currencies
     }), dispatch => ({
         setOrganization: organization => dispatch(setActiveOrganization(organization)),
-        setAvailableMerchandise: merchandiseList => dispatch(setAvailableMerchandise(merchandiseList)),
         toShopView: shop => {
             dispatch(setActiveShop(shop))
             dispatch(changeView(shopView))
@@ -54,7 +51,7 @@ export default connect(
                     heads: [],
                     balance: [],
                     shops: [],
-                    ownedMerchandise: [],
+                    items: [],
                     entranceTax: []
                 }
             }
@@ -89,7 +86,7 @@ export default connect(
                                                 onDetailsClicked={shop => this.props.toShopView(shop)}
                     />
 
-                    <OwnedMerchandiseComponent ownedMerchandise={this.state.organization.ownedMerchandise}/>
+                    <OrganizationItemsComponent items={this.state.organization.items}/>
 
                     {this.detailsComponent()}
 

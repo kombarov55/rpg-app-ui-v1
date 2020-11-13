@@ -1,6 +1,6 @@
 import FindEnum from "../../util/FindEnum";
 
-class MerchandisePublisherType {
+class ItemPublisherType {
 
     PLAYERS = "PLAYERS"
     ORGANIZATION_HEADS = "ORGANIZATION_HEADS"
@@ -22,4 +22,4 @@ class MerchandisePublisherType {
 
 }
 
-export default new MerchandisePublisherType()
+export default new ItemPublisherType()

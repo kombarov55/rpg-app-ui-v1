@@ -16,7 +16,6 @@ import {
 } from "./Parameters";
 import {
     setActiveGame,
-    setAvailableMerchandise,
     setConversions,
     setCurrencies,
     setGames,
@@ -48,7 +47,6 @@ export default {
         get(gameByIdUrl(gameId), rs => window.store.dispatch(setActiveGame(rs)))
         get(organizationByGameIdUrl(gameId), rs => window.store.dispatch(setOrganizations(rs)))
         get(getRecipesByGameId(gameId), rs => window.store.dispatch(setRecipes(rs)))
-        get(itemTemplateUrl(gameId), rs => window.store.dispatch(setAvailableMerchandise(rs)))
         get(shortSkillsByGameIdUrl(gameId), rs => window.store.dispatch(setSkills(rs)))
         get(findQuestionnaireTemplatesByGameId(gameId), rs => window.store.dispatch(setQuestionnaireTemplates(rs)))
     },

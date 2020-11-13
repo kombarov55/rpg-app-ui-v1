@@ -1,7 +1,7 @@
 import React from "react";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import {SelectButton} from "primereact/selectbutton";
-import MerchandisePublisherType from "../../../../data-layer/enums/MerchandisePublisherType";
+import MerchandisePublisherType from "../../../../data-layer/enums/ItemPublisherType";
 
 export default class ShopSettingsComponent extends React.Component {
 

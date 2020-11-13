@@ -30,7 +30,6 @@ import {
     SET_ACTIVE_SUBNETWORK,
     SET_ACTIVE_USER_ACCOUNT,
     SET_AVAILABLE_ITEMS_FOR_SALE,
-    SET_AVAILABLE_MERCHANDISE,
     SET_CONVERSIONS,
     SET_CURRENCIES,
     SET_GAMES,
@@ -309,11 +308,6 @@ export function rootReducer(state = initialState, action) {
         case SET_ACTIVE_ORGANIZATION:
             return Object.assign({}, state, {
                 activeOrganization: action.payload.organization
-            })
-
-        case SET_AVAILABLE_MERCHANDISE:
-            return Object.assign({}, state, {
-                availableMerchandise: action.payload.merchandiseList
             })
 
         case SET_AVAILABLE_ITEMS_FOR_SALE:

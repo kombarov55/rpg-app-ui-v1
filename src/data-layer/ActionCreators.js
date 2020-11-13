@@ -32,7 +32,6 @@ import {
     SET_ACTIVE_SUBNETWORK,
     SET_ACTIVE_USER_ACCOUNT,
     SET_AVAILABLE_ITEMS_FOR_SALE,
-    SET_AVAILABLE_MERCHANDISE,
     SET_CONVERSIONS,
     SET_CURRENCIES,
     SET_GAMES,
@@ -496,15 +495,6 @@ export function setActiveOrganization(organization) {
         type: SET_ACTIVE_ORGANIZATION,
         payload: {
             organization: organization
-        }
-    }
-}
-
-export function setAvailableMerchandise(merchandiseList) {
-    return {
-        type: SET_AVAILABLE_MERCHANDISE,
-        payload: {
-            merchandiseList: merchandiseList
         }
     }
 }

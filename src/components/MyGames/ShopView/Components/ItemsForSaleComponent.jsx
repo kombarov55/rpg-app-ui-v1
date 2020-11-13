@@ -14,7 +14,7 @@ export default class ItemsForSaleComponent extends React.Component {
         this.state = {
             formVisible: false,
 
-            merchandiseList: []
+            items: []
         }
     }
 
@@ -25,7 +25,7 @@ export default class ItemsForSaleComponent extends React.Component {
                       isAddButtonVisible={this.props.isPublishingAvailable && !this.state.formVisible}
                       onAddClicked={() => get(getItemsUrl(this.props.characterId), rs => this.setState({
                           formVisible: true,
-                          merchandiseList: rs
+                          items: rs
                       }))}
                       values={this.props.itemsForSale.map(itemForSale =>
                           <ItemForSaleComponent itemForSale={itemForSale}
@@ -40,7 +40,7 @@ export default class ItemsForSaleComponent extends React.Component {
                     <ItemForSaleForm gameId={this.props.gameId}
                                      currencyNames={this.props.currencyNames}
                                      mode={AutocompleteComponentMode.LOCAL}
-                                     merchandiseList={this.state.merchandiseList}
+                                     items={this.state.items}
                                      onSubmit={form => {
                                          this.props.onItemForSaleAdded(form)
                                          this.setState({formVisible: false})

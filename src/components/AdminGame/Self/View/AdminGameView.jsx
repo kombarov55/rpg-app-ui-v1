@@ -6,7 +6,6 @@ import {
     setActiveOrganization,
     setActiveQuestionnaireTemplate,
     setActiveSkillCategory,
-    setAvailableMerchandise,
     setGames,
     setOrganizations,
     setQuestionnaireTemplates,
@@ -28,17 +27,14 @@ import {
 } from "../../../../Views";
 import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
-    addItemForSaleForGameUrl,
     deleteGameUrl,
     deleteQuestionnaireTemplateUrl,
     deleteRecipe,
-    editQuestionnaireTemplateUrl,
-    itemTemplateUrl,
+    editQuestionnaireTemplateUrl, itemTemplateByGameIdAndDestination,
     organizationByGameIdAndIdUrl,
     organizationByGameIdUrl,
     organizationUrl,
     questionnaireTemplateByIdUrl,
-    removeItemForSaleForGameUrl,
     saveQuestionnaireTemplateUrl,
     saveRecipe,
     saveSkillCategoryUrl,
@@ -62,6 +58,7 @@ import QuestionnaireTemplateForm from "../../QuestionnaireTemplate/Form/Question
 import TransferComponent from "../Component/TransferComponent";
 import BalanceProcedures from "../../../../data-layer/Procedures/BalanceProcedures";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
+import Destination from "../../../../data-layer/enums/Destination";
 
 function mapStateToProps(state, props) {
     return {
@@ -70,7 +67,6 @@ function mapStateToProps(state, props) {
         organizations: state.organizations,
         userAccounts: state.userAccounts,
         currencies: state.activeGame.currencies.map(v => v.name),
-        availableMerchandise: state.availableMerchandise,
         recipes: state.recipes,
         skills: state.skills,
         questionnaireTemplates: state.questionnaireTemplates,
@@ -87,7 +83,6 @@ function mapDispatchToProps(dispatch) {
         setActiveGame: game => dispatch(setActiveGame(game)),
         setOrganizations: organizations => dispatch(setOrganizations(organizations)),
         setActiveOrganization: organization => dispatch(setActiveOrganization(organization)),
-        setAvailableMerchandise: xs => dispatch(setAvailableMerchandise(xs)),
         setActiveSkillCategory: x => dispatch(setActiveSkillCategory(x)),
         setRecipes: x => dispatch(setRecipes(x)),
         setQuestionnaireTemplates: x => dispatch(setQuestionnaireTemplates(x)),
@@ -112,28 +107,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     const [organizationForm, setOrganizationForm] = useState()
     const [organizationFormMode, setOrganizationFormMode] = useState(FormMode.CREATE)
 
-    const [itemForSaleFormVisible, setItemForSaleFormVisible] = useState(false)
-
     const [recipeFormVisible, setRecipeFormVisible] = useState(false)
+    const [itemTemplates, setItemTemplates] = useState([])
 
     const [questionnaireTemplateFormVisible, setQuestionnaireTemplateFormVisible] = useState(false)
     const [questionnaireTemplateForm, setQuestionnaireTemplateForm] = useState()
     const [questionnaireTemplateMode, setQuestionnaireTemplateFormMode] = useState(FormMode.CREATE)
-
-    function onEditClicked() {
-        props.updateGameForm(props.activeGame)
-        props.changeView(gameEditView)
-    }
-
-    function onDeleteClicked() {
-        if (window.confirm("Удалить игру?")) {
-            httpDelete(deleteGameUrl(props.activeGame.id), () => {
-                Popup.info("Игра архивирована.")
-                props.setGames(props.games.filter(it => it.id !== props.activeGame.id))
-                onBackClicked()
-            })
-        }
-    }
 
     function onBackClicked() {
         switch (Globals.gameCreationMode) {
@@ -208,28 +187,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
     function onSkillCategoryDetailsClicked(skillCategory) {
         props.setActiveSkillCategory(skillCategory)
         props.changeView(skillCategoryView)
-    }
-
-    function onAddItemForSaleClicked() {
-        get(itemTemplateUrl(props.activeGame.id), rs => {
-            props.setAvailableMerchandise(rs)
-            setItemForSaleFormVisible(true)
-        })
-    }
-
-    function onItemForSaleSubmit(form) {
-        post(addItemForSaleForGameUrl(props.activeGame.id), form, rs => {
-            props.setActiveGame(rs)
-            setItemForSaleFormVisible(false)
-            Popup.info("Товар добавлен.")
-        })
-    }
-
-    function onItemForSaleDeleteClicked(itemForSale) {
-        httpDelete(removeItemForSaleForGameUrl(props.activeGame.id, itemForSale.id), rs => {
-            props.setActiveGame(rs)
-            Popup.info("Товар снят с продажи")
-        })
     }
 
     function onAddSkillCategorySubmit(form) {
@@ -308,39 +265,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                     )
                 }
 
-                {/*
-                <List title={"База:"}
-                      noItemsText={"Нет товаров.."}
-                      isAddButtonVisible={!itemForSaleFormVisible}
-                      onAddClicked={() => onAddItemForSaleClicked()}
-                      values={props.activeGame.itemsForSale.map(itemForSale =>
-                          <ExpandableListItemWithBullets
-                              name={itemForSale.merchandise.name}
-                              img={itemForSale.merchandise.img}
-                              description={itemForSale.merchandise.description}
-                              onDeleteClicked={() => onItemForSaleDeleteClicked(itemForSale)}
-                              bullets={[
-                                  "Цена: " + itemForSale.price.map(v => v.name + ": " + v.amount).join(" или "),
-                                  "Количество: " + itemForSale.amount,
-                                  "Дата выставления на продажу: " + FormatDate(new Date(itemForSale.creationDate))
-                              ]}
-
-                              alwaysExpand={true}
-                              key={itemForSale.id}
-                          />
-                      )}
-                />
-                {
-                    itemForSaleFormVisible &&
-                    <ItemForSaleForm
-                        merchandiseList={props.availableMerchandise}
-                        currencies={props.activeGame.currencies}
-                        onSubmit={form => onItemForSaleSubmit(form)}
-                    />
-                }
-
-                */}
-
                 <List title={"Организации"}
                       noItemsText={"Нет организаций"}
                       isAddButtonVisible={!organizationFormVisible}
@@ -390,9 +314,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 <List title={"Рецепты крафта:"}
                       noItemsText={"Отсутствуют.."}
                       isAddButtonVisible={!recipeFormVisible}
-                      onAddClicked={() => {
+                      onAddClicked={() => get(itemTemplateByGameIdAndDestination(this.props.gameId, Destination.PLAYER), rs => {
+                          setItemTemplates(rs)
                           setRecipeFormVisible(true)
-                      }}
+                      })}
                       values={props.recipes.map(recipe =>
                           <ExpandableListItemWithBullets
                               name={recipe.target.name}
@@ -419,8 +344,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
                 {
                     recipeFormVisible &&
                     <RecipeForm
-                        targetOptions={props.availableMerchandise.filter(v => v.canBeCrafted)}
-                        ingredientOptions={props.availableMerchandise.filter(v => v.canBeUsedInCraft)}
+                        targetOptions={itemTemplates.filter(v => v.canBeCrafted)}
+                        ingredientOptions={itemTemplates.filter(v => v.canBeUsedInCraft)}
                         dependantSkillOptions={props.skills}
                         onSubmit={form => {
                             post(saveRecipe(props.activeGame.id), form, rs => props.setRecipes(props.recipes.concat(rs)))

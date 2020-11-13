@@ -75,9 +75,9 @@ export default class ItemForSaleForm extends React.Component {
             )
         } else {
             return (
-                <LocalAutocomplete items={this.props.itemTemplates}
+                <LocalAutocomplete items={this.props.items}
                                    fieldToDisplay={"name"}
-                                   onSelected={itemTemplate => this.setState({itemTemplate: itemTemplate})}
+                                   onSelected={item => this.setState({itemTemplate: item})}
                 />
             )
         }

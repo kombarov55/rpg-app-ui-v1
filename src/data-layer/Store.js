@@ -46,7 +46,6 @@ export const initialState = {
     skills: [],
     questionnaireTemplates: [],
 
-    availableItemTemplates: [],
     availableItemsForSale: [],
 
     announcementForm: DefaultFormValues.announcement,

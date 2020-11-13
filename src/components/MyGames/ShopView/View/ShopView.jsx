@@ -9,7 +9,7 @@ import ItemsForSaleComponent from "../Components/ItemsForSaleComponent";
 import {get, post} from "../../../../util/Http";
 import {purchaseFromShopUrl, setItemForSaleUrl, shopByIdUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
-import MerchandisePublisherType from "../../../../data-layer/enums/MerchandisePublisherType";
+import ItemPublisherType from "../../../../data-layer/enums/ItemPublisherType";
 
 export default connect(
     state => ({
@@ -57,13 +57,14 @@ export default connect(
     }
 
     isPublishingAvailable() {
-        return this.state.type === MerchandisePublisherType.PLAYERS ||
+        return this.state.type === ItemPublisherType.PLAYERS ||
             this.props.organization.heads.some(v => v.id === this.props.character.id)
     }
 
     onItemForSaleAdded(form) {
+        console.log(form)
         post(setItemForSaleUrl, {
-            merchandiseId: form.merchandise.id,
+            itemId: form.itemTemplate.id,
             shopId: this.state.id,
             publisherId: this.props.character.id,
             price: form.price
@@ -78,7 +79,7 @@ export default connect(
                 gameId: this.props.gameId,
                 itemForSaleId: itemForSale.id
             },
-            () => this.refresh(() => Popup.success(`${itemForSale.merchandise.name} был приобретён и добавлен в инвентарь персонажа ${this.props.character.name}`)),
+            () => this.refresh(() => Popup.success(`${itemForSale.item.name} был приобретён и добавлен в инвентарь персонажа ${this.props.character.name}`)),
             rs => Popup.error(rs.message))
     }
 

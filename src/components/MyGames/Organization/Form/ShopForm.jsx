@@ -6,7 +6,7 @@ import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import IconSelect from "../../../Common/Input/IconSelect";
 import SkillIcons from "../../../../data-layer/enums/SkillIcons";
 import FileUpload from "../../../Common/Input/FileUpload";
-import MerchandisePublisherType from "../../../../data-layer/enums/MerchandisePublisherType";
+import MerchandisePublisherType from "../../../../data-layer/enums/ItemPublisherType";
 
 export default class ShopForm extends React.Component {
 

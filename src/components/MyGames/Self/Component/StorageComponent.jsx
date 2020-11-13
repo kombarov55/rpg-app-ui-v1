@@ -25,7 +25,7 @@ export default class StorageComponent extends React.Component {
         this.state = {
             addItemVisible: false,
 
-            merchandiseList: []
+            itemTemplates: []
         }
     }
 
@@ -38,7 +38,7 @@ export default class StorageComponent extends React.Component {
                       onAddClicked={() => {
                           get(itemTemplateUrl(this.props.gameId), rs => this.setState({
                               addItemVisible: true,
-                              merchandiseList: rs
+                              itemTemplates: rs
                           }))
                       }}
                       values={this.props.items.map(itemForSale =>

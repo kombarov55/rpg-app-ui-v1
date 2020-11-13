@@ -22,9 +22,9 @@ export default class ItemForSaleComponent extends React.Component {
     render() {
         return (
             <ExpandableListItem
-                img={this.props.itemForSale.merchandise.img}
-                name={this.props.itemForSale.merchandise.name}
-                description={this.props.itemForSale.merchandise.description}
+                img={this.props.itemForSale.item.img}
+                name={this.props.itemForSale.item.name}
+                description={this.props.itemForSale.item.description}
                 expandableElements={[
                     <div>
                         <div>Дата выставления на

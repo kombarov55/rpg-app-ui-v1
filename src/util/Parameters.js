@@ -161,9 +161,9 @@ export const adminTransferUrl = `${rootUrl}/balance/adminTransfer.do`
 export const upgradeSkillUrl = `${rootUrl}/gameCharacter/upgradeSkill.do`
 export const purchaseSkillUrl = `${rootUrl}/gameCharacter/purchaseSkill.do`
 export const purchaseSpellUrl = `${rootUrl}/gameCharacter/purchaseSpell.do`
-export const disposeMerchandiseUrl = `${rootUrl}/gameCharacter/disposeMerchandise.do`
+export const disposeItemUrl = `${rootUrl}/gameCharacter/disposeItem.do`
 
 export const purchaseFromShopUrl = `${rootUrl}/shop/purchase.do`
 export const purchaseFromGameUrl = `${rootUrl}/game/purchaseItem.do`
 export const setItemForSaleUrl = `${rootUrl}/shop/setItemForSale.do`
-export const setItemForSaleInGameUrl = `${rootUrl}/game/setItemForSale.do`
+export const setItemForSaleInGameUrl = `${rootUrl}/game/addItemForSale.do`

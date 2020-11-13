@@ -21,7 +21,7 @@ export default class ItemTemplateComponent extends React.Component {
     render() {
         return (
             <div>
-                <List title={"Шаблоны предметов"}
+                <List title={"Шаблоны предметов:"}
                       isAddButtonVisible={!this.state.formVisible}
                       onAddClicked={() => this.setState({
                           formVisible: true,

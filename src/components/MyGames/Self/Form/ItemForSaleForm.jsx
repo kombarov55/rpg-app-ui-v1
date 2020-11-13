@@ -16,7 +16,7 @@ import getOrDefault from "../../../../util/getOrDefault";
  * props: {
  *     gameId: String
  *     mode: [REMOTE, LOCAL]
- *     merchandiseList: []?
+ *     itemTemplateList: []?
  *     currencyNames: [String]
  *     onSubmit: () => {}
  * }
@@ -27,7 +27,7 @@ export default class ItemForSaleForm extends React.Component {
         super(props);
 
         this.state = {
-            merchandise: null,
+            itemTemplate: null,
             price: []
         }
     }
@@ -35,9 +35,9 @@ export default class ItemForSaleForm extends React.Component {
     render() {
         return (
             <div>
-                <FormTitleLabel text={"Добавление товара на продажу"}/>
+                <FormTitleLabel text={"Добавление предмета на продажу"}/>
 
-                <InputLabel text={"Товар:"}/>
+                <InputLabel text={"Предмет:"}/>
                 {this.getAutocomplete()}
 
                 <InputLabel text={"Стоимость:"}/>
@@ -49,7 +49,7 @@ export default class ItemForSaleForm extends React.Component {
 
                 <SubmitButton text={"Выставить на продажу"}
                               onClick={() => {
-                                  if (this.state.merchandise == null || this.state.price.length === 0) {
+                                  if (this.state.itemTemplate == null || this.state.price.length === 0) {
                                       Popup.error("Заполните все поля: Товар, Стоимость")
                                       return
                                   }
@@ -70,14 +70,14 @@ export default class ItemForSaleForm extends React.Component {
             return (
                 <RemoteAutocomplete fieldToDisplay={"name"}
                                     buildSyncUrl={name => itemTemplateByGameIdAndName(this.props.gameId, name)}
-                                    onSelected={merchandise => this.setState({merchandise: merchandise})}
+                                    onSelected={itemTemplate => this.setState({itemTemplate: itemTemplate})}
                 />
             )
         } else {
             return (
-                <LocalAutocomplete items={this.props.merchandiseList}
+                <LocalAutocomplete items={this.props.itemTemplates}
                                    fieldToDisplay={"name"}
-                                   onSelected={merchandise => this.setState({merchandise: merchandise})}
+                                   onSelected={itemTemplate => this.setState({itemTemplate: itemTemplate})}
                 />
             )
         }

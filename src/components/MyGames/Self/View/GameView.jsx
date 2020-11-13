@@ -122,9 +122,9 @@ export default connect(
 
                 <StorageComponent gameId={this.state.game.id}
                                   items={this.state.game.itemsForSale}
+                                  currencyNames={this.state.game.currencies.map(v => v.name)}
                                   characterId={this.props.activeCharacter?.id}
                                   purchaseVisible={this.props.activeCharacter != null}
-                                  currencyNames={this.state.game.currencies.map(v => v.name)}
                                   onItemForSaleAdded={itemForSale => this.onItemForSaleAdded(itemForSale)}
                                   onItemPurchase={(balanceId, itemForSale) => this.onItemPurchase(balanceId, itemForSale)}
                 />
@@ -185,7 +185,7 @@ export default connect(
 
     onItemForSaleAdded(itemForSale) {
         post(setItemForSaleInGameUrl, {
-            merchandiseId: itemForSale.merchandise.id,
+            itemTemplateId: itemForSale.itemTemplate.id,
             price: itemForSale.price,
             gameId: this.state.game.id
         }, () => this.refreshGame(() => Popup.info("Товар добавлен на продажу в базу.")))
@@ -198,7 +198,7 @@ export default connect(
                 characterId: this.props.activeCharacter.id,
                 balanceId: balanceId
             },
-            () => this.refreshGame(() => Popup.info(`${itemForSale.merchandise.name} приобретён и передан активному персонажу.'`)),
+            () => this.refreshGame(() => Popup.info(`${itemForSale.item.name} приобретён и передан активному персонажу.'`)),
             rs => Popup.error(rs.message))
     }
 })

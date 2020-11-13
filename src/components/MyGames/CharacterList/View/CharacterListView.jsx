@@ -5,12 +5,7 @@ import {gameView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {get, post} from "../../../../util/Http";
-import {
-    currenciesByGameIdUrl,
-    disposeMerchandiseUrl,
-    getCharacterByIdUrl,
-    transferUrl
-} from "../../../../util/Parameters";
+import {currenciesByGameIdUrl, disposeItemUrl, getCharacterByIdUrl, transferUrl} from "../../../../util/Parameters";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import ListItem from "../../../Common/ListElements/ListItem";
@@ -23,7 +18,7 @@ import GameCharacterProcedures from "../../../../data-layer/Procedures/GameChara
 import LearnNewSkillComponent from "../Component/LearnNewSkillComponent";
 import SkillComponent from "../Component/SkillComponent";
 import LearnNewSpellComponent from "../Component/LearnNewSpellComponent";
-import CharacterOwnedMerchandiseComponent from "../Component/CharacterOwnedMerchandiseComponent";
+import CharacterItemsComponent from "../Component/CharacterItemsComponent";
 
 export default connect(
     state => ({
@@ -53,7 +48,7 @@ export default connect(
                 balance: [],
                 learnedSpells: [],
                 learnedSkills: [],
-                ownedMerchandise: []
+                items: []
             },
 
             transferFormVisible: false
@@ -93,9 +88,8 @@ export default connect(
                 />
                 }
 
-                <CharacterOwnedMerchandiseComponent merchandiseList={this.state.character.ownedMerchandise}
-                                                    onDisposeMerchandise={merchandise => this.onDisposeMerchandise(merchandise)}
-
+                <CharacterItemsComponent items={this.state.character.items}
+                                         onDisposeItem={item => this.onDisposeItem(item)}
                 />
 
                 <FormTitleLabel text={"Навыки:"}/>
@@ -213,9 +207,9 @@ export default connect(
         return this.state.character.balance.find(v => v.name === currency).amount >= amount
     }
 
-    onDisposeMerchandise(merchandise) {
-        post(disposeMerchandiseUrl, {
-            merchandiseId: merchandise.id,
+    onDisposeItem(item) {
+        post(disposeItemUrl, {
+            itemId: item.id,
             characterId: this.state.character.id
         }, () => this.refresh(() => Popup.info("Предмет выброшен.")))
     }

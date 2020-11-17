@@ -39,7 +39,7 @@ import StorageComponent from "../Component/StorageComponent";
 export default connect(
     state => ({
         game: state.activeGame,
-        activeCharacter: GetActiveCharacterFromStore(state)
+        activeCharacter: state.activeCharacter
     }),
     null,
     (stateProps, dispatchProps, ownProps) => {

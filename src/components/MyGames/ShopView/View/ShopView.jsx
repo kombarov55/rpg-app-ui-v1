@@ -4,7 +4,6 @@ import {changeView} from "../../../../data-layer/ActionCreators";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {organizationDetailsView, shopManagementView} from "../../../../Views";
-import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
 import ItemsForSaleComponent from "../Components/ItemsForSaleComponent";
 import {get, post} from "../../../../util/Http";
 import {purchaseFromShopUrl, setItemForSaleUrl, shopByIdUrl} from "../../../../util/Parameters";
@@ -14,7 +13,7 @@ import ItemPublisherType from "../../../../data-layer/enums/ItemPublisherType";
 export default connect(
     state => ({
         shop: state.activeShop,
-        character: GetActiveCharacterFromStore(state),
+        character: state.activeCharacter,
         gameId: state.activeGame.id,
         organization: state.activeOrganization,
         currencyNames: state.activeGame.currencies.map(v => v.name)

@@ -29,7 +29,7 @@ import CharacterItemsComponent from "../Component/CharacterItemsComponent";
 export default connect(
     state => ({
         gameId: state.activeGame.id,
-        characterId: state.userAccount.gameToActiveCharacter.find(v => v.game.id === state.activeGame.id).activeCharacter.id,
+        characterId: state.activeCharacter.id,
         currencies: state.currencies,
     }),
     null,

@@ -7,8 +7,7 @@ import {
     getCharactersByUserIdUrl,
     killCharacterUrl,
     makeCharacterActiveUrl,
-    reviveCharacterUrl,
-    userAccountUrl
+    reviveCharacterUrl
 } from "../../../../util/Parameters";
 import Globals from "../../../../util/Globals";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
@@ -86,9 +85,11 @@ export default connect(
     toCharacterListViewButton(game, character) {
         return (
             <Btn text={"Выбрать"}
-                 onClick={() => post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () =>
+                 onClick={() => {
+                     console.log(character)
+                     post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () =>
                      this.props.toCharacterListView(game, character)
-                 )}
+                 )}}
             />
         )
     }

@@ -3,6 +3,8 @@ import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem"
 import Btn from "../../../Common/Buttons/Btn";
 import BulletList from "../../../Common/Lists/BulletList";
 import ItemTransferForm from "../Form/ItemTransferForm";
+import List from "../../../Common/Lists/List";
+import ItemUpgradeComponent from "./ItemUpgradeComponent";
 
 export default class extends React.Component {
 
@@ -10,7 +12,8 @@ export default class extends React.Component {
         super(props);
 
         this.state = {
-            formVisible: false
+            formVisible: false,
+            upgradeListVisible: false
         }
     }
 
@@ -29,6 +32,23 @@ export default class extends React.Component {
                                         this.props.item.canBeUsedInCraft ? "Можно использовать в крафте" : null,
                                         `${this.props.item.lvl} уровень предмета`
                                     ]}/>,
+                                    (
+                                        this.props.item.upgradable &&
+                                        <Btn text={"Повысить уровень предмета:"}
+                                             onClick={() => this.setState({upgradeListVisible: true})}
+                                        />
+                                    ),
+                                    (
+                                        this.state.upgradeListVisible &&
+                                            <List title={"Уровни предмета:"}
+                                                  values={this.props.item.upgrades.map(upgrade =>
+                                                      <ItemUpgradeComponent upgrade={upgrade}
+                                                                            key={upgrade.id}
+                                                                            isUpgraded={true}
+                                                      />
+                                                  )}
+                                            />
+                                    ),
                                     <Btn text={"Передать"} onClick={() => this.setState({formVisible: true})}/>,
                                     (
                                         this.state.formVisible &&

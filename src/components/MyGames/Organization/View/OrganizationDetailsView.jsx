@@ -9,11 +9,11 @@ import {
 } from "../../../../data-layer/ActionCreators";
 import {gameView, shopView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
-import {get, httpDelete, post, put} from "../../../../util/Http";
+import {get, httpDelete, patch, post, put} from "../../../../util/Http";
 import {
     addOrganizationShopUrl, disposeOrganizationItemUrl,
     getOrganizationByIdUrl,
-    organizationHeadUrl,
+    organizationHeadUrl, organizationUrl,
     removeOrganizationShopUrl, transferItemUrl,
     transferUrl
 } from "../../../../util/Parameters";
@@ -52,7 +52,7 @@ export default connect(
                     balance: [],
                     shops: [],
                     items: [],
-                    entranceTax: []
+                    creditOffers: []
                 }
             }
 
@@ -106,6 +106,7 @@ export default connect(
                         <CountryDetailsComponent gameId={this.props.gameId}
                                                  organization={this.state.organization}
                                                  currencies={this.props.currencies}
+                                                 onChangeTaxInfo={form => this.onChangeTaxInfo(form)}
                                                  setOrganization={organization => this.props.setOrganization(organization)}
                         />
                     )
@@ -195,11 +196,17 @@ export default connect(
             }, () => this.refresh(() => Popup.info("Предмет отправлен.")))
         }
 
-        refresh(then = () => {
-        }) {
+        refresh(then = () => {}) {
             get(getOrganizationByIdUrl(this.props.organization.id), rs => {
                 this.setState({organization: rs})
                 then()
+            })
+        }
+
+        onChangeTaxInfo(form) {
+            patch(organizationUrl(this.props.organization.id), form, rs => {
+                this.setState({organization: rs})
+                Popup.info("Информация о налогах обновлена")
             })
         }
     }

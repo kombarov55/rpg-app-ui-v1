@@ -3,15 +3,15 @@ import FormMode from "../../../../data-layer/enums/FormMode";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import Btn from "../../../Common/Buttons/Btn";
 import CountryTaxForm from "../Form/CountryTaxForm";
-import {httpDelete, post, put} from "../../../../util/Http";
-import {addCreditOfferUrl, organizationByGameIdAndIdUrl, removeCreditOfferUrl} from "../../../../util/Parameters";
+import {httpDelete, post} from "../../../../util/Http";
+import {addCreditOfferUrl, removeCreditOfferUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import CreditOfferForm from "../Form/CreditOfferForm";
 import Label from "../../../Common/Labels/Label";
 
-export default class CountryDetailsComponent extends React.Component {
+export default class extends React.Component {
 
     constructor(props) {
         super(props);
@@ -33,20 +33,16 @@ export default class CountryDetailsComponent extends React.Component {
         return (
             <div>
                 <Label text={"Налоги:"}/>
-                <InputLabel text={"Налог на вход/выход из игры:"}/>
-                {
-                    (this.props.organization.entranceTax != null && this.props.organization.entranceTax.length != 0) ?
-                        this.props.organization.entranceTax.map(v => v.name + ": " + v.amount).join(" + ") :
-                        "Не указан"
-                }
-
                 <InputLabel text={"Подоходный налог граждан:"}/>
-                {this.props.organization.incomeTax + "%"}
+                {`${this.props.organization.incomeTax}%`}
 
                 {
                     this.state.taxFormVisible ?
                         <CountryTaxForm currencies={this.props.currencies.map(v => v.name)}
-                                        onSubmit={form => this.onCountryTaxFormSubmit(form)}
+                                        onSubmit={form => {
+                                            this.setState({taxFormVisible: false})
+                                            this.props.onChangeTaxInfo(form)
+                                        }}
                         /> :
                         <Btn text={"Редактировать информацию о налогах"}
                              onClick={() => this.setState({taxFormVisible: true})}
@@ -87,19 +83,6 @@ export default class CountryDetailsComponent extends React.Component {
 
             </div>
         )
-    }
-
-    onCountryTaxFormSubmit(form) {
-        const body = Object.assign({}, this.props.organization, {
-            incomeTax: form.incomeTax,
-            entranceTax: form.entranceTax
-        })
-
-        put(organizationByGameIdAndIdUrl(this.props.gameId, this.props.organization.id), body, rs => {
-            this.props.setOrganization(rs)
-            Popup.info("Информация о налогах обновлена.")
-            this.setState({taxFormVisible: false})
-        })
     }
 
     onCreditOfferSubmit(form) {

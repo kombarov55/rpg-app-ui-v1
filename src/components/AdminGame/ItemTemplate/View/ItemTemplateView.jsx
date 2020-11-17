@@ -29,7 +29,7 @@ export default connect(
     dispatch => ({
         back: () => dispatch(changeView(adminGameView))
     })
-)(class MerchandiseView extends React.Component {
+)(class extends React.Component {
     constructor(props) {
         super(props)
 
@@ -39,7 +39,7 @@ export default connect(
         get(itemTypeUrl(props.gameId), rs => this.setState({itemTypes: rs}))
         get(shortSkillsByGameIdUrl(props.gameId), rs => this.setState({skills: rs}))
         get(currenciesByGameIdUrl(props.gameId), rs => this.setState({currencies: rs}))
-        get(itemTemplateUrl(props.gameId), rs => this.setState({merchandiseList: rs}))
+        get(itemTemplateUrl(props.gameId), rs => this.setState({itemTemplates: rs}))
     }
 
     initialState = {
@@ -118,8 +118,7 @@ export default connect(
     onSaveItemType(form) {
         post(itemTypeUrl(this.props.gameId), form, rs => {
             this.setState(state => ({
-                itemTypes: state.itemTypes.concat(rs),
-                merchandiseTypeFormVisible: false
+                itemTypes: state.itemTypes.concat(rs)
             }))
             Popup.info("Тип создан.")
         })
@@ -128,8 +127,7 @@ export default connect(
     onUpdateItemType(form) {
         put(itemTypeByIdUrl(this.props.gameId, form.id), form, rs => {
             this.setState(state => ({
-                itemTypes: state.itemTypes.filter(it => it.id !== rs.id).concat(rs),
-                merchandiseTypeFormVisible: false
+                itemTypes: state.itemTypes.filter(it => it.id !== rs.id).concat(rs)
             }))
             Popup.info("Тип обновлен.")
         })
@@ -139,7 +137,6 @@ export default connect(
         post(itemTemplateUrl(this.props.gameId), form, rs => {
             this.setState(state => ({
                 itemTemplates: state.itemTemplates.concat(rs),
-                merchandiseFormVisible: false
             }))
             Popup.info("Товар был создан.")
         })
@@ -148,8 +145,7 @@ export default connect(
     onUpdateItemTemplate(form) {
         put(itemTemplateByIdUrl(this.props.gameId, form.id), form, rs => {
             this.setState(state => ({
-                itemTemplates: state.itemTemplates.filter(it => it.id !== rs.id).concat(rs),
-                merchandiseFormVisible: false
+                itemTemplates: state.itemTemplates.filter(it => it.id !== rs.id).concat(rs)
             }))
             Popup.info("Товар был обновлён")
         })

@@ -107,7 +107,7 @@ export default connect(
                                                  organization={this.state.organization}
                                                  currencies={this.props.currencies}
                                                  onChangeTaxInfo={form => this.onChangeTaxInfo(form)}
-                                                 setOrganization={organization => this.props.setOrganization(organization)}
+                                                 setOrganization={organization => this.setState({organization: organization})}
                         />
                     )
                 default:

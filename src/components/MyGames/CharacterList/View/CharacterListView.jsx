@@ -41,7 +41,7 @@ export default connect(
             ...ownProps,
             setCurrencies: xs => dispatch(setCurrencies(xs)),
             toGameView: () => dispatch(changeView(gameView)),
-            back: () => dispatch(changeView(officeView))
+            back: () => dispatch(changeView(gameView))
         }
     }
 )(class CharacterListView extends React.Component {

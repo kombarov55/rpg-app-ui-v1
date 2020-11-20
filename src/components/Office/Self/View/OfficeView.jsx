@@ -16,7 +16,7 @@ import Popup from "../../../../util/Popup";
 import {addUserAccount, changeView, setActiveCharacter, setActiveGame} from "../../../../data-layer/ActionCreators";
 import FormatDate from "../../../../util/FormatDate";
 import CharacterStatus from "../../../../data-layer/enums/CharacterStatus";
-import {characterListView} from "../../../../Views";
+import {characterListView, gameView} from "../../../../Views";
 
 export default connect(
     state => ({
@@ -34,6 +34,11 @@ export default connect(
                 dispatch(setActiveGame(game))
                 dispatch(setActiveCharacter(character))
                 dispatch(changeView(characterListView))
+            },
+            toGameView: (game, character) => {
+                dispatch(setActiveGame(game))
+                dispatch(setActiveCharacter(character))
+                dispatch(changeView(gameView))
             }
         }
     }
@@ -86,9 +91,8 @@ export default connect(
         return (
             <Btn text={"Выбрать"}
                  onClick={() => {
-                     console.log(character)
                      post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () =>
-                     this.props.toCharacterListView(game, character)
+                     this.props.toGameView(game, character)
                  )}}
             />
         )

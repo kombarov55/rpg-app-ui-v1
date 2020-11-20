@@ -10,6 +10,7 @@ import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import CreditOfferForm from "../Form/CreditOfferForm";
 import Label from "../../../Common/Labels/Label";
+import CreditOfferComponent from "./CreditOfferComponent";
 
 export default class extends React.Component {
 
@@ -48,6 +49,10 @@ export default class extends React.Component {
                              onClick={() => this.setState({taxFormVisible: true})}
                         />
                 }
+
+                <CreditOfferComponent creditOffers={this.props.organization.creditOffers}
+                                      onSubmitCreditOffer={form => this.onSubmitCreditOffer(form)}
+                />
 
                 <List title={"Кредитные предложения:"}
                       noItemsText={"Пока нет.."}
@@ -99,6 +104,10 @@ export default class extends React.Component {
             Popup.info("Кредитное предложение удалено.")
             this.setState({creditOfferVisible: false})
         })
+    }
+
+    onSubmitCreditOffer(form) {
+        //TODO:
     }
 
 

@@ -61,7 +61,6 @@ export default connect(
     }
 
     onItemForSaleAdded(form) {
-        console.log(form)
         post(setItemForSaleUrl, {
             itemId: form.itemTemplate.id,
             shopId: this.state.id,

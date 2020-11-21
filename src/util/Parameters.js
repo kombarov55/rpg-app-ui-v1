@@ -147,6 +147,8 @@ export const getCharacterBalances = id => `${rootUrl}/character/${id}/balances`
 
 export const shopByIdUrl = id => `${rootUrl}/shop/${id}`
 
+export const findPendingCreditRequestsByOrganizationId = organizationId => `${rootUrl}/organization/${organizationId}/credit-request/pending`
+
 export const approveQuestionnaireUrl = rootUrl + "/questionnaire/approve.do"
 export const clarifyQuestionnaireUrl = rootUrl + "/questionnaire/clarify.do"
 export const archiveQuestionnaireUrl = rootUrl + "/questionnaire/archive.do"
@@ -172,4 +174,5 @@ export const transferItemUrl = `${rootUrl}/game/transferItem.do`
 
 export const disposeOrganizationItemUrl = `${rootUrl}/organization/disposeItem.do`
 export const submitCreditRequestUrl = `${rootUrl}/organization/submitCreditRequest.do`
-export const findPendingCreditRequestsByOrganizationId = organizationId => `${rootUrl}/organization/${organizationId}/credit-request/pending`
+export const approveCreditRequest = `${rootUrl}/organization/approveCreditRequest.do`
+export const rejectCreditRequest = `${rootUrl}/organization/rejectCreditRequest.do`

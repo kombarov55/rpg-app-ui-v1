@@ -6,11 +6,15 @@ import {organizationDetailsView} from "../../../../Views";
 import Btn from "../../../Common/Buttons/Btn";
 import CreditRequestComponent from "../Components/CreditRequestComponent";
 import {get, post} from "../../../../util/Http";
-import {findPendingCreditRequestsByOrganizationId, submitCreditRequestUrl} from "../../../../util/Parameters";
+import {
+    approveCreditRequest,
+    findPendingCreditRequestsByOrganizationId,
+    rejectCreditRequest,
+    submitCreditRequestUrl
+} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import CreditRequestListItem from "../../../ListItem/CreditRequestListItem";
 import List from "../../../Common/Lists/List";
-import CreditRequestStatus from "../../../../data-layer/enums/CreditRequestStatus";
 
 export default connect(
     state => ({
@@ -36,14 +40,14 @@ export default connect(
             organization: props.activeOrganization,
             creditRequests: []
         }
-        get(findPendingCreditRequestsByOrganizationId(props.activeOrganization.id), rs => this.setState({creditRequests: rs}))
+        this.refresh()
     }
 
     render() {
         return (
             <div style={FormViewStyle}>
 
-                <CreditRequestComponent creditOffers={this.state.creditOffers}
+                <CreditRequestComponent creditOffers={this.state.organization.creditOffers}
                                         onSubmitCreditOffer={form => this.onSubmitCreditRequest(form)}
                 />
 
@@ -68,16 +72,29 @@ export default connect(
             amount: form.amount,
             duration: form.duration,
             purpose: form.purpose,
-            organizationId: this.state.id,
+            organizationId: this.state.organization.id,
             requesterId: this.props.characterId
-        }, () => Popup.info("Заявка на кредит создана. Ожидайте решения мастера"))
+        }, () => {
+            Popup.info("Заявка на кредит создана. Ожидайте решения мастера")
+        })
     }
 
     onApprove(creditRequest) {
-
+        post(approveCreditRequest, {
+            creditRequestId: creditRequest.id
+        }, () => () => this.refresh(() => Popup.info("Вы одобрили заявку на кредит.")))
     }
 
     onReject(creditRequest) {
+        post(rejectCreditRequest, {
+            creditRequestId: creditRequest.id
+        }, () => this.refresh(() => Popup.info("Вы отклонили заявку на кредит.")))
+    }
 
+    refresh(then = () => {}) {
+        get(findPendingCreditRequestsByOrganizationId(this.props.activeOrganization.id), rs => {
+            this.setState({creditRequests: rs})
+            then()
+        })
     }
 })

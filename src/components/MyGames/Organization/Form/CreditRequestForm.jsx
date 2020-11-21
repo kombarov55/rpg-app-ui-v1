@@ -41,7 +41,7 @@ export default class extends React.Component {
                                                           creditOffer.currency.name,
                                                           `Ставка: ${creditOffer.rate}`,
                                                           "От " + creditOffer.minAmount + " до " + creditOffer.maxAmount,
-                                                          `До ${creditOffer.maxDurationInDays} дней`
+                                                          `От ${creditOffer.minDurationInDays} до ${creditOffer.maxDurationInDays} дней`
                                                       ]}/>
                                                       <HandledCheckButton uncheckedText={"Выбрать"}
                                                                           checkedText={"Выбрано"}
@@ -75,10 +75,10 @@ export default class extends React.Component {
                 <SubmitButton text={"Отправить"}
                               onClick={() => {
                                   const success = Validation.run(
-                                      Validation.nonNull(this.state.selectedCreditOffer, "Выберите кредитное предложение"),
-                                      Validation.isNumeric(this.state.amount, "'Сумма кредита' должна быть цифрой"),
-                                      Validation.isNumeric(this.state.duration, "'Длительность' должна быть цифрой"),
-                                      Validation.nonNull(this.state.purpose, "Заполните поле 'Назначение'"),
+                                      Validation.nonNull(this.state.selectedCreditOffer, "Кредитное предложение"),
+                                      Validation.between(this.state.amount, this.state.selectedCreditOffer?.minAmount, this.state.selectedCreditOffer?.maxAmount, "Сумма кредита"),
+                                      Validation.between(this.state.duration, this.state.selectedCreditOffer?.minDurationInDays, this.state.selectedCreditOffer?.maxDurationInDays, "Длительность"),
+                                      Validation.nonNull(this.state.purpose, "Назначение"),
                                   )
                                   if (success) {
                                       this.props.onSubmit(this.state)

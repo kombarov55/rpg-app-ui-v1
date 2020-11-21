@@ -6,17 +6,32 @@ export default {
         return validationResults.every(v => v)
     },
 
-    nonNull: (x, errText = "Пожалуйста, заполните все поля") => {
+    nonNull: (x, fieldName) => {
         if (x == null) {
+            Popup.error(`Пожалуйста, заполните поле ${fieldName}`)
+            return false
+        }
+
+        return true
+    },
+
+    isNumeric: (x, errText = "Пожалуйста, заполните все поля") => {
+        if (!IsNumeric(x)) {
             Popup.error(errText)
             return false
         }
 
         return true
     },
-    isNumeric: (x, errText = "Пожалуйста, заполните все поля") => {
+
+    between: (x, min, max, fieldName) => {
         if (!IsNumeric(x)) {
-            Popup.error(errText)
+            Popup.error(`"${fieldName}" должно быть цифрой`)
+            return false
+        }
+
+        if (x < min || x > max) {
+            Popup.error(`"${fieldName}" должно быть между ${min} и ${max}`)
             return false
         }
 

@@ -5,6 +5,7 @@ import {InputTextarea} from "primereact/inputtextarea";
 import {SelectButton} from "primereact/selectbutton";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import IsNumeric from "../../../../util/IsNumeric";
+import Validation from "../../../../util/Validation";
 
 export default class CreditOfferForm extends React.Component {
 
@@ -15,13 +16,14 @@ export default class CreditOfferForm extends React.Component {
     }
 
     initialState = {
-        name: "",
-        description: "",
+        name: null,
+        description: null,
         currency: null,
-        minAmount: 0,
-        maxAmount: 0,
-        rate: 0,
-        maxDurationInDays: 0
+        minAmount: null,
+        maxAmount: null,
+        rate: null,
+        minDurationInDays: null,
+        maxDurationInDays: null
     }
 
     render() {
@@ -58,26 +60,30 @@ export default class CreditOfferForm extends React.Component {
                 <input value={this.state.rate}
                        onChange={e => this.setState({rate: e.target.value})}/>
 
+                <InputLabel text={"Мин. длительность: (в днях)"}/>
+                <input value={this.state.minDurationInDays}
+                       onChange={e => this.setState({minDurationInDays: e.target.value})}/>
+
                 <InputLabel text={"Макс. длительность: (в днях)"}/>
                 <input value={this.state.maxDurationInDays}
                        onChange={e => this.setState({maxDurationInDays: e.target.value})}/>
 
                 <SubmitButton text={"Сохранить"}
                               onClick={() => {
-                                  if (this.state.name == "" ||
-                                      this.state.description == "" ||
-                                      this.state.currency == null ||
-                                      this.state.minAmount <= 0 ||
-                                      !IsNumeric(this.state.minAmount) ||
-                                      this.state.maxAmount <= 0 ||
-                                      !IsNumeric(this.state.maxAmount) ||
-                                      this.state.rate <= 0 ||
-                                      !IsNumeric(this.state.rate) ||
-                                      this.state.maxDurationInDays <= 0 ||
-                                      !IsNumeric(this.state.maxDurationInDays)
-                                  ) return
-                                  this.props.onSubmit(this.state)
-                                  this.setState(this.initialState)
+                                  const success = Validation.run(
+                                      Validation.nonNull(this.state.name, "Имя"),
+                                      Validation.nonNull(this.state.description, "Описание"),
+                                      Validation.nonNull(this.state.currency, "Валюта"),
+                                      Validation.nonNull(this.state.minAmount, "Минимальная кредитная сумма"),
+                                      Validation.nonNull(this.state.maxAmount, "Максимальная кредитная сумма"),
+                                      Validation.nonNull(this.state.rate, "Ставка"),
+                                      Validation.nonNull(this.state.minDurationInDays, "Минимательная длительность"),
+                                      Validation.nonNull(this.state.maxDurationInDays, "Максимательная длительность")
+                                  )
+                                  if (success) {
+                                      this.props.onSubmit(this.state)
+                                      this.setState(this.initialState)
+                                  }
                               }}
                 />
 

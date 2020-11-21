@@ -2,6 +2,7 @@ import Globals from "./Globals";
 import {uploadUrl} from "./Parameters";
 import axios from "axios"
 import getOrDefault from "./getOrDefault";
+import Popup from "./Popup";
 
 export function get(url, onSuccess = () => {}, onFailure = () => {}) {
     const xhr = new XMLHttpRequest()
@@ -19,7 +20,7 @@ export function get(url, onSuccess = () => {}, onFailure = () => {}) {
 
 export function post(url, body, onSuccess, onFailure) {
     const onSuccessCallback = onSuccess == null ? () => {} : onSuccess
-    const onFailureCallback = onFailure == null ? () => {} : onFailure
+    const onFailureCallback = onFailure == null ? (rs) => {Popup.error(rs.message)} : onFailure
 
     const xhr = new XMLHttpRequest()
     xhr.open("POST", url, true)

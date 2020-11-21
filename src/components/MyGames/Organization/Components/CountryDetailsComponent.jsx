@@ -4,13 +4,13 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import Btn from "../../../Common/Buttons/Btn";
 import CountryTaxForm from "../Form/CountryTaxForm";
 import {httpDelete, post} from "../../../../util/Http";
-import {addCreditOfferUrl, removeCreditOfferUrl} from "../../../../util/Parameters";
+import {addCreditOfferUrl, removeCreditOfferUrl, submitCreditRequestUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import CreditOfferForm from "../Form/CreditOfferForm";
 import Label from "../../../Common/Labels/Label";
-import CreditOfferComponent from "./CreditOfferComponent";
+import CreditOfferComponent from "./CreditRequestComponent";
 
 export default class extends React.Component {
 
@@ -51,7 +51,7 @@ export default class extends React.Component {
                 }
 
                 <CreditOfferComponent creditOffers={this.props.organization.creditOffers}
-                                      onSubmitCreditOffer={form => this.onSubmitCreditOffer(form)}
+                                      onSubmitCreditOffer={form => this.onSubmitCreditRequest(form)}
                 />
 
                 <List title={"Кредитные предложения:"}
@@ -64,7 +64,7 @@ export default class extends React.Component {
                               description={creditOffer.description}
                               bullets={[
                                   "Ставка: " + creditOffer.rate + "%",
-                                  "Макс. длительность: " + creditOffer.maxDurationInDays + " дней",
+                                  `Длительность: ${creditOffer.minDurationInDays} до ${creditOffer.maxDurationInDays} дней`,
                                   "Валюта: " + creditOffer.currency.name,
                                   "Мин. сумма кредитования: " + creditOffer.minAmount,
                                   "Макс. сумма кредитования: " + creditOffer.maxAmount
@@ -106,8 +106,15 @@ export default class extends React.Component {
         })
     }
 
-    onSubmitCreditOffer(form) {
-        //TODO:
+    onSubmitCreditRequest(form) {
+        post(submitCreditRequestUrl, {
+            creditOfferId: form.selectedCreditOffer.id,
+            amount: form.amount,
+            duration: form.duration,
+            purpose: form.purpose,
+            organizationId: this.props.organization.id,
+            requesterId: this.props.characterId
+        }, () => Popup.info("Заявка на кредит создана. Ожидайте решения мастера"))
     }
 
 

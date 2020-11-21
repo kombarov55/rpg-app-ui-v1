@@ -104,6 +104,7 @@ export default connect(
                 case OrganizationType.COUNTRY:
                     return (
                         <CountryDetailsComponent gameId={this.props.gameId}
+                                                 characterId={this.props.characterId}
                                                  organization={this.state.organization}
                                                  currencies={this.props.currencies}
                                                  onChangeTaxInfo={form => this.onChangeTaxInfo(form)}

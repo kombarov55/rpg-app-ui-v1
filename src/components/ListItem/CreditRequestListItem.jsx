@@ -2,6 +2,7 @@ import React from "react";
 import ExpandableListItem from "../Common/ListElements/ExpandableListItem";
 import BulletList from "../Common/Lists/BulletList";
 import CreditRequestStatus from "../../data-layer/enums/CreditRequestStatus";
+import Btn from "../Common/Buttons/Btn";
 
 export default class extends React.Component {
 
@@ -18,9 +19,10 @@ export default class extends React.Component {
                                         `Сумма: ${this.props.creditRequest.amount}: ${this.props.creditRequest.currencyName}`,
                                         `Цель: ${this.props.creditRequest.purpose}`,
                                         `Статус: ${CreditRequestStatus.getLabel(this.props.creditRequest.status)}`
-
                                     ]}
-                                    />
+                                    />,
+                                    <Btn text={"Одобрить"} onClick={() => this.props.onApprove()}/>,
+                                    <Btn text={"Отказать"} onClick={() => this.props.onReject()}/>
                                 ]}
                                 alwaysExpand={true}
             />

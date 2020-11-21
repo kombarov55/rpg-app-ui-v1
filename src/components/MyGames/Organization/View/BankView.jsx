@@ -50,6 +50,8 @@ export default connect(
                 <List title={"Заявки на кредит:"}
                       values={this.state.creditRequests.map(creditRequest =>
                           <CreditRequestListItem creditRequest={creditRequest}
+                                                 onApprove={(() => this.onApprove(creditRequest))}
+                                                 onReject={() => this.onReject(creditRequest)}
                                                  key={creditRequest.id}
                           />
                       )}
@@ -69,5 +71,13 @@ export default connect(
             organizationId: this.state.id,
             requesterId: this.props.characterId
         }, () => Popup.info("Заявка на кредит создана. Ожидайте решения мастера"))
+    }
+
+    onApprove(creditRequest) {
+
+    }
+
+    onReject(creditRequest) {
+
     }
 })

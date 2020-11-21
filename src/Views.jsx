@@ -40,6 +40,7 @@ import CharacterListView from "./components/MyGames/CharacterList/View/Character
 import OfficeView from "./components/Office/Self/View/OfficeView";
 import ShopView from "./components/MyGames/ShopView/View/ShopView";
 import ShopManagementView from "./components/MyGames/ShopView/View/ShopManagementView";
+import BankView from "./components/MyGames/Organization/View/BankView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -93,3 +94,4 @@ export const characterListView = {component: <CharacterListView/>, label: "Ли�
 export const officeView = {component: <OfficeView/>, label: "Кабинет"}
 export const shopView = {component: <ShopView/>, label: "Магазин"}
 export const shopManagementView = {component: <ShopManagementView/>, label: "Управление магазином"}
+export const bankView = {component: <BankView/>, label: "Банк"}

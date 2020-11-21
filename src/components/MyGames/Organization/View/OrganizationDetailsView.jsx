@@ -7,7 +7,7 @@ import {
     setActiveOrganization,
     setActiveShop
 } from "../../../../data-layer/ActionCreators";
-import {gameView, shopView} from "../../../../Views";
+import {bankView, gameView, shopView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import {get, httpDelete, patch, post, put} from "../../../../util/Http";
 import {
@@ -40,6 +40,7 @@ export default connect(
             dispatch(setActiveShop(shop))
             dispatch(changeView(shopView))
         },
+        toBankView: () => dispatch(changeView(bankView)),
         back: () => dispatch(changeView(gameView))
     }))
 (class OrganizationDetailsView extends React.Component {
@@ -109,6 +110,7 @@ export default connect(
                                                  currencies={this.props.currencies}
                                                  onChangeTaxInfo={form => this.onChangeTaxInfo(form)}
                                                  setOrganization={organization => this.setState({organization: organization})}
+                                                 toBankView={() => this.props.toBankView()}
                         />
                     )
                 default:
@@ -199,6 +201,7 @@ export default connect(
 
         refresh(then = () => {}) {
             get(getOrganizationByIdUrl(this.props.organization.id), rs => {
+                this.props.setOrganization(rs)
                 this.setState({organization: rs})
                 then()
             })

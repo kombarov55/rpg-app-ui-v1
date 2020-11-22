@@ -6,6 +6,7 @@ import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {get, post} from "../../../../util/Http";
 import {
+    creditPaymentUrl,
     currenciesByGameIdUrl,
     disposeCharacterItemUrl,
     getCharacterByIdUrl,
@@ -145,6 +146,8 @@ export default connect(
                 <List title={"Кредиты:"}
                       values={this.state.character.credits.map(credit =>
                           <CreditListItem credit={credit}
+                                          onPayWholeCreditClicked={() => this.onPayWholeCreditClicked(credit)}
+                                          onPartialPayClicked={amount => this.onPartialPayClicked(credit, amount)}
                                           key={credit.id}
                           />
                       )}
@@ -251,5 +254,19 @@ export default connect(
         } else {
             Popup.error("Недостаточно средств.")
         }
+    }
+
+    onPayWholeCreditClicked(credit) {
+        post(creditPaymentUrl, {
+            creditId: credit.id,
+            amount: credit.debtAmount
+        }, () => this.refresh(() => Popup.info("Сумма внесена.")))
+    }
+
+    onPartialPayClicked(credit, amount) {
+        post(creditPaymentUrl, {
+            creditId: credit.id,
+            amount: amount
+        }, () => this.refresh(() => Popup.info("Сумма внесена.")))
     }
 })

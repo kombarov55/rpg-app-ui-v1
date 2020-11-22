@@ -12,8 +12,7 @@ export default class extends React.Component {
                     `Длительность: ${this.props.creditOffer.minDurationInDays} до ${this.props.creditOffer.maxDurationInDays} дней`,
                     "Валюта: " + this.props.creditOffer.currency.name,
                     "Мин. сумма кредитования: " + this.props.creditOffer.minAmount,
-                    "Макс. сумма кредитования: " + this.props.creditOffer.maxAmount,
-                    `Платёж каждые ${this.props.creditOffer.paymentPeriodInDays} дней`
+                    "Макс. сумма кредитования: " + this.props.creditOffer.maxAmount
                 ]}
 
                 onDeleteClicked={() => this.props.onDeleteClicked()}

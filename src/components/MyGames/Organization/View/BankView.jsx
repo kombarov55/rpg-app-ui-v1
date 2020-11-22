@@ -8,7 +8,7 @@ import CreditRequestComponent from "../Components/CreditRequestComponent";
 import {get, httpDelete, post} from "../../../../util/Http";
 import {
     addCreditOfferUrl,
-    approveCreditRequest,
+    approveCreditRequest, findOverdueCreditsUrl,
     findPendingCreditRequestsByOrganizationId,
     rejectCreditRequest,
     removeCreditOfferUrl,
@@ -18,6 +18,7 @@ import Popup from "../../../../util/Popup";
 import CreditRequestListItem from "../../../ListItem/CreditRequestListItem";
 import List from "../../../Common/Lists/List";
 import CreditOffersComponent from "../Components/CreditOffersComponent";
+import OverdueCreditListItem from "../../../ListItem/OverdueCreditListItem";
 
 export default connect(
     state => ({
@@ -42,9 +43,11 @@ export default connect(
         super(props);
         this.state = {
             creditOffers: props.activeOrganization.creditOffers,
-            creditRequests: []
+            creditRequests: [],
+            overdueCredits: []
         }
         this.refresh()
+        get(findOverdueCreditsUrl(props.activeOrganization.id), rs => this.setState({overdueCredits: rs}))
     }
 
     render() {
@@ -67,6 +70,14 @@ export default connect(
                                                  onApprove={(() => this.onApprove(creditRequest))}
                                                  onReject={() => this.onReject(creditRequest)}
                                                  key={creditRequest.id}
+                          />
+                      )}
+                />
+
+                <List title={"Просрочненные кредиты:"}
+                      values={this.state.overdueCredits.map(credit =>
+                          <OverdueCreditListItem credit={credit}
+                                                 key={credit.id}
                           />
                       )}
                 />

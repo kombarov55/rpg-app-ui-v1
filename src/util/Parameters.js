@@ -83,6 +83,7 @@ export const organizationByGameIdAndIdUrl = (gameId, id) => rootUrl + "/game/" +
 export const organizationHeadUrl = (organizationId, headId) => rootUrl + "/organization/" + organizationId + "/head/" + headId
 export const findOrganizationByGameIdAndNameUrl = (gameId, name) => `${rootUrl}/game/${gameId}/organization/filterByName?name=${name}`
 export const getOrganizationByIdUrl = id => `${rootUrl}/organization/${id}`
+export const findOverdueCreditsUrl = organizationId => `${rootUrl}/organization/${organizationId}/credit/overdue`
 
 export const addOrganizationShopUrl = organizationUrl => rootUrl + "/organization/" + organizationUrl + "/shop"
 export const removeOrganizationShopUrl = (organizationUrl, shopId) => rootUrl + "/organization/" + organizationUrl + "/shop/" + shopId

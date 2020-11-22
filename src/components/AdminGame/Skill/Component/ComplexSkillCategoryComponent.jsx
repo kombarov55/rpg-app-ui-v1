@@ -16,8 +16,7 @@ export default class ComplexSkillCategoryComponent extends React.Component {
         this.state = {
             spellSchoolFormVisible: false,
             spellSchoolForm: null,
-            spellSchoolFormMode: FormMode.CREATE,
-            spellSchools: props.spellSchools
+            spellSchoolFormMode: FormMode.CREATE
         }
     }
 
@@ -31,7 +30,7 @@ export default class ComplexSkillCategoryComponent extends React.Component {
                           spellSchoolFormVisible: true,
                           spellSchoolFormMode: FormMode.CREATE
                       })}
-                      values={this.state.spellSchools.map(spellSchool =>
+                      values={this.props.spellSchools.map(spellSchool =>
 
                               <ExpandableListItemWithBullets
                                   img={spellSchool.img}
@@ -61,35 +60,21 @@ export default class ComplexSkillCategoryComponent extends React.Component {
                     (
                         this.state.spellSchoolFormMode == FormMode.CREATE ?
                             <SpellSchoolForm currencyNames={this.props.currencies.map(v => v.name)}
-                                             onSubmit={form => this.onAddSpellSchoolSubmit(form)}
+                                             onSubmit={form => {
+                                                 this.setState({spellSchoolFormVisible: false})
+                                                 this.props.onSaveSpellSchool(form)
+                                             }}
                             /> :
                             <SpellSchoolForm initialState={this.state.spellSchoolForm}
                                              currencyNames={this.props.currencies.map(v => v.name)}
-                                             onSubmit={form => this.onEditSpellSchoolSubmit(form)}
+                                             onSubmit={form => {
+                                                 this.setState({spellSchoolFormVisible: false})
+                                                 this.onEditSpellSchool(form)
+                                             }}
                             />
                     )
                 }
             </div>
         )
-    }
-
-    onAddSpellSchoolSubmit(form) {
-        post(addSpellSchoolUrl(this.props.skillCategoryId), form, rs => {
-            this.setState(state => ({
-                spellSchoolFormVisible: false,
-                spellSchools: state.spellSchools.concat(rs)
-            }))
-        })
-        Popup.info("Школа навыков добавлена.")
-    }
-
-    onEditSpellSchoolSubmit(form) {
-        put(editSpellSchoolUrl(form.id), form, rs => {
-            this.setState(state => ({
-                spellSchoolFormVisible: false,
-                spellSchools: state.spellSchools.filter(v => v.id !== rs.id).concat(rs)
-            }))
-            Popup.info("Школа навыков обновлена.")
-        })
     }
 }

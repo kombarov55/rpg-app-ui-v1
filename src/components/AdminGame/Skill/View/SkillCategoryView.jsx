@@ -9,7 +9,13 @@ import BasicSkillCategoryComponent from "../Component/BasicSkillCategoryComponen
 import ComplexSkillCategoryComponent from "../Component/ComplexSkillCategoryComponent";
 import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByName";
 import {get, post, put} from "../../../../util/Http";
-import {saveSkillUrl, skillByIdUrl, skillCategoryUrl} from "../../../../util/Parameters";
+import {
+    addSpellSchoolUrl,
+    editSpellSchoolUrl,
+    saveSkillUrl,
+    skillByIdUrl,
+    skillCategoryUrl
+} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 
 export default connect(
@@ -64,6 +70,8 @@ export default connect(
                         currencies={this.props.currencies}
                         spellSchools={this.state.spellSchools}
                         toSpellSchoolView={spellSchool => this.props.toSpellSchoolView(spellSchool)}
+                        onSaveSpellSchool={form => this.onSaveSpellSchool(form)}
+                        onEditSpellSchool={form => this.onEditSpellSchool(form)}
                     /> :
                     <BasicSkillCategoryComponent
                         skillCategoryId={this.state.id}
@@ -95,6 +103,20 @@ export default connect(
         put(skillByIdUrl(form.id), form, rs => {
             this.setState({skills: this.state.skills.filter(v => v.id !== rs.id).concat(rs)})
             Popup.info("Навык обновлен.")
+        })
+    }
+
+    onSaveSpellSchool(form) {
+        post(addSpellSchoolUrl(this.state.id), form, rs => {
+            this.setState(state => ({spellSchools: state.spellSchools.concat(rs)}))
+        })
+        Popup.info("Школа навыков добавлена.")
+    }
+
+    onEditSpellSchool(form) {
+        put(editSpellSchoolUrl(form.id), form, rs => {
+            this.setState(state => ({spellSchools: state.spellSchools.filter(v => v.id !== rs.id).concat(rs)}))
+            Popup.info("Школа навыков обновлена.")
         })
     }
 })

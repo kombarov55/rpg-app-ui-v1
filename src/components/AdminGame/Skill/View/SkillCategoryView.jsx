@@ -8,6 +8,9 @@ import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import BasicSkillCategoryComponent from "../Component/BasicSkillCategoryComponent";
 import ComplexSkillCategoryComponent from "../Component/ComplexSkillCategoryComponent";
 import GetDestinationByName from "../../../../data-layer/enums/GetDestinationByName";
+import {get, post, put} from "../../../../util/Http";
+import {saveSkillUrl, skillByIdUrl, skillCategoryUrl} from "../../../../util/Parameters";
+import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
@@ -39,7 +42,9 @@ export default connect(
 
     constructor(props) {
         super(props);
-        this.state = this.props.skillCategory
+        this.state = props.skillCategory
+
+        get(skillCategoryUrl(props.skillCategory.id), rs => this.setState(rs))
     }
 
     render() {
@@ -66,10 +71,30 @@ export default connect(
                         skills={this.state.skills}
                         currencies={this.props.currencies}
                         toSkillView={skill => this.props.toSkillView(skill)}
+                        onSaveSkill={form => this.onSaveSkill(form)}
+                        onEditSkill={form => this.onEditSkill(form)}
                     />
                 }
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
+    }
+
+    onSaveSkill(form) {
+        post(saveSkillUrl(this.state.id), form, rs => {
+            this.setState({
+                skillFormVisible: false,
+                skills: this.state.skills.concat(rs)
+            })
+            Popup.info("Навык сохранён.")
+        })
+    }
+
+
+    onEditSkill(form) {
+        put(skillByIdUrl(form.id), form, rs => {
+            this.setState({skills: this.state.skills.filter(v => v.id !== rs.id).concat(rs)})
+            Popup.info("Навык обновлен.")
+        })
     }
 })

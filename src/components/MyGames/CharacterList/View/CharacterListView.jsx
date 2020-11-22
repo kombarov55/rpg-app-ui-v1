@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux"
 import {changeView, setCurrencies} from "../../../../data-layer/ActionCreators";
-import {gameView} from "../../../../Views";
+import {gameView, officeView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {get, post} from "../../../../util/Http";
@@ -43,7 +43,7 @@ export default connect(
             ...ownProps,
             setCurrencies: xs => dispatch(setCurrencies(xs)),
             toGameView: () => dispatch(changeView(gameView)),
-            back: () => dispatch(changeView(gameView))
+            back: () => dispatch(changeView(officeView))
         }
     }
 )(class CharacterListView extends React.Component {

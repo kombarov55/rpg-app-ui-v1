@@ -29,16 +29,10 @@ export default connect(
         return {
             ...stateProps,
             ...ownProps,
-            setUserAccount: x => dispatch(addUserAccount(x)),
             toCharacterListView: (game, character) => {
                 dispatch(setActiveGame(game))
                 dispatch(setActiveCharacter(character))
                 dispatch(changeView(characterListView))
-            },
-            toGameView: (game, character) => {
-                dispatch(setActiveGame(game))
-                dispatch(setActiveCharacter(character))
-                dispatch(changeView(gameView))
             }
         }
     }
@@ -92,7 +86,7 @@ export default connect(
             <Btn text={"Выбрать"}
                  onClick={() => {
                      post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () =>
-                     this.props.toGameView(game, character)
+                     this.props.toCharacterListView(game, character)
                  )}}
             />
         )

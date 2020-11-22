@@ -21,7 +21,8 @@ import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import Btn from "../../../Common/Buttons/Btn";
 import {
     characterListView,
-    myGamesView, officeView,
+    characterSelectionView,
+    myGamesView,
     organizationDetailsView,
     questionnaireDisclaimerView,
     questionnaireReviewView
@@ -33,7 +34,6 @@ import QuestionnaireStatus from "../../../../data-layer/enums/QuestionnaireStatu
 import FormatDate from "../../../../util/FormatDate";
 import Popup from "../../../../util/Popup";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
-import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
 import StorageComponent from "../Component/StorageComponent";
 
 export default connect(
@@ -62,12 +62,7 @@ export default connect(
                 dispatch(setActiveQuestionnaire(questionnaire))
                 dispatch(changeView(questionnaireReviewView))
             },
-            toCharacterList: () => {
-                dispatch(changeView(characterListView))
-            },
-
-            toOfficeView: () => dispatch(changeView(officeView)),
-
+            toCharacterSelectionView: () => dispatch(changeView(characterSelectionView)),
             back: () => dispatch(changeView(myGamesView))
         }
     }
@@ -76,9 +71,9 @@ export default connect(
     constructor(props) {
         super(props);
 
-        if (this.props.activeCharacter == null) {
+        if (this.props.activeCharacter == null || this.props.activeCharacter?.game?.id !== this.props.game.id) {
             Popup.info("Выберите персонажа")
-            this.props.toOfficeView()
+            this.props.toCharacterSelectionView()
         }
 
         this.state = {
@@ -171,10 +166,6 @@ export default connect(
                           />
                       )}
                 />
-                {
-                    this.props.activeCharacter != null &&
-                    <Btn text={"Лист персонажа"} onClick={() => this.props.toCharacterList()}/>
-                }
 
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>

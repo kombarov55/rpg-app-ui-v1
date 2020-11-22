@@ -39,6 +39,7 @@ export default class extends React.Component {
                                                   <div>
                                                       <BulletList values={[
                                                           creditOffer.currency.name,
+                                                          `Платёж каждые ${creditOffer.paymentPeriodInDays} дней`,
                                                           `Ставка: ${creditOffer.rate}`,
                                                           "От " + creditOffer.minAmount + " до " + creditOffer.maxAmount,
                                                           `От ${creditOffer.minDurationInDays} до ${creditOffer.maxDurationInDays} дней`

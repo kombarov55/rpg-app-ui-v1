@@ -88,9 +88,7 @@ export const addOrganizationShopUrl = organizationUrl => rootUrl + "/organizatio
 export const removeOrganizationShopUrl = (organizationUrl, shopId) => rootUrl + "/organization/" + organizationUrl + "/shop/" + shopId
 
 export const addCreditOfferUrl = organizationId => rootUrl + "/organization/" + organizationId + "/credit-offer"
-export const removeCreditOfferUrl = (organizationId, creditOfferId) => rootUrl + "/organization/" + organizationId + "/credit-offer/" + creditOfferId
-
-export const addBalanceUrl = organizationId => rootUrl + "/organization/" + organizationId + "/balance"
+export const removeCreditOfferUrl = creditOfferId => `${rootUrl}/credit-offer/${creditOfferId}`
 
 export const addOwnedMerchandiseUrl = (organizationId, merchandiseId, amount) => rootUrl + "/organization/" + organizationId + "/ownedMerchandise/" + merchandiseId + "?amount=" + amount
 
@@ -99,7 +97,6 @@ export const removeItemForSaleForGameUrl = (gameId, itemForSaleId) => rootUrl + 
 
 export const addSpellSchoolUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/spellSchool"
 export const editSpellSchoolUrl = id => rootUrl + "/spellSchool/" + id
-export const findSpellSchoolsByGameIdAndDestination = (gameId, destination) => `${rootUrl}/game/${gameId}/skillCategory/findByDestination?destination=${destination}`
 export const findAvailableSpells = (gameId, characterId) => `${rootUrl}/game/${gameId}/spell/available?characterId=${characterId}`
 
 export const addSchoolLvlToSpellSchoolUrl = spellSchoolId => rootUrl + "/spellSchool/" + spellSchoolId + "/schoolLvl"
@@ -173,6 +170,7 @@ export const setItemForSaleInGameUrl = `${rootUrl}/game/addItemForSale.do`
 export const transferItemUrl = `${rootUrl}/game/transferItem.do`
 
 export const disposeOrganizationItemUrl = `${rootUrl}/organization/disposeItem.do`
-export const submitCreditRequestUrl = `${rootUrl}/organization/submitCreditRequest.do`
-export const approveCreditRequest = `${rootUrl}/organization/approveCreditRequest.do`
-export const rejectCreditRequest = `${rootUrl}/organization/rejectCreditRequest.do`
+
+export const submitCreditRequestUrl = `${rootUrl}/credit/submitCreditRequest.do`
+export const approveCreditRequest = `${rootUrl}/credit/approveCreditRequest.do`
+export const rejectCreditRequest = `${rootUrl}/credit/rejectCreditRequest.do`

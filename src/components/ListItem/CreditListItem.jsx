@@ -2,6 +2,7 @@ import React from "react";
 import ExpandableListItem from "../Common/ListElements/ExpandableListItem";
 import BulletList from "../Common/Lists/BulletList";
 import FormatDate from "../../util/FormatDate";
+import getOrDefault from "../../util/getOrDefault";
 
 export default class extends React.Component {
 
@@ -11,10 +12,14 @@ export default class extends React.Component {
                 expandableElements={[
                     <div>
                         <BulletList values={[
-                            `Полученная сумма: ${this.props.credit.amount}: ${this.props.credit.currencyName}`,
+                            `Полученная сумма: ${this.props.credit.amount} ${this.props.credit.currencyName}`,
                             `Выплачено: ${this.props.credit.payedAmount}`,
                             `Дата открытия: ${FormatDate(new Date(this.props.credit.openingDate))}`,
-                            `Дата закрытия: ${FormatDate(new Date(this.props.credit.endingDate))}`,
+                            `Дата окончания: ${FormatDate(new Date(this.props.credit.endingDate))}`,
+                            `Длительность: ${this.props.credit.durationInDays} дней`,
+                            `Дата последнего платежа: ${this.getLastPaymentDateFormatted(this.props.credit.lastPaymentDate)}`,
+                            this.props.credit.isOverdue ? "Платёж просрочен" : "Просрочек нет",
+                            `Минимальный платёж: ${this.props.credit.minimalPayment}`,
                             `Осталось дней: ${this.props.credit.remainingDays}`,
                             `Кредит взят у организации: "${this.props.credit.organizationName}"`
                         ]}
@@ -24,5 +29,13 @@ export default class extends React.Component {
                 alwaysExpand={true}
             />
         )
+    }
+
+    getLastPaymentDateFormatted(lastPaymentDate) {
+        if (lastPaymentDate != null) {
+            return FormatDate(new Date(lastPaymentDate))
+        } else {
+            return "отсутствует"
+        }
     }
 }

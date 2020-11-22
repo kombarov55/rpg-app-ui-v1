@@ -22,7 +22,7 @@ export default class CreditOfferForm extends React.Component {
         minAmount: null,
         maxAmount: null,
         rate: null,
-        minDurationInDays: null,
+        paymentPeriodInDays: null,        minDurationInDays: null,
         maxDurationInDays: null
     }
 
@@ -68,17 +68,22 @@ export default class CreditOfferForm extends React.Component {
                 <input value={this.state.maxDurationInDays}
                        onChange={e => this.setState({maxDurationInDays: e.target.value})}/>
 
+                <InputLabel text={"Периодичность платежа: (в днях)"}/>
+                <input value={this.state.paymentPeriodInDays}
+                       onChange={e => this.setState({paymentPeriodInDays: e.target.value})}/>
+
                 <SubmitButton text={"Сохранить"}
                               onClick={() => {
                                   const success = Validation.run(
                                       Validation.nonNull(this.state.name, "Имя"),
                                       Validation.nonNull(this.state.description, "Описание"),
                                       Validation.nonNull(this.state.currency, "Валюта"),
-                                      Validation.nonNull(this.state.minAmount, "Минимальная кредитная сумма"),
-                                      Validation.nonNull(this.state.maxAmount, "Максимальная кредитная сумма"),
-                                      Validation.nonNull(this.state.rate, "Ставка"),
-                                      Validation.nonNull(this.state.minDurationInDays, "Минимательная длительность"),
-                                      Validation.nonNull(this.state.maxDurationInDays, "Максимательная длительность")
+                                      Validation.isNumeric(this.state.minAmount, "Минимальная кредитная сумма"),
+                                      Validation.isNumeric(this.state.maxAmount, "Максимальная кредитная сумма"),
+                                      Validation.isNumeric(this.state.rate, "Ставка"),
+                                      Validation.isNumeric(this.state.minDurationInDays, "Минимательная длительность"),
+                                      Validation.isNumeric(this.state.maxDurationInDays, "Максимательная длительность"),
+                                      Validation.isNumeric(this.state.paymentPeriodInDays, "Периодичность платежа")
                                   )
                                   if (success) {
                                       this.props.onSubmit(this.state)

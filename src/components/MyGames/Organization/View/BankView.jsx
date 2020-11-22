@@ -5,20 +5,24 @@ import {changeView} from "../../../../data-layer/ActionCreators";
 import {organizationDetailsView} from "../../../../Views";
 import Btn from "../../../Common/Buttons/Btn";
 import CreditRequestComponent from "../Components/CreditRequestComponent";
-import {get, post} from "../../../../util/Http";
+import {get, httpDelete, post} from "../../../../util/Http";
 import {
+    addCreditOfferUrl,
     approveCreditRequest,
     findPendingCreditRequestsByOrganizationId,
     rejectCreditRequest,
+    removeCreditOfferUrl,
     submitCreditRequestUrl
 } from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import CreditRequestListItem from "../../../ListItem/CreditRequestListItem";
 import List from "../../../Common/Lists/List";
+import CreditOffersComponent from "../Components/CreditOffersComponent";
 
 export default connect(
     state => ({
         activeOrganization: state.activeOrganization,
+        currencies: state.activeGame.currencies,
         characterId: state.activeCharacter.id
     }),
     null,
@@ -37,7 +41,7 @@ export default connect(
     constructor(props) {
         super(props);
         this.state = {
-            organization: props.activeOrganization,
+            creditOffers: props.activeOrganization.creditOffers,
             creditRequests: []
         }
         this.refresh()
@@ -47,8 +51,14 @@ export default connect(
         return (
             <div style={FormViewStyle}>
 
-                <CreditRequestComponent creditOffers={this.state.organization.creditOffers}
+                <CreditRequestComponent creditOffers={this.state.creditOffers}
                                         onSubmitCreditOffer={form => this.onSubmitCreditRequest(form)}
+                />
+
+                <CreditOffersComponent creditOffers={this.state.creditOffers}
+                                       currencies={this.props.currencies}
+                                       onSaveCreditOffer={form => this.onSaveCreditOffer(form)}
+                                       onDeleteCreditOffer={creditOffer => this.onDeleteCreditOffer(creditOffer)}
                 />
 
                 <List title={"Заявки на кредит:"}
@@ -72,23 +82,43 @@ export default connect(
             amount: form.amount,
             duration: form.duration,
             purpose: form.purpose,
-            organizationId: this.state.organization.id,
+            organizationId: this.props.activeOrganization.id,
             requesterId: this.props.characterId
         }, () => {
-            Popup.info("Заявка на кредит создана. Ожидайте решения мастера")
+            this.refresh(() => Popup.info("Заявка на кредит создана. Ожидайте решения мастера"))
         })
     }
 
     onApprove(creditRequest) {
         post(approveCreditRequest, {
             creditRequestId: creditRequest.id
-        }, () => () => this.refresh(() => Popup.info("Вы одобрили заявку на кредит.")))
+        }, () => this.refresh(() => this.refresh(() => Popup.info("Вы одобрили заявку на кредит."))))
     }
 
     onReject(creditRequest) {
         post(rejectCreditRequest, {
             creditRequestId: creditRequest.id
         }, () => this.refresh(() => Popup.info("Вы отклонили заявку на кредит.")))
+    }
+
+    onSaveCreditOffer(form) {
+        post(addCreditOfferUrl(this.props.activeOrganization.id), form, rs => {
+            this.setState(state => ({creditOffers: state.creditOffers.concat(rs)}))
+            Popup.info("Кредитное предложение добавлено.")
+            this.setState({creditOfferVisible: false})
+        })
+    }
+
+    onDeleteCreditOffer(creditOffer) {
+        console.log(creditOffer)
+
+        httpDelete(removeCreditOfferUrl(creditOffer.id), rs => {
+            console.log(rs)
+
+            this.setState(state => ({creditOffers: state.creditOffers.filter(v => v.id !== rs.id)}))
+            Popup.info("Кредитное предложение удалено.")
+            this.setState({creditOfferVisible: false})
+        })
     }
 
     refresh(then = () => {}) {

@@ -61,6 +61,7 @@ export const findAllSkillCategoriesByGameIdAndDestinationUrl = (gameId, destinat
 export const saveSkillUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/skill"
 export const skillByIdUrl = id => rootUrl + "/skill/" + id
 export const findSkillsByGameIdAndDestination = (gameId, destination) => `${rootUrl}/game/${gameId}/skill/short/find?destination=${destination}`
+export const findSkillByNameUrl = (gameId, name) => `${rootUrl}/game/${gameId}/skill/findByName?name=${name}`
 
 export const itemCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/itemCategory"
 export const itemCategoryByIdUrl = (gameId, itemCategoryId) => rootUrl + "/game/" + gameId + "/itemCategory/" + itemCategoryId
@@ -72,6 +73,8 @@ export const itemTemplateUrl = gameId => rootUrl + "/game/" + gameId + "/itemTem
 export const itemTemplateByIdUrl = (gameId, itemTemplateId) => rootUrl + "/game/" + gameId + "/itemTemplate/" + itemTemplateId
 export const itemTemplateByGameIdAndDestination = (gameId, destination) => rootUrl + "/game/" + gameId + "/itemTemplate/filter?destination=" + destination
 export const itemTemplateByGameIdAndName = (gameId, name) => `${rootUrl}/game/${gameId}/itemTemplate/filterByName?name=${name}`
+export const findCraftableItemTemplatesByGameIdAndNameUrl = (gameId, name) => `${rootUrl}/game/${gameId}/itemTemplate/filterByName?name=${name}&canBeCrafted=true`
+export const findUsableInCraftItemTemplatesByGameIdAndNameUrl = (gameId, name) => `${rootUrl}/game/${gameId}/itemTemplate/filterByName?name=${name}&canBeUsedInCraft=true`
 export const getItemsUrl = characterId => `${rootUrl}/character/${characterId}/items/short`
 
 export const organizationByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/organization"

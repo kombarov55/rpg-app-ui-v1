@@ -5,10 +5,14 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import ListItem from "../../../Common/ListElements/ListItem";
 import List from "../../../Common/Lists/List";
-import {SelectButton} from "primereact/selectbutton";
 import SuccessChanceDependencyForm from "./SuccessChanceDependencyForm";
 import RemoteAutocomplete from "../../../Common/Input/RemoteAutocomplete";
-import {itemTemplateByGameIdAndName} from "../../../../util/Parameters";
+import {
+    findCraftableItemTemplatesByGameIdAndNameUrl,
+    findSkillByNameUrl,
+    findUsableInCraftItemTemplatesByGameIdAndNameUrl
+} from "../../../../util/Parameters";
+import Validation from "../../../../util/Validation";
 
 export default class extends React.Component {
 
@@ -40,10 +44,9 @@ export default class extends React.Component {
             <div style={FormViewStyle}>
                 <FormTitleLabel text={"Формула крафта:"}/>
                 <InputLabel text={"Цель:"}/>
-                <SelectButton
-                    options={this.props.targetOptions.map(v => ({label: v.name, value: v}))}
-                    value={this.state.target}
-                    onChange={e => this.setState({target: e.target.value})}
+                <RemoteAutocomplete
+                    buildSyncUrl={input => findCraftableItemTemplatesByGameIdAndNameUrl(this.props.gameId, input)}
+                    onSelected={itemTemplate => this.setState({target: itemTemplate})}
                 />
 
                 <List title={"Предметы, участвующие в крафте:"}
@@ -58,21 +61,20 @@ export default class extends React.Component {
                 />
                 {
                     this.state.ingredientFormVisible &&
-                        <RemoteAutocomplete fieldToDisplay={"name"}
-                                            buildSyncUrl={input => itemTemplateByGameIdAndName(this.props.gameId, input)}
-                                            onSelected={itemTemplate => this.setState(state => ({
-                                                ingredients: state.ingredients.concat(itemTemplate),
-                                                ingredientFormVisible: false
-                                            }))}
-                        />
+                    <RemoteAutocomplete
+                        buildSyncUrl={input => findUsableInCraftItemTemplatesByGameIdAndNameUrl(this.props.gameId, input)}
+                        onSelected={itemTemplate => this.setState(state => ({
+                            ingredients: state.ingredients.concat(itemTemplate),
+                            ingredientFormVisible: false
+                        }))}
+                    />
                 }
 
                 <InputLabel text={"Навык, влияющий на успех:"}/>
-                <SelectButton
-                    options={this.props.dependantSkillOptions.map(v => ({label: v.name, value: v}))}
-                    value={this.state.dependantSkill}
-                    onChange={e => this.setState({dependantSkill: e.target.value})}
+                <RemoteAutocomplete buildSyncUrl={input => findSkillByNameUrl(this.props.gameId, input)}
+                                    onSelected={skill => this.setState({dependantSkill: skill})}
                 />
+
 
                 <InputLabel text={"Минимальный уровень навыка для создания предмета:"}/>
                 <input value={this.state.minSkillLvl}
@@ -84,24 +86,31 @@ export default class extends React.Component {
                       isAddButtonVisible={!this.state.successChanceDependencyFormVisible}
                       onAddClicked={() => this.setState({successChanceDependencyFormVisible: true})}
                       values={this.state.successChanceDependencies.map(successChanceDependency =>
-                          <ListItem text={successChanceDependency.min + " до " + successChanceDependency.max + ": " + successChanceDependency.percent + "%"}
-                                    onDelete={() => this.setState(state => ({successChanceDependencies: state.successChanceDependencies.filter(v => v !== successChanceDependency)}))}
+                          <ListItem
+                              text={successChanceDependency.min + " до " + successChanceDependency.max + ": " + successChanceDependency.percent + "%"}
+                              onDelete={() => this.setState(state => ({successChanceDependencies: state.successChanceDependencies.filter(v => v !== successChanceDependency)}))}
                           />
                       )}
                 />
                 {
                     this.state.successChanceDependencyFormVisible &&
-                        <SuccessChanceDependencyForm
-                            onSubmit={successChanceDependency => this.setState(state => ({
-                                successChanceDependencies: state.successChanceDependencies.concat(successChanceDependency),
-                                successChanceDependencyFormVisible: false
-                            }))}
-                        />
+                    <SuccessChanceDependencyForm
+                        onSubmit={successChanceDependency => this.setState(state => ({
+                            successChanceDependencies: state.successChanceDependencies.concat(successChanceDependency),
+                            successChanceDependencyFormVisible: false
+                        }))}
+                    />
                 }
 
                 <SubmitButton text={"Сохранить"}
                               onClick={() => {
-                                  this.props.onSubmit(this.state)
+                                  const success = Validation.run(
+                                      Validation.nonNull(this.state.target, "Цель"),
+                                      Validation.notEmpty(this.state.ingredients, "Ингредиенты")
+                                  )
+                                  if (success) {
+                                      this.props.onSubmit(this.state)
+                                  }
                               }}
                 />
             </div>

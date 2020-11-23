@@ -2,6 +2,7 @@ import React from "react";
 import List from "../Lists/List";
 import {get} from "../../../util/Http";
 import ListItem from "../ListElements/ListItem";
+import getOrDefault from "../../../util/getOrDefault";
 
 /**
  * props: {
@@ -34,7 +35,7 @@ export default class RemoteAutocomplete extends React.Component {
                 <List
                     noItemsText={"Не найдено.."}
                     values={this.state.filteredItems.map(item =>
-                        <ListItem text={item[this.props.fieldToDisplay]}
+                        <ListItem text={item[getOrDefault(this.props.fieldToDisplay, "name")]}
                                   onClick={() => this.onSelect(item)}
                                   selected={this.state.selectedItem?.id === item.id}
                         />

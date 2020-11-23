@@ -112,7 +112,8 @@ export default connect(
                                                  onDeleteOrganization={organization => this.onDeleteOrganization(organization)}
                 />
 
-                <RecipeComponent recipes={this.state.recipes}
+                <RecipeComponent gameId={this.state.id}
+                                 recipes={this.state.recipes}
                                  onAddRecipe={form => this.onAddRecipe(form)}
                                  onDeleteRecipe={recipe => this.onDeleteRecipe(recipe)}
                 />

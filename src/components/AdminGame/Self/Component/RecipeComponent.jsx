@@ -27,10 +27,12 @@ export default class extends React.Component {
                 />
                 {
                     this.state.formVisible &&
-                    <RecipeForm onSubmit={form => {
-                        this.setState({formVisible: false})
-                        this.props.onAddRecipe(form)
-                    }}/>
+                    <RecipeForm gameId={this.props.gameId}
+                                onSubmit={form => {
+                                    this.setState({formVisible: false})
+                                    this.props.onAddRecipe(form)
+                                }}
+                    />
                 }
             </div>
         )

@@ -45,5 +45,14 @@ export default {
         }
 
         return true
+    },
+
+    notEmpty(x, fieldName) {
+        if (x.length === 0) {
+            Popup.error(`"${fieldName}" не должно быть пустым`)
+            return false
+        }
+
+        return true
     }
 }

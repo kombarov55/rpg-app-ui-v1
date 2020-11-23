@@ -159,6 +159,7 @@ export const reviveCharacterUrl = `${rootUrl}/userAccount/reviveCharacter.do`
 
 export const transferUrl = `${rootUrl}/balance/transfer.do`
 export const adminTransferUrl = `${rootUrl}/balance/adminTransfer.do`
+export const convertUrl = `${rootUrl}/balance/convert.do`
 
 export const upgradeSkillUrl = `${rootUrl}/gameCharacter/upgradeSkill.do`
 export const purchaseSkillUrl = `${rootUrl}/gameCharacter/purchaseSkill.do`

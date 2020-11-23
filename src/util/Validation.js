@@ -15,9 +15,18 @@ export default {
         return true
     },
 
-    isNumeric: (x, errText = "Пожалуйста, заполните все поля") => {
+    isNumeric: (x, fieldName) => {
         if (!IsNumeric(x)) {
-            Popup.error(errText)
+            Popup.error(`${fieldName} должно быть цифрой`)
+            return false
+        }
+
+        return true
+    },
+
+    notEqual(x1, x2, field1Name, field2Name) {
+        if (x1 === x2) {
+            Popup.error(`${field1Name} и ${field2Name} должны быть разными`)
             return false
         }
 

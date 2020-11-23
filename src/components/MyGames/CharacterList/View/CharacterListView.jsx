@@ -6,6 +6,7 @@ import FormViewStyle from "../../../../styles/FormViewStyle";
 import Btn from "../../../Common/Buttons/Btn";
 import {get, post} from "../../../../util/Http";
 import {
+    convertUrl,
     creditPaymentUrl,
     currenciesByGameIdUrl,
     disposeCharacterItemUrl,
@@ -27,6 +28,7 @@ import SkillComponent from "../Component/SkillComponent";
 import LearnNewSpellComponent from "../Component/LearnNewSpellComponent";
 import CharacterItemsComponent from "../Component/CharacterItemsComponent";
 import CreditListItem from "../../../ListItem/CreditListItem";
+import ConversionComponent from "../Component/ConversionComponent";
 
 export default connect(
     state => ({
@@ -64,6 +66,7 @@ export default connect(
             transferFormVisible: false
         }
 
+        get(currenciesByGameIdUrl(this.props.gameId), rs => this.props.setCurrencies(rs))
         this.refresh()
     }
 
@@ -90,7 +93,6 @@ export default connect(
                 />
 
                 <Btn text={"Переводы"} onClick={() => {
-                    get(currenciesByGameIdUrl(this.props.gameId), rs => this.props.setCurrencies(rs))
                     this.setState({transferFormVisible: true})
                 }}/>
                 {this.state.transferFormVisible &&
@@ -99,6 +101,11 @@ export default connect(
                               onSubmit={form => this.performTransfer(form)}
                 />
                 }
+
+                <ConversionComponent gameId={this.props.gameId}
+                                     currencies={this.props.currencies}
+                                     onSubmit={form => this.onConversion(form.currency1, form.currency2, form.amount)}
+                />
 
                 <CharacterItemsComponent items={this.state.character.items}
                                          gameId={this.props.gameId}
@@ -275,5 +282,14 @@ export default connect(
 
     isSpellLearned(spell) {
         return this.state.character.learnedSpells.some(v => v.id === spell.id)
+    }
+
+    onConversion(currency1, currency2, amount) {
+        post(convertUrl, {
+            currency1Id: currency1.id,
+            currency2Id: currency2.id,
+            amount: amount,
+            characterId: this.state.character.id
+        }, () => this.refresh(() => Popup.info("Обмен произведён.")))
     }
 })

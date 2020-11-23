@@ -5,7 +5,8 @@ import ListItem from "../ListElements/ListItem";
 /**
  * props: {
  *     items: [],
- *     fieldToDisplay: String
+ *     fieldToDisplay: String,
+ *     onSelected: item => {}
  * }
  */
 export default class LocalAutocomplete extends React.Component {

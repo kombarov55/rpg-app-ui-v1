@@ -79,6 +79,8 @@ export default connect(
                     </div>
                 )}</div>
 
+                <InputLabel text={`Баллов актива: ${this.state.character.activityPoints}`}/>
+
                 <List title={"Баланс:"}
                       values={this.state.character.balance.map(amount =>
                           <ListItem text={`${amount.name}: ${amount.amount}`}

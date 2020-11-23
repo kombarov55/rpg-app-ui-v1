@@ -9,8 +9,8 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import List from "../../../Common/Lists/List";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
-import {post} from "../../../../util/Http";
-import {addSchoolLvlToSpellSchoolUrl} from "../../../../util/Parameters";
+import {get, post} from "../../../../util/Http";
+import {addSchoolLvlToSpellSchoolUrl, editSpellSchoolUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 
 export default connect(
@@ -38,6 +38,8 @@ export default connect(
         super(props);
 
         this.state = props.spellSchool
+
+        get(editSpellSchoolUrl(props.spellSchool.id), rs => this.setState(rs))
     }
 
     render() {

@@ -12,14 +12,14 @@ import priceCombinationListToString from "../../../../util/priceCombinationListT
 import FormMode from "../../../../data-layer/enums/FormMode";
 import SpellForm from "../Form/SpellForm";
 import Popup from "../../../../util/Popup";
-import {httpDelete, post, put} from "../../../../util/Http";
+import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
     addSpellPurchaseOptionUrl,
     addSpellUrl,
     deleteSpellPurchaseOption,
     deleteSpellUrl,
     editSpellPurchaseOption,
-    editSpellUrl
+    editSpellUrl, schoolLvlByIdUrl
 } from "../../../../util/Parameters";
 import SpellPurchaseForm from "../Form/SpellPurchaseForm";
 import IsLastElement from "../../../../util/IsLastElement";
@@ -53,6 +53,8 @@ export default connect(
             spellPurchaseForm: null,
             spellPurchaseFormMode: FormMode.CREATE
         })
+
+        get(schoolLvlByIdUrl(props.schoolLvl.id), rs => this.setState(rs))
     }
 
 

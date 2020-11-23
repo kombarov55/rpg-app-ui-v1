@@ -100,6 +100,7 @@ export const editSpellSchoolUrl = id => rootUrl + "/spellSchool/" + id
 export const findAvailableSpells = (gameId, characterId) => `${rootUrl}/game/${gameId}/spell/available?characterId=${characterId}`
 
 export const addSchoolLvlToSpellSchoolUrl = spellSchoolId => rootUrl + "/spellSchool/" + spellSchoolId + "/schoolLvl"
+export const schoolLvlByIdUrl = id => `${rootUrl}/schoolLvl/${id}`
 
 export const addSpellUrl = schoolLvlId => rootUrl + "/schoolLvl/" + schoolLvlId + "/spell"
 export const editSpellUrl = spellId => rootUrl + "/spell/" + spellId

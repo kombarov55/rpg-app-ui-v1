@@ -105,6 +105,7 @@ export const schoolLvlByIdUrl = id => `${rootUrl}/schoolLvl/${id}`
 export const addSpellUrl = schoolLvlId => rootUrl + "/schoolLvl/" + schoolLvlId + "/spell"
 export const editSpellUrl = spellId => rootUrl + "/spell/" + spellId
 export const deleteSpellUrl = spellId => rootUrl + "/spell/" + spellId
+export const findSpellByName = (spellSchoolId, name) => `${rootUrl}/spellSchool/${spellSchoolId}/spell/findByName?name=${name}`
 
 export const addSpellPurchaseOptionUrl = schoolLvl => rootUrl + "/schoolLvl/" + schoolLvl + "/spellPurchaseOption"
 export const editSpellPurchaseOption = spellPurchaseOptionId => rootUrl + "/spellPurchaseOption/" + spellPurchaseOptionId

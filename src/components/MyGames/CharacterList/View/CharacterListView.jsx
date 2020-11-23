@@ -140,6 +140,7 @@ export default connect(
 
                 <LearnNewSpellComponent gameId={this.props.gameId}
                                         characterId={this.props.characterId}
+                                        isSpellLearned={spell => this.isSpellLearned(spell)}
                                         onSpellPurchase={(spell, amounts) => this.onSpellPurchase(spell, amounts)}
                 />
 
@@ -268,5 +269,9 @@ export default connect(
             creditId: credit.id,
             amount: amount
         }, () => this.refresh(() => Popup.info("Сумма внесена.")))
+    }
+
+    isSpellLearned(spell) {
+        return this.state.character.learnedSpells.some(v => v.id === spell.id)
     }
 })

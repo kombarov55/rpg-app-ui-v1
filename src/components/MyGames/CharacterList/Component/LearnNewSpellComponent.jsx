@@ -5,8 +5,10 @@ import {findAvailableSpells} from "../../../../util/Parameters";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import AmountsToString from "../../../../util/AmountsToString";
+import SpellToPurchaseListItem from "../../../ListItem/SpellToPurchaseListItem";
+import List from "../../../Common/Lists/List";
 
-export default class LearnNewSpellComponent extends React.Component {
+export default class extends React.Component {
 
     constructor(props) {
         super(props);
@@ -19,59 +21,25 @@ export default class LearnNewSpellComponent extends React.Component {
 
     render() {
         return (
-            <div>
-                {
-                    !this.state.listVisible &&
-                    <Btn text={"Купить новое заклинание"}
-                         onClick={() => {
-                             get(findAvailableSpells(this.props.gameId, this.props.characterId), rs => this.setState({
-                                 spells: rs,
-                                 listVisible: true
-                             }))
-                         }}
-                    />
-                }
-                {
-                    this.state.listVisible &&
-                    <div>
-                        <FormTitleLabel text={"Можете изучить:"}/>
-
-                        {this.state.spells.map(spell =>
-                            <div key={spell.id}>
-                                <ExpandableListItem name={spell.name}
-                                                    img={spell.img}
-                                                    description={spell.description}
-                                                    expandableElements={[
-                                                        <div>
-                                                            <div>Школа: {spell.spellSchoolName}</div>
-                                                            <div>Уровень заклинания: {spell.lvl}</div>
-                                                            {spell.prices != null && spell.prices.length > 0 ?
-                                                                <div>{spell.prices.map(amounts =>
-                                                                    <Btn text={`Купить за ${AmountsToString(amounts)}`}
-                                                                         onClick={() => {
-                                                                             this.setState({listVisible: false})
-                                                                             this.props.onSpellPurchase(spell, amounts)
-                                                                         }}
-                                                                    />
-                                                                )}</div> :
-                                                                <Btn text={"Бесплатно!"}
-                                                                     onClick={() => {
-                                                                         this.setState({listVisible: false})
-                                                                         this.props.onSpellPurchase(spell, [])
-                                                                     }}
-                                                                />
-                                                            }
-
-                                                        </div>
-                                                    ]}
-                                                    alwaysExpand={true}
-                                />
-                            </div>
-                        )}
-                    </div>
-                }
-
-            </div>
+            !this.state.listVisible ?
+                <Btn text={"Купить новое заклинание"}
+                     onClick={() => get(findAvailableSpells(this.props.gameId, this.props.characterId), rs => this.setState({
+                         spells: rs,
+                         listVisible: true
+                     }))}
+                /> :
+                <List title={"Можете изучить:"}
+                      values={this.state.spells.map(spell =>
+                          <SpellToPurchaseListItem spell={spell}
+                                                   onSpellPurchase={(spell, amounts) => {
+                                                       this.props.onSpellPurchase(spell, amounts)
+                                                       this.setState({listVisible: false})
+                                                   }}
+                                                   isSpellLearned={spell => this.props.isSpellLearned(spell)}
+                                                   key={spell.id}
+                          />
+                      )}
+                />
         )
     }
 }

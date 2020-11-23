@@ -26,6 +26,7 @@ import IsLastElement from "../../../../util/IsLastElement";
 
 export default connect(
     state => ({
+        spellSchoolId: state.activeSpellSchool.id,
         schoolLvl: state.activeSchoolLvl,
         currencyNames: state.activeGame.currencies.map(v => v.name)
     }),
@@ -76,6 +77,10 @@ export default connect(
                               name={spell.name}
                               description={spell.description}
 
+                              bullets={spell.requiredSpells.length !== 0 ? [
+                                  "Требуются заклинания:" + spell.requiredSpells.map(v => v.name).join(", ")
+                              ] : []}
+
                               onEditClicked={() => this.setState({
                                   spellFormVisible: true,
                                   spellForm: spell,
@@ -93,11 +98,13 @@ export default connect(
                 />
                 {
                     this.state.spellFormVisible &&
-                    (this.state.spellFormMode == FormMode.CREATE ?
+                    (this.state.spellFormMode === FormMode.CREATE ?
                             <SpellForm
+                                spellSchoolId={this.props.spellSchoolId}
                                 onSubmit={form => this.onAddSpellFormSubmit(form)}
                             /> :
                             <SpellForm
+                                spellSchoolId={this.props.spellSchoolId}
                                 initialState={this.state.spellForm}
                                 onSubmit={form => this.onEditSpellFormSubmit(form)}
                             />

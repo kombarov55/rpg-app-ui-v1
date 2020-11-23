@@ -9,7 +9,7 @@ import FormViewStyle from "../../../../styles/FormViewStyle";
  *     gameId: String
  * }
  */
-export default class TransferComponent extends React.Component {
+export default class AdminTransferComponent extends React.Component {
 
     constructor(props) {
         super(props);

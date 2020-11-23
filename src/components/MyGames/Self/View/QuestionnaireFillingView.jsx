@@ -8,7 +8,7 @@ import FileUpload from "../../../Common/Input/FileUpload";
 import {SelectButton} from "primereact/selectbutton";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import {
-    findAllSkillCategoriesByGameIdAndDestionationUrl,
+    findAllSkillCategoriesByGameIdAndDestinationUrl,
     organizationByGameIdAndTypeUrl,
     saveQuestionnaireUrl
 } from "../../../../util/Parameters";
@@ -66,7 +66,7 @@ export default connect(
             countries: []
         }
 
-        get(findAllSkillCategoriesByGameIdAndDestionationUrl(props.gameId, Destination.PLAYER), rs => this.setState({skillCategories: rs}))
+        get(findAllSkillCategoriesByGameIdAndDestinationUrl(props.gameId, Destination.PLAYER), rs => this.setState({skillCategories: rs}))
         get(organizationByGameIdAndTypeUrl(props.gameId, OrganizationType.COUNTRY), rs => this.setState({countries: rs}))
     }
 

@@ -19,7 +19,6 @@ import SubnetworkEditView from "./components/Admin/Subnetwork/View/SubnetworkEdi
 import GameEditView from "./components/AdminGame/Self/View/GameEditView";
 import AdminPageView from "./components/Admin/View/AdminPageView";
 import ConversionView from "./components/AdminGame/Self/View/ConversionView";
-import CurrencyCreationView from "./components/AdminGame/Self/View/CurrencyFormView";
 import ItemTemplateView from "./components/AdminGame/ItemTemplate/View/ItemTemplateView";
 import SkillCategoryView from "./components/AdminGame/Skill/View/SkillCategoryView";
 import OrganizationDetailsView from "./components/MyGames/Organization/View/OrganizationDetailsView";
@@ -80,7 +79,6 @@ export const schoolLvlView = {component: <SchoolLvlView/>, label: "Круг шк
 
 export const skillView = {component: <SkillView/>, label: "Навык"}
 export const conversionView = {component: <ConversionView/>, label: "Обмен валют"}
-export const currencyFormView = {component: <CurrencyCreationView/>, label: "Валюта"}
 export const itemTemplateView = {component: <ItemTemplateView/>, label: "Предметы"}
 export const organizationDetailsView = {component: <OrganizationDetailsView/>, label: "Организация"}
 export const questionnaireTemplateView = {component: <QuestionnaireTemplateView/>, label: "Шаблон анкеты"}

@@ -29,6 +29,7 @@ import LearnNewSpellComponent from "../Component/LearnNewSpellComponent";
 import CharacterItemsComponent from "../Component/CharacterItemsComponent";
 import CreditListItem from "../../../ListItem/CreditListItem";
 import ConversionComponent from "../Component/ConversionComponent";
+import CharacterCraftComponent from "../Component/CharacterCraftComponent";
 
 export default connect(
     state => ({
@@ -112,6 +113,8 @@ export default connect(
                                          onTransferItem={(item, destinationType, destination) => this.onTransferItem(item, destinationType, destination)}
                                          onDisposeItem={item => this.onDisposeItem(item)}
                 />
+
+                <CharacterCraftComponent onItemCrafted={form => this.onItemCrafted(form)}/>
 
                 <List title={"Навыки:"}
                       values={this.state.character.learnedSkills.map(({skill, amount}) =>
@@ -291,5 +294,9 @@ export default connect(
             amount: amount,
             characterId: this.state.character.id
         }, () => this.refresh(() => Popup.info("Обмен произведён.")))
+    }
+
+    onItemCrafted(form) {
+        console.log(form)
     }
 })

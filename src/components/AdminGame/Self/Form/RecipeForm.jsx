@@ -5,11 +5,12 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import ListItem from "../../../Common/ListElements/ListItem";
 import List from "../../../Common/Lists/List";
-import WarehouseEntryForm from "../../ItemTemplate/Form/WarehouseEntryForm";
 import {SelectButton} from "primereact/selectbutton";
 import SuccessChanceDependencyForm from "./SuccessChanceDependencyForm";
+import RemoteAutocomplete from "../../../Common/Input/RemoteAutocomplete";
+import {itemTemplateByGameIdAndName} from "../../../../util/Parameters";
 
-export default class RecipeForm extends React.Component {
+export default class extends React.Component {
 
     constructor(props) {
         super(props);
@@ -49,21 +50,21 @@ export default class RecipeForm extends React.Component {
                       noItemsText={"Отсутствуют.."}
                       isAddButtonVisible={!this.state.ingredientFormVisible}
                       onAddClicked={() => this.setState({ingredientFormVisible: true})}
-                      values={this.state.ingredients.map(warehouseEntry =>
-                          <ListItem text={warehouseEntry.merchandise.name + ": " + warehouseEntry.amount + " шт."}
-                                    onDelete={() => this.setState(state => ({ingredients: state.ingredients.filter(v => v !== warehouseEntry)}))}
+                      values={this.state.ingredients.map(itemTemplate =>
+                          <ListItem text={itemTemplate.name}
+                                    onDelete={() => this.setState(state => ({ingredients: state.ingredients.filter(v => v !== itemTemplate)}))}
                           />
                       )}
                 />
                 {
                     this.state.ingredientFormVisible &&
-                    <WarehouseEntryForm
-                        merchandiseList={this.props.ingredientOptions}
-                        onSubmit={warehouseEntry => this.setState(state => ({
-                            ingredients: state.ingredients.concat(warehouseEntry),
-                            ingredientFormVisible: false
-                        }))}
-                    />
+                        <RemoteAutocomplete fieldToDisplay={"name"}
+                                            buildSyncUrl={input => itemTemplateByGameIdAndName(this.props.gameId, input)}
+                                            onSelected={itemTemplate => this.setState(state => ({
+                                                ingredients: state.ingredients.concat(itemTemplate),
+                                                ingredientFormVisible: false
+                                            }))}
+                        />
                 }
 
                 <InputLabel text={"Навык, влияющий на успех:"}/>

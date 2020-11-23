@@ -1,41 +1,52 @@
 import React from "react";
-import {connect} from "react-redux";
+import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
+import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import InputLabel from "../../../Common/Labels/InputLabel";
-import {updateCurrencyForm} from "../../../../data-layer/ActionCreators";
-import Btn from "../../../Common/Buttons/Btn";
+import Validation from "../../../../util/Validation";
 
-function mapStateToProps(state, props) {
-    return {
-        currencyForm: state.currencyForm
+export default class extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = props.initialState == null ?
+            this.initialState :
+            props.initialState
     }
-}
 
-function mapDispatchToProps(dispatch, props) {
-    return {
-        updateCurrencyForm: fieldNameToValue => dispatch(updateCurrencyForm(fieldNameToValue))
+    initialState = {
+        name: null,
+        priceInActivityPoints: null
     }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
-    return (
-        <div className={"currency-form"}>
-            <div className={"input-group"}>
+    render() {
+        return (
+            <div>
+                <FormTitleLabel text={"Добавление новой валюты:"}/>
+
                 <InputLabel text={"Название:"}/>
-                <input
-                    value={props.currencyForm.name}
-                    onChange={e => props.updateCurrencyForm({name: e.target.value})}
+                <input value={this.state.name}
+                       onChange={e => this.setState({name: e.target.value})}
                 />
 
                 <InputLabel text={"Цена в баллах актива:"}/>
-                <input
-                    value={props.currencyForm.priceInActivityPoints}
-                    onChange={e => props.updateCurrencyForm({priceInActivityPoints: e.target.value})}
+                <input value={this.state.priceInActivityPoints}
+                       onChange={e => this.setState({priceInActivityPoints: e.target.value})}
+                />
+
+                <SubmitButton text={"Сохранить"}
+                              onClick={() => {
+                                  const success = Validation.run(
+                                      Validation.nonNull(this.state.name, "Название"),
+                                      Validation.between(this.state.priceInActivityPoints, 0, Number.MAX_SAFE_INTEGER, "Цена в баллах актива")
+                                  )
+
+                                  if (success) {
+                                      this.props.onSubmit(this.state)
+                                  }
+                              }}
                 />
             </div>
-
-            <Btn text={"Сохранить"}
-                 onClick={() => props.onSubmit()}
-            />
-        </div>
-    )
-})
+        )
+    }
+}

@@ -20,7 +20,6 @@ import {
 import ViewInfo from "../../../Common/Constructions/ViewInfo";
 import Btn from "../../../Common/Buttons/Btn";
 import {
-    characterListView,
     characterSelectionView,
     myGamesView,
     organizationDetailsView,

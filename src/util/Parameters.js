@@ -56,7 +56,7 @@ export const updateCurrencyUrl = (gameId, currencyId) => rootUrl + "/game/" + ga
 export const saveSkillCategoryUrl = gameId => rootUrl + "/game/" + gameId + "/skillCategory"
 export const skillCategoryUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId
 export const findAllSkillCategoriesShortByGameId = gameId => rootUrl + "/game/" + gameId + "/skillCategory/short"
-export const findAllSkillCategoriesByGameIdAndDestionationUrl = (gameId, destination) => rootUrl + "/game/" + gameId + "/skillCategory/filter?destination=" + destination
+export const findAllSkillCategoriesByGameIdAndDestinationUrl = (gameId, destination) => rootUrl + "/game/" + gameId + "/skillCategory/filter?destination=" + destination
 
 export const saveSkillUrl = skillCategoryId => rootUrl + "/skillCategory/" + skillCategoryId + "/skill"
 export const skillByIdUrl = id => rootUrl + "/skill/" + id
@@ -116,9 +116,8 @@ export const editSkillUpgradeUrl = skillUpgradeId => rootUrl + "/skillUpgrade/" 
 export const deleteSkillUpgrade = skillUpgradeId => rootUrl + "/skillUpgrade/" + skillUpgradeId
 
 export const getRecipesByGameId = gameId => rootUrl + "/game/" + gameId + "/recipe"
-export const saveRecipe = gameId => rootUrl + "/game/" + gameId + "/recipe"
-export const updateRecipe = (gameId, recipeId) => rootUrl + "/game/" + gameId + "/recipe/" + recipeId
-export const deleteRecipe = id => rootUrl + "/recipe/" + id
+export const saveRecipeUrl = gameId => rootUrl + "/game/" + gameId + "/recipe"
+export const deleteRecipeUrl = id => rootUrl + "/recipe/" + id
 
 export const findQuestionnaireTemplatesByGameId = gameId => rootUrl + "/game/" + gameId + "/questionnaireTemplate"
 export const questionnaireTemplateByIdUrl = id => rootUrl + "/questionnaireTemplate/" + id

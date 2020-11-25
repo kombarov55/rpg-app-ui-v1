@@ -13,7 +13,7 @@ export default class extends React.Component {
                 bullets={[
                     `Зависит от навыка: ${recipe.dependantSkill.name}`,
                     `Мин. уровень навыка: ${recipe.minSkillLvl}`,
-                    `Необходимые предметы: ${recipe.ingredients.map(v => v.name).join(", ")}`,
+                    `Необходимые предметы: ${recipe.ingredients.map(v => `${v.itemTemplate.name} ${v.amount}шт.`).join(", ")}`,
                     "Шанс успеха:",
                     ...recipe.successChanceDependencies.map(successChanceDependency => successChanceDependency.min + " до " + successChanceDependency.max + ": " + successChanceDependency.percent + "%")
                 ]}

@@ -1,6 +1,7 @@
 import React from "react";
 import List from "../Lists/List";
 import ListItem from "../ListElements/ListItem";
+import getOrDefault from "../../../util/getOrDefault";
 
 /**
  * props: {
@@ -22,6 +23,8 @@ export default class LocalAutocomplete extends React.Component {
     }
 
     render() {
+        const fieldToDisplay = getOrDefault(this.props.fieldToDisplay, "name")
+
         return (
             <div>
                 <input placeholder={"Введите название..."}
@@ -30,12 +33,12 @@ export default class LocalAutocomplete extends React.Component {
                            input: e.target.value,
                            filteredItems: this
                                .props
-                               .items.filter(item => item[this.props.fieldToDisplay].toLowerCase().startsWith(e.target.value.toLowerCase()))
+                               .items.filter(item => item[fieldToDisplay].toLowerCase().startsWith(e.target.value.toLowerCase()))
                        })}
                 />
                 <List values={[
                         ...this.state.filteredItems.map(item =>
-                            <ListItem text={item[this.props.fieldToDisplay]}
+                            <ListItem text={item[fieldToDisplay]}
                                       onClick={() => {
                                           this.setState({selectedItem: item})
                                           this.props.onSelected(item)

@@ -114,7 +114,11 @@ export default connect(
                                          onDisposeItem={item => this.onDisposeItem(item)}
                 />
 
-                <CharacterCraftComponent onItemCrafted={form => this.onItemCrafted(form)}/>
+                <CharacterCraftComponent gameId={this.props.gameId}
+                                         items={this.state.character.items}
+                                         learnedSkills={this.state.character.learnedSkills}
+                                         onItemCrafted={form => this.onItemCrafted(form)}
+                />
 
                 <List title={"Навыки:"}
                       values={this.state.character.learnedSkills.map(({skill, amount}) =>

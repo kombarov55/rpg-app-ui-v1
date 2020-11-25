@@ -72,7 +72,7 @@ export default class ItemForSaleComponent extends React.Component {
                     </div>
                 ]}
 
-                alwaysExpand={true}
+                alwaysExpand={false}
             />
         )
     }

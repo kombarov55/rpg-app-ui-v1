@@ -54,5 +54,14 @@ export default {
         }
 
         return true
+    },
+
+    isTrue(cond, errMsg) {
+        if (!cond) {
+            Popup.error(errMsg)
+            return false
+        }
+
+        return true
     }
 }

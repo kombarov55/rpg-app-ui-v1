@@ -10,7 +10,7 @@ import {
     creditPaymentUrl,
     currenciesByGameIdUrl,
     disposeCharacterItemUrl,
-    getCharacterByIdUrl,
+    getCharacterByIdUrl, performCraftingUrl,
     transferItemUrl,
     transferUrl
 } from "../../../../util/Parameters";
@@ -301,6 +301,15 @@ export default connect(
     }
 
     onItemCrafted(form) {
-        console.log(form)
+        post(performCraftingUrl, {
+            characterId: this.state.character.id,
+            recipeId: form.recipe.id
+        }, rs => this.refresh(() => {
+            if (rs.success) {
+                Popup.success("Успешно")
+            } else {
+                Popup.error("Не получилось скрафтить предмет ;(")
+            }
+        }))
     }
 })

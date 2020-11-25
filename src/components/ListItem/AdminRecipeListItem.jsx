@@ -15,7 +15,7 @@ export default class extends React.Component {
                     `Мин. уровень навыка: ${recipe.minSkillLvl}`,
                     `Необходимые предметы: ${recipe.ingredients.map(v => `${v.itemTemplate.name} ${v.amount}шт.`).join(", ")}`,
                     "Шанс успеха:",
-                    ...recipe.successChanceDependencies.map(successChanceDependency => successChanceDependency.min + " до " + successChanceDependency.max + ": " + successChanceDependency.percent + "%")
+                    ...recipe.successChanceDependencies.map(successChanceDependency => this.successChanceDependencyToString(successChanceDependency))
                 ]}
                 onDeleteClicked={() => this.props.onDelete()}
 
@@ -23,5 +23,13 @@ export default class extends React.Component {
                 key={recipe.id}
             />
         )
+    }
+
+    successChanceDependencyToString(successChanceDependency) {
+        if (successChanceDependency.max != null) {
+            return successChanceDependency.min + " до " + successChanceDependency.max + ": " + successChanceDependency.percent + "%"
+        } else {
+            return "От " + successChanceDependency.min + ": " + successChanceDependency.percent + "%"
+        }
     }
 }

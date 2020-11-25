@@ -2,8 +2,7 @@ import React from "react";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import InputLabel from "../../../Common/Labels/InputLabel";
-import IsNumeric from "../../../../util/IsNumeric";
-import Popup from "../../../../util/Popup";
+import Validation from "../../../../util/Validation";
 
 export default class SuccessChanceDependencyForm extends React.Component {
 
@@ -45,16 +44,14 @@ export default class SuccessChanceDependencyForm extends React.Component {
 
                 <SubmitButton text={"Сохранить"}
                               onClick={() => {
-                                  if (
-                                      !IsNumeric(this.state.min) ||
-                                      !IsNumeric(this.state.max) ||
-                                      !IsNumeric(this.state.percent)
-                                  ) {
-                                      Popup.error("Пожалуйста, заполните поля верно! Каждое из полей должно содержать целое число")
-                                      return
+                                  const success = Validation.run(
+                                      Validation.between(this.state.min, 0, Number.MAX_SAFE_INTEGER, "От"),
+                                      Validation.between(this.state.min, this.state.min, Number.MAX_SAFE_INTEGER, "До"),
+                                      Validation.between(this.state.percent, 0, 100, "Шанс успеха")
+                                  )
+                                  if (success) {
+                                      this.props.onSubmit(this.state)
                                   }
-
-                                  this.props.onSubmit(this.state)
                               }}
                 />
             </div>

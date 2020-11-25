@@ -200,14 +200,14 @@ export default connect(
 
     onAddRecipe(form) {
         post(saveRecipeUrl(this.state.id), form, rs => {
-            this.setState(state => ({questionnaireTemplates: state.questionnaireTemplates.concat(rs)}))
+            this.setState(state => ({recipes: state.recipes.concat(rs)}))
             Popup.info("Формула крафта создана.")
         })
     }
 
     onDeleteRecipe(form) {
         httpDelete(deleteRecipeUrl(form.id), rs => {
-            this.setState(state => ({questionnaireTemplates: state.questionnaireTemplates.filter(v => v.id !== rs.id)}))
+            this.setState(state => ({recipes: state.recipes.filter(v => v.id !== rs.id)}))
             Popup.info("Формула крафта удалена.")
         })
     }

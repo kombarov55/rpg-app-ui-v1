@@ -7,12 +7,9 @@ import ListItem from "../../../Common/ListElements/ListItem";
 import List from "../../../Common/Lists/List";
 import SuccessChanceDependencyForm from "./SuccessChanceDependencyForm";
 import RemoteAutocomplete from "../../../Common/Input/RemoteAutocomplete";
-import {
-    findCraftableItemTemplatesByGameIdAndNameUrl,
-    findSkillByNameUrl,
-    findUsableInCraftItemTemplatesByGameIdAndNameUrl
-} from "../../../../util/Parameters";
+import {findCraftableItemTemplatesByGameIdAndNameUrl, findSkillByNameUrl} from "../../../../util/Parameters";
 import Validation from "../../../../util/Validation";
+import ItemTemplateAmountForm from "./ItemTemplateAmountForm";
 
 export default class extends React.Component {
 
@@ -53,18 +50,18 @@ export default class extends React.Component {
                       noItemsText={"Отсутствуют.."}
                       isAddButtonVisible={!this.state.ingredientFormVisible}
                       onAddClicked={() => this.setState({ingredientFormVisible: true})}
-                      values={this.state.ingredients.map(itemTemplate =>
-                          <ListItem text={itemTemplate.name}
-                                    onDelete={() => this.setState(state => ({ingredients: state.ingredients.filter(v => v !== itemTemplate)}))}
+                      values={this.state.ingredients.map(itemTemplateAmount =>
+                          <ListItem text={`${itemTemplateAmount.itemTemplate.name} ${itemTemplateAmount.amount} шт.`}
+                                    onDelete={() => this.setState(state => ({ingredients: state.ingredients.filter(v => v !== itemTemplateAmount)}))}
                           />
                       )}
                 />
                 {
                     this.state.ingredientFormVisible &&
-                    <RemoteAutocomplete
-                        buildSyncUrl={input => findUsableInCraftItemTemplatesByGameIdAndNameUrl(this.props.gameId, input)}
-                        onSelected={itemTemplate => this.setState(state => ({
-                            ingredients: state.ingredients.concat(itemTemplate),
+                    <ItemTemplateAmountForm
+                        gameId={this.props.gameId}
+                        onSubmit={form => this.setState(state => ({
+                            ingredients: state.ingredients.concat(form),
                             ingredientFormVisible: false
                         }))}
                     />

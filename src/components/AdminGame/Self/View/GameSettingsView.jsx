@@ -9,10 +9,9 @@ import {InputTextarea} from "primereact/inputtextarea";
 import {patch} from "../../../../util/Http";
 import {patchSettingsUrl} from "../../../../util/Parameters";
 import {InputSwitch} from "primereact/inputswitch";
-import List from "../../../Common/Lists/List";
-import MaxEquippedAmountListItem from "../../../ListItem/MaxEquippedAmountListItem";
 import Popup from "../../../../util/Popup";
 import Validation from "../../../../util/Validation";
+import MaxEquippedAmountsComponent from "../Component/MaxEquippedAmountsComponent";
 
 export default connect(
     state => ({
@@ -58,19 +57,19 @@ export default connect(
                              onChange={e => this.setState({charImgUploadable: e.value})}
                 />
 
-                <List title={"Максимальное количество одетых предметов по категориям:"}
-                      values={this.state.maxEquippedAmounts.map(maxEquippedAmount =>
-                          <MaxEquippedAmountListItem maxEquippedAmount={maxEquippedAmount}
-                                                     onDelete={() => this.setState(state => ({
-                                                         maxEquippedAmounts: state.maxEquippedAmounts.filter(v => v.id !== maxEquippedAmount.id)
-                                                     }))}
-                                                     onEdit={() => this.setState(state => ({
-                                                         maxEquippedAmounts: state.maxEquippedAmounts.filter(v => v.id !== maxEquippedAmount.id).concat(maxEquippedAmount)
-                                                     }))}
-                          />
-                      )}
+                <MaxEquippedAmountsComponent
+                    gameId={this.props.gameId}
+                    maxEquippedAmounts={this.state.maxEquippedAmounts}
+                    onDeleted={maxEquippedAmount => this.setState(state => ({
+                        maxEquippedAmounts: state.maxEquippedAmounts.filter(v => v.id !== maxEquippedAmount.id)
+                    }))}
+                    onEdited={maxEquippedAmount => this.setState(state => ({
+                        maxEquippedAmounts: state.maxEquippedAmounts.filter(v => v.id !== maxEquippedAmount.id).concat(maxEquippedAmount)
+                    }))}
+                    onAdded={maxEquippedAmount => this.setState(state => ({
+                        maxEquippedAmounts: state.maxEquippedAmounts.concat(maxEquippedAmount)
+                    }))}
                 />
-
                 <Btn text={"Сохранить изменения"} onClick={() => {
                     const success = Validation.run(
                         Validation.between(this.state.inventorySize, 0, Number.MAX_SAFE_INTEGER, "Размер инвентаря")

@@ -13,7 +13,7 @@ import {
     getCharacterByIdUrl, gameSettingsUrl,
     performCraftingUrl,
     transferItemUrl,
-    transferUrl
+    transferUrl, equipItemUrl, unequipItemUrl
 } from "../../../../util/Parameters";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
@@ -120,10 +120,12 @@ export default connect(
                 />
 
                 <CharacterInventoryComponent items={this.state.character.items}
+                                             equippedItems={this.state.character.equippedItems}
                                              gameId={this.props.gameId}
                                              inventorySize={this.state.gameSettings?.inventorySize}
                                              onTransferItem={(item, destinationType, destination) => this.onTransferItem(item, destinationType, destination)}
                                              onDisposeItem={item => this.onDisposeItem(item)}
+                                             onEquipItem={item => this.onEquipItem(item)}
                 />
 
                 <CharacterCraftComponent gameId={this.props.gameId}
@@ -240,6 +242,20 @@ export default connect(
             itemId: item.id,
             characterId: this.state.character.id
         }, () => this.refresh(() => Popup.info("Предмет выброшен.")))
+    }
+
+    onEquipItem(item) {
+        post(equipItemUrl, {
+            characterId: this.state.character.id,
+            itemId: item.id
+        }, () => this.refresh(() => Popup.info("Предмет одет.")))
+    }
+
+    onUnequipItem(item) {
+        post(unequipItemUrl, {
+            characterId: this.state.character.id,
+            itemId: item.id
+        }, () => this.refresh(() => Popup.info("Предмет снят.")))
     }
 
     onSpellPurchase(spell, amounts) {

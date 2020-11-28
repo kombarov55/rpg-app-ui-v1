@@ -41,8 +41,6 @@ export default class extends React.Component {
                                          this.props.onSelected(item)
                                      }
                                  }
-
-
                              }}
 
                              key={item}

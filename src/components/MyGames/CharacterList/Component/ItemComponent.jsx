@@ -59,6 +59,10 @@ export default class extends React.Component {
                                                           }}
                                         />
                                     ),
+                                    (
+                                        this.props.item.canBeEquipped &&
+                                        <Btn text={"Одеть предмет"} onClick={() => this.props.onEquipItem()}/>
+                                    ),
                                     <Btn text={"Выбросить"} onClick={() => this.props.onDisposeItem(this.props.item)}/>
                                 ]}
 

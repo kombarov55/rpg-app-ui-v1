@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 import {
     changeView,
-    setActiveOrganization,
     setActiveQuestionnaireTemplate,
     setActiveSkillCategory,
 } from "../../../../data-layer/ActionCreators";
@@ -11,27 +10,26 @@ import {
     conversionView,
     gameSettingsView,
     itemTemplateView,
-    organizationDetailsView,
     questionnaireTemplateView,
     skillCategoryView
 } from "../../../../Views";
 import {get, httpDelete, post, put} from "../../../../util/Http";
 import {
-    deleteQuestionnaireTemplateUrl, deleteRecipeUrl,
+    deleteQuestionnaireTemplateUrl,
+    deleteRecipeUrl,
     editQuestionnaireTemplateUrl,
     gameByIdUrl,
     organizationByGameIdUrl,
     organizationUrl,
     saveCurrencyUrl,
-    saveQuestionnaireTemplateUrl, saveRecipeUrl,
+    saveQuestionnaireTemplateUrl,
+    saveRecipeUrl,
     saveSkillCategoryUrl,
     skillCategoryUrl,
-    updateCurrencyUrl, updateRecipe
+    updateCurrencyUrl
 } from "../../../../util/Parameters";
 import Btn from "../../../Common/Buttons/Btn";
 import Popup from "../../../../util/Popup";
-import NameImgDescription from "../../../Common/Constructions/NameImgDescription";
-import InputLabel from "../../../Common/Labels/InputLabel";
 import AdminGameCurrencyComponent from "../Component/AdminGameCurrencyComponent";
 import AdminGameSkillCateoryComponent from "../Component/AdminGameSkillCateoryComponent";
 import AdminGameOrganizationsComponent from "../Component/AdminGameOrganizationsComponent";
@@ -126,7 +124,7 @@ export default connect(
                     onQuestionnaireTemplateDetailsClicked={questionnaireTemplate => this.props.toQuestionnaireTemplateView(questionnaireTemplate)}
                 />
 
-                <AdminTransferComponent currencyNames={this.state.currencies}
+                <AdminTransferComponent currencyNames={this.state.currencies.map(v => v.name)}
                                         gameId={this.state.id}
                                         onSubmit={({destinationType, destination, currency, amount}) =>
                                             this.onAdminTransfer(destinationType, destination, currency, amount)}

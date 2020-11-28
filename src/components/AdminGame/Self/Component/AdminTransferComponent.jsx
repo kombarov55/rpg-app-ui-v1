@@ -24,7 +24,7 @@ export default class AdminTransferComponent extends React.Component {
             <div style={FormViewStyle}>
                 {
                     !this.state.formVisible ?
-                        <Btn text={"Сделать перевод"} onClick={() => this.setState({formVisible: true})}/> :
+                        <Btn text={"Админский перевод"} onClick={() => this.setState({formVisible: true})}/> :
                         <TransferForm
                             currencyNames={this.props.currencyNames}
                             gameId={this.props.gameId}

@@ -8,7 +8,7 @@ import getOrDefault from "../../../../util/getOrDefault";
 
 export default connect(
     state => ({
-        game: state.activeGame
+        txt: state.activeGame.settings.disclaimerText
     }),
     null,
     (stateProps, dispatchProps, ownProps) => {
@@ -31,7 +31,7 @@ export default connect(
     render() {
         return (
             <div style={FormViewStyle}>
-                <div>{getOrDefault(this.props.game.disclaimerText, "Дисклеймер отсутствует")}</div>
+                <div>{getOrDefault(this.props.txt, "Правила отсутствуют.")}</div>
                 <Btn text={"Прочитал и согласен"} onClick={() => this.props.toQuestionnaireFillingView()}/>
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>

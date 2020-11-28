@@ -117,6 +117,7 @@ export default connect(
                 <CharacterEquipmentComponent equippedItems={this.state.character.equippedItems}
                                              gameSettings={this.state.gameSettings}
                                              gameId={this.props.gameId}
+                                             onUnequipItem={item => this.onUnequipItem(item)}
                 />
 
                 <CharacterInventoryComponent items={this.state.character.items}

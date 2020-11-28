@@ -34,7 +34,10 @@ export default class extends React.Component {
                                        this.setState({selectedItem: null})
                                        this.props.onTransferItem(this.state.selectedItem, destinationType, destination)
                                    }}
-                                   onEquipItem={() => this.props.onEquipItem(this.state.selectedItem)}
+                                   onEquipItem={() => {
+                                       this.setState({selectedItem: null})
+                                       this.props.onEquipItem(this.state.selectedItem)
+                                   }}
                     />
                 }
 

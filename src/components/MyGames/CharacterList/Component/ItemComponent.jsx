@@ -5,6 +5,7 @@ import BulletList from "../../../Common/Lists/BulletList";
 import ItemTransferForm from "../Form/ItemTransferForm";
 import List from "../../../Common/Lists/List";
 import ItemUpgradeComponent from "./ItemUpgradeComponent";
+import getOrDefault from "../../../../util/getOrDefault";
 
 export default class extends React.Component {
 
@@ -18,6 +19,7 @@ export default class extends React.Component {
     }
 
     render() {
+        const viewOnly = getOrDefault(this.props.viewOnly, false)
         return (
             <ExpandableListItem name={this.props.item.name}
                                 img={this.props.item.img}
@@ -40,16 +42,20 @@ export default class extends React.Component {
                                     ),
                                     (
                                         this.state.upgradeListVisible &&
-                                            <List title={"Уровни предмета:"}
-                                                  values={this.props.item.upgrades.map(upgrade =>
-                                                      <ItemUpgradeComponent upgrade={upgrade}
-                                                                            key={upgrade.id}
-                                                                            isUpgraded={true}
-                                                      />
-                                                  )}
-                                            />
+                                        <List title={"Уровни предмета:"}
+                                              values={this.props.item.upgrades.map(upgrade =>
+                                                  <ItemUpgradeComponent upgrade={upgrade}
+                                                                        key={upgrade.id}
+                                                                        isUpgraded={true}
+                                                  />
+                                              )}
+                                        />
                                     ),
-                                    <Btn text={"Передать"} onClick={() => this.setState({formVisible: true})}/>,
+                                    (
+                                        !viewOnly &&
+                                        <Btn text={"Передать"} onClick={() => this.setState({formVisible: true})}/>
+                                    ),
+
                                     (
                                         this.state.formVisible &&
                                         <ItemTransferForm gameId={this.props.gameId}
@@ -60,10 +66,14 @@ export default class extends React.Component {
                                         />
                                     ),
                                     (
-                                        this.props.item.canBeEquipped &&
+                                        (!viewOnly && this.props.item.canBeEquipped) &&
                                         <Btn text={"Одеть предмет"} onClick={() => this.props.onEquipItem()}/>
                                     ),
-                                    <Btn text={"Выбросить"} onClick={() => this.props.onDisposeItem(this.props.item)}/>
+                                    (
+                                        !viewOnly &&
+                                        <Btn text={"Выбросить"} onClick={() => this.props.onDisposeItem(this.props.item)}/>
+                                    )
+
                                 ]}
 
                                 alwaysExpand={true}

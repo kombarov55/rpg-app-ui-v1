@@ -36,7 +36,7 @@ export function onStartup() {
     console.log(window.location)
 
     const urlSearchParams = new URLSearchParams(window.location.search);
-    const userId = urlSearchParams.get("user_id")
+    const userId = urlSearchParams.get("viewer_id")
     Globals.userId = userId == null ? "33167934" : userId
 
     postWithoutAuth(loginUrl, {login: Globals.userId}, rs => {

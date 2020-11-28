@@ -31,6 +31,7 @@ import CharacterInventoryComponent from "../Component/CharacterInventoryComponen
 import CreditListItem from "../../../ListItem/CreditListItem";
 import ConversionComponent from "../Component/ConversionComponent";
 import CharacterCraftComponent from "../Component/CharacterCraftComponent";
+import CharacterEquipmentComponent from "../Component/CharacterEquipmentComponent";
 
 export default connect(
     state => ({
@@ -61,6 +62,7 @@ export default connect(
                 balance: [],
                 learnedSpells: [],
                 learnedSkills: [],
+                equippedItems: [],
                 items: [],
                 credits: []
             },
@@ -110,6 +112,11 @@ export default connect(
                 <ConversionComponent gameId={this.props.gameId}
                                      currencies={this.props.currencies}
                                      onSubmit={form => this.onConversion(form.currency1, form.currency2, form.amount)}
+                />
+
+                <CharacterEquipmentComponent equippedItems={this.state.character.equippedItems}
+                                             gameSettings={this.state.gameSettings}
+                                             gameId={this.props.gameId}
                 />
 
                 <CharacterInventoryComponent items={this.state.character.items}

@@ -1,6 +1,14 @@
 import React from "react";
 import getOrDefault from "../../../util/getOrDefault";
 
+/**
+ * itemKey: String = "img"
+ * items: List<T>
+ * onSelected: T => {}
+ * onSelectRemoved: T => {},
+ * size: Int?
+ * emptyIcon: String?
+ */
 export default class extends React.Component {
 
     constructor(props) {
@@ -18,11 +26,11 @@ export default class extends React.Component {
         return (
             <div style={this.gridStyle}>
                 {
-                    this.props.items.map(item =>
+                    this.getItems().map(item =>
                         <Img src={item[imgKey]}
                              selected={item === this.state.selectedItem}
                              onClick={() => {
-                                 if (this.state.selectedItem?.id === item.id) {
+                                 if (!getOrDefault(item.unselectable, false) && this.state.selectedItem?.id === item.id) {
                                      this.setState({selectedItem: null})
                                      if (this.props.onSelectRemoved != null) {
                                          this.props.onSelectRemoved(item)
@@ -43,6 +51,16 @@ export default class extends React.Component {
                 }
             </div>
         )
+    }
+
+    getItems() {
+        if (this.props.size == null) {
+            return this.props.items
+        } else {
+            const fillingItemsLength = this.props.size - this.props.items.length
+            const suffix = Array(fillingItemsLength).fill({img: "rounded-square.png", unselectable: true})
+            return this.props.items.concat(suffix)
+        }
     }
 }
 

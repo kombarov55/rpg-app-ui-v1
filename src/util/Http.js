@@ -1,5 +1,4 @@
 import Globals from "./Globals";
-import {uploadUrl} from "./Parameters";
 import axios from "axios"
 import getOrDefault from "./getOrDefault";
 import Popup from "./Popup";
@@ -32,6 +31,7 @@ export function post(url, body, onSuccess, onFailure) {
         if (xhr.status === 200) {
             onSuccessCallback(parseResponse(xhr.responseText))
         } else {
+            Popup.error("Что то пошло не так ;(")
             onFailureCallback(parseResponse(xhr.responseText))
         }
     }
@@ -50,6 +50,7 @@ export function postWithoutAuth(url, body, onSuccess, onFailure) {
         if (xhr.status === 200) {
             onSuccessCallback(parseResponse(xhr.responseText))
         } else {
+            Popup.error("Что то пошло не так ;(")
             onFailureCallback()
         }
     }
@@ -65,6 +66,7 @@ export function httpDelete(url, onSuccess = () => {}, onFailure = () => {}) {
         if (xhr.status === 200) {
             onSuccess(parseResponse(xhr.responseText))
         } else {
+            Popup.error("Невозможно удалить.")
             onFailure()
         }
     }

@@ -77,7 +77,7 @@ export default class ItemTemplateComponent extends React.Component {
 
                                 initialState={this.state.form}
                                 onSubmit={form => {
-                                    this.onUpdateItemTemplate(form)
+                                    this.props.onUpdateItemTemplate(form)
                                     this.setState({formVisible: false})
                                 }}
                             />

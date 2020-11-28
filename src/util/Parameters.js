@@ -43,6 +43,7 @@ export const editGameByNetworkId = (networkId, gameId) => gameByNetworkId(networ
 export const editGamebySubnetworkId = (networkId, subnetworkId, gameId) => gameBySubnetworkId(networkId, subnetworkId) + "/" + gameId
 export const deleteGameUrl = gameId => rootUrl + "/game/" + gameId
 export const patchSettingsUrl = gameId => `${rootUrl}/game/${gameId}/settings`
+export const gameSettingsUrl = gameId => `${rootUrl}/game/${gameId}/settings`
 
 export const skillsByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/skill"
 export const shortSkillsByGameIdUrl = gameId => rootUrl + "/game/" + gameId + "/skill/short"

@@ -53,7 +53,10 @@ export default class extends React.Component {
                                     (
                                         this.state.formVisible &&
                                         <ItemTransferForm gameId={this.props.gameId}
-                                                          onSubmit={({destinationType, destination}) => this.props.onTransferItem(destinationType, destination)}
+                                                          onSubmit={({destinationType, destination}) => {
+                                                              this.setState({formVisible: false})
+                                                              this.props.onTransferItem(destinationType, destination)
+                                                          }}
                                         />
                                     ),
                                     <Btn text={"Выбросить"} onClick={() => this.props.onDisposeItem(this.props.item)}/>

@@ -10,7 +10,7 @@ import {
     creditPaymentUrl,
     currenciesByGameIdUrl,
     disposeCharacterItemUrl,
-    getCharacterByIdUrl,
+    getCharacterByIdUrl, gameSettingsUrl,
     performCraftingUrl,
     transferItemUrl,
     transferUrl
@@ -65,10 +65,13 @@ export default connect(
                 credits: []
             },
 
+            gameSettings: null,
+
             transferFormVisible: false
         }
 
         get(currenciesByGameIdUrl(this.props.gameId), rs => this.props.setCurrencies(rs))
+        get(gameSettingsUrl(this.props.gameId), rs => this.setState({gameSettings: rs}))
         this.refresh()
     }
 
@@ -111,6 +114,7 @@ export default connect(
 
                 <CharacterInventoryComponent items={this.state.character.items}
                                              gameId={this.props.gameId}
+                                             inventorySize={this.state.gameSettings?.inventorySize}
                                              onTransferItem={(item, destinationType, destination) => this.onTransferItem(item, destinationType, destination)}
                                              onDisposeItem={item => this.onDisposeItem(item)}
                 />

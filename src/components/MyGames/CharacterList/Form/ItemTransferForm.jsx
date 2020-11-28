@@ -6,6 +6,7 @@ import TransferDestination from "../../../../data-layer/enums/TransferDestinatio
 import RemoteAutocomplete from "../../../Common/Input/RemoteAutocomplete";
 import {findCharacterByNameUrl, findOrganizationByGameIdAndNameUrl} from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
+import ListItem from "../../../Common/ListElements/ListItem";
 
 export default class extends React.Component {
 
@@ -30,7 +31,12 @@ export default class extends React.Component {
                               })}
                 />
 
-                {this.getAutocomplete()}
+                <DestinationInput value={this.state.destination}
+                                  destinationType={this.state.destinationType}
+                                  gameId={this.props.gameId}
+                                  onSelected={destination => this.setState({destination: destination})}
+                                  onRemoved={() => this.setState({destination: null})}
+                />
 
                 <SubmitButton text={"Отправить"}
                               onClick={() => {
@@ -57,5 +63,35 @@ export default class extends React.Component {
                                        onSelected={selected => this.setState({destination: selected})}
             />
         }
+    }
+}
+
+function DestinationInput(props) {
+    const {destinationType, gameId} = props
+
+    if (destinationType === TransferDestination.CHARACTER) {
+        return (
+            props.value != null ?
+                <ListItem text={props.value?.name}
+                          onDelete={() => props.onRemoved()}
+                /> :
+                <RemoteAutocomplete fieldToDisplay={"name"}
+                                    buildSyncUrl={name => findCharacterByNameUrl(gameId, name)}
+                                    onSelected={item => props.onSelected(item)}
+                                    key={TransferDestination.CHARACTER}
+                />
+        )
+    } else {
+        return (
+            props.value != null ?
+                <ListItem text={props.value?.name}
+                          onDelete={() => props.onRemoved()}
+                /> :
+                <RemoteAutocomplete fieldToDisplay={"name"}
+                                    buildSyncUrl={name => findOrganizationByGameIdAndNameUrl(gameId, name)}
+                                    onSelected={item => props.onSelected(item)}
+                                    key={TransferDestination.ORGANIZATION}
+                />
+        )
     }
 }

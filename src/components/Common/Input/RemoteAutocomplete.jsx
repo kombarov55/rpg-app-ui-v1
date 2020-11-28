@@ -32,14 +32,13 @@ export default class RemoteAutocomplete extends React.Component {
                        value={this.state.input}
                        onChange={e => this.fetch(e.target.value)}
                 />
-                <List
-                    noItemsText={"Не найдено.."}
-                    values={this.state.filteredItems.map(item =>
-                        <ListItem text={item[getOrDefault(this.props.fieldToDisplay, "name")]}
-                                  onClick={() => this.onSelect(item)}
-                                  selected={this.state.selectedItem?.id === item.id}
-                        />
-                    )}
+                <List values={this.state.filteredItems.map(item =>
+                    <ListItem text={item[getOrDefault(this.props.fieldToDisplay, "name")]}
+                              onClick={() => this.onSelect(item)}
+                              selected={this.state.selectedItem?.id === item.id}
+                              key={item.id}
+                    />
+                )}
                 />
             </div>
         )

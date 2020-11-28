@@ -8,7 +8,7 @@ import {
     gameByIdUrl,
     purchaseFromGameUrl,
     questionnaireTemplateByIdUrl,
-    setItemForSaleInGameUrl
+    setItemForSaleInGameUrl, userAccountUrl
 } from "../../../../util/Parameters";
 import {
     changeView,
@@ -34,9 +34,11 @@ import FormatDate from "../../../../util/FormatDate";
 import Popup from "../../../../util/Popup";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 import StorageComponent from "../Component/StorageComponent";
+import Globals from "../../../../util/Globals";
 
 export default connect(
     state => ({
+        userAccount: state.userAccount,
         game: state.activeGame,
         activeCharacter: state.activeCharacter
     }),
@@ -70,10 +72,14 @@ export default connect(
     constructor(props) {
         super(props);
 
-        if (this.props.activeCharacter == null || this.props.activeCharacter?.game?.id !== this.props.game.id) {
-            Popup.info("Выберите персонажа")
-            this.props.toCharacterSelectionView()
-        }
+        get(userAccountUrl(Globals.userId), userAccount => {
+            const hasCharacters = userAccount.characters.some(character => character.game.id === this.props.game.id)
+            const hasActiveCharacter = this.props.activeCharacter !== null
+
+            if (hasCharacters && !hasActiveCharacter) {
+                this.props.toCharacterSelectionView()
+            }
+        })
 
         this.state = {
             game: {
@@ -91,8 +97,6 @@ export default connect(
         get(findOrganizationsShortByGameIdUrl(this.props.game.id), rs => this.setState({organizations: rs}))
         if (this.props.activeCharacter != null) {
             Popup.info(`Вы совершаете действия от лица персонажа ${this.props.activeCharacter.name}`)
-        } else {
-            Popup.error("Выберите активного персонажа для этой игры в разделе 'Кабинет'")
         }
     }
 

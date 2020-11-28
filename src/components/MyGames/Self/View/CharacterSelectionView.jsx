@@ -8,6 +8,7 @@ import Globals from "../../../../util/Globals";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import Btn from "../../../Common/Buttons/Btn";
 import {gameView} from "../../../../Views";
+import Popup from "../../../../util/Popup";
 
 export default connect(
     state => ({
@@ -31,7 +32,7 @@ export default connect(
 
     constructor(props) {
         super(props);
-
+        Popup.info("Выберите персонажа")
         this.state = {
             characters: []
         }

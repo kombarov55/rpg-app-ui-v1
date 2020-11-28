@@ -10,7 +10,8 @@ import {
     creditPaymentUrl,
     currenciesByGameIdUrl,
     disposeCharacterItemUrl,
-    getCharacterByIdUrl, performCraftingUrl,
+    getCharacterByIdUrl,
+    performCraftingUrl,
     transferItemUrl,
     transferUrl
 } from "../../../../util/Parameters";
@@ -26,7 +27,7 @@ import GameCharacterProcedures from "../../../../data-layer/Procedures/GameChara
 import LearnNewSkillComponent from "../Component/LearnNewSkillComponent";
 import SkillComponent from "../Component/SkillComponent";
 import LearnNewSpellComponent from "../Component/LearnNewSpellComponent";
-import CharacterItemsComponent from "../Component/CharacterItemsComponent";
+import CharacterInventoryComponent from "../Component/CharacterInventoryComponent";
 import CreditListItem from "../../../ListItem/CreditListItem";
 import ConversionComponent from "../Component/ConversionComponent";
 import CharacterCraftComponent from "../Component/CharacterCraftComponent";
@@ -108,10 +109,10 @@ export default connect(
                                      onSubmit={form => this.onConversion(form.currency1, form.currency2, form.amount)}
                 />
 
-                <CharacterItemsComponent items={this.state.character.items}
-                                         gameId={this.props.gameId}
-                                         onTransferItem={(item, destinationType, destination) => this.onTransferItem(item, destinationType, destination)}
-                                         onDisposeItem={item => this.onDisposeItem(item)}
+                <CharacterInventoryComponent items={this.state.character.items}
+                                             gameId={this.props.gameId}
+                                             onTransferItem={(item, destinationType, destination) => this.onTransferItem(item, destinationType, destination)}
+                                             onDisposeItem={item => this.onDisposeItem(item)}
                 />
 
                 <CharacterCraftComponent gameId={this.props.gameId}

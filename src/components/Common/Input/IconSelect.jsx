@@ -12,7 +12,7 @@ export default class IconSelect extends Component {
 
     render() {
         return (
-            <div>
+            <>
                 <div style={this.gridStyle}>{this.props.imgList.map(src =>
                     <Img src={src}
                          selected={src === this.state.selectedItem}
@@ -26,7 +26,7 @@ export default class IconSelect extends Component {
                          key={src}
                     />
                 )}</div>
-            </div>
+            </>
         )
     }
 

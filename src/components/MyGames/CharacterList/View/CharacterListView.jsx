@@ -32,6 +32,8 @@ import CreditListItem from "../../../ListItem/CreditListItem";
 import ConversionComponent from "../Component/ConversionComponent";
 import CharacterCraftComponent from "../Component/CharacterCraftComponent";
 import CharacterEquipmentComponent from "../Component/CharacterEquipmentComponent";
+import CharacterFieldsComponent from "../Component/CharacterFieldsComponent";
+import CharInfoComponent from "../Component/CharInfoComponent";
 
 export default connect(
     state => ({
@@ -80,14 +82,10 @@ export default connect(
     render() {
         return (
             <div style={FormViewStyle}>
-                <FormTitleLabel text={"Персонаж:"}/>
-                <InputLabel text={this.state.character.name}/>
-                <div>{Object.entries(this.state.character.fieldNameToValueList).map(([name, value]) =>
-                    <div>
-                        <InputLabel text={name + ":"}/>
-                        <div>{value}</div>
-                    </div>
-                )}</div>
+
+                <CharInfoComponent character={this.state.character} />
+
+                <CharacterFieldsComponent fieldNameToValueList={this.state.character.fieldNameToValueList}/>
 
                 <InputLabel text={`Баллов актива: ${this.state.character.activityPoints}`}/>
 

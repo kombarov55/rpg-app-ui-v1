@@ -1,5 +1,6 @@
 import React from "react";
 import getOrDefault from "../../../util/getOrDefault";
+import Img from "../Labels/Img";
 
 /**
  * itemKey: String = "img"
@@ -60,30 +61,4 @@ export default class extends React.Component {
             return this.props.items.concat(suffix)
         }
     }
-}
-
-class Img extends React.Component {
-    render() {
-        return (
-            <img
-                style={
-                    this.props.selected ?
-                        this.selectedImgStyle :
-                        this.imgStyle
-                }
-                src={this.props.src}
-                onClick={() => this.props.onClick()}
-            />
-        )
-    }
-
-    imgStyle = {
-        width: "10vmin",
-        height: "10vmin",
-        margin: "1vmin"
-    }
-
-    selectedImgStyle = Object.assign({}, this.imgStyle, {
-        border: "3px solid gold"
-    })
 }

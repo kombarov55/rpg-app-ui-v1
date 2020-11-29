@@ -22,7 +22,7 @@ import GameCreationMode from "../../../../data-layer/enums/GameCreationMode";
 import DefaultFormValues from "../../../../data-layer/DefaultFormValues";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import NoItemsLabel from "../../../Common/Labels/NoItemsLabel";
-import ListItemSmall from "../../../Common/ListElements/SmallListItem";
+import ListItemSmall from "../../../Common/ListElements/CornerListItem";
 import CurrencyForm from "../Form/CurrencyForm";
 import AddItemButton from "../../../Common/Buttons/AddItemButton";
 import {useForm} from "react-hook-form";

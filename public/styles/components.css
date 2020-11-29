@@ -199,7 +199,15 @@
     background: #212121;
 
     font-size: 1.5vmax;
+}
 
+.list-item-small-left {
+    width: 50%
+}
+
+.list-item-small-right {
+    width: 50%;
+    text-align: center;
 }
 
 .form-view {

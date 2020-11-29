@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {connect} from "react-redux";
 import Label from "../../../Common/Labels/Label";
 import NoItemsLabel from "../../../Common/Labels/NoItemsLabel";
-import ListItemSmall from "../../../Common/ListElements/SmallListItem";
+import ListItemSmall from "../../../Common/ListElements/CornerListItem";
 import AddItemButton from "../../../Common/Buttons/AddItemButton";
 import ConversionForm from "../Form/ConversionForm";
 import {changeView, setConversions, updateConversionForm} from "../../../../data-layer/ActionCreators";

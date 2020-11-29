@@ -1,5 +1,5 @@
 import React from "react";
-import SmallListItem from "./SmallListItem";
+import SmallListItem from "./CornerListItem";
 import Icon from "../Input/Icon";
 
 export default class SmallDeletableListItem extends React.PureComponent {

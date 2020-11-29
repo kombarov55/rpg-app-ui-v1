@@ -29,10 +29,10 @@ export default class extends React.Component {
                 <FormTitleLabel text={"Экипировка:"}/>
                 {
                     this.state.itemCategories
-                        .filter(itemCategory => gameSettings.maxEquippedAmounts.some(v => v.itemCategory.id === itemCategory.id))
+                        .filter(itemCategory => gameSettings?.maxEquippedAmounts?.some(v => v.itemCategory.id === itemCategory.id))
                         .map(itemCategory =>
                             <EquippedItemCategoryComponent itemCategory={itemCategory}
-                                                           size={gameSettings.maxEquippedAmounts.find(v => v.itemCategory.id === itemCategory.id).amount}
+                                                           size={gameSettings?.maxEquippedAmounts?.find(v => v.itemCategory.id === itemCategory.id).amount}
                                                            items={equippedItems.filter(item => item.category === itemCategory.name)}
                                                            onUnequip={item => this.props.onUnequipItem(item)}
                             />

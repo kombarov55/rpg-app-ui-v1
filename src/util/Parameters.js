@@ -180,6 +180,8 @@ export const setItemForSaleInGameUrl = `${rootUrl}/game/addItemForSale.do`
 export const transferItemUrl = `${rootUrl}/game/transferItem.do`
 
 export const disposeOrganizationItemUrl = `${rootUrl}/organization/disposeItem.do`
+export const equipOrganizationItemUrl = `${rootUrl}/organization/equipItem.do`
+export const unequipOrganizationItemUrl = `${rootUrl}/organization/unequipItem.do`
 
 export const submitCreditRequestUrl = `${rootUrl}/credit/submitCreditRequest.do`
 export const approveCreditRequest = `${rootUrl}/credit/approveCreditRequest.do`

@@ -8,6 +8,7 @@ import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem"
 import BulletList from "../../../Common/Lists/BulletList";
 import Btn from "../../../Common/Buttons/Btn";
 import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
+import EquipmentListItem from "../../../ListItem/EquipmentListItem";
 
 export default class extends React.Component {
 
@@ -56,30 +57,10 @@ function EquippedItemCategoryComponent({itemCategory, items, size = 5, onUnequip
             />
             {
                 selectedItem != null &&
-                <ExpandableListItem name={selectedItem.name}
-                                    img={selectedItem.img}
-                                    description={selectedItem.description}
-                                    expandableElements={[
-                                        <BulletList values={[
-                                            selectedItem.skillInfluences.map(v => `${v.skill.name} ${v.modifier.name} ${v.amount}`).join(", "),
-                                            selectedItem.category,
-                                            selectedItem.type,
-                                            `${selectedItem.slots} слотов`,
-                                            selectedItem.canBeEquipped ? "Можно одеть" : null,
-                                            selectedItem.canBeCrafted ? "Можно скрафтить" : null,
-                                            selectedItem.canBeUsedInCraft ? "Можно использовать в крафте" : null,
-                                            `${selectedItem.lvl} уровень предмета`
-                                        ]}/>,
-                                        <Btn text={"Снять"}
-                                             onClick={() => {
-                                                 setSelectedItem(null)
-                                                 onUnequip(selectedItem)
-                                             }}
-                                        />
-                                    ]}
-
-                                    alwaysExpand={true}
-                />
+                <EquipmentListItem item={selectedItem} onUnequip={() => {
+                    onUnequip(selectedItem)
+                    setSelectedItem(null)
+                }} />
             }
         </>
     )

@@ -91,7 +91,7 @@ export default connect(
                 <CharacterFieldsComponent fieldNameToValueList={this.state.character.fieldNameToValueList}/>
                 <CornerListItem left={"Баллов актива"} right={this.state.character.activityPoints}/>
                 <SkillInfo skillToLvlList={this.state.character.learnedSkills}
-                                    equippedItems={this.state.character.equippedItems}
+                           equippedItems={this.state.character.equippedItems}
                 />
 
                 <List title={"Баланс:"}

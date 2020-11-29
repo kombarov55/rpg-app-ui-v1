@@ -66,7 +66,7 @@ export default class extends React.Component {
                                         />
                                     ),
                                     (
-                                        (!viewOnly && this.props.item.canBeEquipped) &&
+                                        (!viewOnly && this.props.item.canBeEquipped && this.props.item.destination === this.props.parentDestination) &&
                                         <Btn text={"Одеть предмет"} onClick={() => this.props.onEquipItem()}/>
                                     ),
                                     (

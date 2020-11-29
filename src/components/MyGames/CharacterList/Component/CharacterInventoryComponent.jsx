@@ -3,6 +3,7 @@ import ItemComponent from "./ItemComponent";
 import Grid from "../../../Common/Lists/Grid";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import InputLabel from "../../../Common/Labels/InputLabel";
+import Destination from "../../../../data-layer/enums/Destination";
 
 export default class extends React.Component {
 
@@ -27,6 +28,7 @@ export default class extends React.Component {
                     this.state.selectedItem != null &&
                     <ItemComponent item={this.state.selectedItem}
                                    gameId={this.props.gameId}
+                                   parentDestination={Destination.PLAYER}
                                    onDisposeItem={item => {
                                        this.setState({selectedItem: null})
                                        this.props.onDisposeItem(item)
@@ -41,20 +43,6 @@ export default class extends React.Component {
                                    }}
                     />
                 }
-
-
-                {/*
-                <List title={"Инвентарь:"}
-                      values={this.props.items.map(item =>
-                          <ItemComponent item={item}
-                                         gameId={this.props.gameId}
-                                         onDisposeItem={item => this.props.onDisposeItem(item)}
-                                         onTransferItem={(destinationType, destination) => this.props.onTransferItem(item, destinationType, destination)}
-                                         key={item.id}
-                          />
-                      )}
-                />
-                */}
             </div>
         )
     }

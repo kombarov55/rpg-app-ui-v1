@@ -11,11 +11,11 @@ import {bankView, gameView, shopView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import {get, httpDelete, patch, post, put} from "../../../../util/Http";
 import {
-    addOrganizationShopUrl, disposeOrganizationItemUrl, findSkillsByGameIdAndDestination,
+    addOrganizationShopUrl, disposeOrganizationItemUrl, equipOrganizationItemUrl, findSkillsByGameIdAndDestination,
     getOrganizationByIdUrl,
     organizationHeadUrl, organizationUrl,
     removeOrganizationShopUrl, transferItemUrl,
-    transferUrl
+    transferUrl, unequipOrganizationItemUrl
 } from "../../../../util/Parameters";
 import Popup from "../../../../util/Popup";
 import CountryDetailsComponent from "../Components/CountryDetailsComponent";
@@ -24,9 +24,10 @@ import OrganizationHeadsComponent from "../Components/OrganizationHeadsComponent
 import OrganizationBalanceComponent from "../Components/OrganizationBalanceComponent";
 import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFromStore";
 import OrganizationShopsComponent from "../Components/OrganizationShopsComponent";
-import OrganizationItemsComponent from "../Components/OrganizationItemsComponent";
+import OrganizationInventoryComponent from "../Components/OrganizationInventoryComponent";
 import TransferDestination from "../../../../data-layer/enums/TransferDestination";
 import SkillInfo from "../../CharacterList/Component/SkillInfo";
+import OrganizationEquippedItemsComponent from "../Components/OrganizationEquippedItemsComponent";
 
 export default connect(
     store => ({
@@ -77,6 +78,10 @@ export default connect(
                                equippedItems={this.state.organization.equippedItems}
                     />
 
+                    <OrganizationEquippedItemsComponent items={this.state.organization.equippedItems}
+                                                        onUnequip={item => this.onUnequipItem(item)}
+                    />
+
                     <OrganizationHeadsComponent gameId={this.props.gameId}
                                                 heads={this.state.organization.heads}
                                                 onAddHead={character => this.onAddHead(character)}
@@ -97,10 +102,12 @@ export default connect(
                                                 onDetailsClicked={shop => this.props.toShopView(shop)}
                     />
 
-                    <OrganizationItemsComponent items={this.state.organization.items}
-                                                gameId={this.props.gameId}
-                                                onDisposeItem={item => this.onDisposeItem(item)}
-                                                onTransferItem={(item, destinationType, destination) => this.onTransferItem(item, destinationType, destination)}
+                    <OrganizationInventoryComponent items={this.state.organization.items}
+                                                    gameId={this.props.gameId}
+                                                    destination={this.state.organization.type}
+                                                    onDisposeItem={item => this.onDisposeItem(item)}
+                                                    onTransferItem={(item, destinationType, destination) => this.onTransferItem(item, destinationType, destination)}
+                                                    onEquipItem={item => this.onEquipItem(item)}
                     />
 
                     {this.detailsComponent()}
@@ -208,6 +215,20 @@ export default connect(
                 toId: destination.id
             }, () => this.refresh(() => Popup.info("Предмет отправлен.")))
         }
+
+        onEquipItem(item) {
+            post(equipOrganizationItemUrl, {
+                organizationId: this.state.organization.id,
+                itemId: item.id
+            }, () => this.refresh(() => Popup.info("Предмет одет")))
+        }
+
+    onUnequipItem(item) {
+        post(unequipOrganizationItemUrl, {
+            organizationId: this.state.organization.id,
+            itemId: item.id
+        }, () => this.refresh(() => Popup.info("Предмет снят")))
+    }
 
         refresh(then = () => {}) {
             get(getOrganizationByIdUrl(this.props.organization.id), rs => {

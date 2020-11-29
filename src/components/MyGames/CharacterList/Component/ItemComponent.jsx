@@ -8,6 +8,7 @@ import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import List from "../../../Common/Lists/List";
 import AmountsToString from "../../../../util/AmountsToString";
+import ItemStatsToString from "../../../../util/ItemStatsToString";
 
 export default class extends React.Component {
 
@@ -27,6 +28,7 @@ export default class extends React.Component {
                                 description={this.props.item.description}
                                 expandableElements={[
                                     <BulletList values={[
+                                        this.props.item.skillInfluences.map(v => ItemStatsToString(v)).join(", "),
                                         this.props.item.category,
                                         this.props.item.type,
                                         `${this.props.item.slots} слотов`,

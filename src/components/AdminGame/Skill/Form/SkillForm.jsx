@@ -13,6 +13,7 @@ import _ from "lodash"
 import PriceInput from "../../../Common/Input/PriceInput";
 import {InputSwitch} from "primereact/inputswitch";
 import Popup from "../../../../util/Popup";
+import Validation from "../../../../util/Validation";
 
 export default class SkillForm extends React.Component {
 
@@ -81,14 +82,10 @@ export default class SkillForm extends React.Component {
 
                 <SubmitButton text={"Сохранить"}
                               onClick={() => {
-                                  if (
-                                      this.state.name == "" ||
-                                      this.state.img == "" ||
-                                      this.state.description == ""
-                                  ) {
-                                      Popup.error("Пожалуйста, заполните все поля: [Название, Картинка, Описание].")
-                                      return
-                                  }
+                                  Validation.run(
+                                      Validation.nonNull(this.state.name, "Имя"),
+                                      Validation.nonNull(this.state.img, "Картинка")
+                                  )
                                   this.props.onSubmit(this.state)
                               }}
                 />

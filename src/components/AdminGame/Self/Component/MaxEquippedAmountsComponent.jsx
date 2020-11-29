@@ -47,18 +47,26 @@ export default class extends React.Component {
                 {
                     this.state.formVisible &&
                     (this.state.formMode === FormMode.CREATE ?
-                            <MaxEquippedAmountsForm itemCategories={this.state.itemCategories}
-                                                    onSubmit={form => {
-                                                        this.setState({formVisible: false})
-                                                        this.props.onAdded(form)
-                                                    }}
+                            <MaxEquippedAmountsForm
+                                itemCategories={this.state.itemCategories
+                                                          .filter(itemCategory => this.props.maxEquippedAmounts
+                                                                                            .flatMap(v => v.itemCategory)
+                                                                                            .every(v => v.id !== itemCategory.id))}
+                                onSubmit={form => {
+                                    this.setState({formVisible: false})
+                                    this.props.onAdded(form)
+                                }}
                             /> :
-                            <MaxEquippedAmountsForm itemCategories={this.state.itemCategories}
-                                                    initialState={this.state.form}
-                                                    onSubmit={form => {
-                                                        this.setState({formVisible: false})
-                                                        this.props.onEdited(form)
-                                                    }}
+                            <MaxEquippedAmountsForm
+                                itemCategories={this.state.itemCategories
+                                                          .filter(itemCategory => this.props.maxEquippedAmounts
+                                                                                            .flatMap(v => v.itemCategory)
+                                                                                            .every(v => v.id !== itemCategory.id))}
+                                initialState={this.state.form}
+                                onSubmit={form => {
+                                    this.setState({formVisible: false})
+                                    this.props.onEdited(form)
+                                }}
                             />
                     )
                 }

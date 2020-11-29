@@ -75,11 +75,6 @@ export default class SkillUpgradeForm extends React.Component {
     }
 
     onSubmit() {
-        if (this.state.description == "") {
-            Popup.info("Пожалуйста, введите описание.")
-            return
-        }
-
         this.props.onSubmit(this.state)
     }
 }

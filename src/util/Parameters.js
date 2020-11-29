@@ -171,6 +171,7 @@ export const purchaseSpellUrl = `${rootUrl}/gameCharacter/purchaseSpell.do`
 export const disposeCharacterItemUrl = `${rootUrl}/gameCharacter/disposeItem.do`
 export const equipItemUrl = `${rootUrl}/gameCharacter/equipItem.do`
 export const unequipItemUrl = `${rootUrl}/gameCharacter/unequipItem.do`
+export const upgradeItemUrl = `${rootUrl}/gameCharacter/upgradeItem.do`
 
 export const purchaseFromShopUrl = `${rootUrl}/shop/purchase.do`
 export const setItemForSaleUrl = `${rootUrl}/shop/setItemForSale.do`

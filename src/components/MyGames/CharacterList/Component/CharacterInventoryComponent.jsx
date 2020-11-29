@@ -26,7 +26,7 @@ export default class extends React.Component {
                 <InputLabel text={`Заполнено: ${this.props.items.length}/${this.props.inventorySize}`}/>
                 {
                     this.state.selectedItem != null &&
-                    <ItemComponent item={this.state.selectedItem}
+                    <ItemComponent item={this.props.items.find(v => v.id === this.state.selectedItem.id)}
                                    gameId={this.props.gameId}
                                    parentDestination={Destination.PLAYER}
                                    onDisposeItem={item => {
@@ -41,6 +41,7 @@ export default class extends React.Component {
                                        this.setState({selectedItem: null})
                                        this.props.onEquipItem(this.state.selectedItem)
                                    }}
+                                   onUpgradeItem={(amounts) => this.props.onUpgradeItem(this.state.selectedItem, amounts)}
                     />
                 }
             </div>

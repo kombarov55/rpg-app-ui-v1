@@ -16,7 +16,7 @@ import {
     performCraftingUrl,
     transferItemUrl,
     transferUrl,
-    unequipItemUrl
+    unequipItemUrl, upgradeItemUrl
 } from "../../../../util/Parameters";
 import ListItem from "../../../Common/ListElements/ListItem";
 import List from "../../../Common/Lists/List";
@@ -37,6 +37,7 @@ import CharacterFieldsComponent from "../Component/CharacterFieldsComponent";
 import CharInfoComponent from "../Component/CharInfoComponent";
 import CornerListItem from "../../../Common/ListElements/CornerListItem";
 import SkillInfo from "../Component/SkillInfo";
+import SkillStatsComponent from "../Component/SkillStatsComponent";
 
 export default connect(
     state => ({
@@ -64,6 +65,7 @@ export default connect(
         this.state = {
             character: {
                 fieldNameToValueList: [],
+                skillStats: [],
                 balance: [],
                 learnedSpells: [],
                 learnedSkills: [],
@@ -87,12 +89,11 @@ export default connect(
             <div style={FormViewStyle}>
 
                 <CharInfoComponent character={this.state.character}/>
+                <SkillStatsComponent skillStats={this.state.character.skillStats} />
 
                 <CharacterFieldsComponent fieldNameToValueList={this.state.character.fieldNameToValueList}/>
                 <CornerListItem left={"Баллов актива"} right={this.state.character.activityPoints}/>
-                <SkillInfo skillToLvlList={this.state.character.learnedSkills}
-                           equippedItems={this.state.character.equippedItems}
-                />
+
 
                 <List title={"Баланс:"}
                       values={this.state.character.balance.map(amount =>
@@ -130,6 +131,7 @@ export default connect(
                                              onTransferItem={(item, destinationType, destination) => this.onTransferItem(item, destinationType, destination)}
                                              onDisposeItem={item => this.onDisposeItem(item)}
                                              onEquipItem={item => this.onEquipItem(item)}
+                                             onUpgradeItem={(item, amounts) => this.onUpgradeItem(item, amounts)}
                 />
 
                 <CharacterCraftComponent gameId={this.props.gameId}
@@ -253,6 +255,14 @@ export default connect(
             characterId: this.state.character.id,
             itemId: item.id
         }, () => this.refresh(() => Popup.info("Предмет одет.")))
+    }
+
+    onUpgradeItem(item, amounts) {
+        post(upgradeItemUrl, {
+            characterId: this.state.character.id,
+            itemId: item.id,
+            amounts: amounts
+        }, () => this.refresh(() => Popup.success("Уровень предмета повышен.")))
     }
 
     onUnequipItem(item) {

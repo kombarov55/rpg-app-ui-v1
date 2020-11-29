@@ -3,9 +3,11 @@ import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem"
 import Btn from "../../../Common/Buttons/Btn";
 import BulletList from "../../../Common/Lists/BulletList";
 import ItemTransferForm from "../Form/ItemTransferForm";
+import CornerListItem from "../../../Common/ListElements/CornerListItem";
+import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
+import priceCombinationListToString from "../../../../util/priceCombinationListToString";
 import List from "../../../Common/Lists/List";
-import ItemUpgradeComponent from "./ItemUpgradeComponent";
-import getOrDefault from "../../../../util/getOrDefault";
+import AmountsToString from "../../../../util/AmountsToString";
 
 export default class extends React.Component {
 
@@ -19,7 +21,6 @@ export default class extends React.Component {
     }
 
     render() {
-        const viewOnly = getOrDefault(this.props.viewOnly, false)
         return (
             <ExpandableListItem name={this.props.item.name}
                                 img={this.props.item.img}
@@ -34,28 +35,10 @@ export default class extends React.Component {
                                         this.props.item.canBeUsedInCraft ? "Можно использовать в крафте" : null,
                                         `${this.props.item.lvl} уровень предмета`
                                     ]}/>,
-                                    (
-                                        this.props.item.upgradable &&
-                                        <Btn text={"Повысить уровень предмета:"}
-                                             onClick={() => this.setState({upgradeListVisible: true})}
-                                        />
-                                    ),
-                                    (
-                                        this.state.upgradeListVisible &&
-                                        <List title={"Уровни предмета:"}
-                                              values={this.props.item.upgrades.map(upgrade =>
-                                                  <ItemUpgradeComponent upgrade={upgrade}
-                                                                        key={upgrade.id}
-                                                                        isUpgraded={true}
-                                                  />
-                                              )}
-                                        />
-                                    ),
-                                    (
-                                        !viewOnly &&
-                                        <Btn text={"Передать"} onClick={() => this.setState({formVisible: true})}/>
-                                    ),
-
+                                    <ItemUpgradeComponent item={this.props.item}
+                                                          onUpgradeClicked={amounts => this.props.onUpgradeItem(amounts)}
+                                    />,
+                                    <Btn text={"Передать"} onClick={() => this.setState({formVisible: true})}/>,
                                     (
                                         this.state.formVisible &&
                                         <ItemTransferForm gameId={this.props.gameId}
@@ -66,18 +49,50 @@ export default class extends React.Component {
                                         />
                                     ),
                                     (
-                                        (!viewOnly && this.props.item.canBeEquipped && this.props.item.destination === this.props.parentDestination) &&
+                                        (this.props.item.canBeEquipped && this.props.item.destination === this.props.parentDestination) &&
                                         <Btn text={"Одеть предмет"} onClick={() => this.props.onEquipItem()}/>
                                     ),
-                                    (
-                                        !viewOnly &&
-                                        <Btn text={"Выбросить"} onClick={() => this.props.onDisposeItem(this.props.item)}/>
-                                    )
-
+                                    <Btn text={"Выбросить"} onClick={() => this.props.onDisposeItem(this.props.item)}/>
                                 ]}
 
                                 alwaysExpand={true}
             />
         )
+    }
+}
+
+function ItemUpgradeComponent({item, onUpgradeClicked}) {
+    if (item.upgradable) {
+        const currentLvl = item.upgrades.find(v => v.lvlNum === item.lvl)
+        const nextLvl = item.upgrades.find(v => v.lvlNum === item.lvl + 1)
+
+
+        return (
+            <>
+                {
+                    currentLvl != null &&
+                    <CornerListItem left={`Текущий уровень: ${currentLvl.lvlNum}`}
+                                    right={currentLvl.skillInfluences.map(v => SkillInfluenceToString(v)).join(", ")}
+                    />
+                }
+                {
+                    nextLvl != null &&
+                    <>
+                        <CornerListItem
+                            left={`Следующий уровень: ${nextLvl?.lvlNum} (${priceCombinationListToString(nextLvl?.prices)})`}
+                            right={nextLvl?.skillInfluences?.map(v => SkillInfluenceToString(v)).join(", ")}
+                        />
+
+                        <List values={nextLvl.prices.map(amounts =>
+                            <Btn text={`Повысить уровень предмета за ${AmountsToString(amounts)}`}
+                                 onClick={() => onUpgradeClicked(amounts)}
+                            />
+                        )}/>
+                    </>
+                }
+            </>
+        )
+    } else {
+        return <></>
     }
 }

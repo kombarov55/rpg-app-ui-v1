@@ -31,15 +31,17 @@ export default class extends React.Component {
                         <Img src={item[imgKey]}
                              selected={item === this.state.selectedItem}
                              onClick={() => {
-                                 if (!getOrDefault(item.unselectable, false) && this.state.selectedItem?.id === item.id) {
+                                 if (this.state.selectedItem?.id === item.id) {
                                      this.setState({selectedItem: null})
                                      if (this.props.onSelectRemoved != null) {
                                          this.props.onSelectRemoved(item)
                                      }
                                  } else {
-                                     this.setState({selectedItem: item})
-                                     if (this.props.onSelected != null) {
-                                         this.props.onSelected(item)
+                                     if (item.unselectable == null) {
+                                         this.setState({selectedItem: item})
+                                         if (this.props.onSelected != null) {
+                                             this.props.onSelected(item)
+                                         }
                                      }
                                  }
                              }}

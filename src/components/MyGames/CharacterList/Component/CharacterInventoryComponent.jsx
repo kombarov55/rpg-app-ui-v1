@@ -18,6 +18,7 @@ export default class extends React.Component {
             <div>
                 <FormTitleLabel text={"Инвентарь:"}/>
                 <Grid items={this.props.items}
+                      size={this.props.inventorySize}
                       onSelected={item => this.setState({selectedItem: item})}
                       onSelectRemoved={item => this.setState({selectedItem: null})}
                 />

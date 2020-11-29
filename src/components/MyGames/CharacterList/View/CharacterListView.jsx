@@ -34,6 +34,8 @@ import CharacterCraftComponent from "../Component/CharacterCraftComponent";
 import CharacterEquipmentComponent from "../Component/CharacterEquipmentComponent";
 import CharacterFieldsComponent from "../Component/CharacterFieldsComponent";
 import CharInfoComponent from "../Component/CharInfoComponent";
+import CornerListItem from "../../../Common/ListElements/CornerListItem";
+import CharacterSkillInfo from "../Component/CharacterSkillInfo";
 
 export default connect(
     state => ({
@@ -83,11 +85,13 @@ export default connect(
         return (
             <div style={FormViewStyle}>
 
-                <CharInfoComponent character={this.state.character} />
+                <CharInfoComponent character={this.state.character}/>
 
                 <CharacterFieldsComponent fieldNameToValueList={this.state.character.fieldNameToValueList}/>
-
-                <InputLabel text={`Баллов актива: ${this.state.character.activityPoints}`}/>
+                <CornerListItem left={"Баллов актива"} right={this.state.character.activityPoints}/>
+                <CharacterSkillInfo learnedSkills={this.state.character.learnedSkills}
+                                    equippedItems={this.state.character.equippedItems}
+                />
 
                 <List title={"Баланс:"}
                       values={this.state.character.balance.map(amount =>

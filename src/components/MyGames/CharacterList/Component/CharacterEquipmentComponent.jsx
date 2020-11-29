@@ -7,6 +7,7 @@ import Grid from "../../../Common/Lists/Grid";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 import BulletList from "../../../Common/Lists/BulletList";
 import Btn from "../../../Common/Buttons/Btn";
+import SkillInfluenceToString from "../../../../util/SkillInfluenceToString";
 
 export default class extends React.Component {
 
@@ -45,7 +46,6 @@ export default class extends React.Component {
 
 function EquippedItemCategoryComponent({itemCategory, items, size = 5, onUnequip = () => {}}) {
     const [selectedItem, setSelectedItem] = useState(null)
-
     return (
         <>
             <InputLabel text={`${itemCategory.name}:`}/>
@@ -61,8 +61,9 @@ function EquippedItemCategoryComponent({itemCategory, items, size = 5, onUnequip
                                     description={selectedItem.description}
                                     expandableElements={[
                                         <BulletList values={[
-                                            selectedItem.category.name,
-                                            selectedItem.type.name,
+                                            selectedItem.skillInfluences.map(v => `${v.skill.name} ${v.modifier.name} ${v.amount}`).join(", "),
+                                            selectedItem.category,
+                                            selectedItem.type,
                                             `${selectedItem.slots} слотов`,
                                             selectedItem.canBeEquipped ? "Можно одеть" : null,
                                             selectedItem.canBeCrafted ? "Можно скрафтить" : null,

@@ -26,8 +26,8 @@ export default class extends React.Component {
                                 description={this.props.item.description}
                                 expandableElements={[
                                     <BulletList values={[
-                                        this.props.item.category.name,
-                                        this.props.item.type.name,
+                                        this.props.item.category,
+                                        this.props.item.type,
                                         `${this.props.item.slots} слотов`,
                                         this.props.item.canBeEquipped ? "Можно одеть" : null,
                                         this.props.item.canBeCrafted ? "Можно скрафтить" : null,

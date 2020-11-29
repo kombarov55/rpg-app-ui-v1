@@ -3,9 +3,11 @@ import React from "react";
 import CornerListItem from "../../../Common/ListElements/CornerListItem";
 import ArithmeticModifiers from "../../../../data-layer/enums/ArithmeticModifiers";
 
-export default function ({learnedSkills, equippedItems}) {
+export default function ({skillToLvlList, equippedItems}) {
+    console.log({skillToLvlList: skillToLvlList})
+
     return (
-        <List values={learnedSkills.map(({skill, amount}) =>
+        <List values={skillToLvlList.map(({skill, amount}) =>
             <CornerListItem
                 left={skill.name}
                 right={calculateSkillSkillInfluence(skill, amount, equippedItems)}

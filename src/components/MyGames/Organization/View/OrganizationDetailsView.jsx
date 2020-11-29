@@ -11,7 +11,7 @@ import {bankView, gameView, shopView} from "../../../../Views";
 import FormViewStyle from "../../../../styles/FormViewStyle";
 import {get, httpDelete, patch, post, put} from "../../../../util/Http";
 import {
-    addOrganizationShopUrl, disposeOrganizationItemUrl,
+    addOrganizationShopUrl, disposeOrganizationItemUrl, findSkillsByGameIdAndDestination,
     getOrganizationByIdUrl,
     organizationHeadUrl, organizationUrl,
     removeOrganizationShopUrl, transferItemUrl,
@@ -26,6 +26,7 @@ import GetActiveCharacterFromStore from "../../../../util/GetActiveCharacterFrom
 import OrganizationShopsComponent from "../Components/OrganizationShopsComponent";
 import OrganizationItemsComponent from "../Components/OrganizationItemsComponent";
 import TransferDestination from "../../../../data-layer/enums/TransferDestination";
+import SkillInfo from "../../CharacterList/Component/SkillInfo";
 
 export default connect(
     store => ({
@@ -53,9 +54,14 @@ export default connect(
                     balance: [],
                     shops: [],
                     items: [],
+                    equippedItems: [],
                     creditOffers: []
-                }
+                },
+
+                organizationSkills: []
             }
+
+            get(findSkillsByGameIdAndDestination(this.props.gameId, this.props.organization.type), rs => this.setState({organizationSkills: rs}))
 
             this.refresh()
         }
@@ -66,6 +72,10 @@ export default connect(
                     <FormTitleLabel text={this.state.organization.name}/>
                     <div>{OrganizationType.getLabelByName(this.state.organization.type)}</div>
                     <div>{this.state.organization.description}</div>
+
+                    <SkillInfo skillToLvlList={this.state.organizationSkills.map(v => ({skill: v, amount: 0}))}
+                               equippedItems={this.state.organization.equippedItems}
+                    />
 
                     <OrganizationHeadsComponent gameId={this.props.gameId}
                                                 heads={this.state.organization.heads}

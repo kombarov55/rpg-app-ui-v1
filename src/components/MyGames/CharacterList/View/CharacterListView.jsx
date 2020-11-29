@@ -10,13 +10,14 @@ import {
     creditPaymentUrl,
     currenciesByGameIdUrl,
     disposeCharacterItemUrl,
-    getCharacterByIdUrl, gameSettingsUrl,
+    equipItemUrl,
+    gameSettingsUrl,
+    getCharacterByIdUrl,
     performCraftingUrl,
     transferItemUrl,
-    transferUrl, equipItemUrl, unequipItemUrl
+    transferUrl,
+    unequipItemUrl
 } from "../../../../util/Parameters";
-import InputLabel from "../../../Common/Labels/InputLabel";
-import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import ListItem from "../../../Common/ListElements/ListItem";
 import List from "../../../Common/Lists/List";
 import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
@@ -35,7 +36,7 @@ import CharacterEquipmentComponent from "../Component/CharacterEquipmentComponen
 import CharacterFieldsComponent from "../Component/CharacterFieldsComponent";
 import CharInfoComponent from "../Component/CharInfoComponent";
 import CornerListItem from "../../../Common/ListElements/CornerListItem";
-import CharacterSkillInfo from "../Component/CharacterSkillInfo";
+import SkillInfo from "../Component/SkillInfo";
 
 export default connect(
     state => ({
@@ -89,7 +90,7 @@ export default connect(
 
                 <CharacterFieldsComponent fieldNameToValueList={this.state.character.fieldNameToValueList}/>
                 <CornerListItem left={"Баллов актива"} right={this.state.character.activityPoints}/>
-                <CharacterSkillInfo learnedSkills={this.state.character.learnedSkills}
+                <SkillInfo skillToLvlList={this.state.character.learnedSkills}
                                     equippedItems={this.state.character.equippedItems}
                 />
 

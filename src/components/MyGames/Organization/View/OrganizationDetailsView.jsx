@@ -28,6 +28,7 @@ import OrganizationInventoryComponent from "../Components/OrganizationInventoryC
 import TransferDestination from "../../../../data-layer/enums/TransferDestination";
 import SkillInfo from "../../CharacterList/Component/SkillInfo";
 import OrganizationEquippedItemsComponent from "../Components/OrganizationEquippedItemsComponent";
+import SkillStatsComponent from "../../CharacterList/Component/SkillStatsComponent";
 
 export default connect(
     store => ({
@@ -51,18 +52,15 @@ export default connect(
             super(props);
             this.state = {
                 organization: {
+                    skillStats: [],
                     heads: [],
                     balance: [],
                     shops: [],
                     items: [],
                     equippedItems: [],
                     creditOffers: []
-                },
-
-                organizationSkills: []
+                }
             }
-
-            get(findSkillsByGameIdAndDestination(this.props.gameId, this.props.organization.type), rs => this.setState({organizationSkills: rs}))
 
             this.refresh()
         }
@@ -74,9 +72,7 @@ export default connect(
                     <div>{OrganizationType.getLabelByName(this.state.organization.type)}</div>
                     <div>{this.state.organization.description}</div>
 
-                    <SkillInfo skillToLvlList={this.state.organizationSkills.map(v => ({skill: v, amount: 0}))}
-                               equippedItems={this.state.organization.equippedItems}
-                    />
+                    <SkillStatsComponent skillStats={this.state.organization.skillStats}/>
 
                     <OrganizationEquippedItemsComponent items={this.state.organization.equippedItems}
                                                         onUnequip={item => this.onUnequipItem(item)}

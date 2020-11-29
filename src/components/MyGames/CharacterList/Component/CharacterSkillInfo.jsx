@@ -22,8 +22,6 @@ function calculateSkillSkillInfluence(skill, amount, equippedItems) {
             const modifier = skillInfluence.modifier.name
             const modifyAmount = skillInfluence.amount
 
-            console.log(`calc: modifier: ${modifier}, modifyAmount: ${modifyAmount}, result: ${result}`)
-
             if (modifier === ArithmeticModifiers.PLUS) {
                 return result + modifyAmount
             }

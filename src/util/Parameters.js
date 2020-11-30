@@ -151,6 +151,11 @@ export const getCharacterBalances = id => `${rootUrl}/character/${id}/balances`
 
 export const shopByIdUrl = id => `${rootUrl}/shop/${id}`
 
+export const addPetTemplateUrl = gameId => `${rootUrl}/game/${gameId}/pet-template`
+export const editPetTemplateUrl = id => `${rootUrl}/pet-template/${id}`
+export const petTemplatesByGameIdUrl = gameId => `${rootUrl}/game/${gameId}/pet-template`
+export const deletePetTemplateUrl = id => `${rootUrl}/pet-template/${id}`
+
 export const findPendingCreditRequestsByOrganizationId = organizationId => `${rootUrl}/organization/${organizationId}/credit-request/pending`
 
 export const approveQuestionnaireUrl = rootUrl + "/questionnaire/approve.do"

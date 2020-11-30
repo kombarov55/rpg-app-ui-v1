@@ -10,6 +10,7 @@ import {
     conversionView,
     gameSettingsView,
     itemTemplateView,
+    petTemplatesView,
     questionnaireTemplateView,
     skillCategoryView
 } from "../../../../Views";
@@ -63,6 +64,7 @@ export default connect(
             toItemTemplateView: () => dispatch(changeView(itemTemplateView)),
             toConversionView: () => dispatch(changeView(conversionView)),
             toGameSettingsView: () => dispatch(changeView(gameSettingsView)),
+            toPetsView: () => dispatch(changeView(petTemplatesView)),
             back: () => dispatch(changeView(adminPageView))
         }
     }
@@ -132,6 +134,7 @@ export default connect(
 
                 <div className={"game-view-button-group"}>
                     <Btn text={"Предметы"} onClick={() => this.props.toItemTemplateView()}/>
+                    <Btn text={"Питомцы"} onClick={() => this.props.toPetsView()}/>
                     <Btn text={"Настройки обмена валют"} onClick={() => this.props.toConversionView()}/>
                     <Btn text={"Настройки"} onClick={() => this.props.toGameSettingsView()}/>
                     <Btn text={"Назад"} onClick={() => this.props.back()}/>

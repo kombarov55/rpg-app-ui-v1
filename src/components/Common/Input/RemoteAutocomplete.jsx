@@ -7,7 +7,8 @@ import getOrDefault from "../../../util/getOrDefault";
 /**
  * props: {
  *    fieldToDisplay: String
- *    buildSyncUrl: (input: String) => url: String
+ *    buildSyncUrl: (input: String) => url: String,
+ *    filteredItems: List<Item>
  *    onSelected: Consumer<Item>
  * }
  */
@@ -18,7 +19,7 @@ export default class RemoteAutocomplete extends React.Component {
 
         this.state = {
             input: "",
-            filteredItems: [],
+            items: [],
             selectedItem: null
         }
 
@@ -32,7 +33,7 @@ export default class RemoteAutocomplete extends React.Component {
                        value={this.state.input}
                        onChange={e => this.fetch(e.target.value)}
                 />
-                <List values={this.state.filteredItems.map(item =>
+                <List values={this.getItems().map(item =>
                     <ListItem text={item[getOrDefault(this.props.fieldToDisplay, "name")]}
                               onClick={() => this.onSelect(item)}
                               selected={this.state.selectedItem?.id === item.id}
@@ -46,11 +47,20 @@ export default class RemoteAutocomplete extends React.Component {
 
     fetch(input) {
         this.setState({input: input})
-        get(this.props.buildSyncUrl(input), rs => this.setState({filteredItems: rs}))
+        get(this.props.buildSyncUrl(input), rs => this.setState({items: rs}))
     }
 
     onSelect(item) {
         this.setState({selectedItem: item})
         this.props.onSelected(item)
+    }
+
+    getItems() {
+        const items = this.state.items
+        if (this.props.filteredItems == null) {
+            return items
+        } else {
+            return items.filter(v1 => this.props.filteredItems.every(v2 => v1.id !== v2.id))
+        }
     }
 }

@@ -41,6 +41,7 @@ import ShopView from "./components/MyGames/ShopView/View/ShopView";
 import ShopManagementView from "./components/MyGames/ShopView/View/ShopManagementView";
 import BankView from "./components/MyGames/Organization/View/BankView";
 import CharacterSelectionView from "./components/MyGames/Self/View/CharacterSelectionView";
+import PetTemplatesView from "./components/AdminGame/Self/View/PetTemplatesView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -95,3 +96,4 @@ export const shopView = {component: <ShopView/>, label: "Магазин"}
 export const shopManagementView = {component: <ShopManagementView/>, label: "Управление магазином"}
 export const bankView = {component: <BankView/>, label: "Банк"}
 export const characterSelectionView = {component: <CharacterSelectionView/>, label: "Выбор персонажа"}
+export const petTemplatesView = {component: <PetTemplatesView/>, label: "Питомцы"}

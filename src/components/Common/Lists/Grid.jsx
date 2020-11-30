@@ -8,7 +8,6 @@ import Img from "../Labels/Img";
  * onSelected: T => {}
  * onSelectRemoved: T => {},
  * size: Int?
- * emptyIcon: String?
  */
 export default class extends React.Component {
 

@@ -13,7 +13,7 @@ import {
     questionnaireTemplateView,
     skillCategoryView
 } from "../../../../Views";
-import {get, httpDelete, post, put} from "../../../../util/Http";
+import {get, httpDelete, patch, post, put} from "../../../../util/Http";
 import {
     deleteQuestionnaireTemplateUrl,
     deleteRecipeUrl,
@@ -148,7 +148,7 @@ export default connect(
     }
 
     onEditCurrency(form) {
-        put(updateCurrencyUrl(this.state.id, form.id), form, rs => {
+        patch(updateCurrencyUrl(this.state.id, form.id), form, rs => {
             this.setState(state => ({currencies: state.currencies.filter(v => v.id !== rs.id).concat(rs)}))
             Popup.info("Валюта обновлена.")
         })

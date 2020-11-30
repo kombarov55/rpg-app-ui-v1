@@ -89,12 +89,9 @@ export default connect(
             <div style={FormViewStyle}>
 
                 <CharInfoComponent character={this.state.character}/>
-                <SkillStatsComponent skillStats={this.state.character.skillStats} />
-
                 <CharacterFieldsComponent fieldNameToValueList={this.state.character.fieldNameToValueList}/>
                 <CornerListItem left={"Баллов актива"} right={this.state.character.activityPoints}/>
-
-
+                <SkillStatsComponent skillStats={this.state.character.skillStats} />
                 <List title={"Баланс:"}
                       values={this.state.character.balance.map(amount =>
                           <ListItem text={`${amount.name}: ${amount.amount}`}

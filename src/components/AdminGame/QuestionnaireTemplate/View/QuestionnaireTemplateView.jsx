@@ -62,7 +62,6 @@ export default connect(
                                                       onDeleteField={field => this.onDeleteField(field)}
                 />
 
-
                 <SkillCategoryToPointsComponent
                     gameId={this.props.gameId}
                     skillCategoryToPoints={this.state.skillCategoryToPoints}

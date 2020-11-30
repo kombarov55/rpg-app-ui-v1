@@ -5,10 +5,12 @@ import SkillStatsAmountToString from "../../../../util/SkillStatsAmountToString"
 
 export default function ({skillStats}) {
     return (
-        <List values={skillStats.map(skillStatsDto =>
-            <CornerListItem left={skillStatsDto.skillName}
-                            right={SkillStatsAmountToString(skillStatsDto.initialAmount, skillStatsDto.bonusAmount)}
-            />
-        )}/>
+        <List title={"Характеристики:"}
+              values={skillStats.map(skillStatsDto =>
+                  <CornerListItem left={skillStatsDto.skillName}
+                                  right={SkillStatsAmountToString(skillStatsDto.initialAmount, skillStatsDto.bonusAmount)}
+                  />
+              )}
+        />
     )
 }

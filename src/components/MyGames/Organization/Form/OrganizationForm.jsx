@@ -7,6 +7,7 @@ import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 import Popup from "../../../../util/Popup";
+import Validation from "../../../../util/Validation";
 
 export default class OrganizationForm extends React.Component {
 
@@ -50,16 +51,15 @@ export default class OrganizationForm extends React.Component {
                 />
 
                 <SubmitButton text={"Сохранить"} onClick={() => {
-                    if (
-                        this.state.name == null ||
-                        this.state.type == null
-                    ) {
-                        Popup.error("Пожалуйста, заполните все поля: [Название, Тип, Описание]")
-                        return
-                    }
+                    const success = Validation.run(
+                        Validation.nonNull(this.state.name, "Имя"),
+                        Validation.nonNull(this.state.type, "Тип"),
+                        Validation.nonNull(this.state.description, "Описание")
+                    )
 
-                    this.props.onSubmit(this.state)
-                    this.setState(this.initialState)
+                    if (success) {
+                        this.props.onSubmit(this.state)
+                    }
                 }}/>
             </div>
         )

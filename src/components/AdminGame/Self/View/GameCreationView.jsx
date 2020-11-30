@@ -18,6 +18,7 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import {useForm} from "react-hook-form";
 import SkillCategoryFormMode from "../../../../data-layer/enums/SkillCategoryFormMode";
 import Popup from "../../../../util/Popup";
+import Btn from "../../../Common/Buttons/Btn";
 
 function mapStateToProps(state, props) {
     return {
@@ -147,6 +148,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <input className={"network-creation-save-button"}
                    type={"submit"}
                    value={"Сохранить"}/>
+            <Btn text={"Назад"} onClick={() => this.props.changeView(adminPageView)}/>
         </form>
     )
 })

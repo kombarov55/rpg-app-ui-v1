@@ -15,9 +15,13 @@ export default function ({gameId, currencies, petTemplates, onAddPetTemplate, on
                   values={petTemplates.map(petTemplate =>
                       <PetTemplateListItem petTemplate={petTemplate}
                                            onEditClicked={() => {
-                                               setFormVisible(true)
-                                               setFormMode(FormMode.EDIT)
-                                               setForm(petTemplate)
+                                               if (formVisible) {
+                                                   setFormVisible(false)
+                                               } else {
+                                                   setFormVisible(true)
+                                                   setFormMode(FormMode.EDIT)
+                                                   setForm(petTemplate)
+                                               }
                                            }}
                                            onDeleteClicked={() => onDeletePetTemplate(petTemplate)}
                                            key={petTemplate.id}

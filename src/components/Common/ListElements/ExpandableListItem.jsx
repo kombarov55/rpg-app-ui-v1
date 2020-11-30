@@ -1,5 +1,7 @@
 import React from "react";
 import ExpandableListItemStyle from "../../../styles/ExpandableListItemStyle";
+import Icon from "../Input/Icon";
+import getOrDefault from "../../../util/getOrDefault";
 
 export default class ExpandableListItem extends React.Component {
 
@@ -13,6 +15,8 @@ export default class ExpandableListItem extends React.Component {
     }
 
     render() {
+        const {img, name, description, onEditClicked, isDeleteVisible, onDeleteClicked, alwaysExpand, expandableElements} = this.props
+
         return (
             <div style={ExpandableListItemStyle.containerStyle}>
                 <div style={ExpandableListItemStyle.innerHorizontalStyle}>
@@ -23,7 +27,10 @@ export default class ExpandableListItem extends React.Component {
                         }
                         <div style={ExpandableListItemStyle.nameStyle}>{this.props.name}</div>
                     </div>
-                    <div style={ExpandableListItemStyle.upperButtonsStyle}>{this.props.upperButtons}</div>
+                    <div style={ExpandableListItemStyle.upperButtonsStyle}>
+                        {this.props.onEditClicked && <Icon className={"pi pi-pencil"} onClick={() => this.props.onEditClicked()}/>}
+                        {(getOrDefault(this.props.isDeleteVisible, true) && this.props.onDeleteClicked) && <Icon className={"pi pi-times"} onClick={() => this.props.onDeleteClicked()}/>}
+                    </div>
                 </div>
                 <div>{this.props.description}</div>
                 {

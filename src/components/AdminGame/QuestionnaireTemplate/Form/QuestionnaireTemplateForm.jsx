@@ -8,6 +8,7 @@ import FileUpload from "../../../Common/Input/FileUpload";
 import SkillIcons from "../../../../data-layer/enums/SkillIcons";
 import {InputTextarea} from "primereact/inputtextarea";
 import Popup from "../../../../util/Popup";
+import Validation from "../../../../util/Validation";
 
 export default class QuestionnaireTemplateForm extends React.Component {
 
@@ -50,15 +51,14 @@ export default class QuestionnaireTemplateForm extends React.Component {
 
                 <SubmitButton text={"Сохранить"}
                               onClick={() => {
-                                  if (
-                                      this.state.name == "" ||
-                                      this.state.img == null ||
-                                      this.state.description == ""
-                                  ) {
-                                      Popup.error("Пожалуйста, заполните все поля: [Название, Картинка, Описание]")
-                                      return
+                                  const success = Validation.run(
+                                      Validation.nonNull(this.state.name, "Название"),
+                                      Validation.nonNull(this.state.img, "Картинка"),
+                                      Validation.nonNull(this.state.description, "Описание")
+                                  )
+                                  if (success) {
+                                      this.props.onSubmit(this.state)
                                   }
-                                  this.props.onSubmit(this.state)
                               }}
                 />
             </div>

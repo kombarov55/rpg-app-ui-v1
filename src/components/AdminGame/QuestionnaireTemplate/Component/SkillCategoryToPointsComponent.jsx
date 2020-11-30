@@ -41,7 +41,10 @@ export default class extends React.Component {
                     this.state.formVisible &&
                     <SkillCategoryToPointsForm
                         skillCategories={this.state.skillCategories}
-                        onSubmit={form => this.props.onAddSkillCategoryToPoints(form)}
+                        onSubmit={form => {
+                            this.setState({formVisible: false})
+                            this.props.onAddSkillCategoryToPoints(form)
+                        }}
                     />
 
                 }

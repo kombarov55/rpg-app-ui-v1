@@ -70,9 +70,16 @@ export default connect(
                         maxEquippedAmounts: state.maxEquippedAmounts.concat(maxEquippedAmount)
                     }))}
                 />
+
+                <InputLabel text={"Максимальное количество питомцев:"}/>
+                <input value={this.state.maxOwnedPetsCount}
+                       onChange={e => this.setState({maxOwnedPetsCount: e.target.value})}
+                />
+
                 <Btn text={"Сохранить изменения"} onClick={() => {
                     const success = Validation.run(
-                        Validation.between(this.state.inventorySize, 0, Number.MAX_SAFE_INTEGER, "Размер инвентаря")
+                        Validation.between(this.state.inventorySize, 0, Number.MAX_SAFE_INTEGER, "Размер инвентаря"),
+                        Validation.between(this.state.maxOwnedPetsCount, 0, Number.MAX_SAFE_INTEGER, "Максимальное количество питомцев")
                     )
 
                     if (success) {

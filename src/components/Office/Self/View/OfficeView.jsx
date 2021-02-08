@@ -1,23 +1,22 @@
 import React from "react";
 import {connect} from "react-redux"
 import FormViewStyle from "../../../../styles/FormViewStyle";
-import List from "../../../Common/Lists/List";
 import {get, post} from "../../../../util/Http";
 import {
     getCharactersByUserIdUrl,
     killCharacterUrl,
-    makeCharacterActiveUrl, officeViewUrl,
+    makeCharacterActiveUrl,
+    officeViewUrl,
     reviveCharacterUrl
 } from "../../../../util/Parameters";
 import Globals from "../../../../util/Globals";
-import ExpandableListItem from "../../../Common/ListElements/ExpandableListItem";
 import Btn from "../../../Common/Buttons/Btn";
 import Popup from "../../../../util/Popup";
-import {addUserAccount, changeView, setActiveCharacter, setActiveGame} from "../../../../data-layer/ActionCreators";
-import FormatDate from "../../../../util/FormatDate";
+import {changeView, setActiveCharacter, setActiveGame} from "../../../../data-layer/ActionCreators";
 import CharacterStatus from "../../../../data-layer/enums/CharacterStatus";
-import {characterListView, gameView} from "../../../../Views";
+import {characterListView} from "../../../../Views";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
+import UserAccountView from "./Component/UserAccountView";
 
 export default connect(
     state => ({
@@ -53,13 +52,7 @@ export default connect(
     render() {
         return (
             <div style={FormViewStyle}>
-                <ExpandableListItemWithBullets img={this.state.userAccount.img}
-                                    name={this.state.userAccount.fullName}
-                                    bullets={[
-                                        this.state.userAccount.role
-                                    ]}
-                    alwaysExpand={true}
-                />
+                <UserAccountView userAccount={this.state.userAccount}/>
 
                 {/*<List title={"Мои персонажи:"}*/}
                 {/*      noItemsText={"Пусто.."}*/}

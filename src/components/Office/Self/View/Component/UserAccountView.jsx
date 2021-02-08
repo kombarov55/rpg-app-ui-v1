@@ -3,8 +3,8 @@ import ExpandableListItemWithBullets from "../../../../Common/ListElements/Expan
 
 export default function ({userAccount}) {
     return (
-        <ExpandableListItemWithBullets img={userAccount.img}
-                                       name={userAccount.fullName}
+        <ExpandableListItemWithBullets img={userAccount.photo50Url}
+                                       name={`${userAccount.firstName} ${userAccount.lastName}`}
                                        bullets={[
                                            userAccount.role
                                        ]}

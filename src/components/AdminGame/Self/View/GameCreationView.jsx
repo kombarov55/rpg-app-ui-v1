@@ -148,7 +148,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(function (props) {
             <input className={"network-creation-save-button"}
                    type={"submit"}
                    value={"Сохранить"}/>
-            <Btn text={"Назад"} onClick={() => this.props.changeView(adminPageView)}/>
+            <Btn text={"Назад"} onClick={() => props.changeView(adminPageView)}/>
         </form>
     )
 })

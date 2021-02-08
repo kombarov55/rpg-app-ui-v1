@@ -17,6 +17,7 @@ import CharacterStatus from "../../../../data-layer/enums/CharacterStatus";
 import {characterListView} from "../../../../Views";
 import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import UserAccountView from "./Component/UserAccountView";
+import UserAccountGameRolesComponent from "./Component/UserAccountGameRolesComponent";
 
 export default connect(
     state => ({
@@ -43,7 +44,9 @@ export default connect(
 
 
         this.state = {
-            userAccount: {}
+            userAccount: {
+                rolesInGames: []
+            }
         }
 
         get(officeViewUrl, rs => this.setState(rs))
@@ -53,6 +56,7 @@ export default connect(
         return (
             <div style={FormViewStyle}>
                 <UserAccountView userAccount={this.state.userAccount}/>
+                <UserAccountGameRolesComponent userAccountGameRoleDtoList={this.state.userAccount.rolesInGames}/>
 
                 {/*<List title={"Мои персонажи:"}*/}
                 {/*      noItemsText={"Пусто.."}*/}
@@ -87,8 +91,9 @@ export default connect(
             <Btn text={"Выбрать"}
                  onClick={() => {
                      post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () =>
-                     this.props.toCharacterListView(game, character)
-                 )}}
+                         this.props.toCharacterListView(game, character)
+                     )
+                 }}
             />
         )
     }

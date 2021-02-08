@@ -6,7 +6,7 @@ import {get, post} from "../../../../util/Http";
 import {
     getCharactersByUserIdUrl,
     killCharacterUrl,
-    makeCharacterActiveUrl,
+    makeCharacterActiveUrl, officeViewUrl,
     reviveCharacterUrl
 } from "../../../../util/Parameters";
 import Globals from "../../../../util/Globals";
@@ -17,6 +17,7 @@ import {addUserAccount, changeView, setActiveCharacter, setActiveGame} from "../
 import FormatDate from "../../../../util/FormatDate";
 import CharacterStatus from "../../../../data-layer/enums/CharacterStatus";
 import {characterListView, gameView} from "../../../../Views";
+import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 
 export default connect(
     state => ({
@@ -43,40 +44,47 @@ export default connect(
 
 
         this.state = {
-            characters: [],
-            games: []
+            userAccount: {}
         }
 
-        get(getCharactersByUserIdUrl(Globals.userId), rs => this.setState({characters: rs}))
+        get(officeViewUrl, rs => this.setState(rs))
     }
 
     render() {
         return (
             <div style={FormViewStyle}>
-                <List title={"Мои персонажи:"}
-                      noItemsText={"Пусто.."}
-                      values={this.groupCharactersByGame(this.state.characters).map(({game, characters}) =>
-                          <List title={`${game.name}:`}
-                                values={characters.sort((c1, c2) => CharacterStatus.compare(c1.status, c2.status))
-                                    .map(character =>
-                                        <ExpandableListItem name={character.name}
-                                                            alwaysExpand={true}
-                                                            expandableElements={[
-                                                                <div>{`Игра: ${character.game.name}`}</div>,
-                                                                <div>{`Гражданин страны: ${character.country.name}`}</div>,
-                                                                <div>{`Статус: ${CharacterStatus.getLabel(character.status)}`}</div>,
-                                                                <div>{`Дата смены статуса: ${FormatDate(new Date(character.statusChangeDate))}`}</div>,
-                                                                ...(character.status !== CharacterStatus.DEAD ? [
-                                                                    this.toCharacterListViewButton(game, character)
-                                                                ] : []),
-                                                                this.killCharacterButton(game, character)
-                                                            ].filter(v => v != null)}
-                                                            key={character.id}
-                                        />
-                                    )}
-                          />
-                      )}
+                <ExpandableListItemWithBullets img={this.state.userAccount.img}
+                                    name={this.state.userAccount.fullName}
+                                    bullets={[
+                                        this.state.userAccount.role
+                                    ]}
+                    alwaysExpand={true}
                 />
+
+                {/*<List title={"Мои персонажи:"}*/}
+                {/*      noItemsText={"Пусто.."}*/}
+                {/*      values={this.groupCharactersByGame(this.state.characters).map(({game, characters}) =>*/}
+                {/*          <List title={`${game.name}:`}*/}
+                {/*                values={characters.sort((c1, c2) => CharacterStatus.compare(c1.status, c2.status))*/}
+                {/*                    .map(character =>*/}
+                {/*                        <ExpandableListItem name={character.name}*/}
+                {/*                                            alwaysExpand={true}*/}
+                {/*                                            expandableElements={[*/}
+                {/*                                                <div>{`Игра: ${character.game.name}`}</div>,*/}
+                {/*                                                <div>{`Гражданин страны: ${character.country.name}`}</div>,*/}
+                {/*                                                <div>{`Статус: ${CharacterStatus.getLabel(character.status)}`}</div>,*/}
+                {/*                                                <div>{`Дата смены статуса: ${FormatDate(new Date(character.statusChangeDate))}`}</div>,*/}
+                {/*                                                ...(character.status !== CharacterStatus.DEAD ? [*/}
+                {/*                                                    this.toCharacterListViewButton(game, character)*/}
+                {/*                                                ] : []),*/}
+                {/*                                                this.killCharacterButton(game, character)*/}
+                {/*                                            ].filter(v => v != null)}*/}
+                {/*                                            key={character.id}*/}
+                {/*                        />*/}
+                {/*                    )}*/}
+                {/*          />*/}
+                {/*      )}*/}
+                {/*/>*/}
             </div>
         )
     }

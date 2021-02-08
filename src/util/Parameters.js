@@ -195,3 +195,6 @@ export const rejectCreditRequest = `${rootUrl}/credit/rejectCreditRequest.do`
 export const creditPaymentUrl = `${rootUrl}/credit/creditPayment.do`
 
 export const performCraftingUrl = `${rootUrl}/craft/performCrafting.do`
+
+
+export const officeViewUrl = `${rootUrl}/officeView`

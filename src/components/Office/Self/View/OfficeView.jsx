@@ -15,9 +15,10 @@ import Popup from "../../../../util/Popup";
 import {changeView, setActiveCharacter, setActiveGame} from "../../../../data-layer/ActionCreators";
 import CharacterStatus from "../../../../data-layer/enums/CharacterStatus";
 import {characterListView} from "../../../../Views";
-import ExpandableListItemWithBullets from "../../../Common/ListElements/ExpandableListItemWithBullets";
 import UserAccountView from "./Component/UserAccountView";
 import UserAccountGameRolesComponent from "./Component/UserAccountGameRolesComponent";
+import Stubs from "../../../../stubs/Stubs";
+import CharacterToGameComponent from "./Component/CharacterToGameComponent";
 
 export default connect(
     state => ({
@@ -43,11 +44,7 @@ export default connect(
         super(props);
 
 
-        this.state = {
-            userAccount: {
-                rolesInGames: []
-            }
-        }
+        this.state = Stubs.officeView
 
         get(officeViewUrl, rs => this.setState(rs))
     }
@@ -56,7 +53,8 @@ export default connect(
         return (
             <div style={FormViewStyle}>
                 <UserAccountView userAccount={this.state.userAccount}/>
-                <UserAccountGameRolesComponent userAccountGameRoleDtoList={this.state.userAccount.rolesInGames}/>
+                <UserAccountGameRolesComponent userAccountGameRoleDtoList={this.state.userAccount?.rolesInGames}/>
+                <CharacterToGameComponent gamesToCharacters={this.state.gamesToCharacters} />
 
                 {/*<List title={"Мои персонажи:"}*/}
                 {/*      noItemsText={"Пусто.."}*/}

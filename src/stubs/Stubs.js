@@ -6,6 +6,7 @@ import SchoolLvlStub from "./game/SchoolLvlStub";
 import MerchandiseUpgradesStub from "./game/MerchandiseUpgradesStub";
 import ListOfAmountsStub from "./game/ListOfAmountsStub";
 import SkillsStub from "./game/SkillsStub";
+import OfficeViewStub from "./game/OfficeViewStub";
 
 export default {
     basicSkillCategory: BasicSkillCategoryStub,
@@ -15,5 +16,6 @@ export default {
     schoolLvlList: SchoolLvlStub,
     merchandiseUpgrades: MerchandiseUpgradesStub,
     listOfAmounts: ListOfAmountsStub,
-    skills: SkillsStub
+    skills: SkillsStub,
+    officeView: OfficeViewStub
 }

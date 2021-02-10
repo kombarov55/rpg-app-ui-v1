@@ -6,7 +6,7 @@ export default function ({userAccountGameRoleDtoList}) {
     return (
         <>
             <List title={"Мои роли в играх"}>
-                {userAccountGameRoleDtoList.map(v =>
+                {userAccountGameRoleDtoList?.map(v =>
                     <CornerListItem left={v.title} right={v.role} />
                 )}
             </List>

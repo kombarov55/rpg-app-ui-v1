@@ -6,7 +6,6 @@ import _ from "lodash"
 import IsNumeric from "../../../../util/IsNumeric";
 import PriceInput from "../../../Common/Input/PriceInput";
 import ListItem from "../../../Common/ListElements/ListItem";
-import Popup from "../../../../util/Popup";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
 

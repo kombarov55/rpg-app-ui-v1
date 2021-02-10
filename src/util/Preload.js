@@ -7,7 +7,6 @@ import {
     gameByNetworkId,
     gameBySubnetworkId,
     getRecipesByGameId,
-    itemTemplateUrl,
     networkUrl,
     openGamesUrl,
     organizationByGameIdUrl,

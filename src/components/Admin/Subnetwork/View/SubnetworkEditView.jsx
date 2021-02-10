@@ -7,9 +7,9 @@ import {
     setSubnetworks,
     updateSubnetworkForm
 } from "../../../../data-layer/ActionCreators";
-import {post, put, upload} from "../../../../util/Http";
-import {editSubnetworkUrl, subnetworkUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
-import {networkView, subnetworkView} from "../../../../Views";
+import {put, upload} from "../../../../util/Http";
+import {editSubnetworkUrl, uploadServerUrl, uploadUrl} from "../../../../util/Parameters";
+import {subnetworkView} from "../../../../Views";
 import InputLabel from "../../../Common/Labels/InputLabel";
 import {useForm} from "react-hook-form";
 import Popup from "../../../../util/Popup";

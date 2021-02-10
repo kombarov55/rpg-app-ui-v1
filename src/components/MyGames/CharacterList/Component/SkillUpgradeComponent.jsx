@@ -6,11 +6,6 @@ import AmountsToString from "../../../../util/AmountsToString";
 
 export default class SkillUpgradeComponent extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-    }
-
     render() {
         return (
             <ExpandableListItem name={`${this.props.skillUpgrade.lvlNum} уровень: `}

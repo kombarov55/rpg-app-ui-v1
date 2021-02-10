@@ -6,7 +6,6 @@ import {SelectButton} from "primereact/selectbutton";
 import OrganizationType from "../../../../data-layer/enums/OrganizationType";
 import FormTitleLabel from "../../../Common/Labels/FormTitleLabel";
 import SubmitButton from "../../../Common/Buttons/SubmitButton";
-import Popup from "../../../../util/Popup";
 import Validation from "../../../../util/Validation";
 
 export default class OrganizationForm extends React.Component {

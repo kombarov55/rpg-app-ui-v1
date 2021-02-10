@@ -94,7 +94,7 @@ export default connect(
                 />
                 {
                     this.state.upgradeFormVisible && (
-                        this.state.upgradeFormMode == FormMode.CREATE ?
+                        this.state.upgradeFormMode === FormMode.CREATE ?
                             <SkillUpgradeForm
                                 lvlNum={Math.max(...this.state.upgrades.map(v => v.lvlNum)) + 1}
                                 currencyNames={this.props.currencyNames}

@@ -6,10 +6,6 @@ import Btn from "../Common/Buttons/Btn";
 
 export default class extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <ExpandableListItem name={`Заявка от ${this.props.creditRequest.requester.name}`}

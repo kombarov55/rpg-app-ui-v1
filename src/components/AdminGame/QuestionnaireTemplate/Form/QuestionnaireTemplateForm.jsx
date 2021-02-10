@@ -7,7 +7,6 @@ import InputLabel from "../../../Common/Labels/InputLabel";
 import FileUpload from "../../../Common/Input/FileUpload";
 import SkillIcons from "../../../../data-layer/enums/SkillIcons";
 import {InputTextarea} from "primereact/inputtextarea";
-import Popup from "../../../../util/Popup";
 import Validation from "../../../../util/Validation";
 
 export default class QuestionnaireTemplateForm extends React.Component {

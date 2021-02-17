@@ -54,99 +54,39 @@ export default connect(
             <div style={FormViewStyle}>
                 <UserAccountView userAccount={this.state.userAccount}/>
                 <UserAccountGameRolesComponent userAccountGameRoleDtoList={this.state.userAccount?.rolesInGames}/>
-                <CharacterToGameComponent gamesToCharacters={this.state.gamesToCharacters} />
+                <CharacterToGameComponent characters={this.state.userAccount?.characters}
+                                          onCharacterListClicked={(game, character) => this.onCharacterListClicked(game, character)}
+                                          onKillClicked={character => this.onKillClicked(character)}
+                                          onReviveClicked={character => this.onReviveClicked(character)}
+                />
 
-                {/*<List title={"Мои персонажи:"}*/}
-                {/*      noItemsText={"Пусто.."}*/}
-                {/*      values={this.groupCharactersByGame(this.state.characters).map(({game, characters}) =>*/}
-                {/*          <List title={`${game.name}:`}*/}
-                {/*                values={characters.sort((c1, c2) => CharacterStatus.compare(c1.status, c2.status))*/}
-                {/*                    .map(character =>*/}
-                {/*                        <ExpandableListItem name={character.name}*/}
-                {/*                                            alwaysExpand={true}*/}
-                {/*                                            expandableElements={[*/}
-                {/*                                                <div>{`Игра: ${character.game.name}`}</div>,*/}
-                {/*                                                <div>{`Гражданин страны: ${character.country.name}`}</div>,*/}
-                {/*                                                <div>{`Статус: ${CharacterStatus.getLabel(character.status)}`}</div>,*/}
-                {/*                                                <div>{`Дата смены статуса: ${FormatDate(new Date(character.statusChangeDate))}`}</div>,*/}
-                {/*                                                ...(character.status !== CharacterStatus.DEAD ? [*/}
-                {/*                                                    this.toCharacterListViewButton(game, character)*/}
-                {/*                                                ] : []),*/}
-                {/*                                                this.killCharacterButton(game, character)*/}
-                {/*                                            ].filter(v => v != null)}*/}
-                {/*                                            key={character.id}*/}
-                {/*                        />*/}
-                {/*                    )}*/}
-                {/*          />*/}
-                {/*      )}*/}
-                {/*/>*/}
             </div>
         )
     }
 
-    toCharacterListViewButton(game, character) {
-        return (
-            <Btn text={"Выбрать"}
-                 onClick={() => {
-                     post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () =>
-                         this.props.toCharacterListView(game, character)
-                     )
-                 }}
-            />
+    onCharacterListClicked(game, character) {
+        post(makeCharacterActiveUrl, {characterId: character.id, gameId: game.id}, () =>
+            this.props.toCharacterListView(game, character)
         )
     }
 
-    killCharacterButton(game, character) {
-        if (character.status === CharacterStatus.DEAD) {
-            return (
-                <Btn
-                    text={"Оживить персонажа"}
-                    onClick={() => {
-                        post(reviveCharacterUrl, {characterId: character.id}, () =>
-                            get(getCharactersByUserIdUrl(Globals.userId), rs => {
-                                this.setState({characters: rs})
-                                Popup.success(`Вы оживили персонажа!`)
-                            })
-                        )
-                    }
-                    }
-                />
-            )
-        } else {
-            return (
+    onReviveClicked(character) {
+        post(reviveCharacterUrl, {characterId: character.id}, () =>
+            get(getCharactersByUserIdUrl(Globals.userId), rs => {
+                this.setState({characters: rs})
+                Popup.success(`Вы оживили персонажа!`)
+            })
+        )
+    }
 
-                <Btn text={"Убить персонажа"} onClick={() => {
-                    if (window.confirm("Вы действительно хотите убить персонажа?")) {
-                        post(killCharacterUrl, {characterId: character.id, gameId: character.game.id}, () =>
-                            get(getCharactersByUserIdUrl(Globals.userId), rs => {
-                                this.setState({characters: rs})
-                                Popup.success(`Персонаж успешно убит. Дата смерти: ${new Date()}`)
-                            })
-                        )
-                    }
-                }}/>
+    onKillClicked(character) {
+        if (window.confirm("Вы действительно хотите убить персонажа?")) {
+            post(killCharacterUrl, {characterId: character.id, gameId: character.game.id}, () =>
+                get(getCharactersByUserIdUrl(Globals.userId), rs => {
+                    this.setState({characters: rs})
+                    Popup.success(`Персонаж успешно убит. Дата смерти: ${new Date()}`)
+                })
             )
         }
-    }
-
-    isCharacterActive(character) {
-        return this.props.userAccount.gameToActiveCharacter.some(({activeCharacter}) => activeCharacter?.id === character.id)
-    }
-
-    groupCharactersByGame(characters) {
-        return characters.reduce((resultList, character) => {
-            const stored = resultList.find(v => v.game.id === character.game.id)
-            if (stored == null) {
-                return resultList.concat({
-                    game: character.game,
-                    characters: [character]
-                })
-            } else {
-                return resultList.filter(v => v.game.id !== stored.game.id).concat({
-                    game: stored.game,
-                    characters: stored.characters.concat(character)
-                })
-            }
-        }, [])
     }
 })

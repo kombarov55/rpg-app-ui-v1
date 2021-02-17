@@ -158,6 +158,8 @@ export const deletePetTemplateUrl = id => `${rootUrl}/pet-template/${id}`
 
 export const findPendingCreditRequestsByOrganizationId = organizationId => `${rootUrl}/organization/${organizationId}/credit-request/pending`
 
+export const searchUserAccountByNameOrCharacterName = name => `${searchViewUrl}/search?name=${name}`
+
 export const approveQuestionnaireUrl = rootUrl + "/questionnaire/approve.do"
 export const clarifyQuestionnaireUrl = rootUrl + "/questionnaire/clarify.do"
 export const archiveQuestionnaireUrl = rootUrl + "/questionnaire/archive.do"
@@ -198,3 +200,4 @@ export const performCraftingUrl = `${rootUrl}/craft/performCrafting.do`
 
 
 export const officeViewUrl = `${rootUrl}/officeView`
+export const searchViewUrl = `${rootUrl}/searchView`

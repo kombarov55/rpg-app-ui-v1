@@ -33,7 +33,6 @@ import GameView from "./components/MyGames/Self/View/GameView";
 import QuestionnaireFillingView from "./components/MyGames/Self/View/QuestionnaireFillingView";
 import QuestionnaireDisclaimerView from "./components/MyGames/Self/View/QuestionnaireDisclaimerView";
 import GameSettingsView from "./components/AdminGame/Self/View/GameSettingsView";
-import UserAccountDetailsView from "./components/Admin/View/UserAccountDetailsView";
 import QuestionnaireReviewView from "./components/MyGames/Self/View/QuestionnaireReviewView";
 import CharacterListView from "./components/MyGames/CharacterList/View/CharacterListView";
 import OfficeView from "./components/Office/Self/View/OfficeView";
@@ -42,6 +41,7 @@ import ShopManagementView from "./components/MyGames/ShopView/View/ShopManagemen
 import BankView from "./components/MyGames/Organization/View/BankView";
 import CharacterSelectionView from "./components/MyGames/Self/View/CharacterSelectionView";
 import PetTemplatesView from "./components/AdminGame/Self/View/PetTemplatesView";
+import SearchView from "./components/Admin/View/SearchView";
 
 export const testView = {component: <TestView/>, label: "Тест"}
 
@@ -88,7 +88,6 @@ export const gameView = {component: <GameView/>, label: "Игра"}
 export const questionnaireDisclaimerView = {component: <QuestionnaireDisclaimerView/>, label: "Правила игры"}
 export const questionnaireFillingView = {component: <QuestionnaireFillingView/>, label: "Заполнение анкеты"}
 export const gameSettingsView = {component: <GameSettingsView/>, label: "Настройки"}
-export const userAccountDetailsView = {component: <UserAccountDetailsView/>, label: "Управление игроком"}
 export const questionnaireReviewView = {component: <QuestionnaireReviewView/>, label: "Рассмотрение анкеты"}
 export const characterListView = {component: <CharacterListView/>, label: "Лист персонажа"}
 export const officeView = {component: <OfficeView/>, label: "Кабинет"}
@@ -97,3 +96,4 @@ export const shopManagementView = {component: <ShopManagementView/>, label: "У�
 export const bankView = {component: <BankView/>, label: "Банк"}
 export const characterSelectionView = {component: <CharacterSelectionView/>, label: "Выбор персонажа"}
 export const petTemplatesView = {component: <PetTemplatesView/>, label: "Питомцы"}
+export const searchView = {component: <SearchView/>, label: "Поиск"}

@@ -6,7 +6,7 @@ import {
     adminGameView,
     gameCreationView,
     networkCreationView,
-    networkView,
+    networkView, searchView,
     userAccountDetailsView
 } from "../../../Views";
 import {
@@ -29,6 +29,7 @@ import {get} from "../../../util/Http";
 import {allUsersShortUrl} from "../../../util/Parameters";
 import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
 import FormViewStyle from "../../../styles/FormViewStyle";
+import Btn from "../../Common/Buttons/Btn";
 
 function mapStateToProps(state, props) {
     return {
@@ -86,9 +87,8 @@ export default connect(mapStateToProps, mapDispatchToProps)
         this.props.changeView(gameCreationView)
     }
 
-    toUserAccountDetailsView(userAccount) {
-        this.props.setActiveUserAccount(userAccount)
-        this.props.changeView(userAccountDetailsView)
+    toSearchView() {
+        this.props.changeView(searchView)
     }
 
     render() {
@@ -121,23 +121,7 @@ export default connect(mapStateToProps, mapDispatchToProps)
                 </div>
 
                 <div style={FormViewStyle}>
-                    <List title={"Игроки:"}
-                          noItemsText={"Пусто.."}
-                          values={this.state.userAccounts.map(userAccount =>
-                              <ExpandableListItemWithBullets
-                                  img={userAccount.img}
-                                  name={userAccount.fullName}
-                                  bullets={[
-                                      "Роль: " + userAccount.role
-                                  ]}
-                                  detailsButtonText={"Управление ролями"}
-                                  onDetailsClicked={() => this.toUserAccountDetailsView(userAccount)}
-
-                                  alwaysExpand={true}
-                                  key={userAccount.id}
-                              />
-                          )}
-                    />
+                    <Btn text={"Поиск.."} onClick={() => this.toSearchView()}/>
                 </div>
             </div>
         )

@@ -19,7 +19,7 @@ export default class extends React.Component {
     }
 
     render() {
-        const {userAccountDto, onEditUserGameRoleSubmit, onEditCharacterRoleSubmit} = this.props
+        const {userAccountDto, onEditUserAccountRoleSubmit, onEditUserGameRoleSubmit, onEditCharacterRoleSubmit} = this.props
         const {id, photo50Url, firstName, lastName, role, rolesInGames, characters} = userAccountDto
 
         return (
@@ -27,6 +27,14 @@ export default class extends React.Component {
                 <ExpandableListItem img={photo50Url}
                                     name={`${firstName} ${lastName}`}
                                     description={role}
+                                    onEditClicked={() => this.setState({form:
+                                            <UserAccountRoleForm prevRole={role}
+                                                                 onSubmit={role => {
+                                                                     onEditUserAccountRoleSubmit(id, role)
+                                                                     this.setState({form: <></>})
+                                                                 }}
+                                            />
+                                    })}
                                     expandableElements={[
                                         <>
                                             <List title={"Роли в играх"}
@@ -114,6 +122,32 @@ class CharacterRoleForm extends React.Component {
         return (
             <>
                 <FormTitleLabel text={"Изменение роли персонажа"}/>
+                <SelectButton options={Roles.values()}
+                              value={this.state.role}
+                              onChange={e => this.setState({role: e.target.value})}
+                />
+                <SubmitButton onClick={() => this.props.onSubmit(this.state.role)}
+                              text={"Сохранить"}
+                />
+            </>
+        )
+    }
+}
+
+class UserAccountRoleForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            role: Roles.findByLabel(props.prevRole)
+        }
+    }
+
+    render() {
+        return (
+            <>
+                <FormTitleLabel text={"Изменение роли пользователя:"}/>
                 <SelectButton options={Roles.values()}
                               value={this.state.role}
                               onChange={e => this.setState({role: e.target.value})}

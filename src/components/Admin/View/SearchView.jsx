@@ -42,6 +42,7 @@ export default connect(
                                     itemRenderer={item =>
                                         <UserAccountSearchResultListItem
                                             userAccountDto={item}
+                                            onEditUserAccountRoleSubmit={(userAccountId, newRole) => this.changeUserRole(userAccountId, newRole)}
                                             onEditUserGameRoleSubmit={(userAccountId, gameId, newRole) => this.changeUserGameRole(userAccountId, gameId, newRole)}
                                             onEditCharacterRoleSubmit={(characterId, newRole) => this.changeCharacterRole(characterId, newRole)}
                                         />}

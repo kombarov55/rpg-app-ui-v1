@@ -1,18 +1,13 @@
 import React from "react";
 import ExpandableListItemWithBullets from "../Common/ListElements/ExpandableListItemWithBullets";
+import ListItem from "../Common/ListElements/ListItem";
 
 export default function ({characterDto, onEditClicked}) {
-    const {name, img, game, role} = characterDto
+    const {name, role} = characterDto
 
     return (
-        <ExpandableListItemWithBullets img={img}
-                                       name={name}
-                                       description={game.name}
-                                       bullets={[
-                                           role
-                                       ]}
-                                       alwaysExpand={true}
-                                       onEditClicked={() => onEditClicked()}
+        <ListItem text={`${name}: ${role}`}
+                  onEdit={() => onEditClicked()}
         />
     )
 }

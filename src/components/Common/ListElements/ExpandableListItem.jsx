@@ -42,12 +42,12 @@ export default class ExpandableListItem extends React.Component {
                         !this.state.expand ?
                             <Icon className={"pi pi-angle-down"}
                                   fontSize={"4vmax"}
-                                  center={true}
+                                  alignSelf={"center"}
                                   onClick={() => this.setState({expand: true})}
                             /> :
                             <Icon className={"pi pi-angle-up"}
                                   fontSize={"4vmax"}
-                                  center={true}
+                                  alignSelf={"center"}
                                   onClick={() => this.setState({expand: false})}
                             />
                     )

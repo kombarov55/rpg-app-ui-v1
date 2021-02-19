@@ -12,7 +12,11 @@ export default function ({text, selected, onEdit, onClick = () => {}, onDelete, 
             </div>
             <div className={"list-item-small-right"}>
                 {
-                    onEdit && <Icon className={"pi pi-pencil"} onClick={(() => onEdit())}/>
+                    onEdit && <Icon
+                        className={"pi pi-pencil"}
+                        alignSelf={"flex-end"}
+                        onClick={(() => onEdit())}
+                    />
                 }
                 {
                     (getOrDefault(isDeleteVisible, true) && onDelete != null) && <Icon className={"pi pi-times"} onClick={(() => onDelete())}/>

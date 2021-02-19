@@ -5,11 +5,10 @@ import Btn from "../../Common/Buttons/Btn";
 import FormViewStyle from "../../../styles/FormViewStyle";
 import RemoteAutocomplete from "../../Common/Input/RemoteAutocomplete";
 import {searchUserAccountByNameOrCharacterName} from "../../../util/Parameters";
+import UserAccountSearchResultListItem from "../../ListItem/UserAccountSearchResultListItem";
 
 export default connect(
-    state => ({
-
-    }),
+    state => ({}),
     null,
     (stateProps, dispatchProps, ownProps) => {
         const {dispatch} = dispatchProps
@@ -30,14 +29,27 @@ export default connect(
     render() {
         return (
             <div style={FormViewStyle}>
-                <input placeholder={"Имя пользователя или перонажа..."}/>
                 <RemoteAutocomplete buildSyncUrl={name => searchUserAccountByNameOrCharacterName(name)}
                                     fieldToDisplay={"firstName"}
                                     onSelected={some => console.log(some)}
+                                    itemRenderer={item =>
+                                        <UserAccountSearchResultListItem
+                                            userAccountDto={item}
+                                            onEditUserGameRoleSubmit={(gameId, newRole) => this.changeUserGameRole(newRole, gameId)}
+                                            onEditCharacterRoleSubmit={newRole => this.changeCharacterRole(newRole)}
+                                        />}
                 />
 
                 <Btn text={"Назад"} onClick={() => this.props.back()}/>
             </div>
         )
+    }
+
+    changeUserGameRole(newRole, gameId) {
+        alert(`${newRole} ${gameId}`)
+    }
+
+    changeCharacterRole(newRole) {
+        alert(`${newRole}`)
     }
 })

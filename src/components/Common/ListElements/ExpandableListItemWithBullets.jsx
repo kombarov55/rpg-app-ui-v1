@@ -1,29 +1,25 @@
 import React from "react";
 import BulletList from "../Lists/BulletList";
 import ExpandableListItem from "./ExpandableListItem";
-import Icon from "../Input/Icon";
 import GreyButton from "../Buttons/GreyButton";
 import getOrDefault from "../../../util/getOrDefault";
 
-export default class ExpandableListItemWithBullets extends React.Component {
-
-    render() {
-        return (
-            <ExpandableListItem
-                img={this.props.img}
-                name={this.props.name}
-                isDeleteVisible={this.props.isDeleteVisible}
-                onDeleteClicked={this.props.onDeleteClicked}
-                onEditClicked={this.props.onEditClicked}
-                expandableElements={[
-                    <div style={descriptionStyle}>{this.props.description}</div>,
-                    <BulletList values={this.props.bullets}/>,
-                    this.props.onDetailsClicked && <GreyButton text={getOrDefault(this.props.detailsButtonText, "Подробнее")} onClick={() => this.props.onDetailsClicked()}/>
-                ]}
-                alwaysExpand={this.props.alwaysExpand}
-            />
-        )
-    }
+export default function ({img, name, description, bullets, alwaysExpand, isDeleteVisible, onDeleteClicked, onEditClicked, onDetailsClicked, detailsButtonText}) {
+    return (
+        <ExpandableListItem
+            img={img}
+            name={name}
+            isDeleteVisible={isDeleteVisible}
+            onDeleteClicked={onDeleteClicked}
+            onEditClicked={onEditClicked}
+            expandableElements={[
+                <div style={descriptionStyle}>{description}</div>,
+                <BulletList values={bullets}/>,
+                onDetailsClicked && <GreyButton text={getOrDefault(detailsButtonText, "Подробнее")} onClick={() => onDetailsClicked()}/>
+            ]}
+            alwaysExpand={alwaysExpand}
+        />
+    )
 }
 
 const descriptionStyle = {

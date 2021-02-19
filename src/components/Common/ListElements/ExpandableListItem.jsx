@@ -22,21 +22,38 @@ export default class ExpandableListItem extends React.Component {
                 <div style={ExpandableListItemStyle.innerHorizontalStyle}>
                     <div style={ExpandableListItemStyle.imgAndNameStyle} onClick={() => this.expand()}>
                         {
-                            this.props.img &&
-                            <img style={ExpandableListItemStyle.imgStyle} src={this.props.img}/>
+                            img &&
+                            <img style={ExpandableListItemStyle.imgStyle} src={img}/>
                         }
-                        <div style={ExpandableListItemStyle.nameStyle}>{this.props.name}</div>
+                        <div style={ExpandableListItemStyle.nameStyle}>{name}</div>
                     </div>
                     <div style={ExpandableListItemStyle.upperButtonsStyle}>
-                        {this.props.onEditClicked && <Icon className={"pi pi-pencil"} onClick={() => this.props.onEditClicked()}/>}
-                        {(getOrDefault(this.props.isDeleteVisible, true) && this.props.onDeleteClicked) && <Icon className={"pi pi-times"} onClick={() => this.props.onDeleteClicked()}/>}
+                        {onEditClicked && <Icon className={"pi pi-pencil"} onClick={() => onEditClicked()}/>}
+                        {(getOrDefault(isDeleteVisible, true) && onDeleteClicked) && <Icon className={"pi pi-times"} onClick={() => onDeleteClicked()}/>}
                     </div>
                 </div>
-                <div>{this.props.description}</div>
+                <div>{description}</div>
                 {
-                    (this.props.alwaysExpand || this.state.expand) &&
-                    this.props.expandableElements
+                    (alwaysExpand || this.state.expand) &&
+                    expandableElements
                 }
+                {
+                    !alwaysExpand && (
+                        !this.state.expand ?
+                            <Icon className={"pi pi-angle-down"}
+                                  fontSize={"4vmax"}
+                                  center={true}
+                                  onClick={() => this.setState({expand: true})}
+                            /> :
+                            <Icon className={"pi pi-angle-up"}
+                                  fontSize={"4vmax"}
+                                  center={true}
+                                  onClick={() => this.setState({expand: false})}
+                            />
+                    )
+                }
+
+
             </div>
         )
     }

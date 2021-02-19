@@ -10,6 +10,7 @@ import getOrDefault from "../../../util/getOrDefault";
  *    buildSyncUrl: (input: String) => url: String,
  *    filteredItems: List<Item>
  *    onSelected: Consumer<Item>
+     renderer: item => JSX
  * }
  */
 export default class RemoteAutocomplete extends React.Component {
@@ -24,6 +25,13 @@ export default class RemoteAutocomplete extends React.Component {
         }
 
         this.fetch("")
+
+        this.itemRenderer = props.itemRenderer != null ?
+            props.itemRenderer :
+            item => <ListItem text={item[getOrDefault(this.props.fieldToDisplay, "name")]}
+                              onClick={() => this.onSelect(item)}
+                              selected={this.state.selectedItem?.id === item.id}
+                              key={item.id}/>
     }
 
     render() {
@@ -33,14 +41,9 @@ export default class RemoteAutocomplete extends React.Component {
                        value={this.state.input}
                        onChange={e => this.fetch(e.target.value)}
                 />
-                <List values={this.getItems().map(item =>
-                    <ListItem text={item[getOrDefault(this.props.fieldToDisplay, "name")]}
-                              onClick={() => this.onSelect(item)}
-                              selected={this.state.selectedItem?.id === item.id}
-                              key={item.id}
-                    />
-                )}
-                />
+                <List>{
+                    this.getItems().map(item => this.itemRenderer(item))
+                }</List>
             </div>
         )
     }

@@ -1,10 +1,13 @@
 import React from "react";
 
-export default function(props) {
+export default function({className, center, fontSize, onClick = () => {}}) {
     return (
-        <i className={props.className}
-           style={{"fontSize": props.fontSize}}
-           onClick={() => props.onClick()}
+        <i className={className}
+           style={{
+               "fontSize": fontSize,
+               "alignSelf": center ? "center" : "auto"
+           }}
+           onClick={() => onClick()}
         />
     )
 }

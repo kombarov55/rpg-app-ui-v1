@@ -2,54 +2,48 @@ import React from "react";
 import Icon from "../Input/Icon";
 import getOrDefault from "../../../util/getOrDefault";
 
-export default function (props) {
-
-    function onClick() {
-        if (props.onClick != null) {
-            props.onClick()
-        }
-    }
-
-    const defaultContainerStyle = {
-        "display": "flex",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-        "alignItems": "center",
-        "width": "100%",
-        "padding": "1vmax 2vmin",
-        "margin": "0.2vmax 0",
-        "borderRadius": "5px",
-        "background": "#212121",
-        "fontSize": "1.5vmax"
-    }
-
-    const selectedContainerStyle = {
-        "display": "flex",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-        "alignItems": "center",
-        "width": "100%",
-        "padding": "1vmax 2vmin",
-        "margin": "0.2vmax 0",
-        "borderRadius": "5px",
-        "background": "#592e83",
-        "fontSize": "1.5vmax"
-    }
+export default function ({text, selected, onEdit, onClick = () => {}, onDelete, isDeleteVisible}) {
 
 
     return (
-        <div style={props.selected ? selectedContainerStyle : defaultContainerStyle} onClick={() => onClick()}>
+        <div style={selected ? selectedContainerStyle : defaultContainerStyle} onClick={() => onClick()}>
             <div className={"list-item-small-left"}>
-                {props.text}
+                {text}
             </div>
             <div className={"list-item-small-right"}>
                 {
-                    props.onEdit && <Icon className={"pi pi-pencil"} onClick={(() => props.onEdit())}/>
+                    onEdit && <Icon className={"pi pi-pencil"} onClick={(() => onEdit())}/>
                 }
                 {
-                    (getOrDefault(props.isDeleteVisible, true) && props.onDelete != null) && <Icon className={"pi pi-times"} onClick={(() => props.onDelete())}/>
+                    (getOrDefault(isDeleteVisible, true) && onDelete != null) && <Icon className={"pi pi-times"} onClick={(() => onDelete())}/>
                 }
             </div>
         </div>
     )
+}
+
+const defaultContainerStyle = {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "width": "100%",
+    "padding": "1vmax 2vmin",
+    "margin": "0.2vmax 0",
+    "borderRadius": "5px",
+    "background": "#212121",
+    "fontSize": "1.5vmax"
+}
+
+const selectedContainerStyle = {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "width": "100%",
+    "padding": "1vmax 2vmin",
+    "margin": "0.2vmax 0",
+    "borderRadius": "5px",
+    "background": "#592e83",
+    "fontSize": "1.5vmax"
 }

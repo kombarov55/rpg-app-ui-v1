@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import ExpandableListItem from "../Common/ListElements/ExpandableListItem";
 import List from "../Common/Lists/List";
 import UserAccountGameRoleListItem from "./UserAccountGameRoleListItem";
@@ -18,10 +18,9 @@ export default class extends React.Component {
         }
     }
 
-
     render() {
         const {userAccountDto, onEditUserGameRoleSubmit, onEditCharacterRoleSubmit} = this.props
-        const {photo50Url, firstName, lastName, role, rolesInGames, characters} = userAccountDto
+        const {id, photo50Url, firstName, lastName, role, rolesInGames, characters} = userAccountDto
 
         return (
             <>
@@ -31,16 +30,16 @@ export default class extends React.Component {
                                     expandableElements={[
                                         <>
                                             <List title={"Роли в играх"}
-                                                  values={rolesInGames.map(v =>
+                                                  values={rolesInGames.map(userAccountGameRole =>
                                                       <UserAccountGameRoleListItem
-                                                          title={v.title}
-                                                          role={v.role}
-                                                          key={v.gameId}
+                                                          title={userAccountGameRole.title}
+                                                          role={userAccountGameRole.role}
+                                                          key={userAccountGameRole.gameId}
                                                           onEditClicked={() => this.setState({
                                                               form: <UserAccountGameRoleForm
-                                                                  prevRole={v.role}
+                                                                  prevRole={userAccountGameRole.role}
                                                                   onSubmit={role => {
-                                                                      onEditUserGameRoleSubmit(v.gameId, role)
+                                                                      onEditUserGameRoleSubmit(id, userAccountGameRole.gameId, role)
                                                                       this.setState({form: <></>})
                                                                   }}
                                                               />
@@ -50,14 +49,15 @@ export default class extends React.Component {
                                                   )}
                                             />
                                             <List title={"Персонажи"}
-                                                  values={characters.map(v =>
+                                                  values={characters.map(character =>
                                                       <CharacterRoleListItem
-                                                          characterDto={v}
+                                                          key={character.id}
+                                                          characterDto={character}
                                                           onEditClicked={() => this.setState({
                                                               form: <CharacterRoleForm
-                                                                  prevRole={v.role}
+                                                                  prevRole={character.role}
                                                                   onSubmit={role => {
-                                                                      onEditCharacterRoleSubmit(role)
+                                                                      onEditCharacterRoleSubmit(character.id, role)
                                                                       this.setState({form: <></>})
                                                                   }}
                                                               />

@@ -4,8 +4,15 @@ import {changeView} from "../../../data-layer/ActionCreators";
 import Btn from "../../Common/Buttons/Btn";
 import FormViewStyle from "../../../styles/FormViewStyle";
 import RemoteAutocomplete from "../../Common/Input/RemoteAutocomplete";
-import {searchUserAccountByNameOrCharacterName} from "../../../util/Parameters";
+import {
+    changeCharacterRoleUrl,
+    changeUserAccountGameRoleUrl,
+    changeUserAccountRoleUrl,
+    searchUserAccountByNameOrCharacterName
+} from "../../../util/Parameters";
 import UserAccountSearchResultListItem from "../../ListItem/UserAccountSearchResultListItem";
+import {post} from "../../../util/Http";
+import Popup from "../../../util/Popup";
 
 export default connect(
     state => ({}),
@@ -35,8 +42,8 @@ export default connect(
                                     itemRenderer={item =>
                                         <UserAccountSearchResultListItem
                                             userAccountDto={item}
-                                            onEditUserGameRoleSubmit={(gameId, newRole) => this.changeUserGameRole(newRole, gameId)}
-                                            onEditCharacterRoleSubmit={newRole => this.changeCharacterRole(newRole)}
+                                            onEditUserGameRoleSubmit={(userAccountId, gameId, newRole) => this.changeUserGameRole(userAccountId, gameId, newRole)}
+                                            onEditCharacterRoleSubmit={(characterId, newRole) => this.changeCharacterRole(characterId, newRole)}
                                         />}
                 />
 
@@ -45,11 +52,15 @@ export default connect(
         )
     }
 
-    changeUserGameRole(newRole, gameId) {
-        alert(`${newRole} ${gameId}`)
+    changeUserRole(userAccountId, newRole) {
+        post(changeUserAccountRoleUrl, {userAccountId: userAccountId, newRole: newRole}, () => Popup.success("Роль была изменена."))
     }
 
-    changeCharacterRole(newRole) {
-        alert(`${newRole}`)
+    changeUserGameRole(userAccountId, gameId, newRole) {
+        post(changeUserAccountGameRoleUrl, {userAccountId: userAccountId, gameId: gameId, newRole: newRole}, () => Popup.success("Роль была изменена."))
+    }
+
+    changeCharacterRole(characterId, newRole) {
+        post(changeCharacterRoleUrl, {characterId: characterId, newRole: newRole}, () => Popup.success("Роль была изменена."))
     }
 })

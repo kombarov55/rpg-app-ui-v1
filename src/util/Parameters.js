@@ -198,6 +198,11 @@ export const creditPaymentUrl = `${rootUrl}/credit/creditPayment.do`
 
 export const performCraftingUrl = `${rootUrl}/craft/performCrafting.do`
 
+export const changeUserAccountRoleUrl = `${rootUrl}/role/changeUserAccountRole.do`
+export const changeUserAccountGameRoleUrl = `${rootUrl}/role/changeUserAccountGameRole.do`
+export const changeCharacterRoleUrl = `${rootUrl}/role/changeCharacterRole.do`
+
+
 
 export const officeViewUrl = `${rootUrl}/officeView`
 export const searchViewUrl = `${rootUrl}/searchView`

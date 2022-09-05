@@ -13,12 +13,16 @@ import MerchandiseForm from "../MerchandiseForm";
 import {get, httpDelete, post, put} from "../../../util/Http";
 import Popup from "../../../util/Popup";
 import {
-    currenciesByGameIdUrl,
+    currenciesByGameIdUrl, merchandiseByIdUrl,
     merchandiseCategoryByIdUrl,
     merchandiseCategoryUrl,
     merchandiseTypeByIdUrl,
-    merchandiseTypeUrl, shortSkillsByGameIdUrl
+    merchandiseTypeUrl, merchandiseUrl, shortSkillsByGameIdUrl
 } from "../../../util/Parameters";
+import ExpandableListItem from "../../Common/ListElements/ExpandableListItem";
+import ExpandableListItemWithBullets from "../../Common/ListElements/ExpandableListItemWithBullets";
+import SkillInfluenceToString from "../../../util/SkillInfluenceToString";
+import priceCombinationListToString from "../../../util/priceCombinationListToString";
 
 export default connect(
     state => ({
@@ -38,6 +42,7 @@ export default connect(
 
         get(merchandiseCategoryUrl(this.gameId), rs => this.setState({merchandiseCategories: rs}))
         get(merchandiseTypeUrl(this.gameId), rs => this.setState({merchandiseTypes: rs}))
+        get(merchandiseUrl(this.gameId), rs => this.setState({merchandiseList: rs}))
         get(shortSkillsByGameIdUrl(this.gameId), rs => this.setState({skills: rs}))
         get(currenciesByGameIdUrl(this.gameId), rs => this.setState({currencies: rs}))
     }
@@ -45,6 +50,7 @@ export default connect(
     initialState = {
         merchandiseCategories: [],
         merchandiseTypes: [],
+        merchandiseList: [],
         skills: [],
         currencies: [],
 
@@ -117,6 +123,21 @@ export default connect(
 
                 <List
                     title={"Товары:"}
+                    values={this.state.merchandiseList.map(merchandise =>
+                        <ExpandableListItemWithBullets
+                            img={merchandise.img}
+                            name={merchandise.name}
+                            description={merchandise.description}
+                            bullets={[
+                                "Категория: " + merchandise.category.name,
+                                "Тип: " + merchandise.type.name,
+                                "Кол-во слотов: " + merchandise.slots,
+                                ... merchandise.skillInfluences.map(it => SkillInfluenceToString(it))
+                            ]}
+                            onEdit={() => this.onEditMerchandiseClicked(merchandise)}
+                            onDelete={() => this.onDeleteMerchandiseClicked(merchandise)}
+                        />
+                    )}
                     isAddButtonVisible={!this.state.merchandiseFormVisible}
                     noItemsText={"Нет товаров"}
                     onAddClicked={() => this.onAddMerchandiseClicked()}
@@ -244,15 +265,44 @@ export default connect(
     }
 
     onAddMerchandiseClicked() {
-        this.setState({merchandiseFormVisible: true})
+        this.setState({
+            merchandiseFormVisible: true,
+            merchandiseFormMode: FormMode.CREATE
+        })
+    }
+
+    onEditMerchandiseClicked(merchandise) {
+        this.setState({
+            merchandiseFormVisible: true,
+            merchandiseObjToUpdate: merchandise,
+            merchandiseFormMode: FormMode.EDIT
+        })
+    }
+
+    onDeleteMerchandiseClicked(merchandise) {
+        Popup.info("Товар удалён (типо)")
     }
 
     addMerchandise(form) {
-        console.log(form)
+        post(merchandiseUrl(this.gameId), form, rs => {
+            this.setState(state => ({
+                merchandiseList: state.merchandiseList.concat(rs),
+                merchandiseFormVisible: false
+            }))
+
+            Popup.info("Товар создан.")
+        }, () => Popup.error("Ошибка при создании товара. Обратитесь к администратору."))
     }
 
     updateMerchandise(form) {
-        console.log(form)
+        put(merchandiseByIdUrl(this.gameId, form.id), form, rs => {
+            this.setState(state => ({
+                merchandiseList: state.merchandiseList.filter(it => it.id !== rs.id).concat(rs),
+                merchandiseFormVisible: false
+            }))
+
+            Popup.info("Товар изменён.")
+        }, () => Popup.error("Ошибка при редактировании товара. Обратитесь к администратору."))
     }
 
     onBackClicked() {

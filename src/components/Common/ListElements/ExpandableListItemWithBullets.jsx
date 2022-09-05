@@ -1,7 +1,16 @@
 import React from "react";
 import BulletList from "../Lists/BulletList";
 import ExpandableListItem from "./ExpandableListItem";
+import GreyButton from "../Buttons/GreyButton";
 
+/**
+ * @props {
+ *     img: String,
+ *     name: String,
+ *     description: String,
+ *     bullets: [String]
+ * }
+ */
 export default class ExpandableListItemWithBullets extends React.Component {
 
     render() {
@@ -11,7 +20,9 @@ export default class ExpandableListItemWithBullets extends React.Component {
                 name={this.props.name}
                 expandableElements={[
                     <div style={descriptionStyle}>{this.props.description}</div>,
-                    <BulletList values={this.props.bullets}/>
+                    <BulletList values={this.props.bullets}/>,
+                    this.props.onEdit && <GreyButton text={"Редактировать"} onClick={() => this.props.onEdit()}/>,
+                    this.props.onDelete && <GreyButton text={"Удалить"} onClick={() => this.props.onDelete()}/>
                 ]}
             />
         )

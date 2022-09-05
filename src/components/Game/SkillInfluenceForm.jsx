@@ -3,7 +3,6 @@ import InnerFormStyle from "../../styles/InnerFormStyle";
 import InputLabel from "../Common/Labels/InputLabel";
 import SubmitButton from "../Common/Buttons/SubmitButton";
 import {SelectButton} from "primereact/selectbutton";
-import {FormLabel} from "uikit-react";
 import ArithmeticModifiers from "../../data-layer/enums/AriphmeticModifiers";
 
 export default class SkillInfluenceForm extends React.Component {
@@ -22,7 +21,7 @@ export default class SkillInfluenceForm extends React.Component {
     render() {
         return (
             <div style={InnerFormStyle}>
-                <FormLabel text={"Влияние на навык:"}/>
+                <InputLabel text={"Влияние на навык:"}/>
                 <InputLabel text={"Навык:"}/>
                 <SelectButton
                     options={this.props.skills.map(skill => ({label: skill.name, value: skill}))}

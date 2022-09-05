@@ -11,6 +11,7 @@ import priceCombinationToString from "../../util/priceCombinationToString";
 import SkillInfluenceForm from "./SkillInfluenceForm";
 import FormMode from "../../data-layer/enums/FormMode";
 import {connect} from "react-redux"
+import {InputTextarea} from "primereact/inputtextarea";
 
 export default connect(
     state => ({
@@ -31,21 +32,19 @@ export default connect(
 
         this.state = props.initialState != null ? props.initialState : this.initialState
 
-        // get(shortSkillsByGameIdUrl(this.props.gameId), rs => this.setState({skills: rs}))
-        // get(currenciesByGameIdUrl(this.props.gameId), rs => this.setState({currencies: rs}))
+        console.log(this.state)
     }
 
     initialState = {
         name: "",
         img: "",
+        description: "",
         category: "",
         type: "",
         slots: 0,
         prices: [],
         skillInfluences: [],
 
-        // skills: [],
-        // currencies: [],
 
         skillInfluenceFormVisible: false,
         skillInfluenceFormMode: FormMode.CREATE,
@@ -63,6 +62,12 @@ export default connect(
                 <InputLabel text={"Картинка:"}/>
                 <input type={"file"}
                        onChange={e => upload(e.target.files[0], filename => this.setState({img: filename}))}
+                />
+
+                <InputLabel text={"Описание:"}/>
+                <InputTextarea autoResize={true}
+                               value={this.state.description}
+                               onChange={e => this.setState({description: e.target.value})}
                 />
 
                 <InputLabel text={"Категория:"}/>
@@ -162,14 +167,16 @@ export default connect(
 
     onSubmitClicked() {
         this.props.onSubmit({
+            id: this.state.id,
             name: this.state.name,
             img: this.state.img,
+            description: this.state.description,
             category: this.state.category,
             type: this.state.type,
             slots: this.state.slots,
             prices: this.state.prices,
             skillInfluences: this.state.skillInfluences
         })
-        this.setState(this.initialState)
+        // this.setState(this.initialState)
     }
 })
